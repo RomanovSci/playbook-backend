@@ -1,5 +1,9 @@
 <?php
 
+use Illuminate\Support\Facades\View;
+use Illuminate\Support\Facades\Route;
+use Symfony\Component\HttpKernel\Exception\NotFoundHttpException;
+
 /*
 |--------------------------------------------------------------------------
 | Web Routes
@@ -12,5 +16,9 @@
 */
 
 Route::get('/', function () {
-    return view('welcome');
+    if (View::exists('generated.index')) {
+        return view('generated.index');
+    }
+
+    throw new NotFoundHttpException();
 });
