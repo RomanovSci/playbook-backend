@@ -21,4 +21,4 @@ Route::get('/', function () {
     }
 
     throw new NotFoundHttpException();
-});
+})->name('index');
