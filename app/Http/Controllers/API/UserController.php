@@ -6,7 +6,6 @@ use App\Http\Controllers\Controller;
 use App\Models\User;
 use Illuminate\Http\Request;
 use Illuminate\Http\Response;
-use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\Validator;
 
 /**
@@ -44,11 +43,11 @@ class UserController extends Controller
          * @var User $user
          */
         $user = User::create($input);
-        $success['token'] =  $user->createToken('MyApp')-> accessToken;
-        $success['name'] =  $user->name;
+        $success['token'] = $user->createToken('MyApp')->accessToken;
+        $success['name'] = $user->name;
 
         return response()->json([
-            'success'=>$success
+            'success' => $success
         ]);
     }
 }
