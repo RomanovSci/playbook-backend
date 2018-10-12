@@ -13,5 +13,4 @@ use Illuminate\Support\Facades\Route;
 |
 */
 
-Route::post('/login', 'API\UserController@login')->name('user.login');
 Route::post('/register', 'API\UserController@register')->name('user.register');
