@@ -10,5 +10,6 @@
 7. Apply migrations in workspace container
 
 ### Commands:
-1. Generate doc: `php artisan api:generate --routePrefix="*"`
-2. To container `cd docker && docker-compose exec workspace bash`
+1. Generate doc: `php artisan api:generate --routePrefix="api/*" --noPostmanCollection`
+2. Update doc: `php artisan api:update`
+3. To container: `cd docker && docker-compose exec workspace bash`

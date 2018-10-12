@@ -12,11 +12,20 @@ use Illuminate\Support\Facades\Validator;
  * Class UserController
  *
  * @package App\Http\Controllers\API
+ * @resource User
  */
 class UserController extends Controller
 {
     /**
      * Register new user
+     *
+     * @response {
+     *      "success": true,
+     *      "data": {
+     *          "token": "Access token",
+     *          "email": "User email"
+     *      }
+     * }
      *
      * @param Request $request
      * @return Response
@@ -43,11 +52,13 @@ class UserController extends Controller
          * @var User $user
          */
         $user = User::create($input);
-        $success['token'] = $user->createToken('MyApp')->accessToken;
-        $success['name'] = $user->name;
 
         return response()->json([
-            'success' => $success
+            'success' => true,
+            'data' => [
+                'token' => $user->createToken('MyApp')->accessToken,
+                'email' => $user->email,
+            ]
         ]);
     }
 }
