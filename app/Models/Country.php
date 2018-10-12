@@ -11,6 +11,7 @@ use Illuminate\Database\Eloquent\SoftDeletes;
  * @package App\Models
  * @property string code
  * @property string name
+ * @property string native_name
  */
 class Country extends Model
 {

@@ -18,6 +18,7 @@ class CreateCountriesTable extends Migration
             $table->increments('id');
             $table->char('code', 2);
             $table->string('name');
+            $table->string('native_name');
             $table->timestamps();
             $table->softDeletes();
         });
@@ -29,6 +30,7 @@ class CreateCountriesTable extends Migration
             $countryModel = new Country();
             $countryModel->code = $country->alpha2Code;
             $countryModel->name = $country->name;
+            $countryModel->native_name = $country->nativeName;
             $countryModel->save();
         }
     }

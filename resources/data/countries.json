@@ -1,1002 +1,1252 @@
 [
     {
         "name": "Afghanistan",
-        "alpha2Code": "AF"
+        "alpha2Code": "AF",
+        "nativeName": "افغانستان"
     },
     {
         "name": "Åland Islands",
-        "alpha2Code": "AX"
+        "alpha2Code": "AX",
+        "nativeName": "Åland"
     },
     {
         "name": "Albania",
-        "alpha2Code": "AL"
+        "alpha2Code": "AL",
+        "nativeName": "Shqipëria"
     },
     {
         "name": "Algeria",
-        "alpha2Code": "DZ"
+        "alpha2Code": "DZ",
+        "nativeName": "الجزائر"
     },
     {
         "name": "American Samoa",
-        "alpha2Code": "AS"
+        "alpha2Code": "AS",
+        "nativeName": "American Samoa"
     },
     {
         "name": "Andorra",
-        "alpha2Code": "AD"
+        "alpha2Code": "AD",
+        "nativeName": "Andorra"
     },
     {
         "name": "Angola",
-        "alpha2Code": "AO"
+        "alpha2Code": "AO",
+        "nativeName": "Angola"
     },
     {
         "name": "Anguilla",
-        "alpha2Code": "AI"
+        "alpha2Code": "AI",
+        "nativeName": "Anguilla"
     },
     {
         "name": "Antarctica",
-        "alpha2Code": "AQ"
+        "alpha2Code": "AQ",
+        "nativeName": "Antarctica"
     },
     {
         "name": "Antigua and Barbuda",
-        "alpha2Code": "AG"
+        "alpha2Code": "AG",
+        "nativeName": "Antigua and Barbuda"
     },
     {
         "name": "Argentina",
-        "alpha2Code": "AR"
+        "alpha2Code": "AR",
+        "nativeName": "Argentina"
     },
     {
         "name": "Armenia",
-        "alpha2Code": "AM"
+        "alpha2Code": "AM",
+        "nativeName": "Հայաստան"
     },
     {
         "name": "Aruba",
-        "alpha2Code": "AW"
+        "alpha2Code": "AW",
+        "nativeName": "Aruba"
     },
     {
         "name": "Australia",
-        "alpha2Code": "AU"
+        "alpha2Code": "AU",
+        "nativeName": "Australia"
     },
     {
         "name": "Austria",
-        "alpha2Code": "AT"
+        "alpha2Code": "AT",
+        "nativeName": "Österreich"
     },
     {
         "name": "Azerbaijan",
-        "alpha2Code": "AZ"
+        "alpha2Code": "AZ",
+        "nativeName": "Azərbaycan"
     },
     {
         "name": "Bahamas",
-        "alpha2Code": "BS"
+        "alpha2Code": "BS",
+        "nativeName": "Bahamas"
     },
     {
         "name": "Bahrain",
-        "alpha2Code": "BH"
+        "alpha2Code": "BH",
+        "nativeName": "\u200fالبحرين"
     },
     {
         "name": "Bangladesh",
-        "alpha2Code": "BD"
+        "alpha2Code": "BD",
+        "nativeName": "Bangladesh"
     },
     {
         "name": "Barbados",
-        "alpha2Code": "BB"
+        "alpha2Code": "BB",
+        "nativeName": "Barbados"
     },
     {
         "name": "Belarus",
-        "alpha2Code": "BY"
+        "alpha2Code": "BY",
+        "nativeName": "Белару́сь"
     },
     {
         "name": "Belgium",
-        "alpha2Code": "BE"
+        "alpha2Code": "BE",
+        "nativeName": "België"
     },
     {
         "name": "Belize",
-        "alpha2Code": "BZ"
+        "alpha2Code": "BZ",
+        "nativeName": "Belize"
     },
     {
         "name": "Benin",
-        "alpha2Code": "BJ"
+        "alpha2Code": "BJ",
+        "nativeName": "Bénin"
     },
     {
         "name": "Bermuda",
-        "alpha2Code": "BM"
+        "alpha2Code": "BM",
+        "nativeName": "Bermuda"
     },
     {
         "name": "Bhutan",
-        "alpha2Code": "BT"
+        "alpha2Code": "BT",
+        "nativeName": "ʼbrug-yul"
     },
     {
         "name": "Bolivia (Plurinational State of)",
-        "alpha2Code": "BO"
+        "alpha2Code": "BO",
+        "nativeName": "Bolivia"
     },
     {
         "name": "Bonaire, Sint Eustatius and Saba",
-        "alpha2Code": "BQ"
+        "alpha2Code": "BQ",
+        "nativeName": "Bonaire"
     },
     {
         "name": "Bosnia and Herzegovina",
-        "alpha2Code": "BA"
+        "alpha2Code": "BA",
+        "nativeName": "Bosna i Hercegovina"
     },
     {
         "name": "Botswana",
-        "alpha2Code": "BW"
+        "alpha2Code": "BW",
+        "nativeName": "Botswana"
     },
     {
         "name": "Bouvet Island",
-        "alpha2Code": "BV"
+        "alpha2Code": "BV",
+        "nativeName": "Bouvetøya"
     },
     {
         "name": "Brazil",
-        "alpha2Code": "BR"
+        "alpha2Code": "BR",
+        "nativeName": "Brasil"
     },
     {
         "name": "British Indian Ocean Territory",
-        "alpha2Code": "IO"
+        "alpha2Code": "IO",
+        "nativeName": "British Indian Ocean Territory"
     },
     {
         "name": "United States Minor Outlying Islands",
-        "alpha2Code": "UM"
+        "alpha2Code": "UM",
+        "nativeName": "United States Minor Outlying Islands"
     },
     {
         "name": "Virgin Islands (British)",
-        "alpha2Code": "VG"
+        "alpha2Code": "VG",
+        "nativeName": "British Virgin Islands"
     },
     {
         "name": "Virgin Islands (U.S.)",
-        "alpha2Code": "VI"
+        "alpha2Code": "VI",
+        "nativeName": "Virgin Islands of the United States"
     },
     {
         "name": "Brunei Darussalam",
-        "alpha2Code": "BN"
+        "alpha2Code": "BN",
+        "nativeName": "Negara Brunei Darussalam"
     },
     {
         "name": "Bulgaria",
-        "alpha2Code": "BG"
+        "alpha2Code": "BG",
+        "nativeName": "България"
     },
     {
         "name": "Burkina Faso",
-        "alpha2Code": "BF"
+        "alpha2Code": "BF",
+        "nativeName": "Burkina Faso"
     },
     {
         "name": "Burundi",
-        "alpha2Code": "BI"
+        "alpha2Code": "BI",
+        "nativeName": "Burundi"
     },
     {
         "name": "Cambodia",
-        "alpha2Code": "KH"
+        "alpha2Code": "KH",
+        "nativeName": "Kâmpŭchéa"
     },
     {
         "name": "Cameroon",
-        "alpha2Code": "CM"
+        "alpha2Code": "CM",
+        "nativeName": "Cameroon"
     },
     {
         "name": "Canada",
-        "alpha2Code": "CA"
+        "alpha2Code": "CA",
+        "nativeName": "Canada"
     },
     {
         "name": "Cabo Verde",
-        "alpha2Code": "CV"
+        "alpha2Code": "CV",
+        "nativeName": "Cabo Verde"
     },
     {
         "name": "Cayman Islands",
-        "alpha2Code": "KY"
+        "alpha2Code": "KY",
+        "nativeName": "Cayman Islands"
     },
     {
         "name": "Central African Republic",
-        "alpha2Code": "CF"
+        "alpha2Code": "CF",
+        "nativeName": "Ködörösêse tî Bêafrîka"
     },
     {
         "name": "Chad",
-        "alpha2Code": "TD"
+        "alpha2Code": "TD",
+        "nativeName": "Tchad"
     },
     {
         "name": "Chile",
-        "alpha2Code": "CL"
+        "alpha2Code": "CL",
+        "nativeName": "Chile"
     },
     {
         "name": "China",
-        "alpha2Code": "CN"
+        "alpha2Code": "CN",
+        "nativeName": "中国"
     },
     {
         "name": "Christmas Island",
-        "alpha2Code": "CX"
+        "alpha2Code": "CX",
+        "nativeName": "Christmas Island"
     },
     {
         "name": "Cocos (Keeling) Islands",
-        "alpha2Code": "CC"
+        "alpha2Code": "CC",
+        "nativeName": "Cocos (Keeling) Islands"
     },
     {
         "name": "Colombia",
-        "alpha2Code": "CO"
+        "alpha2Code": "CO",
+        "nativeName": "Colombia"
     },
     {
         "name": "Comoros",
-        "alpha2Code": "KM"
+        "alpha2Code": "KM",
+        "nativeName": "Komori"
     },
     {
         "name": "Congo",
-        "alpha2Code": "CG"
+        "alpha2Code": "CG",
+        "nativeName": "République du Congo"
     },
     {
         "name": "Congo (Democratic Republic of the)",
-        "alpha2Code": "CD"
+        "alpha2Code": "CD",
+        "nativeName": "République démocratique du Congo"
     },
     {
         "name": "Cook Islands",
-        "alpha2Code": "CK"
+        "alpha2Code": "CK",
+        "nativeName": "Cook Islands"
     },
     {
         "name": "Costa Rica",
-        "alpha2Code": "CR"
+        "alpha2Code": "CR",
+        "nativeName": "Costa Rica"
     },
     {
         "name": "Croatia",
-        "alpha2Code": "HR"
+        "alpha2Code": "HR",
+        "nativeName": "Hrvatska"
     },
     {
         "name": "Cuba",
-        "alpha2Code": "CU"
+        "alpha2Code": "CU",
+        "nativeName": "Cuba"
     },
     {
         "name": "Curaçao",
-        "alpha2Code": "CW"
+        "alpha2Code": "CW",
+        "nativeName": "Curaçao"
     },
     {
         "name": "Cyprus",
-        "alpha2Code": "CY"
+        "alpha2Code": "CY",
+        "nativeName": "Κύπρος"
     },
     {
         "name": "Czech Republic",
-        "alpha2Code": "CZ"
+        "alpha2Code": "CZ",
+        "nativeName": "Česká republika"
     },
     {
         "name": "Denmark",
-        "alpha2Code": "DK"
+        "alpha2Code": "DK",
+        "nativeName": "Danmark"
     },
     {
         "name": "Djibouti",
-        "alpha2Code": "DJ"
+        "alpha2Code": "DJ",
+        "nativeName": "Djibouti"
     },
     {
         "name": "Dominica",
-        "alpha2Code": "DM"
+        "alpha2Code": "DM",
+        "nativeName": "Dominica"
     },
     {
         "name": "Dominican Republic",
-        "alpha2Code": "DO"
+        "alpha2Code": "DO",
+        "nativeName": "República Dominicana"
     },
     {
         "name": "Ecuador",
-        "alpha2Code": "EC"
+        "alpha2Code": "EC",
+        "nativeName": "Ecuador"
     },
     {
         "name": "Egypt",
-        "alpha2Code": "EG"
+        "alpha2Code": "EG",
+        "nativeName": "مصر\u200e"
     },
     {
         "name": "El Salvador",
-        "alpha2Code": "SV"
+        "alpha2Code": "SV",
+        "nativeName": "El Salvador"
     },
     {
         "name": "Equatorial Guinea",
-        "alpha2Code": "GQ"
+        "alpha2Code": "GQ",
+        "nativeName": "Guinea Ecuatorial"
     },
     {
         "name": "Eritrea",
-        "alpha2Code": "ER"
+        "alpha2Code": "ER",
+        "nativeName": "ኤርትራ"
     },
     {
         "name": "Estonia",
-        "alpha2Code": "EE"
+        "alpha2Code": "EE",
+        "nativeName": "Eesti"
     },
     {
         "name": "Ethiopia",
-        "alpha2Code": "ET"
+        "alpha2Code": "ET",
+        "nativeName": "ኢትዮጵያ"
     },
     {
         "name": "Falkland Islands (Malvinas)",
-        "alpha2Code": "FK"
+        "alpha2Code": "FK",
+        "nativeName": "Falkland Islands"
     },
     {
         "name": "Faroe Islands",
-        "alpha2Code": "FO"
+        "alpha2Code": "FO",
+        "nativeName": "Føroyar"
     },
     {
         "name": "Fiji",
-        "alpha2Code": "FJ"
+        "alpha2Code": "FJ",
+        "nativeName": "Fiji"
     },
     {
         "name": "Finland",
-        "alpha2Code": "FI"
+        "alpha2Code": "FI",
+        "nativeName": "Suomi"
     },
     {
         "name": "France",
-        "alpha2Code": "FR"
+        "alpha2Code": "FR",
+        "nativeName": "France"
     },
     {
         "name": "French Guiana",
-        "alpha2Code": "GF"
+        "alpha2Code": "GF",
+        "nativeName": "Guyane française"
     },
     {
         "name": "French Polynesia",
-        "alpha2Code": "PF"
+        "alpha2Code": "PF",
+        "nativeName": "Polynésie française"
     },
     {
         "name": "French Southern Territories",
-        "alpha2Code": "TF"
+        "alpha2Code": "TF",
+        "nativeName": "Territoire des Terres australes et antarctiques françaises"
     },
     {
         "name": "Gabon",
-        "alpha2Code": "GA"
+        "alpha2Code": "GA",
+        "nativeName": "Gabon"
     },
     {
         "name": "Gambia",
-        "alpha2Code": "GM"
+        "alpha2Code": "GM",
+        "nativeName": "Gambia"
     },
     {
         "name": "Georgia",
-        "alpha2Code": "GE"
+        "alpha2Code": "GE",
+        "nativeName": "საქართველო"
     },
     {
         "name": "Germany",
-        "alpha2Code": "DE"
+        "alpha2Code": "DE",
+        "nativeName": "Deutschland"
     },
     {
         "name": "Ghana",
-        "alpha2Code": "GH"
+        "alpha2Code": "GH",
+        "nativeName": "Ghana"
     },
     {
         "name": "Gibraltar",
-        "alpha2Code": "GI"
+        "alpha2Code": "GI",
+        "nativeName": "Gibraltar"
     },
     {
         "name": "Greece",
-        "alpha2Code": "GR"
+        "alpha2Code": "GR",
+        "nativeName": "Ελλάδα"
     },
     {
         "name": "Greenland",
-        "alpha2Code": "GL"
+        "alpha2Code": "GL",
+        "nativeName": "Kalaallit Nunaat"
     },
     {
         "name": "Grenada",
-        "alpha2Code": "GD"
+        "alpha2Code": "GD",
+        "nativeName": "Grenada"
     },
     {
         "name": "Guadeloupe",
-        "alpha2Code": "GP"
+        "alpha2Code": "GP",
+        "nativeName": "Guadeloupe"
     },
     {
         "name": "Guam",
-        "alpha2Code": "GU"
+        "alpha2Code": "GU",
+        "nativeName": "Guam"
     },
     {
         "name": "Guatemala",
-        "alpha2Code": "GT"
+        "alpha2Code": "GT",
+        "nativeName": "Guatemala"
     },
     {
         "name": "Guernsey",
-        "alpha2Code": "GG"
+        "alpha2Code": "GG",
+        "nativeName": "Guernsey"
     },
     {
         "name": "Guinea",
-        "alpha2Code": "GN"
+        "alpha2Code": "GN",
+        "nativeName": "Guinée"
     },
     {
         "name": "Guinea-Bissau",
-        "alpha2Code": "GW"
+        "alpha2Code": "GW",
+        "nativeName": "Guiné-Bissau"
     },
     {
         "name": "Guyana",
-        "alpha2Code": "GY"
+        "alpha2Code": "GY",
+        "nativeName": "Guyana"
     },
     {
         "name": "Haiti",
-        "alpha2Code": "HT"
+        "alpha2Code": "HT",
+        "nativeName": "Haïti"
     },
     {
         "name": "Heard Island and McDonald Islands",
-        "alpha2Code": "HM"
+        "alpha2Code": "HM",
+        "nativeName": "Heard Island and McDonald Islands"
     },
     {
         "name": "Holy See",
-        "alpha2Code": "VA"
+        "alpha2Code": "VA",
+        "nativeName": "Sancta Sedes"
     },
     {
         "name": "Honduras",
-        "alpha2Code": "HN"
+        "alpha2Code": "HN",
+        "nativeName": "Honduras"
     },
     {
         "name": "Hong Kong",
-        "alpha2Code": "HK"
+        "alpha2Code": "HK",
+        "nativeName": "香港"
     },
     {
         "name": "Hungary",
-        "alpha2Code": "HU"
+        "alpha2Code": "HU",
+        "nativeName": "Magyarország"
     },
     {
         "name": "Iceland",
-        "alpha2Code": "IS"
+        "alpha2Code": "IS",
+        "nativeName": "Ísland"
     },
     {
         "name": "India",
-        "alpha2Code": "IN"
+        "alpha2Code": "IN",
+        "nativeName": "भारत"
     },
     {
         "name": "Indonesia",
-        "alpha2Code": "ID"
+        "alpha2Code": "ID",
+        "nativeName": "Indonesia"
     },
     {
         "name": "Côte d'Ivoire",
-        "alpha2Code": "CI"
+        "alpha2Code": "CI",
+        "nativeName": "Côte d'Ivoire"
     },
     {
         "name": "Iran (Islamic Republic of)",
-        "alpha2Code": "IR"
+        "alpha2Code": "IR",
+        "nativeName": "ایران"
     },
     {
         "name": "Iraq",
-        "alpha2Code": "IQ"
+        "alpha2Code": "IQ",
+        "nativeName": "العراق"
     },
     {
         "name": "Ireland",
-        "alpha2Code": "IE"
+        "alpha2Code": "IE",
+        "nativeName": "Éire"
     },
     {
         "name": "Isle of Man",
-        "alpha2Code": "IM"
+        "alpha2Code": "IM",
+        "nativeName": "Isle of Man"
     },
     {
         "name": "Israel",
-        "alpha2Code": "IL"
+        "alpha2Code": "IL",
+        "nativeName": "יִשְׂרָאֵל"
     },
     {
         "name": "Italy",
-        "alpha2Code": "IT"
+        "alpha2Code": "IT",
+        "nativeName": "Italia"
     },
     {
         "name": "Jamaica",
-        "alpha2Code": "JM"
+        "alpha2Code": "JM",
+        "nativeName": "Jamaica"
     },
     {
         "name": "Japan",
-        "alpha2Code": "JP"
+        "alpha2Code": "JP",
+        "nativeName": "日本"
     },
     {
         "name": "Jersey",
-        "alpha2Code": "JE"
+        "alpha2Code": "JE",
+        "nativeName": "Jersey"
     },
     {
         "name": "Jordan",
-        "alpha2Code": "JO"
+        "alpha2Code": "JO",
+        "nativeName": "الأردن"
     },
     {
         "name": "Kazakhstan",
-        "alpha2Code": "KZ"
+        "alpha2Code": "KZ",
+        "nativeName": "Қазақстан"
     },
     {
         "name": "Kenya",
-        "alpha2Code": "KE"
+        "alpha2Code": "KE",
+        "nativeName": "Kenya"
     },
     {
         "name": "Kiribati",
-        "alpha2Code": "KI"
+        "alpha2Code": "KI",
+        "nativeName": "Kiribati"
     },
     {
         "name": "Kuwait",
-        "alpha2Code": "KW"
+        "alpha2Code": "KW",
+        "nativeName": "الكويت"
     },
     {
         "name": "Kyrgyzstan",
-        "alpha2Code": "KG"
+        "alpha2Code": "KG",
+        "nativeName": "Кыргызстан"
     },
     {
         "name": "Lao People's Democratic Republic",
-        "alpha2Code": "LA"
+        "alpha2Code": "LA",
+        "nativeName": "ສປປລາວ"
     },
     {
         "name": "Latvia",
-        "alpha2Code": "LV"
+        "alpha2Code": "LV",
+        "nativeName": "Latvija"
     },
     {
         "name": "Lebanon",
-        "alpha2Code": "LB"
+        "alpha2Code": "LB",
+        "nativeName": "لبنان"
     },
     {
         "name": "Lesotho",
-        "alpha2Code": "LS"
+        "alpha2Code": "LS",
+        "nativeName": "Lesotho"
     },
     {
         "name": "Liberia",
-        "alpha2Code": "LR"
+        "alpha2Code": "LR",
+        "nativeName": "Liberia"
     },
     {
         "name": "Libya",
-        "alpha2Code": "LY"
+        "alpha2Code": "LY",
+        "nativeName": "\u200fليبيا"
     },
     {
         "name": "Liechtenstein",
-        "alpha2Code": "LI"
+        "alpha2Code": "LI",
+        "nativeName": "Liechtenstein"
     },
     {
         "name": "Lithuania",
-        "alpha2Code": "LT"
+        "alpha2Code": "LT",
+        "nativeName": "Lietuva"
     },
     {
         "name": "Luxembourg",
-        "alpha2Code": "LU"
+        "alpha2Code": "LU",
+        "nativeName": "Luxembourg"
     },
     {
         "name": "Macao",
-        "alpha2Code": "MO"
+        "alpha2Code": "MO",
+        "nativeName": "澳門"
     },
     {
         "name": "Macedonia (the former Yugoslav Republic of)",
-        "alpha2Code": "MK"
+        "alpha2Code": "MK",
+        "nativeName": "Македонија"
     },
     {
         "name": "Madagascar",
-        "alpha2Code": "MG"
+        "alpha2Code": "MG",
+        "nativeName": "Madagasikara"
     },
     {
         "name": "Malawi",
-        "alpha2Code": "MW"
+        "alpha2Code": "MW",
+        "nativeName": "Malawi"
     },
     {
         "name": "Malaysia",
-        "alpha2Code": "MY"
+        "alpha2Code": "MY",
+        "nativeName": "Malaysia"
     },
     {
         "name": "Maldives",
-        "alpha2Code": "MV"
+        "alpha2Code": "MV",
+        "nativeName": "Maldives"
     },
     {
         "name": "Mali",
-        "alpha2Code": "ML"
+        "alpha2Code": "ML",
+        "nativeName": "Mali"
     },
     {
         "name": "Malta",
-        "alpha2Code": "MT"
+        "alpha2Code": "MT",
+        "nativeName": "Malta"
     },
     {
         "name": "Marshall Islands",
-        "alpha2Code": "MH"
+        "alpha2Code": "MH",
+        "nativeName": "M̧ajeļ"
     },
     {
         "name": "Martinique",
-        "alpha2Code": "MQ"
+        "alpha2Code": "MQ",
+        "nativeName": "Martinique"
     },
     {
         "name": "Mauritania",
-        "alpha2Code": "MR"
+        "alpha2Code": "MR",
+        "nativeName": "موريتانيا"
     },
     {
         "name": "Mauritius",
-        "alpha2Code": "MU"
+        "alpha2Code": "MU",
+        "nativeName": "Maurice"
     },
     {
         "name": "Mayotte",
-        "alpha2Code": "YT"
+        "alpha2Code": "YT",
+        "nativeName": "Mayotte"
     },
     {
         "name": "Mexico",
-        "alpha2Code": "MX"
+        "alpha2Code": "MX",
+        "nativeName": "México"
     },
     {
         "name": "Micronesia (Federated States of)",
-        "alpha2Code": "FM"
+        "alpha2Code": "FM",
+        "nativeName": "Micronesia"
     },
     {
         "name": "Moldova (Republic of)",
-        "alpha2Code": "MD"
+        "alpha2Code": "MD",
+        "nativeName": "Moldova"
     },
     {
         "name": "Monaco",
-        "alpha2Code": "MC"
+        "alpha2Code": "MC",
+        "nativeName": "Monaco"
     },
     {
         "name": "Mongolia",
-        "alpha2Code": "MN"
+        "alpha2Code": "MN",
+        "nativeName": "Монгол улс"
     },
     {
         "name": "Montenegro",
-        "alpha2Code": "ME"
+        "alpha2Code": "ME",
+        "nativeName": "Црна Гора"
     },
     {
         "name": "Montserrat",
-        "alpha2Code": "MS"
+        "alpha2Code": "MS",
+        "nativeName": "Montserrat"
     },
     {
         "name": "Morocco",
-        "alpha2Code": "MA"
+        "alpha2Code": "MA",
+        "nativeName": "المغرب"
     },
     {
         "name": "Mozambique",
-        "alpha2Code": "MZ"
+        "alpha2Code": "MZ",
+        "nativeName": "Moçambique"
     },
     {
         "name": "Myanmar",
-        "alpha2Code": "MM"
+        "alpha2Code": "MM",
+        "nativeName": "Myanma"
     },
     {
         "name": "Namibia",
-        "alpha2Code": "NA"
+        "alpha2Code": "NA",
+        "nativeName": "Namibia"
     },
     {
         "name": "Nauru",
-        "alpha2Code": "NR"
+        "alpha2Code": "NR",
+        "nativeName": "Nauru"
     },
     {
         "name": "Nepal",
-        "alpha2Code": "NP"
+        "alpha2Code": "NP",
+        "nativeName": "नेपाल"
     },
     {
         "name": "Netherlands",
-        "alpha2Code": "NL"
+        "alpha2Code": "NL",
+        "nativeName": "Nederland"
     },
     {
         "name": "New Caledonia",
-        "alpha2Code": "NC"
+        "alpha2Code": "NC",
+        "nativeName": "Nouvelle-Calédonie"
     },
     {
         "name": "New Zealand",
-        "alpha2Code": "NZ"
+        "alpha2Code": "NZ",
+        "nativeName": "New Zealand"
     },
     {
         "name": "Nicaragua",
-        "alpha2Code": "NI"
+        "alpha2Code": "NI",
+        "nativeName": "Nicaragua"
     },
     {
         "name": "Niger",
-        "alpha2Code": "NE"
+        "alpha2Code": "NE",
+        "nativeName": "Niger"
     },
     {
         "name": "Nigeria",
-        "alpha2Code": "NG"
+        "alpha2Code": "NG",
+        "nativeName": "Nigeria"
     },
     {
         "name": "Niue",
-        "alpha2Code": "NU"
+        "alpha2Code": "NU",
+        "nativeName": "Niuē"
     },
     {
         "name": "Norfolk Island",
-        "alpha2Code": "NF"
+        "alpha2Code": "NF",
+        "nativeName": "Norfolk Island"
     },
     {
         "name": "Korea (Democratic People's Republic of)",
-        "alpha2Code": "KP"
+        "alpha2Code": "KP",
+        "nativeName": "북한"
     },
     {
         "name": "Northern Mariana Islands",
-        "alpha2Code": "MP"
+        "alpha2Code": "MP",
+        "nativeName": "Northern Mariana Islands"
     },
     {
         "name": "Norway",
-        "alpha2Code": "NO"
+        "alpha2Code": "NO",
+        "nativeName": "Norge"
     },
     {
         "name": "Oman",
-        "alpha2Code": "OM"
+        "alpha2Code": "OM",
+        "nativeName": "عمان"
     },
     {
         "name": "Pakistan",
-        "alpha2Code": "PK"
+        "alpha2Code": "PK",
+        "nativeName": "Pakistan"
     },
     {
         "name": "Palau",
-        "alpha2Code": "PW"
+        "alpha2Code": "PW",
+        "nativeName": "Palau"
     },
     {
         "name": "Palestine, State of",
-        "alpha2Code": "PS"
+        "alpha2Code": "PS",
+        "nativeName": "فلسطين"
     },
     {
         "name": "Panama",
-        "alpha2Code": "PA"
+        "alpha2Code": "PA",
+        "nativeName": "Panamá"
     },
     {
         "name": "Papua New Guinea",
-        "alpha2Code": "PG"
+        "alpha2Code": "PG",
+        "nativeName": "Papua Niugini"
     },
     {
         "name": "Paraguay",
-        "alpha2Code": "PY"
+        "alpha2Code": "PY",
+        "nativeName": "Paraguay"
     },
     {
         "name": "Peru",
-        "alpha2Code": "PE"
+        "alpha2Code": "PE",
+        "nativeName": "Perú"
     },
     {
         "name": "Philippines",
-        "alpha2Code": "PH"
+        "alpha2Code": "PH",
+        "nativeName": "Pilipinas"
     },
     {
         "name": "Pitcairn",
-        "alpha2Code": "PN"
+        "alpha2Code": "PN",
+        "nativeName": "Pitcairn Islands"
     },
     {
         "name": "Poland",
-        "alpha2Code": "PL"
+        "alpha2Code": "PL",
+        "nativeName": "Polska"
     },
     {
         "name": "Portugal",
-        "alpha2Code": "PT"
+        "alpha2Code": "PT",
+        "nativeName": "Portugal"
     },
     {
         "name": "Puerto Rico",
-        "alpha2Code": "PR"
+        "alpha2Code": "PR",
+        "nativeName": "Puerto Rico"
     },
     {
         "name": "Qatar",
-        "alpha2Code": "QA"
+        "alpha2Code": "QA",
+        "nativeName": "قطر"
     },
     {
         "name": "Republic of Kosovo",
-        "alpha2Code": "XK"
+        "alpha2Code": "XK",
+        "nativeName": "Republika e Kosovës"
     },
     {
         "name": "Réunion",
-        "alpha2Code": "RE"
+        "alpha2Code": "RE",
+        "nativeName": "La Réunion"
     },
     {
         "name": "Romania",
-        "alpha2Code": "RO"
+        "alpha2Code": "RO",
+        "nativeName": "România"
     },
     {
         "name": "Russian Federation",
-        "alpha2Code": "RU"
+        "alpha2Code": "RU",
+        "nativeName": "Россия"
     },
     {
         "name": "Rwanda",
-        "alpha2Code": "RW"
+        "alpha2Code": "RW",
+        "nativeName": "Rwanda"
     },
     {
         "name": "Saint Barthélemy",
-        "alpha2Code": "BL"
+        "alpha2Code": "BL",
+        "nativeName": "Saint-Barthélemy"
     },
     {
         "name": "Saint Helena, Ascension and Tristan da Cunha",
-        "alpha2Code": "SH"
+        "alpha2Code": "SH",
+        "nativeName": "Saint Helena"
     },
     {
         "name": "Saint Kitts and Nevis",
-        "alpha2Code": "KN"
+        "alpha2Code": "KN",
+        "nativeName": "Saint Kitts and Nevis"
     },
     {
         "name": "Saint Lucia",
-        "alpha2Code": "LC"
+        "alpha2Code": "LC",
+        "nativeName": "Saint Lucia"
     },
     {
         "name": "Saint Martin (French part)",
-        "alpha2Code": "MF"
+        "alpha2Code": "MF",
+        "nativeName": "Saint-Martin"
     },
     {
         "name": "Saint Pierre and Miquelon",
-        "alpha2Code": "PM"
+        "alpha2Code": "PM",
+        "nativeName": "Saint-Pierre-et-Miquelon"
     },
     {
         "name": "Saint Vincent and the Grenadines",
-        "alpha2Code": "VC"
+        "alpha2Code": "VC",
+        "nativeName": "Saint Vincent and the Grenadines"
     },
     {
         "name": "Samoa",
-        "alpha2Code": "WS"
+        "alpha2Code": "WS",
+        "nativeName": "Samoa"
     },
     {
         "name": "San Marino",
-        "alpha2Code": "SM"
+        "alpha2Code": "SM",
+        "nativeName": "San Marino"
     },
     {
         "name": "Sao Tome and Principe",
-        "alpha2Code": "ST"
+        "alpha2Code": "ST",
+        "nativeName": "São Tomé e Príncipe"
     },
     {
         "name": "Saudi Arabia",
-        "alpha2Code": "SA"
+        "alpha2Code": "SA",
+        "nativeName": "العربية السعودية"
     },
     {
         "name": "Senegal",
-        "alpha2Code": "SN"
+        "alpha2Code": "SN",
+        "nativeName": "Sénégal"
     },
     {
         "name": "Serbia",
-        "alpha2Code": "RS"
+        "alpha2Code": "RS",
+        "nativeName": "Србија"
     },
     {
         "name": "Seychelles",
-        "alpha2Code": "SC"
+        "alpha2Code": "SC",
+        "nativeName": "Seychelles"
     },
     {
         "name": "Sierra Leone",
-        "alpha2Code": "SL"
+        "alpha2Code": "SL",
+        "nativeName": "Sierra Leone"
     },
     {
         "name": "Singapore",
-        "alpha2Code": "SG"
+        "alpha2Code": "SG",
+        "nativeName": "Singapore"
     },
     {
         "name": "Sint Maarten (Dutch part)",
-        "alpha2Code": "SX"
+        "alpha2Code": "SX",
+        "nativeName": "Sint Maarten"
     },
     {
         "name": "Slovakia",
-        "alpha2Code": "SK"
+        "alpha2Code": "SK",
+        "nativeName": "Slovensko"
     },
     {
         "name": "Slovenia",
-        "alpha2Code": "SI"
+        "alpha2Code": "SI",
+        "nativeName": "Slovenija"
     },
     {
         "name": "Solomon Islands",
-        "alpha2Code": "SB"
+        "alpha2Code": "SB",
+        "nativeName": "Solomon Islands"
     },
     {
         "name": "Somalia",
-        "alpha2Code": "SO"
+        "alpha2Code": "SO",
+        "nativeName": "Soomaaliya"
     },
     {
         "name": "South Africa",
-        "alpha2Code": "ZA"
+        "alpha2Code": "ZA",
+        "nativeName": "South Africa"
     },
     {
         "name": "South Georgia and the South Sandwich Islands",
-        "alpha2Code": "GS"
+        "alpha2Code": "GS",
+        "nativeName": "South Georgia"
     },
     {
         "name": "Korea (Republic of)",
-        "alpha2Code": "KR"
+        "alpha2Code": "KR",
+        "nativeName": "대한민국"
     },
     {
         "name": "South Sudan",
-        "alpha2Code": "SS"
+        "alpha2Code": "SS",
+        "nativeName": "South Sudan"
     },
     {
         "name": "Spain",
-        "alpha2Code": "ES"
+        "alpha2Code": "ES",
+        "nativeName": "España"
     },
     {
         "name": "Sri Lanka",
-        "alpha2Code": "LK"
+        "alpha2Code": "LK",
+        "nativeName": "śrī laṃkāva"
     },
     {
         "name": "Sudan",
-        "alpha2Code": "SD"
+        "alpha2Code": "SD",
+        "nativeName": "السودان"
     },
     {
         "name": "Suriname",
-        "alpha2Code": "SR"
+        "alpha2Code": "SR",
+        "nativeName": "Suriname"
     },
     {
         "name": "Svalbard and Jan Mayen",
-        "alpha2Code": "SJ"
+        "alpha2Code": "SJ",
+        "nativeName": "Svalbard og Jan Mayen"
     },
     {
         "name": "Swaziland",
-        "alpha2Code": "SZ"
+        "alpha2Code": "SZ",
+        "nativeName": "Swaziland"
     },
     {
         "name": "Sweden",
-        "alpha2Code": "SE"
+        "alpha2Code": "SE",
+        "nativeName": "Sverige"
     },
     {
         "name": "Switzerland",
-        "alpha2Code": "CH"
+        "alpha2Code": "CH",
+        "nativeName": "Schweiz"
     },
     {
         "name": "Syrian Arab Republic",
-        "alpha2Code": "SY"
+        "alpha2Code": "SY",
+        "nativeName": "سوريا"
     },
     {
         "name": "Taiwan",
-        "alpha2Code": "TW"
+        "alpha2Code": "TW",
+        "nativeName": "臺灣"
     },
     {
         "name": "Tajikistan",
-        "alpha2Code": "TJ"
+        "alpha2Code": "TJ",
+        "nativeName": "Тоҷикистон"
     },
     {
         "name": "Tanzania, United Republic of",
-        "alpha2Code": "TZ"
+        "alpha2Code": "TZ",
+        "nativeName": "Tanzania"
     },
     {
         "name": "Thailand",
-        "alpha2Code": "TH"
+        "alpha2Code": "TH",
+        "nativeName": "ประเทศไทย"
     },
     {
         "name": "Timor-Leste",
-        "alpha2Code": "TL"
+        "alpha2Code": "TL",
+        "nativeName": "Timor-Leste"
     },
     {
         "name": "Togo",
-        "alpha2Code": "TG"
+        "alpha2Code": "TG",
+        "nativeName": "Togo"
     },
     {
         "name": "Tokelau",
-        "alpha2Code": "TK"
+        "alpha2Code": "TK",
+        "nativeName": "Tokelau"
     },
     {
         "name": "Tonga",
-        "alpha2Code": "TO"
+        "alpha2Code": "TO",
+        "nativeName": "Tonga"
     },
     {
         "name": "Trinidad and Tobago",
-        "alpha2Code": "TT"
+        "alpha2Code": "TT",
+        "nativeName": "Trinidad and Tobago"
     },
     {
         "name": "Tunisia",
-        "alpha2Code": "TN"
+        "alpha2Code": "TN",
+        "nativeName": "تونس"
     },
     {
         "name": "Turkey",
-        "alpha2Code": "TR"
+        "alpha2Code": "TR",
+        "nativeName": "Türkiye"
     },
     {
         "name": "Turkmenistan",
-        "alpha2Code": "TM"
+        "alpha2Code": "TM",
+        "nativeName": "Türkmenistan"
     },
     {
         "name": "Turks and Caicos Islands",
-        "alpha2Code": "TC"
+        "alpha2Code": "TC",
+        "nativeName": "Turks and Caicos Islands"
     },
     {
         "name": "Tuvalu",
-        "alpha2Code": "TV"
+        "alpha2Code": "TV",
+        "nativeName": "Tuvalu"
     },
     {
         "name": "Uganda",
-        "alpha2Code": "UG"
+        "alpha2Code": "UG",
+        "nativeName": "Uganda"
     },
     {
         "name": "Ukraine",
-        "alpha2Code": "UA"
+        "alpha2Code": "UA",
+        "nativeName": "Україна"
     },
     {
         "name": "United Arab Emirates",
-        "alpha2Code": "AE"
+        "alpha2Code": "AE",
+        "nativeName": "دولة الإمارات العربية المتحدة"
     },
     {
         "name": "United Kingdom of Great Britain and Northern Ireland",
-        "alpha2Code": "GB"
+        "alpha2Code": "GB",
+        "nativeName": "United Kingdom"
     },
     {
         "name": "United States of America",
-        "alpha2Code": "US"
+        "alpha2Code": "US",
+        "nativeName": "United States"
     },
     {
         "name": "Uruguay",
-        "alpha2Code": "UY"
+        "alpha2Code": "UY",
+        "nativeName": "Uruguay"
     },
     {
         "name": "Uzbekistan",
-        "alpha2Code": "UZ"
+        "alpha2Code": "UZ",
+        "nativeName": "O‘zbekiston"
     },
     {
         "name": "Vanuatu",
-        "alpha2Code": "VU"
+        "alpha2Code": "VU",
+        "nativeName": "Vanuatu"
     },
     {
         "name": "Venezuela (Bolivarian Republic of)",
-        "alpha2Code": "VE"
+        "alpha2Code": "VE",
+        "nativeName": "Venezuela"
     },
     {
         "name": "Viet Nam",
-        "alpha2Code": "VN"
+        "alpha2Code": "VN",
+        "nativeName": "Việt Nam"
     },
     {
         "name": "Wallis and Futuna",
-        "alpha2Code": "WF"
+        "alpha2Code": "WF",
+        "nativeName": "Wallis et Futuna"
     },
     {
         "name": "Western Sahara",
-        "alpha2Code": "EH"
+        "alpha2Code": "EH",
+        "nativeName": "الصحراء الغربية"
     },
     {
         "name": "Yemen",
-        "alpha2Code": "YE"
+        "alpha2Code": "YE",
+        "nativeName": "اليَمَن"
     },
     {
         "name": "Zambia",
-        "alpha2Code": "ZM"
+        "alpha2Code": "ZM",
+        "nativeName": "Zambia"
     },
     {
         "name": "Zimbabwe",
-        "alpha2Code": "ZW"
+        "alpha2Code": "ZW",
+        "nativeName": "Zimbabwe"
     }
 ]
