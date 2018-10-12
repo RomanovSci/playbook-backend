@@ -16,7 +16,7 @@ use Illuminate\Support\Facades\Validator;
 class UserController extends Controller
 {
     /**
-     * Register api
+     * Register new user
      *
      * @param Request $request
      * @return Response

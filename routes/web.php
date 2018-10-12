@@ -14,7 +14,6 @@ use Symfony\Component\HttpKernel\Exception\NotFoundHttpException;
 | contains the "web" middleware group. Now create something great!
 |
 */
-
 Route::get('/', function () {
     if (View::exists('generated.index')) {
         return view('generated.index');

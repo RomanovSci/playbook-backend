@@ -1,7 +1,6 @@
 <?php
 
 return [
-
     /*
     |--------------------------------------------------------------------------
     | Default Broadcaster
@@ -14,7 +13,6 @@ return [
     | Supported: "pusher", "redis", "log", "null"
     |
     */
-
     'default' => env('BROADCAST_DRIVER', 'null'),
 
     /*
@@ -27,9 +25,7 @@ return [
     | each available type of connection are provided inside this array.
     |
     */
-
     'connections' => [
-
         'pusher' => [
             'driver' => 'pusher',
             'key' => env('PUSHER_APP_KEY'),
@@ -40,20 +36,15 @@ return [
                 'encrypted' => true,
             ],
         ],
-
         'redis' => [
             'driver' => 'redis',
             'connection' => 'default',
         ],
-
         'log' => [
             'driver' => 'log',
         ],
-
         'null' => [
             'driver' => 'null',
         ],
-
     ],
-
 ];
