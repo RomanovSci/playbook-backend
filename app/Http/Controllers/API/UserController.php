@@ -16,34 +16,6 @@ use Illuminate\Support\Facades\Validator;
  */
 class UserController extends Controller
 {
-    public $successStatus = 200;
-
-    /**
-     * Login api
-     *
-     * @param Request $request
-     * @return Response
-     */
-    public function login(Request $request){
-
-        if (Auth::attempt([
-            'email' => $request->get('email'),
-            'password' => $request->get('password')
-        ])) {
-            /**
-             * @var User $user
-             */
-            $user = Auth::user();
-            $success['token'] = $user->createToken('MyApp')->accessToken;
-
-            return response()->json([
-                'success' => $success
-            ], $this-> successStatus);
-        }
-
-        return response()->json(['error'=>'Unauthorised'], 401);
-    }
-
     /**
      * Register api
      *
@@ -75,6 +47,8 @@ class UserController extends Controller
         $success['token'] =  $user->createToken('MyApp')-> accessToken;
         $success['name'] =  $user->name;
 
-        return response()->json(['success'=>$success], $this-> successStatus);
+        return response()->json([
+            'success'=>$success
+        ]);
     }
 }
