@@ -3,6 +3,8 @@
 use Illuminate\Support\Facades\Schema;
 use Illuminate\Database\Schema\Blueprint;
 use Illuminate\Database\Migrations\Migration;
+use App\Models\Country;
+use App\Models\City;
 
 class CreateCitiesTable extends Migration
 {
@@ -17,6 +19,7 @@ class CreateCitiesTable extends Migration
             $table->increments('id');
             $table->integer('country_id', false, true);
             $table->string('name');
+            $table->string('origin_name');
             $table->timestamps();
             $table->softDeletes();
         });
@@ -26,6 +29,18 @@ class CreateCitiesTable extends Migration
                 ->references('id')
                 ->on('countries');
         });
+
+        $filename = resource_path('data/cities/ua.json');
+        $cities = json_decode(File::get($filename));
+        $uaCountryId = Country::where('code', 'UA')->first()->id;
+
+        foreach ($cities as $city) {
+            $_city = new City();
+            $_city->name = $city->name;
+            $_city->origin_name = $city->origin_name;
+            $_city->country_id = $uaCountryId;
+            $_city->save();
+        }
     }
 
     /**

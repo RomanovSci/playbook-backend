@@ -10,6 +10,7 @@ use Illuminate\Database\Eloquent\SoftDeletes;
  *
  * @package App\Models
  * @property string name
+ * @property string origin_name
  * @property integer country_id
  */
 class City extends Model
