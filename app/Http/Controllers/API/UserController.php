@@ -52,6 +52,7 @@ class UserController extends Controller
          * @var User $user
          */
         $user = User::create($input);
+        $user->assignRole(User::ROLE_USER);
 
         return response()->json([
             'success' => true,
