@@ -29,18 +29,6 @@ class CreateCitiesTable extends Migration
                 ->references('id')
                 ->on('countries');
         });
-
-        $filename = resource_path('data/cities/ua.json');
-        $cities = json_decode(File::get($filename));
-        $uaCountryId = Country::where('code', 'UA')->first()->id;
-
-        foreach ($cities as $city) {
-            $_city = new City();
-            $_city->name = $city->name;
-            $_city->origin_name = $city->origin_name;
-            $_city->country_id = $uaCountryId;
-            $_city->save();
-        }
     }
 
     /**
