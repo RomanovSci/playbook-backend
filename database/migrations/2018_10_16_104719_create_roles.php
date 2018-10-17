@@ -17,7 +17,7 @@ class CreateRoles extends Migration
         $roles = [
             User::ROLE_USER,
             User::ROLE_COACH,
-            User::ROLE_PLACE_ADMIN,
+            User::ROLE_PLAYGROUND_ADMIN,
             User::ROLE_ADMIN,
         ];
 
