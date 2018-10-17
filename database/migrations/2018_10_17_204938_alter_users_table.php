@@ -15,6 +15,8 @@ class AlterUsersTable extends Migration
     {
         Schema::table('users', function(Blueprint $table) {
             $table->dropColumn('remember_token');
+            $table->string('phone')->unique();
+            $table->timestamp('phone_verified_at')->nullable();
         });
     }
 
@@ -25,5 +27,10 @@ class AlterUsersTable extends Migration
      */
     public function down()
     {
+        Schema::table('users', function(Blueprint $table) {
+            $table->string('remember_token', 100);
+            $table->dropColumn('phone');
+            $table->dropColumn('phone_verified_at');
+        });
     }
 }
