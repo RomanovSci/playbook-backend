@@ -21,10 +21,7 @@ class UserController extends Controller
      *
      * @response {
      *      "success": true,
-     *      "data": {
-     *          "token": "Access token",
-     *          "email": "User email"
-     *      }
+     *      "token": "Access token"
      * }
      *
      * @param Request $request
@@ -33,8 +30,9 @@ class UserController extends Controller
     public function register(Request $request)
     {
         $validator = Validator::make($request->all(), [
-            'name' => 'required',
-            'email' => 'required|email',
+            'first_name' => 'required',
+            'last_name' => 'required',
+            'phone' => 'required|numeric|min:10',
             'password' => 'required',
             'c_password' => 'required|same:password',
         ]);
@@ -56,10 +54,7 @@ class UserController extends Controller
 
         return response()->json([
             'success' => true,
-            'data' => [
-                'token' => $user->createToken('MyApp')->accessToken,
-                'email' => $user->email,
-            ]
+            'token' => $user->createToken('MyApp')->accessToken,
         ]);
     }
 }
