@@ -5,6 +5,11 @@ namespace App\Console\Commands;
 use App\Models\User;
 use Illuminate\Console\Command;
 
+/**
+ * Class UserCreate
+ *
+ * @package App\Console\Commands
+ */
 class UserCreate extends Command
 {
     /**
@@ -28,21 +33,24 @@ class UserCreate extends Command
      */
     public function handle()
     {
+        $data = [
+            'first_name' => $this->ask('First name'),
+            'last_name' => $this->ask('Last name'),
+            'phone' => $this->ask('Phone'),
+            'password' => bcrypt($this->ask('Password')),
+            'role' => $this->choice('Role', [
+                User::ROLE_USER,
+                User::ROLE_COACH,
+                User::ROLE_ORGANIZATION_ADMIN,
+                User::ROLE_ADMIN,
+            ]),
+        ];
+
         /**
          * @var User $user
          */
-        $user = new User();
-        $user->first_name = $this->ask('First name');
-        $user->last_name = $this->ask('Last name');
-        $user->phone = $this->ask('Phone');
-        $user->password = bcrypt($this->ask('Password'));
-        $user->save();
-        $user->assignRole($this->choice('Role', [
-            User::ROLE_USER,
-            User::ROLE_COACH,
-            User::ROLE_PLAYGROUND_ADMIN,
-            User::ROLE_ADMIN,
-        ]));
+        $user = User::create($data);
+        $user->assignRole($data['role']);
 
         $this->info('Success!');
         return true;

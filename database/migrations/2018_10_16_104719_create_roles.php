@@ -15,10 +15,10 @@ class CreateRoles extends Migration
     public function up()
     {
         $roles = [
-            User::ROLE_USER,
-            User::ROLE_COACH,
-            User::ROLE_PLAYGROUND_ADMIN,
-            User::ROLE_ADMIN,
+            'user',
+            'coach',
+            'playground-admin',
+            'admin',
         ];
 
         foreach ($roles as $role) {

@@ -22,7 +22,7 @@ class User extends Authenticatable
 
     const ROLE_USER = 'user';
     const ROLE_COACH = 'coach';
-    const ROLE_PLAYGROUND_ADMIN = 'playground-admin';
+    const ROLE_ORGANIZATION_ADMIN = 'organization-admin';
     const ROLE_ADMIN = 'admin';
 
     /**

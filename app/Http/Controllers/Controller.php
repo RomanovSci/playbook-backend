@@ -10,4 +10,18 @@ use Illuminate\Foundation\Auth\Access\AuthorizesRequests;
 class Controller extends BaseController
 {
     use AuthorizesRequests, DispatchesJobs, ValidatesRequests;
+
+    /**
+     * Simple success response
+     *
+     * @param null $message
+     * @return \Illuminate\Http\JsonResponse
+     */
+    protected function success($message = null)
+    {
+        return response()->json([
+            'success' => true,
+            'message' => $message ?? 'Success',
+        ]);
+    }
 }

@@ -20,10 +20,6 @@ class PlaygroundController extends Controller
      */
     public function create(PlaygroundCreate $request)
     {
-        $fields = $request->all();
-
-        return response()->json([
-            'success' => true,
-        ]);
+        return $this->success();
     }
 }
