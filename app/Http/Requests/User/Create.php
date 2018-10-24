@@ -9,7 +9,7 @@ use App\Http\Requests\BaseFormRequest;
  *
  * @package App\Http\Requests\User
  */
-class CreateUser extends BaseFormRequest
+class Create extends BaseFormRequest
 {
     /**
      * Get the validation rules that apply to the request.

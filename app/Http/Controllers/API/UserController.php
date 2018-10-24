@@ -3,11 +3,10 @@
 namespace App\Http\Controllers\API;
 
 use App\Http\Controllers\Controller;
-use App\Http\Requests\User\CreateUser;
+use App\Http\Requests\User\Create as UserCreate;
+use App\Http\Requests\User\Create;
 use App\Models\User;
-use Illuminate\Http\Request;
 use Illuminate\Http\Response;
-use Illuminate\Support\Facades\Validator;
 
 /**
  * Class UserController
@@ -25,18 +24,18 @@ class UserController extends Controller
      *      "token": "Access token"
      * }
      *
-     * @param CreateUser $request
+     * @param Create $request
      * @return Response
      */
-    public function register(CreateUser $request)
+    public function register(UserCreate $request)
     {
-        $input = $request->all();
-        $input['password'] = bcrypt($input['password']);
+        $fields = $request->all();
+        $fields['password'] = bcrypt($fields['password']);
 
         /**
          * @var User $user
          */
-        $user = User::create($input);
+        $user = User::create($fields);
         $user->assignRole(User::ROLE_USER);
 
         return response()->json([
