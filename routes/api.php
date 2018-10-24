@@ -24,6 +24,6 @@ Route::middleware(['role:' . User::ROLE_ORGANIZATION_ADMIN . '|'. User::ROLE_ADM
 
     /** Playground */
     Route::prefix('playground')->group(function () {
-        Route::post('/create', 'API\PlaygroundController@create')->name('playground.create');
+        Route::post('/create/{organization}', 'API\PlaygroundController@create')->name('playground.create');
     });
 });

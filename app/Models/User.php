@@ -11,6 +11,7 @@ use Spatie\Permission\Traits\HasRoles;
  * Class User
  *
  * @package App\Models
+ * @property integer id
  * @property string first_name
  * @property string last_name
  * @property integer phone

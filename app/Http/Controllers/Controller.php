@@ -26,4 +26,17 @@ class Controller extends BaseController
             'data' => $data,
         ]);
     }
+
+    /**
+     * Simple forbidden response
+     *
+     * @param null $message
+     * @return \Illuminate\Http\JsonResponse
+     */
+    protected function forbidden($message = null)
+    {
+        return response()->json([
+            'message' => $message ?? 'Forbidden',
+        ], 403);
+    }
 }
