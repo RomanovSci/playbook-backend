@@ -25,7 +25,7 @@ class PlaygroundController extends Controller
         Organization $organization,
         PlaygroundCreateRequest $request
     ) {
-        if (!Auth::user()->can('createPlayground', $organization)) {
+        if (Auth::user()->cant('createPlayground', $organization)) {
             return $this->forbidden();
         }
 
