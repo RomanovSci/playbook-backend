@@ -15,8 +15,7 @@ use Illuminate\Support\Facades\Route;
 
 Route::post('/register', 'API\UserController@register')->name('user.register');
 
-Route::middleware(['role:playground-admin'])->group
-(function() {
+Route::middleware(['role:playground-admin|admin'])->group(function() {
     /** Playground */
     Route::prefix('playground')->group(function() {
         Route::post('/create', 'API\PlaygroundController@create')->name('playground.create');

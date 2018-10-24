@@ -30,13 +30,13 @@ class UserController extends Controller
      */
     public function register(CreateUser $request)
     {
-        $user = new User();
-        $user->first_name = $request->get('first_name');
-        $user->last_name = $request->get('last_name');
-        $user->phone = $request->get('phone');
-        $user->password = bcrypt($request->get('password'));
+        $input = $request->all();
+        $input['password'] = bcrypt($input['password']);
 
-        $user->save();
+        /**
+         * @var User $user
+         */
+        $user = User::create($input);
         $user->assignRole(User::ROLE_USER);
 
         return response()->json([
