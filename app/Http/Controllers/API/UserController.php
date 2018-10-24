@@ -3,6 +3,7 @@
 namespace App\Http\Controllers\API;
 
 use App\Http\Controllers\Controller;
+use App\Http\Requests\User\CreateUser;
 use App\Models\User;
 use Illuminate\Http\Request;
 use Illuminate\Http\Response;
@@ -24,32 +25,18 @@ class UserController extends Controller
      *      "token": "Access token"
      * }
      *
-     * @param Request $request
+     * @param CreateUser $request
      * @return Response
      */
-    public function register(Request $request)
+    public function register(CreateUser $request)
     {
-        $validator = Validator::make($request->all(), [
-            'first_name' => 'required',
-            'last_name' => 'required',
-            'phone' => 'required|numeric|min:10',
-            'password' => 'required',
-            'c_password' => 'required|same:password',
-        ]);
+        $user = new User();
+        $user->first_name = $request->get('first_name');
+        $user->last_name = $request->get('last_name');
+        $user->phone = $request->get('phone');
+        $user->password = bcrypt($request->get('password'));
 
-        if ($validator->fails()) {
-            return response()->json([
-                'error'=>$validator->errors()
-            ], 401);
-        }
-
-        $input = $request->all();
-        $input['password'] = bcrypt($input['password']);
-
-        /**
-         * @var User $user
-         */
-        $user = User::create($input);
+        $user->save();
         $user->assignRole(User::ROLE_USER);
 
         return response()->json([

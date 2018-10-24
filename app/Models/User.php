@@ -11,6 +11,10 @@ use Spatie\Permission\Traits\HasRoles;
  * Class User
  *
  * @package App\Models
+ * @property string first_name
+ * @property string last_name
+ * @property integer phone
+ * @property string password
  */
 class User extends Authenticatable
 {
