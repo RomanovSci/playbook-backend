@@ -3,7 +3,7 @@
 namespace App\Http\Controllers\API;
 
 use App\Http\Controllers\Controller;
-use App\Http\Requests\Playground\Create as PlaygroundCreate;
+use App\Http\Requests\Playground\Create as PlaygroundCreateRequest;
 
 /**
  * Class PlaygroundController
@@ -15,10 +15,10 @@ class PlaygroundController extends Controller
     /**
      * Create playground
      *
-     * @param PlaygroundCreate $request
+     * @param PlaygroundCreateRequest $request
      * @return string
      */
-    public function create(PlaygroundCreate $request)
+    public function create(PlaygroundCreateRequest $request)
     {
         return $this->success();
     }

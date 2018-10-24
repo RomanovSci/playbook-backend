@@ -18,7 +18,7 @@ class Create extends BaseFormRequest
     {
         return [
             'name' => 'required',
-            'owner_id' => 'required|exists:users,id',
+            'city_id' => 'required|numeric|exists:cities,id',
         ];
     }
 }

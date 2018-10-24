@@ -15,13 +15,15 @@ class Controller extends BaseController
      * Simple success response
      *
      * @param null $message
+     * @param array $data
      * @return \Illuminate\Http\JsonResponse
      */
-    protected function success($message = null)
+    protected function success($message = null, $data = [])
     {
         return response()->json([
             'success' => true,
             'message' => $message ?? 'Success',
+            'data' => $data,
         ]);
     }
 }

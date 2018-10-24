@@ -1,6 +1,7 @@
 <?php
 
 use Illuminate\Support\Facades\Route;
+use App\Models\User;
 
 /*
 |--------------------------------------------------------------------------
@@ -15,9 +16,14 @@ use Illuminate\Support\Facades\Route;
 
 Route::post('/register', 'API\UserController@register')->name('user.register');
 
-Route::middleware(['role:playground-admin|admin'])->group(function() {
+Route::middleware(['role:' . User::ROLE_ORGANIZATION_ADMIN . '|'. User::ROLE_ADMIN])->group(function () {
+    /** Organization */
+    Route::prefix('organization')->group(function () {
+        Route::post('/create', 'API\OrganizationController@create')->name('organization.create');
+    });
+
     /** Playground */
-    Route::prefix('playground')->group(function() {
+    Route::prefix('playground')->group(function () {
         Route::post('/create', 'API\PlaygroundController@create')->name('playground.create');
     });
 });

@@ -22,7 +22,7 @@ class Create extends BaseFormRequest
             'address' => 'required',
             'opening_time' => 'required|date',
             'closing_time' => 'required|date',
-            'type_id' => 'required|exists:playground_types,id',
+            'type_id' => 'required|numeric|exists:playground_types,id',
         ];
     }
 }

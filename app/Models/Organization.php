@@ -3,17 +3,23 @@
 namespace App\Models;
 
 use Illuminate\Database\Eloquent\Model;
+use Illuminate\Database\Eloquent\SoftDeletes;
 
 /**
  * Class Organization
  *
  * @package App\Models
+ * @property string name
+ * @property integer owner_id
+ * @property integer city_id
  */
 class Organization extends Model
 {
-    protected $table = 'organization';
+    use SoftDeletes;
+
+    protected $table = 'organizations';
 
     protected $fillable = [
-        'name', 'owner_id',
+        'name', 'owner_id', 'city_id',
     ];
 }

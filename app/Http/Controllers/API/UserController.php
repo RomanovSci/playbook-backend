@@ -3,7 +3,7 @@
 namespace App\Http\Controllers\API;
 
 use App\Http\Controllers\Controller;
-use App\Http\Requests\User\Create as UserCreate;
+use App\Http\Requests\User\Create as UserCreateRequest;
 use App\Http\Requests\User\Create;
 use App\Models\User;
 use Illuminate\Http\Response;
@@ -24,10 +24,10 @@ class UserController extends Controller
      *      "token": "Access token"
      * }
      *
-     * @param Create $request
+     * @param UserCreateRequest $request
      * @return Response
      */
-    public function register(UserCreate $request)
+    public function register(UserCreateRequest $request)
     {
         $fields = $request->all();
         $fields['password'] = bcrypt($fields['password']);
