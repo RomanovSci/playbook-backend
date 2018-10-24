@@ -9,6 +9,7 @@ use Illuminate\Database\Eloquent\SoftDeletes;
  * Class PlaygroundType
  *
  * @package App\Models
+ * @property string type
  */
 class PlaygroundType extends Model
 {
