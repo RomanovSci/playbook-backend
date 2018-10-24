@@ -5,8 +5,6 @@ namespace App\Http\Controllers\API;
 use App\Http\Controllers\Controller;
 use App\Http\Requests\Playground\Create as PlaygroundCreateRequest;
 use App\Models\Organization;
-use App\Models\Playground;
-use App\Models\User;
 use Illuminate\Support\Facades\Auth;
 
 /**
