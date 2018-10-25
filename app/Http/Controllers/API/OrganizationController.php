@@ -31,6 +31,6 @@ class OrganizationController extends Controller
             ['owner_id' => Auth::user()->id]
         ));
 
-        return $this->success(null, $organization->toArray());
+        return $this->success($organization->toArray());
     }
 }

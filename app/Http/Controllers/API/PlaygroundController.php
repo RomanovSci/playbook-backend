@@ -6,6 +6,7 @@ use App\Http\Controllers\Controller;
 use App\Http\Requests\Playground\Create as PlaygroundCreateRequest;
 use App\Models\Organization;
 use App\Models\Playground;
+use App\Repositories\PlaygroundRepository;
 use Illuminate\Support\Facades\Auth;
 
 /**
@@ -15,6 +16,18 @@ use Illuminate\Support\Facades\Auth;
  */
 class PlaygroundController extends Controller
 {
+    /**
+     * Get all playgrounds
+     *
+     * @return \Illuminate\Http\JsonResponse
+     */
+    public function all()
+    {
+        return $this->success(
+            PlaygroundRepository::getAll()
+        );
+    }
+
     /**
      * Create playground
      *
@@ -38,6 +51,6 @@ class PlaygroundController extends Controller
             ['organization_id' => $organization->id]
         ));
 
-        return $this->success(null, $playground->toArray());
+        return $this->success($playground->toArray());
     }
 }

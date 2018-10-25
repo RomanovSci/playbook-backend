@@ -21,11 +21,30 @@ class Playground extends Model
 {
     use SoftDeletes;
 
+    /**
+     * @var string
+     */
     protected $table = 'playgrounds';
 
+    /**
+     * @var array
+     */
     protected $fillable = [
         'name', 'description', 'address',
         'opening_time', 'closing_time', 'type_id',
         'organization_id',
     ];
+
+    /**
+     * @var array
+     */
+    protected $with = ['prices'];
+
+    /**
+     * @return \Illuminate\Database\Eloquent\Relations\HasMany
+     */
+    public function prices()
+    {
+        return $this->hasMany(PlaygroundRentPrice::class);
+    }
 }
