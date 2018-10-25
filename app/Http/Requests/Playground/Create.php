@@ -20,8 +20,8 @@ class Create extends BaseFormRequest
             'name' => 'required',
             'description' => 'required',
             'address' => 'required',
-            'opening_time' => 'required|date',
-            'closing_time' => 'required|date',
+            'opening_time' => 'required|date_format:H:i:s',
+            'closing_time' => 'required|date_format:H:i:s',
             'type_id' => 'required|numeric|exists:playground_types,id',
         ];
     }
