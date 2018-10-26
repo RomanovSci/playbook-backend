@@ -16,6 +16,8 @@ use Illuminate\Database\Eloquent\SoftDeletes;
  * @property \DateTime closing_time
  * @property integer type_id
  * @property integer organization_id
+ *
+ * @property Organization organization
  */
 class Playground extends Model
 {
@@ -41,10 +43,22 @@ class Playground extends Model
     protected $with = ['prices'];
 
     /**
+     * Get prices
+     *
      * @return \Illuminate\Database\Eloquent\Relations\HasMany
      */
     public function prices()
     {
         return $this->hasMany(PlaygroundRentPrice::class);
+    }
+
+    /**
+     * Get organization
+     *
+     * @return \Illuminate\Database\Eloquent\Relations\BelongsTo
+     */
+    public function organization()
+    {
+        return $this->belongsTo(Organization::class);
     }
 }

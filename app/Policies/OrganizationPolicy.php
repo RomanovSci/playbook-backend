@@ -4,7 +4,6 @@ namespace App\Policies;
 
 use App\Models\Organization;
 use App\Models\User;
-use Illuminate\Auth\Access\HandlesAuthorization;
 
 /**
  * Class OrganizationPolicy
@@ -13,8 +12,6 @@ use Illuminate\Auth\Access\HandlesAuthorization;
  */
 class OrganizationPolicy
 {
-    use HandlesAuthorization;
-
     /**
      * Determine if the playground can be created by user
      *
