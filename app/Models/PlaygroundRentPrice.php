@@ -20,6 +20,14 @@ class PlaygroundRentPrice extends Model
     protected $table = 'playground_rent_prices';
 
     /**
+     * @var array
+     */
+    protected $fillable = [
+        'playground_id', 'start_time', 'end_time',
+        'price_per_hour', 'currency',
+    ];
+
+    /**
      * Get playground
      *
      * @return \Illuminate\Database\Eloquent\Relations\BelongsTo

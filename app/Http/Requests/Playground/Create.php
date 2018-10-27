@@ -7,7 +7,7 @@ use App\Http\Requests\BaseFormRequest;
 /**
  * Class Create
  *
- * @package App\Http\Requests
+ * @package App\Http\Requests\Playground
  */
 class Create extends BaseFormRequest
 {

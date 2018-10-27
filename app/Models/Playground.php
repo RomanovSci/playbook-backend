@@ -40,7 +40,17 @@ class Playground extends Model
     /**
      * @var array
      */
-    protected $with = ['prices'];
+    protected $with = ['prices', 'type'];
+
+    /**
+     * Get type
+     *
+     * @return \Illuminate\Database\Eloquent\Relations\BelongsTo
+     */
+    public function type()
+    {
+        return $this->belongsTo(PlaygroundType::class);
+    }
 
     /**
      * Get prices
