@@ -29,9 +29,9 @@ Route::middleware(['role:' . User::ROLE_ORGANIZATION_ADMIN . '|'. User::ROLE_ADM
             ->name('playground.create');
     });
 
-    /** Playground rent price */
-    Route::prefix('playground-rent-price')->group(function () {
-        Route::post('/create/{playground}', 'API\PlaygroundRentPriceController@create')
-            ->name('playground-rent-price.create');
+    /** Playground schedule */
+    Route::prefix('playground-schedule')->group(function () {
+        Route::post('/create/{playground}', 'API\PlaygroundScheduleController@create')
+            ->name('playground-schedule.create');
     });
 });

@@ -8,14 +8,16 @@ use App\Models\User;
 class PlaygroundPolicy
 {
     /**
-     * Determine if the playground rent price can be created by user
+     * Determine if the playground schedule can be created by user
      *
      * @param User $user
      * @param Playground $playground
      * @return bool
      */
-    public function createRentPrice(User $user, Playground $playground)
-    {
+    public function createSchedule(
+        User $user,
+        Playground $playground
+    ): bool {
         return $user->id === $playground->organization->owner_id;
     }
 }

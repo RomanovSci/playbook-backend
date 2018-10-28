@@ -59,7 +59,7 @@ class Playground extends Model
      */
     public function prices()
     {
-        return $this->hasMany(PlaygroundRentPrice::class);
+        return $this->hasMany(PlaygroundSchedule::class);
     }
 
     /**

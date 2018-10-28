@@ -6,18 +6,18 @@ use Illuminate\Database\Eloquent\Model;
 use Illuminate\Database\Eloquent\SoftDeletes;
 
 /**
- * Class PlaygroundRentPrice
+ * Class PlaygroundSchedule
  *
  * @package App
  */
-class PlaygroundRentPrice extends Model
+class PlaygroundSchedule extends Model
 {
     use SoftDeletes;
 
     /**
      * @var string
      */
-    protected $table = 'playground_rent_prices';
+    protected $table = 'playgrounds_schedules';
 
     /**
      * @var array

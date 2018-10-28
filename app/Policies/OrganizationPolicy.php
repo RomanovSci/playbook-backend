@@ -19,8 +19,10 @@ class OrganizationPolicy
      * @param Organization $organization
      * @return bool
      */
-    public function createPlayground(User $user, Organization $organization)
-    {
+    public function createPlayground(
+        User $user,
+        Organization $organization
+    ): bool {
         return $user->id === $organization->owner_id;
     }
 }

@@ -1,13 +1,13 @@
 <?php
 
-namespace App\Http\Requests\PlaygroundRentPrice;
+namespace App\Http\Requests\PlaygroundSchedule;
 
 use App\Http\Requests\BaseFormRequest;
 
 /**
  * Class Create
  *
- * @package App\Http\Requests\PlaygroundRentPrice
+ * @package App\Http\Requests\PlaygroundSchedule
  */
 class Create extends BaseFormRequest
 {
