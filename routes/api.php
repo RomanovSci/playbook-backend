@@ -16,7 +16,7 @@ use App\Models\User;
 Route::post('/register', 'API\UserController@register')->name('user.register');
 
 /**
- * Organization routes
+ * Organization admin routes
  */
 Route::middleware(['role:' . User::ROLE_ADMIN . '|'. User::ROLE_ORGANIZATION_ADMIN])->group(function () {
     /** Organization */

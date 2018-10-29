@@ -26,12 +26,15 @@ class ScheduleController extends Controller
     public function createForTrainer(
         ScheduleCreateFormRequest $request
     ) {
+        $data = $request->all();
+        $data['price_per_hour'] = money($data['price_per_hour'], $data['currency'])->getAmount();
+
         /**
          * @var User $user
          * @var Schedule $trainerSchedule
          */
         $user = Auth::user();
-        $trainerSchedule = Schedule::create($request->all());
+        $trainerSchedule = Schedule::create($data);
         $trainerSchedule->users()->save($user);
 
         return $this->success($trainerSchedule->toArray());
@@ -52,8 +55,11 @@ class ScheduleController extends Controller
             return $this->forbidden();
         }
 
+        $data = $request->all();
+        $data['price_per_hour'] = money($data['price_per_hour'], $data['currency'])->getAmount();
+
         /** @var Schedule $playgroundSchedule */
-        $playgroundSchedule = Schedule::create($request->all());
+        $playgroundSchedule = Schedule::create($data);
         $playgroundSchedule->playgrounds()->save($playground);
 
         return $this->success($playgroundSchedule->toArray());
