@@ -14,7 +14,11 @@ use App\Models\User;
 |
 */
 Route::post('/register', 'API\UserController@register')->name('user.register');
-Route::middleware(['role:' . User::ROLE_ORGANIZATION_ADMIN . '|'. User::ROLE_ADMIN])->group(function () {
+
+/**
+ * Organization routes
+ */
+Route::middleware(['role:' . User::ROLE_ADMIN . '|'. User::ROLE_ORGANIZATION_ADMIN])->group(function () {
     /** Organization */
     Route::prefix('organization')->group(function () {
         Route::post('/create', 'API\OrganizationController@create')
@@ -29,9 +33,20 @@ Route::middleware(['role:' . User::ROLE_ORGANIZATION_ADMIN . '|'. User::ROLE_ADM
             ->name('playground.create');
     });
 
-    /** Playground schedule */
-    Route::prefix('playground-schedule')->group(function () {
-        Route::post('/create/{playground}', 'API\PlaygroundScheduleController@create')
-            ->name('playground-schedule.create');
+    /** Schedule */
+    Route::prefix('schedule')->group(function () {
+        Route::post('/create-for-playground/{playground}', 'API\ScheduleController@createForPlayground')
+            ->name('schedule.createForPlayground');
+    });
+});
+
+/**
+ * Trainer routes
+ */
+Route::middleware(['role:' . User::ROLE_ADMIN . '|'.  User::ROLE_TRAINER])->group(function () {
+    /** Schedule */
+    Route::prefix('schedule')->group(function () {
+        Route::post('/create-for-trainer', 'API\ScheduleController@createForTrainer')
+            ->name('schedule.createForTrainer');
     });
 });

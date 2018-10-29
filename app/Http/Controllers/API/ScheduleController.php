@@ -5,20 +5,46 @@ namespace App\Http\Controllers\API;
 use App\Http\Controllers\Controller;
 use App\Models\Playground;
 use App\Models\Schedule;
+use App\Models\User;
 use Illuminate\Http\JsonResponse;
 use Illuminate\Support\Facades\Auth;
 use App\Http\Requests\Schedule\ScheduleCreateFormRequest;
 
-class PlaygroundScheduleController extends Controller
+/**
+ * Class ScheduleController
+ *
+ * @package App\Http\Controllers\API
+ */
+class ScheduleController extends Controller
 {
     /**
-     * Create playground pricing
+     * Create trainer schedule
+     *
+     * @param ScheduleCreateFormRequest $request
+     * @return JsonResponse
+     */
+    public function createForTrainer(
+        ScheduleCreateFormRequest $request
+    ) {
+        /**
+         * @var User $user
+         * @var Schedule $trainerSchedule
+         */
+        $user = Auth::user();
+        $trainerSchedule = Schedule::create($request->all());
+        $trainerSchedule->users()->save($user);
+
+        return $this->success($trainerSchedule->toArray());
+    }
+
+    /**
+     * Create playground schedule
      *
      * @param Playground $playground
      * @param ScheduleCreateFormRequest $request
      * @return JsonResponse
      */
-    public function create(
+    public function createForPlayground(
         Playground $playground,
         ScheduleCreateFormRequest $request
     ) {
@@ -26,9 +52,7 @@ class PlaygroundScheduleController extends Controller
             return $this->forbidden();
         }
 
-        /**
-         * @var Schedule $playgroundSchedule
-         */
+        /** @var Schedule $playgroundSchedule */
         $playgroundSchedule = Schedule::create($request->all());
         $playgroundSchedule->playgrounds()->save($playground);
 

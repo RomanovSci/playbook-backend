@@ -49,7 +49,7 @@ class Schedule extends Model
     public function users()
     {
         return $this->morphedByMany(
-            Playground::class,
+            User::class,
             'entity',
             'schedules_to_entities'
         );
