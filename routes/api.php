@@ -49,4 +49,10 @@ Route::middleware(['role:' . User::ROLE_ADMIN . '|'.  User::ROLE_TRAINER])->grou
         Route::post('/create-for-trainer', 'API\ScheduleController@createForTrainer')
             ->name('schedule.createForTrainer');
     });
+
+    /** Trainer info */
+    Route::prefix('trainer-info')->group(function () {
+        Route::post('/create', 'API\TrainerInfoController@create')
+            ->name('trainerInfo.create');
+    });
 });

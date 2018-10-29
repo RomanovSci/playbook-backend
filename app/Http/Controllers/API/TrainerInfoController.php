@@ -4,6 +4,8 @@ namespace App\Http\Controllers\API;
 
 use App\Http\Controllers\Controller;
 use App\Http\Requests\TrainerInfo\TrainerInfoFormRequest;
+use App\Models\TrainerInfo;
+use Illuminate\Support\Facades\Auth;
 
 /**
  * Class TrainerInfoController
@@ -20,6 +22,12 @@ class TrainerInfoController extends Controller
      */
     public function create(TrainerInfoFormRequest $request)
     {
-        return $this->success();
+        /**
+         * @var TrainerInfo $trainerInfo
+         */
+        $trainerInfo = TrainerInfo::create(array_merge($request->all(), [
+            'user_id' => Auth::user()->id,
+        ]));
+        return $this->success($trainerInfo->toArray());
     }
 }

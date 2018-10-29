@@ -16,7 +16,6 @@ class TrainerInfoFormRequest extends BaseFormRequest
     public function rules()
     {
         return [
-            'user_id' => 'required|numeric|exists:users,id',
             'about' => 'string',
             'min_price' => 'required|numeric',
             'max_price' => 'required|numeric|gte:min_price',
