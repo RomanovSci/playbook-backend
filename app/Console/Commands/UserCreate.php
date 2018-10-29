@@ -40,7 +40,7 @@ class UserCreate extends Command
             'password' => bcrypt($this->ask('Password')),
             'role' => $this->choice('Role', [
                 User::ROLE_USER,
-                User::ROLE_COACH,
+                User::ROLE_TRAINER,
                 User::ROLE_ORGANIZATION_ADMIN,
                 User::ROLE_ADMIN,
             ]),

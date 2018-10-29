@@ -22,7 +22,7 @@ class User extends Authenticatable
     use Notifiable, HasApiTokens, HasRoles;
 
     const ROLE_USER = 'user';
-    const ROLE_COACH = 'coach';
+    const ROLE_TRAINER = 'trainer';
     const ROLE_ORGANIZATION_ADMIN = 'organization-admin';
     const ROLE_ADMIN = 'admin';
 
