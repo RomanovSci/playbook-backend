@@ -23,17 +23,7 @@ class PlaygroundSchedule extends Model
      * @var array
      */
     protected $fillable = [
-        'playground_id', 'start_time', 'end_time',
+        'start_time', 'end_time',
         'price_per_hour', 'currency',
     ];
-
-    /**
-     * Get playground
-     *
-     * @return \Illuminate\Database\Eloquent\Relations\BelongsTo
-     */
-    public function playground()
-    {
-        return $this->belongsTo(Playground::class);
-    }
 }

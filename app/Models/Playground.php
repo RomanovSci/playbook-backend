@@ -40,7 +40,7 @@ class Playground extends Model
     /**
      * @var array
      */
-    protected $with = ['prices', 'type'];
+    protected $with = ['type'];
 
     /**
      * Get type
@@ -50,16 +50,6 @@ class Playground extends Model
     public function type()
     {
         return $this->belongsTo(PlaygroundType::class);
-    }
-
-    /**
-     * Get prices
-     *
-     * @return \Illuminate\Database\Eloquent\Relations\HasMany
-     */
-    public function prices()
-    {
-        return $this->hasMany(PlaygroundSchedule::class);
     }
 
     /**
