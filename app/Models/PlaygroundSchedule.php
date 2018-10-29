@@ -17,7 +17,7 @@ class PlaygroundSchedule extends Model
     /**
      * @var string
      */
-    protected $table = 'playgrounds_schedules';
+    protected $table = 'schedules';
 
     /**
      * @var array

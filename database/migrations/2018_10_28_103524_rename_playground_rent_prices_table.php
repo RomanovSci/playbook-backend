@@ -4,7 +4,7 @@ use Illuminate\Support\Facades\Schema;
 use Illuminate\Database\Schema\Blueprint;
 use Illuminate\Database\Migrations\Migration;
 
-class RenamePalygroundTypesTable extends Migration
+class RenamePlaygroundRentPricesTable extends Migration
 {
     /**
      * Run the migrations.
@@ -13,7 +13,7 @@ class RenamePalygroundTypesTable extends Migration
      */
     public function up()
     {
-        Schema::rename('playground_types', 'playgrounds_types');
+        Schema::rename('playground_rent_prices', 'playgrounds_schedules');
     }
 
     /**
@@ -23,5 +23,6 @@ class RenamePalygroundTypesTable extends Migration
      */
     public function down()
     {
+        Schema::rename( 'playgrounds_schedules', 'playground_rent_prices');
     }
 }
