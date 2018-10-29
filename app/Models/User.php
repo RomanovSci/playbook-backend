@@ -53,4 +53,18 @@ class User extends Authenticatable
     {
         return $this->where('phone', $username)->first();
     }
+
+    /**
+     * Get schedules
+     *
+     * @return \Illuminate\Database\Eloquent\Relations\MorphToMany
+     */
+    public function schedules()
+    {
+        return $this->morphToMany(
+            Schedule::class,
+            'entity',
+            'schedules_to_entities'
+        );
+    }
 }

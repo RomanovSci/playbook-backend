@@ -40,7 +40,11 @@ class Playground extends Model
     /**
      * @var array
      */
-    protected $with = ['type'];
+    protected $with = [
+        'organization',
+        'type',
+        'schedules',
+    ];
 
     /**
      * Get type
@@ -60,5 +64,19 @@ class Playground extends Model
     public function organization()
     {
         return $this->belongsTo(Organization::class);
+    }
+
+    /**
+     * Get schedule
+     *
+     * @return \Illuminate\Database\Eloquent\Relations\MorphToMany
+     */
+    public function schedules()
+    {
+        return $this->morphToMany(
+            Schedule::class,
+            'entity',
+            'schedules_to_entities'
+        );
     }
 }

@@ -4,7 +4,7 @@ namespace App\Http\Controllers\API;
 
 use App\Http\Controllers\Controller;
 use App\Models\Playground;
-use App\Models\PlaygroundSchedule;
+use App\Models\Schedule;
 use Illuminate\Http\JsonResponse;
 use Illuminate\Support\Facades\Auth;
 use App\Http\Requests\PlaygroundSchedule\Create as PlaygroundScheduleCreateRequest;
@@ -27,11 +27,10 @@ class PlaygroundScheduleController extends Controller
         }
 
         /**
-         * @var PlaygroundSchedule $playgroundSchedule
+         * @var Schedule $playgroundSchedule
          */
-        $playgroundSchedule = PlaygroundSchedule::create(
-            $request->all()
-        );
+        $playgroundSchedule = Schedule::create($request->all());
+        $playgroundSchedule->playgrounds()->save($playground);
 
         return $this->success($playgroundSchedule->toArray());
     }
