@@ -1,6 +1,6 @@
 <?php
 
-namespace App\Http\Requests\PlaygroundSchedule;
+namespace App\Http\Requests\Schedule;
 
 use App\Http\Requests\BaseFormRequest;
 
@@ -9,7 +9,7 @@ use App\Http\Requests\BaseFormRequest;
  *
  * @package App\Http\Requests\PlaygroundSchedule
  */
-class Create extends BaseFormRequest
+class ScheduleCreateFormRequest extends BaseFormRequest
 {
     /**
      * @return array

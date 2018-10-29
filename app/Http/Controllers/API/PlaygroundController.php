@@ -3,7 +3,7 @@
 namespace App\Http\Controllers\API;
 
 use App\Http\Controllers\Controller;
-use App\Http\Requests\Playground\Create as PlaygroundCreateRequest;
+use App\Http\Requests\Playground\PlaygroundCreateFormRequest;
 use App\Models\Organization;
 use App\Models\Playground;
 use App\Repositories\PlaygroundRepository;
@@ -32,12 +32,12 @@ class PlaygroundController extends Controller
      * Create playground
      *
      * @param Organization $organization
-     * @param PlaygroundCreateRequest $request
+     * @param PlaygroundCreateFormRequest $request
      * @return string
      */
     public function create(
         Organization $organization,
-        PlaygroundCreateRequest $request
+        PlaygroundCreateFormRequest $request
     ) {
         if (Auth::user()->cant('createPlayground', $organization)) {
             return $this->forbidden();

@@ -7,7 +7,7 @@ use App\Models\Playground;
 use App\Models\Schedule;
 use Illuminate\Http\JsonResponse;
 use Illuminate\Support\Facades\Auth;
-use App\Http\Requests\PlaygroundSchedule\Create as PlaygroundScheduleCreateRequest;
+use App\Http\Requests\Schedule\ScheduleCreateFormRequest;
 
 class PlaygroundScheduleController extends Controller
 {
@@ -15,12 +15,12 @@ class PlaygroundScheduleController extends Controller
      * Create playground pricing
      *
      * @param Playground $playground
-     * @param PlaygroundScheduleCreateRequest $request
+     * @param ScheduleCreateFormRequest $request
      * @return JsonResponse
      */
     public function create(
         Playground $playground,
-        PlaygroundScheduleCreateRequest $request
+        ScheduleCreateFormRequest $request
     ) {
         if (Auth::user()->cant('createSchedule', $playground)) {
             return $this->forbidden();

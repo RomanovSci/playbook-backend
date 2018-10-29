@@ -9,7 +9,7 @@ use App\Http\Requests\BaseFormRequest;
  *
  * @package App\Http\Requests\Organization
  */
-class Create extends BaseFormRequest
+class OrganizationCreateFormRequest extends BaseFormRequest
 {
     /**
      * @return array

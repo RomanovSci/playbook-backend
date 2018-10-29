@@ -9,7 +9,7 @@ use App\Http\Requests\BaseFormRequest;
  *
  * @package App\Http\Requests\Playground
  */
-class Create extends BaseFormRequest
+class PlaygroundCreateFormRequest extends BaseFormRequest
 {
     /**
      * @return array
