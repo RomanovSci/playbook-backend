@@ -5,26 +5,59 @@ namespace App\Http\Controllers\API;
 use App\Http\Controllers\Controller;
 use App\Http\Requests\User\UserCreateFormRequest;
 use App\Models\User;
+use Illuminate\Http\JsonResponse;
 use Illuminate\Http\Response;
 
 /**
  * Class UserController
  *
  * @package App\Http\Controllers\API
- * @resource User
  */
 class UserController extends Controller
 {
     /**
-     * Register new user
-     *
-     * @response {
-     *      "success": true,
-     *      "token": "Access token"
-     * }
-     *
      * @param UserCreateFormRequest $request
-     * @return Response
+     * @return JsonResponse
+     *
+     * @OA\Post(
+     *      path="/api/register",
+     *      tags={"User"},
+     *      summary="Register new user",
+     *      @OA\RequestBody(
+     *          @OA\MediaType(
+     *              mediaType="application/json",
+     *              @OA\Schema(
+     *                  example={
+     *                      "first_name": "Roman",
+     *                      "last_name": "Bylbas",
+     *                      "phone": "380501234567",
+     *                      "password": "iampassword",
+     *                      "c_password": "iampassword"
+     *                  }
+     *              )
+     *         )
+     *     ),
+     *      @OA\Response(
+     *          response="200",
+     *          description="Successful registration",
+     *          @OA\MediaType(
+     *              mediaType="application/json",
+     *              @OA\Schema(
+     *                  example={
+     *                      "success": true,
+     *                      "message": "Success",
+     *                      "data": {
+     *                          "token": "Bearer token"
+     *                      }
+     *                  }
+     *              )
+     *         )
+     *      ),
+     *      @OA\Response(
+     *          response="422",
+     *          description="Invalid parameters"
+     *      )
+     * )
      */
     public function register(UserCreateFormRequest $request)
     {
@@ -37,8 +70,7 @@ class UserController extends Controller
         $user = User::create($fields);
         $user->assignRole(User::ROLE_USER);
 
-        return response()->json([
-            'success' => true,
+        return $this->success([
             'token' => $user->createToken('MyApp')->accessToken,
         ]);
     }
