@@ -13,13 +13,62 @@ use Illuminate\Database\Eloquent\SoftDeletes;
  * @property string name
  * @property integer owner_id
  * @property integer city_id
+ *
+ *
+ * @OA\Schema(
+ *      schema="Organization",
+ *      required={
+ *          "id",
+ *          "owner_id",
+ *          "name",
+ *          "city_id"
+ *      },
+ *      @OA\Property(
+ *          property="id",
+ *          type="integer"
+ *      ),
+ *      @OA\Property(
+ *          property="owner_id",
+ *          type="integer"
+ *      ),
+ *      @OA\Property(
+ *          property="name",
+ *          type="string"
+ *      ),
+ *      @OA\Property(
+ *          property="city_id",
+ *          type="integer",
+ *          format="int32"
+ *     ),
+ *     @OA\Property(
+ *          property="created_at",
+ *          type="integer",
+ *          format="int32"
+ *     ),
+ *     @OA\Property(
+ *          property="updated_at",
+ *          type="integer",
+ *          format="int32"
+ *     ),
+ *     @OA\Property(
+ *          property="deleted_at",
+ *          type="integer",
+ *          format="int32"
+ *     )
+ * )
  */
 class Organization extends Model
 {
     use SoftDeletes;
 
+    /**
+     * @var string
+     */
     protected $table = 'organizations';
 
+    /**
+     * @var array
+     */
     protected $fillable = [
         'name', 'owner_id', 'city_id',
     ];

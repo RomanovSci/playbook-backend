@@ -16,10 +16,41 @@ use Illuminate\Support\Facades\Auth;
 class OrganizationController extends Controller
 {
     /**
-     * Create organization
-     *
      * @param OrganizationCreateFormRequest $request
      * @return JsonResponse
+     *
+     * @OA\Post(
+     *      path="/api/organization/create",
+     *      tags={"Organization"},
+     *      summary="Create organization",
+     *      @OA\RequestBody(
+     *          @OA\MediaType(
+     *              mediaType="application/json",
+     *              @OA\Schema(
+     *                  example={
+     *                      "name": "ISport organization",
+     *                      "city_id": 1,
+     *                  }
+     *              )
+     *          )
+     *      ),
+     *      @SWG\Response(
+     *          response=200,
+     *          description="Example extended response",
+     *          ref="$/responses/Json",
+     *          @SWG\Schema(
+     *              @SWG\Property(
+     *                  property="data",
+     *                  ref="#/components/schemas/Organization"
+     *              )
+     *          )
+     *      ),
+     *      @OA\Response(
+     *          response="422",
+     *          description="Invalid parameters"
+     *      ),
+     *     security={{"Bearer":{}}}
+     * )
      */
     public function create(OrganizationCreateFormRequest $request)
     {
