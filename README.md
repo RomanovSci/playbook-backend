@@ -16,7 +16,7 @@
 13. Generate api doc files: `php artisan api:generate --routePrefix="api/*" --noPostmanCollection`
 
 ### Commands
-1. Update doc: `php artisan api:update`
+1. Update doc: `php artisan l5-swagger:generate`
 2. Enter to container: `cd docker && docker-compose exec workspace bash`
 3. Run tests: `php vendor/bin/phpunit`
 4. Run sniffer: `php vendor/bin/phpcs ./app --standard=PSR2`
