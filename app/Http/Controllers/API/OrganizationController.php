@@ -34,16 +34,13 @@ class OrganizationController extends Controller
      *              )
      *          )
      *      ),
-     *      @SWG\Response(
-     *          response=200,
-     *          description="Example extended response",
-     *          ref="$/responses/Json",
-     *          @SWG\Schema(
-     *              @SWG\Property(
-     *                  property="data",
-     *                  ref="#/components/schemas/Organization"
-     *              )
-     *          )
+     *      @OA\Response(
+     *          response="200",
+     *          description="Successful registration",
+     *          @OA\MediaType(
+     *              mediaType="application/json",
+     *              @OA\Schema(ref="#/components/schemas/Organization")
+     *         )
      *      ),
      *      @OA\Response(
      *          response="422",

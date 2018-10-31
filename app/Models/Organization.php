@@ -14,7 +14,6 @@ use Illuminate\Database\Eloquent\SoftDeletes;
  * @property integer owner_id
  * @property integer city_id
  *
- *
  * @OA\Schema(
  *      schema="Organization",
  *      required={

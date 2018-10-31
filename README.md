@@ -20,3 +20,6 @@
 2. Enter to container: `cd docker && docker-compose exec workspace bash`
 3. Run tests: `php vendor/bin/phpunit`
 4. Run sniffer: `php vendor/bin/phpcs ./app --standard=PSR2`
+
+### Links
+1. [Swagger specification](https://swagger.io/docs/specification/about/)
