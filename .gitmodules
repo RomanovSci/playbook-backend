@@ -1,6 +1,3 @@
 [submodule "frontend"]
 	path = resources/frontend
 	url = https://gitlab.com/vladka223/ISport.git
-[submodule "docker"]
-	path = docker
-	url = git@github.com:RomanovSci/laradock.git
