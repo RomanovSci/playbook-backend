@@ -15,7 +15,7 @@
 12. Publish money config: `php artisan vendor:publish --tag=money`
 13. Generate api doc files: `php artisan api:generate --routePrefix="api/*" --noPostmanCollection`
 
-### Commands:
+### Commands
 1. Update doc: `php artisan api:update`
 2. Enter to container: `cd docker && docker-compose exec workspace bash`
 3. Run tests: `php vendor/bin/phpunit`
