@@ -8,13 +8,14 @@
 * Install docker: `sudo snap install docker` 
 * Build containers from docker folder: `docker-compose build nginx postgres`
 * Run container from docker folder: `docker-compose up -d nginx postgres`
-* Build frontend from workspace container: `compile-fronetnd.sh`
-* Setup db connection in `PROJECT_PATH/.env` file
-* Generate app keys: `php PROJECT_PATH/artisan key:generate`
-* Apply migrations in workspace container
-* Install passport: `php artisan passport:install`
-* Publish money config: `php artisan vendor:publish --tag=money`
-* Generate api doc: `php artisan l5-swagger:generate`
+* **[In container]** Install dependencies `composer install`
+* **[In container]** Build frontend from workspace container: `compile-fronetnd.sh`
+* **[In container]** Setup db connection in `PROJECT_PATH/.env` file
+* **[In container]** Generate app keys: `php PROJECT_PATH/artisan key:generate`
+* **[In container]** Apply migrations `php artisan migrate`
+* **[In container]** Install passport: `php artisan passport:install`
+* **[In container]** Publish money config: `php artisan vendor:publish --tag=money`
+* **[In container]** Generate api doc: `php artisan l5-swagger:generate`
 
 ### Commands
 * Update doc: `php artisan l5-swagger:generate`
