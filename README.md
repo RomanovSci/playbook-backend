@@ -5,8 +5,7 @@
 * Update git submodules: `git submodule update`
 * Create app env file: `cp PROJECT_PATH/.env.example PROJECT_PATH/.env`
 * Create container env file: `cp PROJECT_PATH/docker/env-example PROJECT_PATH/docker/.env`
-* Install docker `sudo apt install docker.io`
-* [Install docker compose](https://github.com/docker/compose/releases)
+* Install [docker](https://docs.docker.com/install/linux/docker-ce/ubuntu/) and [docker compose](https://github.com/docker/compose/releases)
 * Build containers from docker folder: `docker-compose build nginx postgres`
 * Run container from docker folder: `docker-compose up -d nginx postgres`
 * Build frontend from workspace container: `compile-fronetnd.sh`
