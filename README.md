@@ -14,7 +14,7 @@
 * Apply migrations in workspace container
 * Install passport: `php artisan passport:install`
 * Publish money config: `php artisan vendor:publish --tag=money`
-* Generate api doc files: `php artisan api:generate --routePrefix="api/*" --noPostmanCollection`
+* Generate api doc: `php artisan l5-swagger:generate`
 
 ### Commands
 * Update doc: `php artisan l5-swagger:generate`
