@@ -1,10 +1,9 @@
 <?php
 
-use Illuminate\Support\Facades\Schema;
-use Illuminate\Database\Schema\Blueprint;
+use Illuminate\Support\Facades\DB;
 use Illuminate\Database\Migrations\Migration;
 
-class CreatePlagroundTypes extends Migration
+class CreatePlaygroundTypes extends Migration
 {
     /**
      * Run the migrations.
@@ -24,9 +23,11 @@ class CreatePlagroundTypes extends Migration
         ];
 
         foreach ($types as $type) {
-            $model = new \App\Models\PlaygroundType();
-            $model->type = $type;
-            $model->save();
+            DB::table('playground_types')->insert([
+                'type' => $type,
+                'created_at' => DB::raw('NOW()'),
+                'updated_at' => DB::raw('NOW()'),
+            ]);
         }
     }
 
@@ -37,7 +38,6 @@ class CreatePlagroundTypes extends Migration
      */
     public function down()
     {
-        \App\Models\PlaygroundType::whereNotNull('id')
-            ->forceDelete();
+        DB::table('playground_types')->truncate();
     }
 }
