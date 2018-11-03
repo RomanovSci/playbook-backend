@@ -21,7 +21,7 @@ class UserController extends Controller
      *
      * @OA\Post(
      *      path="/api/register",
-     *      tags={"User"},
+     *      tags={"Passport"},
      *      summary="Register new user",
      *      @OA\RequestBody(
      *          @OA\MediaType(

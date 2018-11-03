@@ -17,14 +17,14 @@ use Illuminate\Database\Eloquent\SoftDeletes;
  * @OA\Schema(
  *      schema="Organization",
  *      required={
- *          "id",
  *          "owner_id",
  *          "name",
  *          "city_id"
  *      },
  *      @OA\Property(
  *          property="id",
- *          type="integer"
+ *          type="integer",
+ *          readOnly=true
  *      ),
  *      @OA\Property(
  *          property="owner_id",
@@ -41,18 +41,18 @@ use Illuminate\Database\Eloquent\SoftDeletes;
  *     ),
  *     @OA\Property(
  *          property="created_at",
- *          type="integer",
- *          format="int32"
+ *          type="string",
+ *          readOnly=true
  *     ),
  *     @OA\Property(
  *          property="updated_at",
  *          type="integer",
- *          format="int32"
+ *          readOnly=true
  *     ),
  *     @OA\Property(
  *          property="deleted_at",
- *          type="integer",
- *          format="int32"
+ *          type="string",
+ *          readOnly=true
  *     )
  * )
  */

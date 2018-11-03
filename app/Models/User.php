@@ -16,6 +16,57 @@ use Spatie\Permission\Traits\HasRoles;
  * @property string last_name
  * @property integer phone
  * @property string password
+ *
+ * @OA\Schema(
+ *      schema="User",
+ *      required={
+ *          "first_name",
+ *          "last_name",
+ *          "phone",
+ *          "password"
+ *      },
+ *      @OA\Property(
+ *          property="id",
+ *          type="integer",
+ *          readOnly=true
+ *      ),
+ *      @OA\Property(
+ *          property="first_name",
+ *          type="string",
+ *      ),
+ *      @OA\Property(
+ *          property="last_name",
+ *          type="string"
+ *      ),
+ *      @OA\Property(
+ *          property="phone",
+ *          type="string"
+ *      ),
+ *      @OA\Property(
+ *          property="password",
+ *          type="string"
+ *      ),
+ *      @OA\Property(
+ *          property="phone_verified_at",
+ *          type="string",
+ *          readOnly=true
+ *      ),
+ *      @OA\Property(
+ *          property="created_at",
+ *          type="string",
+ *          readOnly=true
+ *      ),
+ *      @OA\Property(
+ *          property="updated_at",
+ *          type="string",
+ *          readOnly=true
+ *     ),
+ *     @OA\Property(
+ *          property="deleted_at",
+ *          type="string",
+ *          readOnly=true
+ *     )
+ * )
  */
 class User extends Authenticatable
 {

@@ -9,6 +9,54 @@ use Illuminate\Database\Eloquent\SoftDeletes;
  * Class PlaygroundSchedule
  *
  * @package App
+ *
+ * @OA\Schema(
+ *      schema="Schedule",
+ *      required={
+ *          "start_time",
+ *          "end_time",
+ *          "price_per_hour",
+ *          "currency"
+ *      },
+ *      @OA\Property(
+ *          property="id",
+ *          type="integer",
+ *          readOnly=true
+ *      ),
+ *      @OA\Property(
+ *          property="start_time",
+ *          type="string",
+ *      ),
+ *      @OA\Property(
+ *          property="end_time",
+ *          type="string"
+ *      ),
+ *      @OA\Property(
+ *          property="price_per_hour",
+ *          type="integer"
+ *      ),
+ *      @OA\Property(
+ *          property="currency",
+ *          type="string",
+ *          minLength=3,
+ *          maxLength=3
+ *      ),
+ *      @OA\Property(
+ *          property="created_at",
+ *          type="string",
+ *          readOnly=true
+ *      ),
+ *      @OA\Property(
+ *          property="updated_at",
+ *          type="string",
+ *          readOnly=true
+ *      ),
+ *      @OA\Property(
+ *          property="deleted_at",
+ *          type="string",
+ *          readOnly=true
+ *      )
+ * )
  */
 class Schedule extends Model
 {

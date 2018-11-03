@@ -17,37 +17,41 @@ use Illuminate\Database\Eloquent\SoftDeletes;
  * @OA\Schema(
  *      schema="City",
  *      required={
- *          "id",
  *          "country_id",
  *          "name",
  *          "origin_name"
  *      },
  *      @OA\Property(
  *          property="id",
- *          type="integer"
+ *          type="integer",
+ *          readOnly=true
  *      ),
  *      @OA\Property(
  *          property="country_id",
- *          type="integer"
+ *          type="integer",
  *      ),
  *      @OA\Property(
  *          property="name",
  *          type="string"
  *      ),
+ *      @OA\Property(
+ *          property="origin_name",
+ *          type="string"
+ *      ),
  *     @OA\Property(
  *          property="created_at",
- *          type="integer",
- *          format="int32"
+ *          type="string",
+ *          readOnly=true
  *     ),
  *     @OA\Property(
  *          property="updated_at",
- *          type="integer",
- *          format="int32"
+ *          type="string",
+ *          readOnly=true
  *     ),
  *     @OA\Property(
  *          property="deleted_at",
- *          type="integer",
- *          format="int32"
+ *          type="string",
+ *          readOnly=true
  *     )
  * )
  */
