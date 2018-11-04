@@ -57,6 +57,66 @@ class UserController extends Controller
      *          response="422",
      *          description="Invalid parameters"
      *      )
+     * ),
+     * @OA\Post(
+     *      path="/oauth/token",
+     *      tags={"Passport"},
+     *      summary="Get access and refresh tokens",
+     *      @OA\RequestBody(
+     *          @OA\MediaType(
+     *              mediaType="application/json",
+     *              @OA\Schema(
+     *                  example={
+     *                      "grant_type": "password",
+     *                      "client_id": "2",
+     *                      "client_secret": "megasecretclientsecret",
+     *                      "username": "0507707018",
+     *                      "password": "1488"
+     *                  }
+     *              )
+     *         )
+     *     ),
+     *      @OA\Response(
+     *          response="200",
+     *          description="Ok",
+     *          @OA\MediaType(
+     *              mediaType="application/json",
+     *              @OA\Schema(
+     *                  example={
+     *                      "token_type": "Bearer",
+     *                      "expires_in": "1296000",
+     *                      "access_token": "access_token",
+     *                      "refresh_token": "refresh_token"
+     *                  }
+     *              )
+     *         )
+     *      ),
+     *      @OA\Response(
+     *          response="401",
+     *          description="Invalid client",
+     *          @OA\MediaType(
+     *              mediaType="application/json",
+     *              @OA\Schema(
+     *                  example={
+     *                      "error": "invalid_client",
+     *                      "message": "Client authentication failed"
+     *                  },
+     *              )
+     *          ),
+     *      ),
+     *      @OA\Response(
+     *          response="400",
+     *          description="Invalid request",
+     *          @OA\MediaType(
+     *              mediaType="application/json",
+     *              @OA\Schema(
+     *                  example={
+     *                      "error": "invalid_request",
+     *                      "message": "The request is missing a required parameter, includes an invalid parameter value, includes a parameter more than once, or is otherwise malformed."
+     *                  },
+     *              )
+     *          ),
+     *      )
      * )
      */
     public function register(UserCreateFormRequest $request)
@@ -64,14 +124,13 @@ class UserController extends Controller
         $fields = $request->all();
         $fields['password'] = bcrypt($fields['password']);
 
-        /**
-         * @var User $user
-         */
+        /** @var User $user */
         $user = User::create($fields);
         $user->assignRole(User::ROLE_USER);
+        $token = $user->createToken('MyApp');
 
         return $this->success([
-            'token' => $user->createToken('MyApp')->accessToken,
+            'access_token' => $token->accessToken,
         ]);
     }
 }
