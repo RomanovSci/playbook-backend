@@ -46,6 +46,45 @@ class ScheduleController extends Controller
      * @param Playground $playground
      * @param ScheduleCreateFormRequest $request
      * @return JsonResponse
+     *
+     * @OA\Post(
+     *      path="/api/create-for-playground/{playground_id}",
+     *      tags={"Schedule"},
+     *      summary="Create trainer information",
+     *      @OA\Parameter(
+     *          name="playground_id",
+     *          description="Playground id",
+     *          in="path",
+     *          required=true,
+     *          @OA\Schema(type="integer")
+     *      ),
+     *      @OA\RequestBody(
+     *          @OA\MediaType(
+     *              mediaType="application/json",
+     *              @OA\Schema(
+     *                  example={
+     *                      "start_time": "Period start. Example: 2018-05-30 09:00:00",
+     *                      "end_time": "Period end. Example: 2018-05-30 17:00:00",
+     *                      "price_per_hour": "Price per hour in cents. Example: 7000. (70RUB)",
+     *                      "currency": "Currency: RUB, UAH, USD, etc. Default: RUB"
+     *                  }
+     *              )
+     *          )
+     *      ),
+     *      @OA\Response(
+     *          response="200",
+     *          description="Ok",
+     *          @OA\MediaType(
+     *              mediaType="application/json",
+     *              @OA\Schema(ref="#/components/schemas/Schedule")
+     *         )
+     *      ),
+     *      @OA\Response(
+     *          response="422",
+     *          description="Invalid parameters"
+     *      ),
+     *     security={{"Bearer":{}}}
+     * )
      */
     public function createForPlayground(
         Playground $playground,

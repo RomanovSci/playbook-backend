@@ -19,6 +19,38 @@ class TrainerInfoController extends Controller
      *
      * @param TrainerInfoFormRequest $request
      * @return \Illuminate\Http\JsonResponse
+     *
+     * @OA\Post(
+     *      path="/api/trainer-info/create",
+     *      tags={"TrainerInfo"},
+     *      summary="Create trainer information",
+     *      @OA\RequestBody(
+     *          @OA\MediaType(
+     *              mediaType="application/json",
+     *              @OA\Schema(
+     *                  example={
+     *                      "about": "Short information about trainer",
+     *                      "min_price": "Min price in cents. Example: 7000. (70RUB)",
+     *                      "max_price": "Max price in cents.",
+     *                      "currency": "Currency: RUB, UAH, USD, etc. Default: RUB"
+     *                  }
+     *              )
+     *          )
+     *      ),
+     *      @OA\Response(
+     *          response="200",
+     *          description="Ok",
+     *          @OA\MediaType(
+     *              mediaType="application/json",
+     *              @OA\Schema(ref="#/components/schemas/TrainerInfo")
+     *         )
+     *      ),
+     *      @OA\Response(
+     *          response="422",
+     *          description="Invalid parameters"
+     *      ),
+     *     security={{"Bearer":{}}}
+     * )
      */
     public function create(TrainerInfoFormRequest $request)
     {

@@ -28,15 +28,15 @@ class OrganizationController extends Controller
      *              mediaType="application/json",
      *              @OA\Schema(
      *                  example={
-     *                      "name": "ISport organization",
-     *                      "city_id": 1,
+     *                      "name": "Organization name",
+     *                      "city_id": "City id. Ref to City entity. Example: 1",
      *                  }
      *              )
      *          )
      *      ),
      *      @OA\Response(
      *          response="200",
-     *          description="Successful registration",
+     *          description="Ok",
      *          @OA\MediaType(
      *              mediaType="application/json",
      *              @OA\Schema(ref="#/components/schemas/Organization")

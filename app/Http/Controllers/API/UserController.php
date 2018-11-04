@@ -28,18 +28,18 @@ class UserController extends Controller
      *              mediaType="application/json",
      *              @OA\Schema(
      *                  example={
-     *                      "first_name": "Roman",
-     *                      "last_name": "Bylbas",
-     *                      "phone": "380501234567",
-     *                      "password": "iampassword",
-     *                      "c_password": "iampassword"
+     *                      "first_name": "User first name.",
+     *                      "last_name": "User last name.",
+     *                      "phone": "User phone with country code, without plus symbol.",
+     *                      "password": "User password.",
+     *                      "c_password": "User password confirm."
      *                  }
      *              )
      *         )
      *     ),
      *      @OA\Response(
      *          response="200",
-     *          description="Successful registration",
+     *          description="Ok",
      *          @OA\MediaType(
      *              mediaType="application/json",
      *              @OA\Schema(
@@ -67,11 +67,11 @@ class UserController extends Controller
      *              mediaType="application/json",
      *              @OA\Schema(
      *                  example={
-     *                      "grant_type": "password",
-     *                      "client_id": "2",
-     *                      "client_secret": "megasecretclientsecret",
-     *                      "username": "0507707018",
-     *                      "password": "1488"
+     *                      "grant_type": "Grant type. 'password' always.",
+     *                      "client_id": "Client id",
+     *                      "client_secret": "Client secret",
+     *                      "username": "User phone with country code without plus symbol.",
+     *                      "password": "User password."
      *                  }
      *              )
      *         )
