@@ -42,6 +42,14 @@ use Illuminate\Database\Eloquent\SoftDeletes;
  *          maxLength=3
  *      ),
  *      @OA\Property(
+ *          property="schedulable_id",
+ *          type="integer"
+ *      ),
+ *      @OA\Property(
+ *          property="schedulable_type",
+ *          type="string"
+ *      ),
+ *      @OA\Property(
  *          property="created_at",
  *          type="string",
  *          readOnly=true
@@ -76,30 +84,10 @@ class Schedule extends Model
     ];
 
     /**
-     * Get playgrounds
-     *
-     * @return \Illuminate\Database\Eloquent\Relations\MorphToMany
+     * @return \Illuminate\Database\Eloquent\Relations\MorphTo
      */
-    public function playgrounds()
+    public function schedulable()
     {
-        return $this->morphedByMany(
-            Playground::class,
-            'entity',
-            'schedules_to_entities'
-        );
-    }
-
-    /**
-     * Users
-     *
-     * @return \Illuminate\Database\Eloquent\Relations\MorphToMany
-     */
-    public function users()
-    {
-        return $this->morphedByMany(
-            User::class,
-            'entity',
-            'schedules_to_entities'
-        );
+        return $this->morphTo();
     }
 }

@@ -108,14 +108,10 @@ class User extends Authenticatable
     /**
      * Get schedules
      *
-     * @return \Illuminate\Database\Eloquent\Relations\MorphToMany
+     * @return \Illuminate\Database\Eloquent\Relations\MorphMany
      */
     public function schedules()
     {
-        return $this->morphToMany(
-            Schedule::class,
-            'entity',
-            'schedules_to_entities'
-        );
+        return $this->morphMany(Schedule::class,'schedulable');
     }
 }
