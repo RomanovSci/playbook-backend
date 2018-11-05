@@ -16,7 +16,9 @@ use Illuminate\Database\Eloquent\SoftDeletes;
  *          "start_time",
  *          "end_time",
  *          "price_per_hour",
- *          "currency"
+ *          "currency",
+ *          "schedulable_id",
+ *          "schedulable_type"
  *      },
  *      @OA\Property(
  *          property="id",
@@ -43,11 +45,13 @@ use Illuminate\Database\Eloquent\SoftDeletes;
  *      ),
  *      @OA\Property(
  *          property="schedulable_id",
- *          type="integer"
+ *          type="integer",
+ *          description="Reference to schedulable entity"
  *      ),
  *      @OA\Property(
  *          property="schedulable_type",
- *          type="string"
+ *          type="string",
+ *          description="Type of schedulable entity"
  *      ),
  *      @OA\Property(
  *          property="created_at",
