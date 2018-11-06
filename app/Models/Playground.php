@@ -137,6 +137,6 @@ class Playground extends Model
      */
     public function schedules()
     {
-        return $this->morphMany(Schedule::class,'schedulable');
+        return $this->morphMany(Schedule::class, 'schedulable');
     }
 }

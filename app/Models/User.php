@@ -112,6 +112,6 @@ class User extends Authenticatable
      */
     public function schedules()
     {
-        return $this->morphMany(Schedule::class,'schedulable');
+        return $this->morphMany(Schedule::class, 'schedulable');
     }
 }

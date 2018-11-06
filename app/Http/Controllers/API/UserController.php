@@ -112,7 +112,7 @@ class UserController extends Controller
      *              @OA\Schema(
      *                  example={
      *                      "error": "invalid_request",
-     *                      "message": "The request is missing a required parameter, includes an invalid parameter value, includes a parameter more than once, or is otherwise malformed."
+     *                      "message": "The request is missing a required parameter ..."
      *                  },
      *              )
      *          ),
