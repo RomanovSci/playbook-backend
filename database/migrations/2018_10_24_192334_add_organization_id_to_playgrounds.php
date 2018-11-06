@@ -14,10 +14,8 @@ class AddOrganizationIdToPlaygrounds extends Migration
     public function up()
     {
         Schema::table('playgrounds', function (Blueprint $table) {
-            $table->integer('organization_id', false, true);
-            $table->foreign('organization_id')
-                ->references('id')
-                ->on('organizations');
+            $table->integer('organization_id', false, true)->nullable()->default(null);
+            $table->foreign('organization_id')->references('id')->on('organizations');
         });
     }
 

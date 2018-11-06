@@ -3,7 +3,7 @@
 use Illuminate\Support\Facades\Schema;
 use Illuminate\Database\Schema\Blueprint;
 use Illuminate\Database\Migrations\Migration;
-use App\Models\Country;
+use Illuminate\Support\Facades\DB;
 
 class CreateCountriesTable extends Migration
 {
@@ -27,11 +27,13 @@ class CreateCountriesTable extends Migration
         $countries = json_decode(File::get($filename));
 
         foreach ($countries as $country) {
-            $countryModel = new Country();
-            $countryModel->code = $country->alpha2Code;
-            $countryModel->name = $country->name;
-            $countryModel->origin_name = $country->nativeName;
-            $countryModel->save();
+            DB::table('countries')->insert([
+                'code' => $country->alpha2Code,
+                'name' => $country->name,
+                'origin_name' => $country->nativeName,
+                'created_at' => DB::raw('NOW()'),
+                'updated_at' => DB::raw('NOW()'),
+            ]);
         }
     }
 

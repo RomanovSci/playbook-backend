@@ -16,13 +16,12 @@ class CreateOrganizationsTable extends Migration
         Schema::create('organizations', function (Blueprint $table) {
             $table->increments('id');
             $table->integer('owner_id', false, true);
+            $table->integer('city_id', false, true);
             $table->string('name');
             $table->timestamps();
             $table->softDeletes();
-
-            $table->foreign('owner_id')
-                ->references('id')
-                ->on('users');
+            $table->foreign('owner_id')->references('id')->on('users');
+            $table->foreign('city_id')->references('id')->on('cities');
         });
     }
 

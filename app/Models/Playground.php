@@ -22,7 +22,6 @@ use Illuminate\Database\Eloquent\SoftDeletes;
  *      schema="Playground",
  *      required={
  *          "type_id",
- *          "organization_id",
  *          "name",
  *          "description",
  *          "address",
@@ -62,6 +61,10 @@ use Illuminate\Database\Eloquent\SoftDeletes;
  *     @OA\Property(
  *          property="closing_time",
  *          type="string",
+ *     ),
+ *     @OA\Property(
+ *          property="status",
+ *          type="integer",
  *     ),
  *     @OA\Property(
  *          property="created_at",

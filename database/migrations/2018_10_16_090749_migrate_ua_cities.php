@@ -2,7 +2,7 @@
 
 use Illuminate\Database\Migrations\Migration;
 use App\Models\Country;
-use App\Models\City;
+use Illuminate\Support\Facades\DB;
 
 class MigrateUaCities extends Migration
 {
@@ -30,11 +30,13 @@ class MigrateUaCities extends Migration
         $cities = json_decode(File::get($filename));
 
         foreach ($cities as $city) {
-            $_city = new City();
-            $_city->name = $city->name;
-            $_city->origin_name = $city->origin_name;
-            $_city->country_id = $this->countryId;
-            $_city->save();
+            DB::table('cities')->insert([
+                'country_id' => $this->countryId,
+                'name' => $city->name,
+                'origin_name' => $city->origin_name,
+                'created_at' => DB::raw('NOW()'),
+                'updated_at' => DB::raw('NOW()'),
+            ]);
         }
     }
 
@@ -45,7 +47,8 @@ class MigrateUaCities extends Migration
      */
     public function down()
     {
-        City::where('country_id', $this->countryId)
-            ->forceDelete();
+        DB::table('cities')
+            ->where('country_id', $this->countryId)
+            ->delete();
     }
 }

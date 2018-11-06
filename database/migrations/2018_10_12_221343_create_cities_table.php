@@ -22,12 +22,7 @@ class CreateCitiesTable extends Migration
             $table->string('origin_name');
             $table->timestamps();
             $table->softDeletes();
-        });
-
-        Schema::table('cities', function (Blueprint $table) {
-            $table->foreign('country_id')
-                ->references('id')
-                ->on('countries');
+            $table->foreign('country_id')->references('id')->on('countries');
         });
     }
 

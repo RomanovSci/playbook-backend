@@ -19,6 +19,10 @@ class CreatePlaygroundTypesTable extends Migration
             $table->timestamps();
             $table->softDeletes();
         });
+
+        Schema::table('playgrounds', function (Blueprint $table) {
+            $table->foreign('type_id')->references('id')->on('playground_types');
+        });
     }
 
     /**
@@ -28,6 +32,10 @@ class CreatePlaygroundTypesTable extends Migration
      */
     public function down()
     {
+        Schema::table('playgrounds', function (Blueprint $table) {
+            $table->dropForeign('type_id');
+        });
+
         Schema::dropIfExists('playground_types');
     }
 }

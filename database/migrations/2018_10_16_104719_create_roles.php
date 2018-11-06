@@ -16,8 +16,8 @@ class CreateRoles extends Migration
     {
         $roles = [
             'user',
-            'coach',
-            'playground-admin',
+            'trainer',
+            'organization-admin',
             'admin',
         ];
 

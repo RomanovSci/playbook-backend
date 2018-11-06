@@ -17,10 +17,11 @@ class CreatePlaygroundsTable extends Migration
             $table->increments('id');
             $table->string('name');
             $table->string('description');
-            $table->string('type');
             $table->string('address');
-            $table->timestamp('opening_time');
-            $table->timestamp('closing_time');
+            $table->time('opening_time');
+            $table->time('closing_time');
+            $table->integer('type_id')->unsigned();
+            $table->smallInteger('status')->default(0);
             $table->timestamps();
             $table->softDeletes();
         });

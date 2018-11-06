@@ -14,8 +14,7 @@ use Illuminate\Database\Eloquent\Relations\MorphTo;
  * @OA\Schema(
  *      schema="Booking",
  *      required={
- *          "bookable_id",
- *          "bookable_type",
+ *          "schedule_id",
  *          "start_time",
  *          "end_time"
  *      },
@@ -25,12 +24,8 @@ use Illuminate\Database\Eloquent\Relations\MorphTo;
  *          readOnly=true
  *      ),
  *      @OA\Property(
- *          property="bookable_id",
+ *          property="schedule_id",
  *          type="integer",
- *      ),
- *      @OA\Property(
- *          property="bookable_type",
- *          type="string"
  *      ),
  *      @OA\Property(
  *          property="start_time",

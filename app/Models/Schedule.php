@@ -13,8 +13,6 @@ use Illuminate\Database\Eloquent\SoftDeletes;
  * @OA\Schema(
  *      schema="Schedule",
  *      required={
- *          "start_time",
- *          "end_time",
  *          "price_per_hour",
  *          "currency",
  *          "schedulable_id",

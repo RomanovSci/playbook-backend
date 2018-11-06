@@ -4,7 +4,7 @@ use Illuminate\Support\Facades\Schema;
 use Illuminate\Database\Schema\Blueprint;
 use Illuminate\Database\Migrations\Migration;
 
-class AddedAddtionalFieldsToSchedulesTable extends Migration
+class CreateSchedulesTable extends Migration
 {
     /**
      * Run the migrations.
@@ -13,9 +13,16 @@ class AddedAddtionalFieldsToSchedulesTable extends Migration
      */
     public function up()
     {
-        Schema::table('schedules', function (Blueprint $table) {
+        Schema::create('schedules', function (Blueprint $table) {
+            $table->increments('id');
             $table->integer('schedulable_id', false, true);
             $table->string('schedulable_type');
+            $table->timestamp('start_time')->nullable();
+            $table->timestamp('end_time')->nullable();
+            $table->integer('price_per_hour');
+            $table->char('currency', 3)->default('RUB');
+            $table->timestamps();
+            $table->softDeletes();
         });
     }
 
@@ -26,11 +33,6 @@ class AddedAddtionalFieldsToSchedulesTable extends Migration
      */
     public function down()
     {
-        Schema::table('schedules', function (Blueprint $table) {
-            $table->dropColumn([
-                'schedulable_id',
-                'schedulable_type',
-            ]);
-        });
+        Schema::dropIfExists('schedules');
     }
 }
