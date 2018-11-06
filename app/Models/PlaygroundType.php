@@ -44,5 +44,5 @@ class PlaygroundType extends Model
 {
     use SoftDeletes;
 
-    protected $table = 'playgrounds_types';
+    protected $table = 'playground_types';
 }
