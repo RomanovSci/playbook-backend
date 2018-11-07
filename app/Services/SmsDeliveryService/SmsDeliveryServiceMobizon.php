@@ -2,6 +2,7 @@
 
 namespace App\Services\SmsDeliveryService;
 
+use Illuminate\Support\Facades\Log;
 use Mobizon\MobizonApi;
 
 /**
@@ -37,8 +38,23 @@ class SmsDeliveryServiceMobizon implements SmsDeliveryServiceInterface
      */
     public function send(string $phone, string $text): bool
     {
-        // TODO: Implement send() method.
+        try {
+            $success = $this->mobizonApi->call('message', 'sendSMSMessage', [
+                'recipient' => $phone,
+                'text' => $text,
+            ]);
+        } catch (\Exception $e) {
+            Log::error($e->getMessage());
+            return false;
+        }
 
-        return true;
+        if ($success) {
+            $data = $this->mobizonApi->getData();
+            // TODO: Save message data
+
+            return true;
+        }
+
+        return false;
     }
 }
