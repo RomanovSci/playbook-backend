@@ -3,8 +3,12 @@
 namespace Tests\Feature;
 
 use Tests\TestCase;
-use Illuminate\Foundation\Testing\RefreshDatabase;
 
+/**
+ * Class ExampleTest
+ *
+ * @package Tests\Feature
+ */
 class ExampleTest extends TestCase
 {
     /**
@@ -12,10 +16,9 @@ class ExampleTest extends TestCase
      *
      * @return void
      */
-    public function testBasicTest()
+    public function testMainPageAccess()
     {
         $response = $this->get('/');
-
         $response->assertStatus(200);
     }
 }
