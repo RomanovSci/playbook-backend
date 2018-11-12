@@ -115,6 +115,21 @@ class UserController extends Controller
      *                  },
      *              )
      *          ),
+     *      ),
+     *      @OA\Response(
+     *          response="422",
+     *          description="Invalid request",
+     *          @OA\MediaType(
+     *              mediaType="application/json",
+     *              @OA\Schema(
+     *                  example={
+     *                      "phone": [
+     *                          "The phone must be a number.",
+     *                          "The phone must be at least 10."
+     *                      ]
+     *                  },
+     *              )
+     *          ),
      *      )
      * )
      */
