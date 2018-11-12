@@ -54,7 +54,15 @@ class UserController extends Controller
      *      ),
      *      @OA\Response(
      *          response="422",
-     *          description="Invalid parameters"
+     *          description="Invalid parameters",
+     *          @OA\MediaType(
+     *              mediaType="application/json",
+     *              @OA\Schema(
+     *                  example={
+     *                      "phone": "The phone must be a number."
+     *                  },
+     *              )
+     *          )
      *      )
      * ),
      * @OA\Post(
@@ -101,7 +109,7 @@ class UserController extends Controller
      *                      "message": "Client authentication failed"
      *                  },
      *              )
-     *          ),
+     *          )
      *      ),
      *      @OA\Response(
      *          response="400",
@@ -114,19 +122,7 @@ class UserController extends Controller
      *                      "message": "The request is missing a required parameter ..."
      *                  },
      *              )
-     *          ),
-     *      ),
-     *      @OA\Response(
-     *          response="422",
-     *          description="Invalid request",
-     *          @OA\MediaType(
-     *              mediaType="application/json",
-     *              @OA\Schema(
-     *                  example={
-     *                      "phone": "The phone must be a number."
-     *                  },
-     *              )
-     *          ),
+     *          )
      *      )
      * )
      */
