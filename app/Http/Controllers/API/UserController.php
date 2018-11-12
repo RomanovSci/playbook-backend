@@ -123,10 +123,7 @@ class UserController extends Controller
      *              mediaType="application/json",
      *              @OA\Schema(
      *                  example={
-     *                      "phone": [
-     *                          "The phone must be a number.",
-     *                          "The phone must be at least 10."
-     *                      ]
+     *                      "phone": "The phone must be a number."
      *                  },
      *              )
      *          ),
