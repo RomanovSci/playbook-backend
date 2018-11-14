@@ -1,4 +1,4 @@
-# ISport backend
+# Playbook backend
 
 ### Initialization
 * Init git submodules: `git submodule init`
