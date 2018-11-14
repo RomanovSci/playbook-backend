@@ -37,6 +37,15 @@ class Controller extends BaseController
         ]);
     }
 
+    protected function error(int $code, $data = [], $message = null): JsonResponse
+    {
+        return response()->json([
+            'success' => false,
+            'message' => $message ?? 'Ooops...Something went wrong',
+            'data' => $data
+        ], $code);
+    }
+
     /**
      * Simple forbidden response
      *

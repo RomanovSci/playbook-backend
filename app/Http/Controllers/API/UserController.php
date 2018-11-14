@@ -6,6 +6,7 @@ use App\Http\Controllers\Controller;
 use App\Http\Requests\User\UserCreateFormRequest;
 use App\Models\User;
 use Illuminate\Http\JsonResponse;
+use Illuminate\Support\Facades\DB;
 
 /**
  * Class UserController
@@ -17,6 +18,7 @@ class UserController extends Controller
     /**
      * @param UserCreateFormRequest $request
      * @return JsonResponse
+     * @throws \Exception
      *
      * @OA\Post(
      *      path="/api/register",
@@ -130,11 +132,17 @@ class UserController extends Controller
     {
         $fields = $request->all();
         $fields['password'] = bcrypt($fields['password']);
+        DB::beginTransaction();
 
-        /** @var User $user */
-        $user = User::create($fields);
-        $user->assignRole(User::ROLE_USER);
-        $token = $user->createToken('MyApp');
+        try {
+            /** @var User $user */
+            $user = User::create($fields);
+            $user->assignRole(User::ROLE_USER);
+            $token = $user->createToken('MyApp');
+        } catch (\Exception $e) {
+            DB::rollBack();
+            throw $e;
+        }
 
         return $this->success([
             'access_token' => $token->accessToken,

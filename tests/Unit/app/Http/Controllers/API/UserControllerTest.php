@@ -24,33 +24,28 @@ class UserControllerTest extends TestCase
         $formRequestMock = $this->getMockBuilder(UserCreateFormRequest::class)
             ->setMethods(['all'])
             ->getMock();
-        $formRequestMock->expects($this->once())
+
+        $formRequestMock->expects($this->any())
             ->method('all')
-            ->willReturn(['password' => 'test']);
-
-        /**
-         * @var User $user
-         */
-        $user = \Mockery::mock(User::class);
-        $user->shouldReceive('create')
-            ->once()
-            ->with()
-            ->andReturn(new class {
-                public function assignRole() {
-                    return true;
-                }
-
-                public function createToken() {
-                    return 'token';
-                }
-            });
+            ->willReturn([
+                'first_name' => 'Test',
+                'last_name' => 'Test',
+                'password' => 'test',
+                'phone' => 911,
+            ]);
 
         /**
          * @var UserController $controller
          */
-        $controller = $this->getMockBuilder(UserController::class)->getMock();
-        $actualResult = $controller->register($formRequestMock);
+        $controller = $this->getMockBuilder(UserController::class)
+            ->setMethods(['success'])
+            ->getMock();
+        $controller->expects($this->once())
+            ->method('success')
+            ->willReturn(new JsonResponse());
 
-//        $this->assertInstanceOf(JsonResponse::class, $actualResult);
+
+        $actualResult = $controller->register($formRequestMock);
+        $this->assertInstanceOf(JsonResponse::class, $actualResult);
     }
 }
