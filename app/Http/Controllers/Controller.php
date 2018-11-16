@@ -37,6 +37,14 @@ class Controller extends BaseController
         ]);
     }
 
+    /**
+     * Error response
+     *
+     * @param int $code
+     * @param array $data
+     * @param null $message
+     * @return JsonResponse
+     */
     protected function error(int $code, $data = [], $message = null): JsonResponse
     {
         return response()->json([
