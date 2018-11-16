@@ -34,7 +34,7 @@ class UserController extends Controller
      *                      "first_name": "User first name.",
      *                      "last_name": "User last name.",
      *                      "phone": "User phone without dial code.",
-     *                      "dial_code": "Dial code with plus symbol."
+     *                      "dial_code": "Dial code with plus symbol.",
      *                      "password": "User password.",
      *                      "c_password": "User password confirm.",
      *                      "is_trainer": "Boolean flag (0 or 1)"
