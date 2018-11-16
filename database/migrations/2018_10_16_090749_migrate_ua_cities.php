@@ -33,7 +33,6 @@ class MigrateUaCities extends Migration
             DB::table('cities')->insert([
                 'country_id' => $this->countryId,
                 'name' => $city->name,
-                'origin_name' => $city->origin_name,
                 'created_at' => DB::raw('NOW()'),
                 'updated_at' => DB::raw('NOW()'),
             ]);

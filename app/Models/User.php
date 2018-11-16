@@ -60,12 +60,12 @@ use Spatie\Permission\Traits\HasRoles;
  *          property="updated_at",
  *          type="string",
  *          readOnly=true
- *     ),
- *     @OA\Property(
+ *      ),
+ *      @OA\Property(
  *          property="deleted_at",
  *          type="string",
  *          readOnly=true
- *     )
+ *      )
  * )
  */
 class User extends Authenticatable

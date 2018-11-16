@@ -30,24 +30,24 @@ use Illuminate\Database\Eloquent\SoftDeletes;
  *          type="string"
  *      ),
  *      @OA\Property(
- *          property="origin_name",
+ *          property="dial_code",
  *          type="string"
  *      ),
- *     @OA\Property(
+ *      @OA\Property(
  *          property="created_at",
  *          type="string",
  *          readOnly=true
- *     ),
- *     @OA\Property(
+ *      ),
+ *      @OA\Property(
  *          property="updated_at",
  *          type="string",
  *          readOnly=true
- *     ),
- *     @OA\Property(
+ *      ),
+ *      @OA\Property(
  *          property="deleted_at",
  *          type="string",
  *          readOnly=true
- *     )
+ *      )
  * )
  */
 class Country extends Model

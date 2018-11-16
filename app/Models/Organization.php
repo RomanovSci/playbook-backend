@@ -38,22 +38,22 @@ use Illuminate\Database\Eloquent\SoftDeletes;
  *          property="city_id",
  *          type="integer",
  *          format="int32"
- *     ),
- *     @OA\Property(
+ *      ),
+ *      @OA\Property(
  *          property="created_at",
  *          type="string",
  *          readOnly=true
- *     ),
- *     @OA\Property(
+ *      ),
+ *      @OA\Property(
  *          property="updated_at",
  *          type="integer",
  *          readOnly=true
- *     ),
- *     @OA\Property(
+ *      ),
+ *      @OA\Property(
  *          property="deleted_at",
  *          type="string",
  *          readOnly=true
- *     )
+ *      )
  * )
  */
 class Organization extends Model

@@ -49,38 +49,38 @@ use Illuminate\Database\Eloquent\SoftDeletes;
  *      @OA\Property(
  *          property="description",
  *          type="string",
- *     ),
- *     @OA\Property(
+ *      ),
+ *      @OA\Property(
  *          property="address",
  *          type="string",
- *     ),
- *     @OA\Property(
+ *      ),
+ *      @OA\Property(
  *          property="opening_time",
  *          type="string",
- *     ),
- *     @OA\Property(
+ *      ),
+ *      @OA\Property(
  *          property="closing_time",
  *          type="string",
- *     ),
- *     @OA\Property(
+ *      ),
+ *      @OA\Property(
  *          property="status",
  *          type="integer",
- *     ),
- *     @OA\Property(
+ *      ),
+ *      @OA\Property(
  *          property="created_at",
  *          type="string",
  *          readOnly=true
- *     ),
- *     @OA\Property(
+ *      ),
+ *      @OA\Property(
  *          property="updated_at",
  *          type="string",
  *          readOnly=true
- *     ),
- *     @OA\Property(
+ *      ),
+ *      @OA\Property(
  *          property="deleted_at",
  *          type="string",
  *          readOnly=true
- *     )
+ *      )
  * )
  */
 class Playground extends Model

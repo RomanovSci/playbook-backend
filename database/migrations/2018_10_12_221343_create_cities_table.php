@@ -19,7 +19,6 @@ class CreateCitiesTable extends Migration
             $table->increments('id');
             $table->integer('country_id', false, true);
             $table->string('name');
-            $table->string('origin_name');
             $table->timestamps();
             $table->softDeletes();
             $table->foreign('country_id')->references('id')->on('countries');

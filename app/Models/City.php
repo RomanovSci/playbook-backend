@@ -35,24 +35,20 @@ use Illuminate\Database\Eloquent\SoftDeletes;
  *          type="string"
  *      ),
  *      @OA\Property(
- *          property="origin_name",
- *          type="string"
- *      ),
- *     @OA\Property(
  *          property="created_at",
  *          type="string",
  *          readOnly=true
- *     ),
- *     @OA\Property(
+ *      ),
+ *      @OA\Property(
  *          property="updated_at",
  *          type="string",
  *          readOnly=true
- *     ),
- *     @OA\Property(
+ *      ),
+ *      @OA\Property(
  *          property="deleted_at",
  *          type="string",
  *          readOnly=true
- *     )
+ *      )
  * )
  */
 class City extends Model

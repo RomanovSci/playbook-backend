@@ -18,7 +18,7 @@ class CreateCountriesTable extends Migration
             $table->increments('id');
             $table->char('code', 2);
             $table->string('name');
-            $table->string('origin_name');
+            $table->string('dial_code');
             $table->timestamps();
             $table->softDeletes();
         });
@@ -28,9 +28,9 @@ class CreateCountriesTable extends Migration
 
         foreach ($countries as $country) {
             DB::table('countries')->insert([
-                'code' => $country->alpha2Code,
+                'code' => $country->code,
                 'name' => $country->name,
-                'origin_name' => $country->nativeName,
+                'dial_code' => $country->dial_code,
                 'created_at' => DB::raw('NOW()'),
                 'updated_at' => DB::raw('NOW()'),
             ]);

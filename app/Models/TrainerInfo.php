@@ -45,21 +45,21 @@ use Illuminate\Database\Eloquent\SoftDeletes;
  *          minLength=3,
  *          maxLength=3
  *      ),
- *     @OA\Property(
+ *      @OA\Property(
  *          property="created_at",
  *          type="string",
  *          readOnly=true
- *     ),
- *     @OA\Property(
+ *      ),
+ *      @OA\Property(
  *          property="updated_at",
  *          type="string",
  *          readOnly=true
- *     ),
- *     @OA\Property(
+ *      ),
+ *      @OA\Property(
  *          property="deleted_at",
  *          type="string",
  *          readOnly=true
- *     )
+ *      )
  * )
  */
 class TrainerInfo extends Model
