@@ -19,9 +19,10 @@ class UserCreateFormRequest extends BaseFormRequest
         return [
             'first_name' => 'required',
             'last_name' => 'required',
-            'phone' => 'required|numeric|min:10',
+            'phone' => 'required|numeric|min:10|unique:users,phone',
             'password' => 'required',
             'c_password' => 'required|same:password',
+            'is_trainer' => 'required|boolean',
         ];
     }
 }

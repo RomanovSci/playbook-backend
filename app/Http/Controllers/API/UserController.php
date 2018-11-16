@@ -33,7 +33,8 @@ class UserController extends Controller
      *                      "last_name": "User last name.",
      *                      "phone": "User phone with country code, without plus symbol.",
      *                      "password": "User password.",
-     *                      "c_password": "User password confirm."
+     *                      "c_password": "User password confirm.",
+     *                      "is_trainer": "Boolean flag (0 or 1)"
      *                  }
      *              )
      *         )
@@ -137,8 +138,9 @@ class UserController extends Controller
         try {
             /** @var User $user */
             $user = User::create($fields);
-            $user->assignRole(User::ROLE_USER);
+            $user->assignRole($fields['is_trainer'] ? User::ROLE_TRAINER : User::ROLE_USER);
             $token = $user->createToken('MyApp');
+            DB::commit();
         } catch (\Exception $e) {
             DB::rollBack();
             throw $e;

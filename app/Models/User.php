@@ -78,6 +78,11 @@ class User extends Authenticatable
     const ROLE_ADMIN = 'admin';
 
     /**
+     * @var string
+     */
+    protected $guard_name = 'api';
+
+    /**
      * The attributes that are mass assignable.
      *
      * @var array
