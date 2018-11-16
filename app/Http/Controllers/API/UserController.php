@@ -4,7 +4,9 @@ namespace App\Http\Controllers\API;
 
 use App\Http\Controllers\Controller;
 use App\Http\Requests\User\UserCreateFormRequest;
+use App\Models\Country;
 use App\Models\User;
+use App\Repositories\CountryRepository;
 use Illuminate\Http\JsonResponse;
 use Illuminate\Support\Facades\DB;
 
@@ -31,7 +33,8 @@ class UserController extends Controller
      *                  example={
      *                      "first_name": "User first name.",
      *                      "last_name": "User last name.",
-     *                      "phone": "User phone with country code, without plus symbol.",
+     *                      "phone": "User phone without dial code.",
+     *                      "dial_code": "Dial code with plus symbol."
      *                      "password": "User password.",
      *                      "c_password": "User password confirm.",
      *                      "is_trainer": "Boolean flag (0 or 1)"
@@ -131,15 +134,19 @@ class UserController extends Controller
      */
     public function register(UserCreateFormRequest $request)
     {
+        /** @var Country $country */
         $fields = $request->all();
+        $country = CountryRepository::getByDialCode($fields['dial_code']);
         $fields['password'] = bcrypt($fields['password']);
-        DB::beginTransaction();
+        $fields['country_id'] = $country->id;
 
+        DB::beginTransaction();
         try {
             /** @var User $user */
             $user = User::create($fields);
             $user->assignRole($fields['is_trainer'] ? User::ROLE_TRAINER : User::ROLE_USER);
             $token = $user->createToken('MyApp');
+
             DB::commit();
         } catch (\Exception $e) {
             DB::rollBack();

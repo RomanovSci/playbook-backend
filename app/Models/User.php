@@ -92,6 +92,7 @@ class User extends Authenticatable
         'last_name',
         'phone',
         'password',
+        'country_id',
     ];
 
     /**
