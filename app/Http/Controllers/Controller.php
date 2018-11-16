@@ -13,7 +13,7 @@ use Illuminate\Foundation\Auth\Access\AuthorizesRequests;
  *
  * @package App\Http\Controllers
  * @OA\Info(
- *     title="ISport API documentation",
+ *     title="Playbook API documentation",
  *     version="0.1"
  * )
  */
