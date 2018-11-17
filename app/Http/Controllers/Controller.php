@@ -13,7 +13,7 @@ use Illuminate\Foundation\Auth\Access\AuthorizesRequests;
  *
  * @package App\Http\Controllers
  * @OA\Info(
- *     title="ISport API documentation",
+ *     title="Playbook API documentation",
  *     version="0.1"
  * )
  */
@@ -37,6 +37,14 @@ class Controller extends BaseController
         ]);
     }
 
+    /**
+     * Error response
+     *
+     * @param int $code
+     * @param array $data
+     * @param null $message
+     * @return JsonResponse
+     */
     protected function error(int $code, $data = [], $message = null): JsonResponse
     {
         return response()->json([
