@@ -16,8 +16,8 @@ fi
   
 cd docker
 
-docker-compose build nginx postgres
+docker-compose build workspace nginx postgres
 docker-compose up -d nginx postgres
 
-docker-compose exec workspace bash -c 'composer install; ./compile-frontend.sh; php artisan key:generate; php artisan migrate; php artisan vendor:publish --tag=money; php artisan l5-swagger:generate; vendor/bin/phpunit'
+docker-compose exec workspace bash -c 'composer install; php artisan key:generate; php artisan migrate; php artisan vendor:publish --tag=money; php artisan l5-swagger:generate; ./compile-frontend.sh; vendor/bin/phpunit --configuration phpunit.xml'
 
