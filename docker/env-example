@@ -232,7 +232,7 @@ MARIADB_ENTRYPOINT_INITDB=./mariadb/docker-entrypoint-initdb.d
 POSTGRES_DB=playbook
 POSTGRES_USER=playbook
 POSTGRES_PASSWORD=playbook
-POSTGRES_PORT=54321
+POSTGRES_PORT=5432
 POSTGRES_ENTRYPOINT_INITDB=./postgres/docker-entrypoint-initdb.d
 
 ### RABBITMQ ##############################################
