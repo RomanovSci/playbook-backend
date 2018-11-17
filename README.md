@@ -1,8 +1,10 @@
 # Playbook backend
+[![pipeline status](https://gitlab.com/vladka223/isport-backend/badges/master/pipeline.svg)](https://gitlab.com/vladka223/isport-backend/commits/master)
+[![coverage report](https://gitlab.com/vladka223/isport-backend/badges/master/coverage.svg)](https://gitlab.com/vladka223/isport-backend/commits/master)
 
 ### Initialization
 * Install docker: `sudo snap install docker`
-* Run initialization script: './init.sh'
+* Run initialization script: `./init.sh`
 
 ### Commands
 * Update doc: `php artisan l5-swagger:generate`
