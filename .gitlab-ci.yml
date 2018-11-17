@@ -1,4 +1,9 @@
-test:app:
+image: php:7.1
+
+before_script:
+- bash ci_install.sh > /dev/null
+
+test:unit:
   script:
   - phpunit --configuration phpunit.xml ./tests/Unit
 
