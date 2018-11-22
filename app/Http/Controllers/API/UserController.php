@@ -33,8 +33,7 @@ class UserController extends Controller
      *                  example={
      *                      "first_name": "User first name.",
      *                      "last_name": "User last name.",
-     *                      "phone": "User phone without dial code.",
-     *                      "dial_code": "Dial code with plus symbol.",
+     *                      "phone": "User phone without '+' symbol",
      *                      "password": "User password.",
      *                      "c_password": "User password confirm.",
      *                      "is_trainer": "Boolean flag (0 or 1)"
@@ -69,6 +68,10 @@ class UserController extends Controller
      *                  },
      *              )
      *          )
+     *      ),
+     *      @OA\Response(
+     *          response="400",
+     *          description="Bad request"
      *      )
      * ),
      * @OA\Post(
@@ -136,9 +139,7 @@ class UserController extends Controller
     {
         /** @var Country $country */
         $fields = $request->all();
-        $country = CountryRepository::getByDialCode($fields['dial_code']);
         $fields['password'] = bcrypt($fields['password']);
-        $fields['country_id'] = $country->id;
 
         DB::beginTransaction();
         try {
