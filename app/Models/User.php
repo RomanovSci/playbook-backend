@@ -31,11 +31,6 @@ use Spatie\Permission\Traits\HasRoles;
  *          readOnly=true
  *      ),
  *      @OA\Property(
- *          property="country_id",
- *          type="integer",
- *          readOnly=true
- *      ),
- *      @OA\Property(
  *          property="first_name",
  *          type="string",
  *      ),
@@ -97,7 +92,6 @@ class User extends Authenticatable
         'last_name',
         'phone',
         'password',
-        'country_id',
     ];
 
     /**
