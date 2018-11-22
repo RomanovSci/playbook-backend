@@ -21,12 +21,15 @@ class Controller extends BaseController
 {
     use AuthorizesRequests, DispatchesJobs, ValidatesRequests;
 
+    const CODE_UNAUTHORIZED = 401;
+    const CODE_FORBIDDEN = 403;
+
     /**
      * Simple success response
      *
      * @param null $message
      * @param array $data
-     * @return \Illuminate\Http\JsonResponse
+     * @return JsonResponse
      */
     protected function success($data = [], $message = null): JsonResponse
     {
@@ -35,6 +38,28 @@ class Controller extends BaseController
             'message' => $message ?? 'Success',
             'data' => $data,
         ]);
+    }
+
+    /**
+     * Simple forbidden response
+     *
+     * @param null $message
+     * @return JsonResponse
+     */
+    protected function forbidden($message = null): JsonResponse
+    {
+        return $this->error(self::CODE_FORBIDDEN, [], $message ?? 'Forbidden');
+    }
+
+    /**
+     * Simple unauthorized response
+     *
+     * @param null $message
+     * @return JsonResponse
+     */
+    protected function unauthorized($message = null): JsonResponse
+    {
+        return $this->error(self::CODE_UNAUTHORIZED, [], $message ?? 'Unauthorized');
     }
 
     /**
@@ -52,18 +77,5 @@ class Controller extends BaseController
             'message' => $message ?? 'Ooops...Something went wrong',
             'data' => $data
         ], $code);
-    }
-
-    /**
-     * Simple forbidden response
-     *
-     * @param null $message
-     * @return \Illuminate\Http\JsonResponse
-     */
-    protected function forbidden($message = null): JsonResponse
-    {
-        return response()->json([
-            'message' => $message ?? 'Forbidden',
-        ], 403);
     }
 }

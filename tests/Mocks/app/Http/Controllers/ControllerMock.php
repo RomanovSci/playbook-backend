@@ -32,4 +32,26 @@ class ControllerMock extends Controller
     {
         return parent::forbidden($message);
     }
+
+    /**
+     * @inheritdoc
+     * @param null $message
+     * @return JsonResponse
+     */
+    public function unauthorized($message = null): JsonResponse
+    {
+        return parent::unauthorized($message);
+    }
+
+    /**
+     * @inheritdoc
+     * @param int $code
+     * @param array $data
+     * @param null $message
+     * @return JsonResponse
+     */
+    public function error(int $code, $data = [], $message = null): JsonResponse
+    {
+        return parent::error($code, $data, $message);
+    }
 }

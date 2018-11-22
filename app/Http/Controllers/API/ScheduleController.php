@@ -83,7 +83,7 @@ class ScheduleController extends Controller
      *          response="422",
      *          description="Invalid parameters"
      *      ),
-     *     security={{"Bearer":{}}}
+     *      security={{"Bearer":{}}}
      * )
      */
     public function createForPlayground(

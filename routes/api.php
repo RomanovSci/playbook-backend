@@ -14,9 +14,17 @@ use App\Models\User;
 |
 */
 Route::post('/register', 'API\UserController@register')->name('user.register');
+Route::post('/login', 'API\UserController@login')->name('user.login');
 
 /**
- * Organization admin routes
+ * Authenticated user
+ */
+Route::middleware(['auth:api'])->group(function () {
+    Route::post('/logout', 'API\UserController@logout')->name('user.logout');
+});
+
+/**
+ * Role organization admin and system admin
  */
 Route::middleware(['role:' . User::ROLE_ADMIN . '|'. User::ROLE_ORGANIZATION_ADMIN])->group(function () {
     /** Organization */
@@ -39,7 +47,7 @@ Route::middleware(['role:' . User::ROLE_ADMIN . '|'. User::ROLE_ORGANIZATION_ADM
 });
 
 /**
- * Trainer routes
+ * Role trainer and system admin
  */
 Route::middleware(['role:' . User::ROLE_ADMIN . '|'.  User::ROLE_TRAINER])->group(function () {
     /** Schedule */
