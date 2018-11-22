@@ -1,6 +1,6 @@
 # Playbook backend
-[![pipeline status](https://gitlab.com/vladka223/isport-backend/badges/master/pipeline.svg)](https://gitlab.com/vladka223/isport-backend/commits/master)
-[![coverage report](https://gitlab.com/vladka223/isport-backend/badges/master/coverage.svg)](https://gitlab.com/vladka223/isport-backend/commits/master)
+[![pipeline status](https://gitlab.com/playbook-dev/backend/badges/master/pipeline.svg)](https://gitlab.com/playbook-dev/backend/commits/master)
+[![coverage report](https://gitlab.com/playbook-dev/backend/badges/master/coverage.svg)](https://gitlab.com/playbook-dev/backend/commits/master)
 
 ### Initialization
 * Install docker: `sudo snap install docker`
