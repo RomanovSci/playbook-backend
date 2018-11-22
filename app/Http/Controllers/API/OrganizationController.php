@@ -46,7 +46,7 @@ class OrganizationController extends Controller
      *          response="422",
      *          description="Invalid parameters"
      *      ),
-     *     security={{"Bearer":{}}}
+     *      security={{"Bearer":{}}}
      * )
      */
     public function create(OrganizationCreateFormRequest $request)

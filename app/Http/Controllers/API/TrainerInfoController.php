@@ -49,7 +49,7 @@ class TrainerInfoController extends Controller
      *          response="422",
      *          description="Invalid parameters"
      *      ),
-     *     security={{"Bearer":{}}}
+     *      security={{"Bearer":{}}}
      * )
      */
     public function create(TrainerInfoFormRequest $request)

@@ -32,4 +32,24 @@ class ControllerTest extends TestCase
         $actualResult = $controller->forbidden();
         $this->assertInstanceOf(JsonResponse::class, $actualResult);
     }
+
+    public function testUnauthorized()
+    {
+        /**
+         * @var ControllerMock $controller
+         */
+        $controller = $this->getMockBuilder(ControllerMock::class)->getMock();
+        $actualResult = $controller->unauthorized();
+        $this->assertInstanceOf(JsonResponse::class, $actualResult);
+    }
+
+    public function testError()
+    {
+        /**
+         * @var ControllerMock $controller
+         */
+        $controller = $this->getMockBuilder(ControllerMock::class)->getMock();
+        $actualResult = $controller->error(404);
+        $this->assertInstanceOf(JsonResponse::class, $actualResult);
+    }
 }
