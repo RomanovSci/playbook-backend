@@ -166,6 +166,7 @@ class UserController extends Controller
 
         return $this->success([
             'access_token' => $token->accessToken,
+            'roles' => $user->getRoleNames(),
         ]);
     }
 
