@@ -132,7 +132,8 @@ class UserController extends Controller
      *                      "success": true,
      *                      "message": "Success",
      *                      "data": {
-     *                          "token": "Bearer token"
+     *                          "access_token": "Bearer token",
+     *                          "roles": {"user"}
      *                      }
      *                  }
      *              )
