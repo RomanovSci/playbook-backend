@@ -46,7 +46,7 @@ use Illuminate\Database\Eloquent\SoftDeletes;
  *      ),
  *      @OA\Property(
  *          property="updated_at",
- *          type="integer",
+ *          type="string",
  *          readOnly=true
  *      ),
  *      @OA\Property(

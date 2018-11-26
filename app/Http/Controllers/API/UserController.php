@@ -53,7 +53,7 @@ class UserController extends Controller
      *              @OA\Schema(
      *                  example={
      *                      "success": true,
-     *                      "message": "Success",
+     *                      "message": "string",
      *                      "data": {
      *                          "token": "Bearer token"
      *                      }
@@ -130,7 +130,7 @@ class UserController extends Controller
      *              @OA\Schema(
      *                  example={
      *                      "success": true,
-     *                      "message": "Success",
+     *                      "message": "string",
      *                      "data": {
      *                          "access_token": "Bearer token",
      *                          "roles": {"user"}
@@ -187,7 +187,7 @@ class UserController extends Controller
      *              @OA\Schema(
      *                  example={
      *                      "success": true,
-     *                      "message": "Success"
+     *                      "message": "string"
      *                  }
      *              )
      *         )
