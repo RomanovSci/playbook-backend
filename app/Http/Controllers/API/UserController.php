@@ -133,7 +133,12 @@ class UserController extends Controller
      *                      "message": "string",
      *                      "data": {
      *                          "access_token": "Bearer token",
-     *                          "roles": {"user"}
+     *                          "roles": {
+     *                              "user",
+     *                              "trainer",
+     *                              "organization-admin",
+     *                              "admin"
+     *                          }
      *                      }
      *                  }
      *              )
