@@ -76,8 +76,23 @@ class ScheduleController extends Controller
      *          description="Ok",
      *          @OA\MediaType(
      *              mediaType="application/json",
-     *              @OA\Schema(ref="#/components/schemas/Schedule")
-     *         )
+     *              @OA\Schema(
+     *                  type="object",
+     *                  @OA\Property(
+     *                      property="success",
+     *                      type="boolean"
+     *                  ),
+     *                  @OA\Property(
+     *                      property="message",
+     *                      type="string",
+     *                  ),
+     *                  @OA\Property(
+     *                      type="object",
+     *                      property="data",
+     *                      ref="#/components/schemas/Schedule"
+     *                  )
+     *              )
+     *          )
      *      ),
      *      @OA\Response(
      *          response="422",
