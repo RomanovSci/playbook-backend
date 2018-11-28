@@ -2,6 +2,7 @@
 
 namespace App\Models;
 
+use Illuminate\Database\Eloquent\SoftDeletes;
 use Illuminate\Notifications\Notifiable;
 use Illuminate\Foundation\Auth\User as Authenticatable;
 use Laravel\Passport\HasApiTokens;
@@ -19,58 +20,48 @@ use Spatie\Permission\Traits\HasRoles;
  *
  * @OA\Schema(
  *      schema="User",
- *      required={
- *          "first_name",
- *          "last_name",
- *          "phone",
- *          "password"
- *      },
- *      @OA\Property(
- *          property="id",
- *          type="integer",
- *          readOnly=true
- *      ),
- *      @OA\Property(
- *          property="first_name",
- *          type="string",
- *      ),
- *      @OA\Property(
- *          property="last_name",
- *          type="string"
- *      ),
- *      @OA\Property(
- *          property="phone",
- *          type="string"
- *      ),
- *      @OA\Property(
- *          property="password",
- *          type="string"
- *      ),
- *      @OA\Property(
- *          property="phone_verified_at",
- *          type="string",
- *          readOnly=true
- *      ),
- *      @OA\Property(
- *          property="created_at",
- *          type="string",
- *          readOnly=true
- *      ),
- *      @OA\Property(
- *          property="updated_at",
- *          type="string",
- *          readOnly=true
- *      ),
- *      @OA\Property(
- *          property="deleted_at",
- *          type="string",
- *          readOnly=true
- *      )
+ *      allOf={
+ *          @OA\Schema(
+ *              required={
+ *                  "first_name",
+ *                  "last_name",
+ *                  "phone",
+ *                  "password"
+ *              },
+ *              @OA\Property(
+ *                  property="id",
+ *                  type="integer",
+ *                  readOnly=true
+ *              ),
+ *              @OA\Property(
+ *                  property="first_name",
+ *                  type="string",
+ *              ),
+ *              @OA\Property(
+ *                  property="last_name",
+ *                  type="string"
+ *              ),
+ *              @OA\Property(
+ *                  property="phone",
+ *                  type="string"
+ *              ),
+ *              @OA\Property(
+ *                  property="password",
+ *                  type="string"
+ *              ),
+ *              @OA\Property(
+ *                  property="phone_verified_at",
+ *                  type="string",
+ *                  readOnly=true
+ *              ),
+ *          ),
+ *          @OA\Schema(ref="#/components/schemas/BaseModel"),
+ *      }
  * )
  */
 class User extends Authenticatable
 {
-    use Notifiable, HasApiTokens, HasRoles;
+    use Notifiable, HasApiTokens, HasRoles, SoftDeletes;
 
     const ROLE_USER = 'user';
     const ROLE_TRAINER = 'trainer';

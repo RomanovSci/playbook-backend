@@ -21,6 +21,7 @@ class CreateUsersTable extends Migration
             $table->string('phone')->unique();
             $table->timestamp('phone_verified_at')->nullable();
             $table->timestamps();
+            $table->softDeletes();
         });
     }
 

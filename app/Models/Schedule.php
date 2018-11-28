@@ -9,60 +9,50 @@ namespace App\Models;
  *
  * @OA\Schema(
  *      schema="Schedule",
- *      required={
- *          "price_per_hour",
- *          "currency",
- *          "schedulable_id",
- *          "schedulable_type"
- *      },
- *      @OA\Property(
- *          property="id",
- *          type="integer",
- *          readOnly=true
- *      ),
- *      @OA\Property(
- *          property="start_time",
- *          type="string",
- *      ),
- *      @OA\Property(
- *          property="end_time",
- *          type="string"
- *      ),
- *      @OA\Property(
- *          property="price_per_hour",
- *          type="integer"
- *      ),
- *      @OA\Property(
- *          property="currency",
- *          type="string",
- *          minLength=3,
- *          maxLength=3
- *      ),
- *      @OA\Property(
- *          property="schedulable_id",
- *          type="integer",
- *          description="Reference to schedulable entity"
- *      ),
- *      @OA\Property(
- *          property="schedulable_type",
- *          type="string",
- *          description="Type of schedulable entity"
- *      ),
- *      @OA\Property(
- *          property="created_at",
- *          type="string",
- *          readOnly=true
- *      ),
- *      @OA\Property(
- *          property="updated_at",
- *          type="string",
- *          readOnly=true
- *      ),
- *      @OA\Property(
- *          property="deleted_at",
- *          type="string",
- *          readOnly=true
- *      )
+ *      allOf={
+ *          @OA\Schema(
+ *              required={
+ *                  "price_per_hour",
+ *                  "currency",
+ *                  "schedulable_id",
+ *                  "schedulable_type"
+ *              },
+ *              @OA\Property(
+ *                  property="id",
+ *                  type="integer",
+ *                  readOnly=true
+ *              ),
+ *              @OA\Property(
+ *                  property="start_time",
+ *                  type="string",
+ *              ),
+ *              @OA\Property(
+ *                  property="end_time",
+ *                  type="string"
+ *              ),
+ *              @OA\Property(
+ *                  property="price_per_hour",
+ *                  type="integer"
+ *              ),
+ *              @OA\Property(
+ *                  property="currency",
+ *                  type="string",
+ *                  minLength=3,
+ *               maxLength=3
+ *              ),
+ *              @OA\Property(
+ *                  property="schedulable_id",
+ *                  type="integer",
+ *                  description="Reference to schedulable entity"
+ *              ),
+ *              @OA\Property(
+ *                  property="schedulable_type",
+ *                  type="string",
+ *                  description="Type of schedulable entity"
+ *              )
+ *          ),
+ *          @OA\Schema(ref="#/components/schemas/BaseModel"),
+ *      }
  * )
  */
 class Schedule extends BaseModel

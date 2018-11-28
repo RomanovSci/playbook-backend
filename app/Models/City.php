@@ -13,39 +13,29 @@ namespace App\Models;
  *
  * @OA\Schema(
  *      schema="City",
- *      required={
- *          "country_id",
- *          "name",
- *          "origin_name"
- *      },
- *      @OA\Property(
- *          property="id",
- *          type="integer",
- *          readOnly=true
- *      ),
- *      @OA\Property(
- *          property="country_id",
- *          type="integer",
- *      ),
- *      @OA\Property(
- *          property="name",
- *          type="string"
- *      ),
- *      @OA\Property(
- *          property="created_at",
- *          type="string",
- *          readOnly=true
- *      ),
- *      @OA\Property(
- *          property="updated_at",
- *          type="string",
- *          readOnly=true
- *      ),
- *      @OA\Property(
- *          property="deleted_at",
- *          type="string",
- *          readOnly=true
- *      )
+ *      allOf={
+ *          @OA\Schema(
+ *              required={
+ *                  "country_id",
+ *                  "name",
+ *                  "origin_name"
+ *              },
+ *              @OA\Property(
+ *                  property="id",
+ *                  type="integer",
+ *                  readOnly=true
+ *              ),
+ *              @OA\Property(
+ *                  property="country_id",
+ *                  type="integer",
+ *              ),
+ *              @OA\Property(
+ *                  property="name",
+ *                  type="string"
+ *              ),
+ *          ),
+ *          @OA\Schema(ref="#/components/schemas/BaseModel"),
+ *      }
  * )
  */
 class City extends BaseModel

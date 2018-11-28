@@ -11,30 +11,20 @@ namespace App\Models;
  * @OA\Schema(
  *      schema="PlaygroundType",
  *      required={"type"},
- *      @OA\Property(
- *          property="id",
- *          type="integer",
- *          readOnly=true
- *      ),
- *      @OA\Property(
- *          property="type",
- *          type="string",
- *      ),
- *      @OA\Property(
- *          property="created_at",
- *          type="string",
- *          readOnly=true
- *      ),
- *      @OA\Property(
- *          property="updated_at",
- *          type="string",
- *          readOnly=true
- *      ),
- *      @OA\Property(
- *          property="deleted_at",
- *          type="string",
- *          readOnly=true
- *      )
+ *      allOf={
+ *          @OA\Schema(
+ *              @OA\Property(
+ *                  property="id",
+ *                  type="integer",
+ *                  readOnly=true
+ *              ),
+ *              @OA\Property(
+ *                  property="type",
+ *                  type="string",
+ *              ),
+ *          ),
+ *          @OA\Schema(ref="#/components/schemas/BaseModel"),
+ *      }
  * )
  */
 class PlaygroundType extends BaseModel
