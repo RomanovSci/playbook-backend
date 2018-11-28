@@ -2,13 +2,11 @@
 
 namespace App\Models;
 
-use Illuminate\Database\Eloquent\Model;
-use Illuminate\Database\Eloquent\SoftDeletes;
-
 /**
  * Class Playground
  *
  * @package App\Models
+ * @property integer id
  * @property string name
  * @property string description
  * @property string address
@@ -20,73 +18,61 @@ use Illuminate\Database\Eloquent\SoftDeletes;
  *
  * @OA\Schema(
  *      schema="Playground",
- *      required={
- *          "type_id",
- *          "name",
- *          "description",
- *          "address",
- *          "opening_time",
- *          "closing_time",
+ *      allOf={
+ *          @OA\Schema(
+ *              required={
+ *                  "type_id",
+ *                  "name",
+ *                  "description",
+ *                  "address",
+ *                  "opening_time",
+ *                  "closing_time",
  *
- *      },
- *      @OA\Property(
- *          property="id",
- *          type="integer",
- *          readOnly=true
- *      ),
- *      @OA\Property(
- *          property="type_id",
- *          type="integer"
- *      ),
- *      @OA\Property(
- *          property="organization_id",
- *          type="integer"
- *      ),
- *      @OA\Property(
- *          property="name",
- *          type="string"
- *      ),
- *      @OA\Property(
- *          property="description",
- *          type="string",
- *      ),
- *      @OA\Property(
- *          property="address",
- *          type="string",
- *      ),
- *      @OA\Property(
- *          property="opening_time",
- *          type="string",
- *      ),
- *      @OA\Property(
- *          property="closing_time",
- *          type="string",
- *      ),
- *      @OA\Property(
- *          property="status",
- *          type="integer",
- *      ),
- *      @OA\Property(
- *          property="created_at",
- *          type="string",
- *          readOnly=true
- *      ),
- *      @OA\Property(
- *          property="updated_at",
- *          type="string",
- *          readOnly=true
- *      ),
- *      @OA\Property(
- *          property="deleted_at",
- *          type="string",
- *          readOnly=true
- *      )
+ *              },
+ *              @OA\Property(
+ *                  property="id",
+ *                  type="integer",
+ *                  readOnly=true
+ *              ),
+ *              @OA\Property(
+ *                  property="type_id",
+ *                  type="integer"
+ *              ),
+ *              @OA\Property(
+ *                  property="organization_id",
+ *                  type="integer"
+ *              ),
+ *              @OA\Property(
+ *                  property="name",
+ *                  type="string"
+ *              ),
+ *              @OA\Property(
+ *                  property="description",
+ *                  type="string",
+ *              ),
+ *              @OA\Property(
+ *                  property="address",
+ *                  type="string",
+ *              ),
+ *              @OA\Property(
+ *                  property="opening_time",
+ *                  type="string",
+ *              ),
+ *              @OA\Property(
+ *                  property="closing_time",
+ *                  type="string",
+ *              ),
+ *              @OA\Property(
+ *                  property="status",
+ *                  type="integer",
+ *              ),
+ *          ),
+ *          @OA\Schema(ref="#/components/schemas/BaseModel"),
+ *      }
  * )
  */
-class Playground extends Model
+class Playground extends BaseModel
 {
-    use SoftDeletes;
-
     /**
      * @var string
      */

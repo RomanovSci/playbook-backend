@@ -17,8 +17,10 @@ class ScheduleCreateFormRequest extends BaseFormRequest
     public function rules()
     {
         return [
-            'start_time' => 'required|date',
-            'end_time' => 'required|date',
+            'dates' => 'required|array',
+            'dates.*' => 'required|date_format:Y-m-d',
+            'start_time' => 'required|date_format:H:i:s',
+            'end_time' => 'required|date_format:H:i:s',
             'price_per_hour' => 'required|numeric',
             'currency' => 'required|string|uppercase|currency',
         ];

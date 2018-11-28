@@ -2,9 +2,6 @@
 
 namespace App\Models;
 
-use Illuminate\Database\Eloquent\Model;
-use Illuminate\Database\Eloquent\SoftDeletes;
-
 /**
  * Class Organization
  *
@@ -16,50 +13,38 @@ use Illuminate\Database\Eloquent\SoftDeletes;
  *
  * @OA\Schema(
  *      schema="Organization",
- *      required={
- *          "owner_id",
- *          "name",
- *          "city_id"
- *      },
- *      @OA\Property(
- *          property="id",
- *          type="integer",
- *          readOnly=true
- *      ),
- *      @OA\Property(
- *          property="owner_id",
- *          type="integer"
- *      ),
- *      @OA\Property(
- *          property="name",
- *          type="string"
- *      ),
- *      @OA\Property(
- *          property="city_id",
- *          type="integer",
- *          format="int32"
- *      ),
- *      @OA\Property(
- *          property="created_at",
- *          type="string",
- *          readOnly=true
- *      ),
- *      @OA\Property(
- *          property="updated_at",
- *          type="string",
- *          readOnly=true
- *      ),
- *      @OA\Property(
- *          property="deleted_at",
- *          type="string",
- *          readOnly=true
- *      )
+ *      allOf={
+ *          @OA\Schema(
+ *              required={
+ *                  "owner_id",
+ *                  "name",
+ *                  "city_id"
+ *              },
+ *              @OA\Property(
+ *                  property="id",
+ *                  type="integer",
+ *                  readOnly=true
+ *              ),
+ *              @OA\Property(
+ *                  property="owner_id",
+ *                  type="integer"
+ *              ),
+ *              @OA\Property(
+ *                  property="name",
+ *                  type="string"
+ *              ),
+ *              @OA\Property(
+ *                  property="city_id",
+ *                  type="integer",
+ *                  format="int32"
+ *              ),
+ *          ),
+ *          @OA\Schema(ref="#/components/schemas/BaseModel"),
+ *      }
  * )
  */
-class Organization extends Model
+class Organization extends BaseModel
 {
-    use SoftDeletes;
-
     /**
      * @var string
      */

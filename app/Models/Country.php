@@ -2,9 +2,6 @@
 
 namespace App\Models;
 
-use Illuminate\Database\Eloquent\Model;
-use Illuminate\Database\Eloquent\SoftDeletes;
-
 /**
  * Class Country
  *
@@ -16,44 +13,32 @@ use Illuminate\Database\Eloquent\SoftDeletes;
  *
  * @OA\Schema(
  *      schema="Country",
- *      required={
- *          "code",
- *          "name",
- *          "origin_name"
- *      },
- *      @OA\Property(
- *          property="id",
- *          type="integer",
- *          readOnly=true
- *      ),
- *      @OA\Property(
- *          property="name",
- *          type="string"
- *      ),
- *      @OA\Property(
- *          property="dial_code",
- *          type="string"
- *      ),
- *      @OA\Property(
- *          property="created_at",
- *          type="string",
- *          readOnly=true
- *      ),
- *      @OA\Property(
- *          property="updated_at",
- *          type="string",
- *          readOnly=true
- *      ),
- *      @OA\Property(
- *          property="deleted_at",
- *          type="string",
- *          readOnly=true
- *      )
+ *      allOf={
+ *          @OA\Schema(
+ *              required={
+ *                  "code",
+ *                  "name",
+ *                  "origin_name"
+ *              },
+ *              @OA\Property(
+ *                  property="id",
+ *                  type="integer",
+ *                  readOnly=true
+ *              ),
+ *              @OA\Property(
+ *                  property="name",
+ *                  type="string"
+ *              ),
+ *              @OA\Property(
+ *                  property="dial_code",
+ *                  type="string"
+ *              ),
+ *          ),
+ *          @OA\Schema(ref="#/components/schemas/BaseModel"),
+ *      }
  * )
  */
-class Country extends Model
+class Country extends BaseModel
 {
-    use SoftDeletes;
-
     protected $table = 'countries';
 }
