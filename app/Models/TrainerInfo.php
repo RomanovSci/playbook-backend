@@ -2,9 +2,6 @@
 
 namespace App\Models;
 
-use Illuminate\Database\Eloquent\Model;
-use Illuminate\Database\Eloquent\SoftDeletes;
-
 /**
  * Class TrainerInfo
  *
@@ -62,10 +59,8 @@ use Illuminate\Database\Eloquent\SoftDeletes;
  *      )
  * )
  */
-class TrainerInfo extends Model
+class TrainerInfo extends BaseModel
 {
-    use SoftDeletes;
-
     /**
      * @var string
      */

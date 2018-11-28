@@ -2,9 +2,6 @@
 
 namespace App\Models;
 
-use Illuminate\Database\Eloquent\Model;
-use Illuminate\Database\Eloquent\SoftDeletes;
-
 /**
  * Class Country
  *
@@ -51,9 +48,7 @@ use Illuminate\Database\Eloquent\SoftDeletes;
  *      )
  * )
  */
-class Country extends Model
+class Country extends BaseModel
 {
-    use SoftDeletes;
-
     protected $table = 'countries';
 }

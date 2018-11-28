@@ -2,9 +2,6 @@
 
 namespace App\Models;
 
-use Illuminate\Database\Eloquent\Model;
-use Illuminate\Database\Eloquent\SoftDeletes;
-
 /**
  * Class PlaygroundType
  *
@@ -40,9 +37,7 @@ use Illuminate\Database\Eloquent\SoftDeletes;
  *      )
  * )
  */
-class PlaygroundType extends Model
+class PlaygroundType extends BaseModel
 {
-    use SoftDeletes;
-
     protected $table = 'playground_types';
 }

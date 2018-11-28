@@ -2,9 +2,6 @@
 
 namespace App\Models;
 
-use Illuminate\Database\Eloquent\Model;
-use Illuminate\Database\Eloquent\SoftDeletes;
-
 /**
  * Class PlaygroundSchedule
  *
@@ -68,10 +65,8 @@ use Illuminate\Database\Eloquent\SoftDeletes;
  *      )
  * )
  */
-class Schedule extends Model
+class Schedule extends BaseModel
 {
-    use SoftDeletes;
-
     /**
      * @var string
      */

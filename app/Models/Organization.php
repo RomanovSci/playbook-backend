@@ -2,9 +2,6 @@
 
 namespace App\Models;
 
-use Illuminate\Database\Eloquent\Model;
-use Illuminate\Database\Eloquent\SoftDeletes;
-
 /**
  * Class Organization
  *
@@ -56,10 +53,8 @@ use Illuminate\Database\Eloquent\SoftDeletes;
  *      )
  * )
  */
-class Organization extends Model
+class Organization extends BaseModel
 {
-    use SoftDeletes;
-
     /**
      * @var string
      */
