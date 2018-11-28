@@ -30,7 +30,7 @@ class ScheduleController extends Controller
      *              mediaType="application/json",
      *              @OA\Schema(
      *                  example={
-     *                      "dates": "Array of period dates. Example: [2018-05-12, 2018-05-13]",
+     *                      "dates": "Array with dates of periods. Example: [2018-05-12, 2018-05-13]",
      *                      "start_time": "Period start time. Example: 09:00:00",
      *                      "end_time": "Period end time. Example: 17:00:00",
      *                      "price_per_hour": "Price per hour in cents. Example: 7000. (70RUB)",
@@ -116,7 +116,7 @@ class ScheduleController extends Controller
      *              mediaType="application/json",
      *              @OA\Schema(
      *                  example={
-     *                      "dates": "Array of period dates. Example: [2018-05-12, 2018-05-13]",
+     *                      "dates": "Array with dates of periods. Example: [2018-05-12, 2018-05-13]",
      *                      "start_time": "Period start time. Example: 09:00:00",
      *                      "end_time": "Period end time. Example: 17:00:00",
      *                      "price_per_hour": "Price per hour in cents. Example: 7000. (70RUB)",
