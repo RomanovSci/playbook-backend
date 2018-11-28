@@ -18,53 +18,21 @@ use App\Http\Requests\Schedule\ScheduleCreateFormRequest;
 class ScheduleController extends Controller
 {
     /**
-     * Create trainer schedule
-     *
-     * @param ScheduleCreateFormRequest $request
-     * @return JsonResponse
-     */
-    public function createForTrainer(
-        ScheduleCreateFormRequest $request
-    ) {
-        $data = $request->all();
-        $data['price_per_hour'] = money($data['price_per_hour'], $data['currency'])->getAmount();
-
-        /**
-         * @var User $user
-         * @var Schedule $trainerSchedule
-         */
-        $user = Auth::user();
-        $trainerSchedule = Schedule::create($data);
-        $trainerSchedule->users()->save($user);
-
-        return $this->success($trainerSchedule->toArray());
-    }
-
-    /**
-     * Create playground schedule
-     *
-     * @param Playground $playground
      * @param ScheduleCreateFormRequest $request
      * @return JsonResponse
      *
      * @OA\Post(
-     *      path="/api/create-for-playground/{playground_id}",
+     *      path="/api/schedule/trainer/create",
      *      tags={"Schedule"},
-     *      summary="Create trainer information",
-     *      @OA\Parameter(
-     *          name="playground_id",
-     *          description="Playground id",
-     *          in="path",
-     *          required=true,
-     *          @OA\Schema(type="integer")
-     *      ),
+     *      summary="Create trainer schedule",
      *      @OA\RequestBody(
      *          @OA\MediaType(
      *              mediaType="application/json",
      *              @OA\Schema(
      *                  example={
-     *                      "start_time": "Period start. Example: 2018-05-30 09:00:00",
-     *                      "end_time": "Period end. Example: 2018-05-30 17:00:00",
+     *                      "dates": "Array of period dates. Example: [2018-05-12, 2018-05-13]",
+     *                      "start_time": "Period start time. Example: 09:00:00",
+     *                      "end_time": "Period end time. Example: 17:00:00",
      *                      "price_per_hour": "Price per hour in cents. Example: 7000. (70RUB)",
      *                      "currency": "Currency: RUB, UAH, USD, etc. Default: RUB"
      *                  }
@@ -87,9 +55,95 @@ class ScheduleController extends Controller
      *                      type="string",
      *                  ),
      *                  @OA\Property(
-     *                      type="object",
+     *                      type="array",
      *                      property="data",
-     *                      ref="#/components/schemas/Schedule"
+     *                      @OA\Items(ref="#/components/schemas/Schedule")
+     *                  )
+     *              )
+     *          )
+     *      ),
+     *      @OA\Response(
+     *          response="422",
+     *          description="Invalid parameters"
+     *      ),
+     *      security={{"Bearer":{}}}
+     * )
+     */
+    public function createForTrainer(ScheduleCreateFormRequest $request)
+    {
+        /**
+         * @var User $user
+         */
+        $schedules = [];
+        $requestData = $request->all();
+        $requestData['price_per_hour'] = money($requestData['price_per_hour'], $requestData['currency'])->getAmount();
+        $user = Auth::user();
+
+        foreach ($requestData['dates'] as $index => $date) {
+            /**
+             * @var Schedule $trainerSchedule
+             */
+            $trainerSchedule = Schedule::create(array_merge($requestData, [
+                'start_time' => $date . ' ' . $requestData['start_time'],
+                'end_time' => $date . ' ' . $requestData['end_time'],
+                'schedulable_id' => $user->id,
+                'schedulable_type' => User::class
+            ]));
+            $schedules[] = $trainerSchedule->toArray();
+        }
+
+        return $this->success($schedules);
+    }
+
+    /**
+     * @param Playground $playground
+     * @param ScheduleCreateFormRequest $request
+     * @return JsonResponse
+     *
+     * @OA\Post(
+     *      path="/api/schedule/playground/create/{playground_id}",
+     *      tags={"Schedule"},
+     *      summary="Create playground schedule",
+     *      @OA\Parameter(
+     *          name="playground_id",
+     *          description="Playground id",
+     *          in="path",
+     *          required=true,
+     *          @OA\Schema(type="integer")
+     *      ),
+     *      @OA\RequestBody(
+     *          @OA\MediaType(
+     *              mediaType="application/json",
+     *              @OA\Schema(
+     *                  example={
+     *                      "dates": "Array of period dates. Example: [2018-05-12, 2018-05-13]",
+     *                      "start_time": "Period start time. Example: 09:00:00",
+     *                      "end_time": "Period end time. Example: 17:00:00",
+     *                      "price_per_hour": "Price per hour in cents. Example: 7000. (70RUB)",
+     *                      "currency": "Currency: RUB, UAH, USD, etc. Default: RUB"
+     *                  }
+     *              )
+     *          )
+     *      ),
+     *      @OA\Response(
+     *          response="200",
+     *          description="Ok",
+     *          @OA\MediaType(
+     *              mediaType="application/json",
+     *              @OA\Schema(
+     *                  type="object",
+     *                  @OA\Property(
+     *                      property="success",
+     *                      type="boolean"
+     *                  ),
+     *                  @OA\Property(
+     *                      property="message",
+     *                      type="string",
+     *                  ),
+     *                  @OA\Property(
+     *                      type="array",
+     *                      property="data",
+     *                      @OA\Items(ref="#/components/schemas/Schedule")
      *                  )
      *              )
      *          )
@@ -109,13 +163,23 @@ class ScheduleController extends Controller
             return $this->forbidden();
         }
 
-        $data = $request->all();
-        $data['price_per_hour'] = money($data['price_per_hour'], $data['currency'])->getAmount();
+        $schedules = [];
+        $requestData = $request->all();
+        $requestData['price_per_hour'] = money($requestData['price_per_hour'], $requestData['currency'])->getAmount();
 
-        /** @var Schedule $playgroundSchedule */
-        $playgroundSchedule = Schedule::create($data);
-        $playgroundSchedule->playgrounds()->save($playground);
+        foreach ($requestData['dates'] as $index => $date) {
+            /**
+             * @var Schedule $trainerSchedule
+             */
+            $trainerSchedule = Schedule::create(array_merge($requestData, [
+                'start_time' => $date . ' ' . $requestData['start_time'],
+                'end_time' => $date . ' ' . $requestData['end_time'],
+                'schedulable_id' => $playground->id,
+                'schedulable_type' => Playground::class
+            ]));
+            $schedules[] = $trainerSchedule->toArray();
+        }
 
-        return $this->success($playgroundSchedule->toArray());
+        return $this->success($schedules);
     }
 }

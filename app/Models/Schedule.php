@@ -81,8 +81,20 @@ class Schedule extends Model
      * @var array
      */
     protected $fillable = [
-        'start_time', 'end_time',
-        'price_per_hour', 'currency',
+        'start_time',
+        'end_time',
+        'price_per_hour',
+        'currency',
+        'schedulable_id',
+        'schedulable_type',
+    ];
+
+    /**
+     * @var array
+     */
+    protected $hidden = [
+        'schedulable_id',
+        'schedulable_type',
     ];
 
     /**

@@ -41,8 +41,8 @@ Route::middleware(['role:' . User::ROLE_ADMIN . '|'. User::ROLE_ORGANIZATION_ADM
 
     /** Schedule */
     Route::prefix('schedule')->group(function () {
-        Route::post('/create-for-playground/{playground}', 'API\ScheduleController@createForPlayground')
-            ->name('schedule.createForPlayground');
+        Route::post('/playground/create/{playground}', 'API\ScheduleController@createForPlayground')
+            ->name('schedule.playground.create');
     });
 });
 
@@ -52,8 +52,8 @@ Route::middleware(['role:' . User::ROLE_ADMIN . '|'. User::ROLE_ORGANIZATION_ADM
 Route::middleware(['role:' . User::ROLE_ADMIN . '|'.  User::ROLE_TRAINER])->group(function () {
     /** Schedule */
     Route::prefix('schedule')->group(function () {
-        Route::post('/create-for-trainer', 'API\ScheduleController@createForTrainer')
-            ->name('schedule.createForTrainer');
+        Route::post('/trainer/create', 'API\ScheduleController@createForTrainer')
+            ->name('schedule.trainer.create');
     });
 
     /** Trainer info */
