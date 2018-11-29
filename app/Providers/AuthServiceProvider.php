@@ -2,9 +2,11 @@
 
 namespace App\Providers;
 
+use App\Models\Booking;
 use App\Models\Organization;
 use App\Models\Playground;
 use App\Models\Schedule;
+use App\Policies\BookingPolicy;
 use App\Policies\OrganizationPolicy;
 use App\Policies\PlaygroundPolicy;
 use App\Policies\SchedulePolicy;
@@ -28,6 +30,7 @@ class AuthServiceProvider extends ServiceProvider
         Organization::class => OrganizationPolicy::class,
         Playground::class => PlaygroundPolicy::class,
         Schedule::class => SchedulePolicy::class,
+        Booking::class => BookingPolicy::class,
     ];
 
     /**

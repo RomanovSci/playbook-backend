@@ -92,7 +92,10 @@ class PlaygroundController extends Controller
          */
         $playground = Playground::create(array_merge(
             $request->all(),
-            ['organization_id' => $organization->id]
+            [
+                'organization_id' => $organization->id,
+                'creator_id' => Auth::user()->id,
+            ]
         ));
 
         return $this->success($playground->toArray());
