@@ -14,10 +14,8 @@ class PlaygroundPolicy
      * @param Playground $playground
      * @return bool
      */
-    public function createSchedule(
-        User $user,
-        Playground $playground
-    ): bool {
+    public function createSchedule(User $user, Playground $playground): bool
+    {
         return $user->id === $playground->organization->owner_id;
     }
 }

@@ -20,6 +20,7 @@ class CreateBookingsTable extends Migration
             $table->timestamp('end_time');
             $table->smallInteger('status')->default(0);
             $table->timestamps();
+            $table->softDeletes();
             $table->foreign('schedule_id')->references('id')->on('schedules');
         });
     }
