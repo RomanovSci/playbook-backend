@@ -36,6 +36,58 @@ class BookingController extends Controller
      * @param Schedule $schedule
      * @param BookingCreateFormRequest $request
      * @return \Illuminate\Http\JsonResponse
+     *
+     * @OA\Post(
+     *      path="/api/booking/create/{schedule_id}",
+     *      tags={"Booking"},
+     *      summary="Create booking",
+     *      @OA\Parameter(
+     *          name="schedule_id",
+     *          description="Schedule id",
+     *          in="path",
+     *          required=true,
+     *          @OA\Schema(type="integer")
+     *      ),
+     *      @OA\RequestBody(
+     *          @OA\MediaType(
+     *              mediaType="application/json",
+     *              @OA\Schema(
+     *                  example={
+     *                      "start_time": "Start booking time. Example: 2018-05-12 09:00:00",
+     *                      "end_time": "End booking time. Example: 2018-05-12 17:59:59",
+     *                  }
+     *              )
+     *          )
+     *      ),
+     *      @OA\Response(
+     *          response="200",
+     *          description="Ok",
+     *          @OA\MediaType(
+     *              mediaType="application/json",
+     *              @OA\Schema(
+     *                  type="object",
+     *                  @OA\Property(
+     *                      property="success",
+     *                      type="boolean"
+     *                  ),
+     *                  @OA\Property(
+     *                      property="message",
+     *                      type="string",
+     *                  ),
+     *                  @OA\Property(
+     *                      type="object",
+     *                      property="data",
+     *                      ref="#/components/schemas/Booking"
+     *                  )
+     *              )
+     *         )
+     *      ),
+     *      @OA\Response(
+     *          response="403",
+     *          description="Can't create booking || Period is unavailable"
+     *      ),
+     *      security={{"Bearer":{}}}
+     * )
      */
     public function create(
         Schedule $schedule,
@@ -49,7 +101,7 @@ class BookingController extends Controller
         $endTime = Carbon::parse($request->post('end_time'));
 
         if (!$this->bookingAvailabilityChecker->isAvailable($schedule, $startTime, $endTime)) {
-            return $this->error(200, [], 'Period is unavailable');
+            return $this->forbidden('Period is unavailable');
         }
 
         /**
