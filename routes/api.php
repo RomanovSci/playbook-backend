@@ -21,6 +21,12 @@ Route::post('/login', 'API\UserController@login')->name('user.login');
  */
 Route::middleware(['auth:api'])->group(function () {
     Route::post('/logout', 'API\UserController@logout')->name('user.logout');
+
+    /** Booking */
+    Route::prefix('booking')->group(function () {
+        Route::post('/create/{schedule}', 'API\BookingController@create')
+            ->name('booking.create');
+    });
 });
 
 /**

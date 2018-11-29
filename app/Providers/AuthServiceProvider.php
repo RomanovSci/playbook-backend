@@ -4,8 +4,10 @@ namespace App\Providers;
 
 use App\Models\Organization;
 use App\Models\Playground;
+use App\Models\Schedule;
 use App\Policies\OrganizationPolicy;
 use App\Policies\PlaygroundPolicy;
+use App\Policies\SchedulePolicy;
 use Carbon\Carbon;
 use Illuminate\Foundation\Support\Providers\AuthServiceProvider as ServiceProvider;
 use Laravel\Passport\Passport;
@@ -25,6 +27,7 @@ class AuthServiceProvider extends ServiceProvider
     protected $policies = [
         Organization::class => OrganizationPolicy::class,
         Playground::class => PlaygroundPolicy::class,
+        Schedule::class => SchedulePolicy::class,
     ];
 
     /**

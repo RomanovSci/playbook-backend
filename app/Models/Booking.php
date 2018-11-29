@@ -46,7 +46,20 @@ use Illuminate\Database\Eloquent\Relations\MorphTo;
  */
 class Booking extends BaseModel
 {
+    /**
+     * @var string
+     */
     protected $table = 'bookings';
+
+    /**
+     * @var array
+     */
+    protected $fillable = [
+        'schedule_id',
+        'start_time',
+        'end_time',
+        'status,'
+    ];
 
     /**
      * Bookable entities

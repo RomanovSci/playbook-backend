@@ -155,17 +155,18 @@ class ScheduleController extends Controller
      *      security={{"Bearer":{}}}
      * )
      */
-    public function createForPlayground(
-        Playground $playground,
-        ScheduleCreateFormRequest $request
-    ) {
+    public function createForPlayground(Playground $playground, ScheduleCreateFormRequest $request)
+    {
         if (Auth::user()->cant('createSchedule', $playground)) {
             return $this->forbidden();
         }
 
         $schedules = [];
         $requestData = $request->all();
-        $requestData['price_per_hour'] = money($requestData['price_per_hour'], $requestData['currency'])->getAmount();
+        $requestData['price_per_hour'] = money(
+            $requestData['price_per_hour'],
+            $requestData['currency']
+        )->getAmount();
 
         foreach ($requestData['dates'] as $index => $date) {
             /**

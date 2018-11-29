@@ -6,6 +6,13 @@ namespace App\Models;
  * Class PlaygroundSchedule
  *
  * @package App
+ * @property integer id
+ * @property string start_time
+ * @property string end_time
+ * @property integer price_per_hour
+ * @property string currency
+ * @property integer schedulable_id
+ * @property string schedulable_type
  *
  * @OA\Schema(
  *      schema="Schedule",
