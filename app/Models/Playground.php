@@ -14,7 +14,9 @@ namespace App\Models;
  * @property \DateTime closing_time
  * @property integer type_id
  * @property integer organization_id
+ * @property integer creator_id
  * @property Organization organization
+ * @property User creator
  *
  * @OA\Schema(
  *      schema="Playground",
@@ -40,6 +42,10 @@ namespace App\Models;
  *              ),
  *              @OA\Property(
  *                  property="organization_id",
+ *                  type="integer"
+ *              ),
+ *              @OA\Property(
+ *                  property="creator_id",
  *                  type="integer"
  *              ),
  *              @OA\Property(
@@ -82,9 +88,14 @@ class Playground extends BaseModel
      * @var array
      */
     protected $fillable = [
-        'name', 'description', 'address',
-        'opening_time', 'closing_time', 'type_id',
+        'name',
+        'description',
+        'address',
+        'opening_time',
+        'closing_time',
+        'type_id',
         'organization_id',
+        'creator_id',
     ];
 
     /**
@@ -94,6 +105,7 @@ class Playground extends BaseModel
         'organization',
         'type',
         'schedules',
+        'creator',
     ];
 
     /**
@@ -104,6 +116,16 @@ class Playground extends BaseModel
     public function type()
     {
         return $this->belongsTo(PlaygroundType::class);
+    }
+
+    /**
+     * Get creator
+     *
+     * @return \Illuminate\Database\Eloquent\Relations\BelongsTo
+     */
+    public function creator()
+    {
+        return $this->belongsTo(User::class);
     }
 
     /**

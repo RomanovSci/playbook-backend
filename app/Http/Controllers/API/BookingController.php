@@ -114,4 +114,64 @@ class BookingController extends Controller
 
         return $this->success($booking->toArray());
     }
+
+    /**
+     * @param Booking $booking
+     * @return \Illuminate\Http\JsonResponse
+     *
+     * @OA\Post(
+     *      path="/api/booking/confirm/{booking_id}",
+     *      tags={"Booking"},
+     *      summary="Confirm booking",
+     *      @OA\Parameter(
+     *          name="booking_id",
+     *          description="Booking id",
+     *          in="path",
+     *          required=true,
+     *          @OA\Schema(type="integer")
+     *      ),
+     *      @OA\Response(
+     *          response="200",
+     *          description="Ok",
+     *          @OA\MediaType(
+     *              mediaType="application/json",
+     *              @OA\Schema(
+     *                  type="object",
+     *                  @OA\Property(
+     *                      property="success",
+     *                      type="boolean"
+     *                  ),
+     *                  @OA\Property(
+     *                      property="message",
+     *                      type="string",
+     *                  ),
+     *                  @OA\Property(
+     *                      type="object",
+     *                      property="data",
+     *                      ref="#/components/schemas/Booking"
+     *                  )
+     *              )
+     *         )
+     *      ),
+     *      @OA\Response(
+     *          response="403",
+     *          description="Can't confirm booking"
+     *      ),
+     *      security={{"Bearer":{}}}
+     * )
+     */
+    public function confirm(Booking $booking)
+    {
+        if (Auth::user()->cant('confirmBooking', $booking)) {
+            return $this->forbidden('Can\'t confirm booking');
+        }
+
+        $booking->status = Booking::STATUS_ACTIVE;
+
+        if (!$booking->update(['status'])) {
+            return $this->error(200, [], 'Can\'t update booking');
+        }
+
+        return $this->success($booking->toArray());
+    }
 }

@@ -30,9 +30,27 @@ Route::middleware(['auth:api'])->group(function () {
 });
 
 /**
+ * All roles, except user
+ */
+Route::middleware(['role:'
+    . User::ROLE_ADMIN . '|'
+    . User::ROLE_ORGANIZATION_ADMIN . '|'
+    . User::ROLE_TRAINER
+])->group(function () {
+    /** Booking */
+    Route::prefix('booking')->group(function () {
+        Route::post('/confirm/{booking}', 'API\BookingController@confirm')
+            ->name('booking.confirm');
+    });
+});
+
+/**
  * Role organization admin and system admin
  */
-Route::middleware(['role:' . User::ROLE_ADMIN . '|'. User::ROLE_ORGANIZATION_ADMIN])->group(function () {
+Route::middleware(['role:'
+    . User::ROLE_ADMIN . '|'
+    . User::ROLE_ORGANIZATION_ADMIN
+])->group(function () {
     /** Organization */
     Route::prefix('organization')->group(function () {
         Route::post('/create', 'API\OrganizationController@create')
@@ -55,7 +73,10 @@ Route::middleware(['role:' . User::ROLE_ADMIN . '|'. User::ROLE_ORGANIZATION_ADM
 /**
  * Role trainer and system admin
  */
-Route::middleware(['role:' . User::ROLE_ADMIN . '|'.  User::ROLE_TRAINER])->group(function () {
+Route::middleware(['role:'
+    . User::ROLE_ADMIN . '|'
+    . User::ROLE_TRAINER
+])->group(function () {
     /** Schedule */
     Route::prefix('schedule')->group(function () {
         Route::post('/trainer/create', 'API\ScheduleController@createForTrainer')

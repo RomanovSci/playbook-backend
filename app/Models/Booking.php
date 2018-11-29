@@ -2,12 +2,22 @@
 
 namespace App\Models;
 
-use Illuminate\Database\Eloquent\Relations\MorphTo;
+use Illuminate\Database\Eloquent\Relations\BelongsTo;
 
 /**
  * Class Booking
  *
  * @package App\Models
+ * @property integer id
+ * @property integer schedule_id
+ * @property string start_time
+ * @property string end_time
+ * @property integer status
+ * @property string created_at
+ * @property string updated_at
+ * @property string deleted_at
+ *
+ * @property Schedule schedule
  *
  * @OA\Schema(
  *      schema="Booking",
@@ -62,12 +72,19 @@ class Booking extends BaseModel
     ];
 
     /**
+     * @var array
+     */
+    protected $with = [
+        'schedule'
+    ];
+
+    /**
      * Bookable entities
      *
-     * @return MorphTo
+     * @return BelongsTo
      */
-    public function bookable()
+    public function schedule()
     {
-        return $this->morphTo();
+        return $this->belongsTo(Schedule::class);
     }
 }

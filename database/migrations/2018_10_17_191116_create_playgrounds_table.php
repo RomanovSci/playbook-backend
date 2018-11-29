@@ -16,6 +16,7 @@ class CreatePlaygroundsTable extends Migration
         Schema::create('playgrounds', function (Blueprint $table) {
             $table->increments('id');
             $table->integer('organization_id', false, true)->nullable()->default(null);
+            $table->integer('creator_id', false, true);
             $table->string('name');
             $table->string('description');
             $table->string('address');
@@ -26,6 +27,7 @@ class CreatePlaygroundsTable extends Migration
             $table->timestamps();
             $table->softDeletes();
             $table->foreign('organization_id')->references('id')->on('organizations');
+            $table->foreign('creator_id')->references('id')->on('users');
         });
     }
 

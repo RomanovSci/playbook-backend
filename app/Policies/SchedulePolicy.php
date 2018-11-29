@@ -14,7 +14,7 @@ use App\Models\User;
 class SchedulePolicy
 {
     /**
-     * Determine if the playground can be created by user
+     * Determine if the booking can be created by user
      *
      * @param User $user
      * @param Schedule $schedule
