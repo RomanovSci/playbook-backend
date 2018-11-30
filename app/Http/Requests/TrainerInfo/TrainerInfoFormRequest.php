@@ -6,6 +6,7 @@ use App\Http\Requests\BaseFormRequest;
 
 /**
  * Class TrainerInfoFormRequest
+ *
  * @package App\Http\Requests\TrainerInfo
  */
 class TrainerInfoFormRequest extends BaseFormRequest
