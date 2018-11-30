@@ -5,9 +5,9 @@ namespace App\Http\Requests\Schedule;
 use App\Http\Requests\BaseFormRequest;
 
 /**
- * Class Create
+ * Class ScheduleCreateFormRequest
  *
- * @package App\Http\Requests\PlaygroundSchedule
+ * @package App\Http\Requests\Schedule
  */
 class ScheduleCreateFormRequest extends BaseFormRequest
 {

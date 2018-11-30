@@ -3,10 +3,12 @@
 namespace App\Http\Controllers\API;
 
 use App\Http\Controllers\Controller;
+use App\Http\Requests\Schedule\ScheduleGetFormRequest;
 use App\Models\Playground;
 use App\Models\Schedule;
 use App\Models\User;
 use App\Repositories\ScheduleRepository;
+use Carbon\Carbon;
 use Illuminate\Http\JsonResponse;
 use Illuminate\Support\Facades\Auth;
 use App\Http\Requests\Schedule\ScheduleCreateFormRequest;
@@ -20,6 +22,7 @@ class ScheduleController extends Controller
 {
     /**
      * @param string $type
+     * @param ScheduleGetFormRequest $request
      * @return JsonResponse
      *
      * @OA\Get(
@@ -30,6 +33,20 @@ class ScheduleController extends Controller
      *          name="type",
      *          description="trainer or playground",
      *          in="path",
+     *          required=true,
+     *          @OA\Schema(type="string")
+     *      ),
+     *      @OA\Parameter(
+     *          name="start_time",
+     *          description="Start time. Example: 2018-05-13 09:00:00",
+     *          in="query",
+     *          required=true,
+     *          @OA\Schema(type="string")
+     *      ),
+     *      @OA\Parameter(
+     *          name="end_time",
+     *          description="End time. Example: 2018-05-13 17:00:00",
+     *          in="query",
      *          required=true,
      *          @OA\Schema(type="string")
      *      ),
@@ -58,9 +75,13 @@ class ScheduleController extends Controller
      *      )
      * )
      */
-    public function get(string $type)
+    public function get(string $type, ScheduleGetFormRequest $request)
     {
-        $schedules = ScheduleRepository::getActiveByType(Schedule::SCHEDULE_TYPES[$type]);
+        $schedules = ScheduleRepository::getActiveByTypeInRange(
+            Schedule::SCHEDULE_TYPES[$type],
+            Carbon::parse($request->get('start_time')),
+            Carbon::parse($request->get('end_time'))
+        );
         return $this->success($schedules->toArray());
     }
 

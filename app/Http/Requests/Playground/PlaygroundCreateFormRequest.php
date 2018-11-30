@@ -5,7 +5,7 @@ namespace App\Http\Requests\Playground;
 use App\Http\Requests\BaseFormRequest;
 
 /**
- * Class Create
+ * Class PlaygroundCreateFormRequest
  *
  * @package App\Http\Requests\Playground
  */

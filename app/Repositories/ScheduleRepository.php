@@ -3,6 +3,7 @@
 namespace  App\Repositories;
 
 use App\Models\Schedule;
+use Carbon\Carbon;
 
 /**
  * Class ScheduleRepository
@@ -15,10 +16,15 @@ class ScheduleRepository
      * Get active schedules by schedulable type
      *
      * @param string $type
+     * @param Carbon $startTime
+     * @param Carbon $endTime
      * @return mixed
      */
-    public static function getActiveByType(string $type)
+    public static function getActiveByTypeInRange(string $type, Carbon $startTime, Carbon $endTime)
     {
-        return Schedule::where('schedulable_type', $type)->get();
+        return Schedule::where('schedulable_type', $type)
+            ->where('start_time', '>=', $startTime->toDateTimeString())
+            ->where('end_time', '<=', $endTime->toDayDateTimeString())
+            ->get();
     }
 }

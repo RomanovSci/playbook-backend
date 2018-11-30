@@ -5,7 +5,7 @@ namespace App\Http\Requests\Organization;
 use App\Http\Requests\BaseFormRequest;
 
 /**
- * Class Create
+ * Class OrganizationCreateFormRequest
  *
  * @package App\Http\Requests\Organization
  */
