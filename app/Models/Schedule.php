@@ -64,6 +64,11 @@ namespace App\Models;
  */
 class Schedule extends BaseModel
 {
+    const SCHEDULE_TYPES = [
+        'trainer' => User::class,
+        'playground' => Playground::class,
+    ];
+
     /**
      * @var string
      */

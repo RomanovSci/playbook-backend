@@ -6,6 +6,7 @@ use App\Http\Controllers\Controller;
 use App\Models\Playground;
 use App\Models\Schedule;
 use App\Models\User;
+use App\Repositories\ScheduleRepository;
 use Illuminate\Http\JsonResponse;
 use Illuminate\Support\Facades\Auth;
 use App\Http\Requests\Schedule\ScheduleCreateFormRequest;
@@ -17,6 +18,52 @@ use App\Http\Requests\Schedule\ScheduleCreateFormRequest;
  */
 class ScheduleController extends Controller
 {
+    /**
+     * @param string $type
+     * @return JsonResponse
+     *
+     * @OA\Get(
+     *      path="/api/schedule/{type}",
+     *      tags={"Schedule"},
+     *      summary="Get schedules for trainer or playground",
+     *      @OA\Parameter(
+     *          name="type",
+     *          description="trainer or playground",
+     *          in="path",
+     *          required=true,
+     *          @OA\Schema(type="string")
+     *      ),
+     *      @OA\Response(
+     *          response="200",
+     *          description="Ok",
+     *          @OA\MediaType(
+     *              mediaType="application/json",
+     *              @OA\Schema(
+     *                  type="object",
+     *                  @OA\Property(
+     *                      property="success",
+     *                      type="boolean"
+     *                  ),
+     *                  @OA\Property(
+     *                      property="message",
+     *                      type="string",
+     *                  ),
+     *                  @OA\Property(
+     *                      type="array",
+     *                      property="data",
+     *                      @OA\Items(ref="#/components/schemas/Schedule")
+     *                  )
+     *              )
+     *         )
+     *      )
+     * )
+     */
+    public function get(string $type)
+    {
+        $schedules = ScheduleRepository::getActiveByType(Schedule::SCHEDULE_TYPES[$type]);
+        return $this->success($schedules->toArray());
+    }
+
     /**
      * @param ScheduleCreateFormRequest $request
      * @return JsonResponse

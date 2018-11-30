@@ -17,8 +17,6 @@ use Illuminate\Support\Facades\Auth;
 class PlaygroundController extends Controller
 {
     /**
-     * Create playground
-     *
      * @param Organization $organization
      * @param PlaygroundCreateFormRequest $request
      * @return string

@@ -17,6 +17,13 @@ Route::post('/register', 'API\UserController@register')->name('user.register');
 Route::post('/login', 'API\UserController@login')->name('user.login');
 
 /**
+ * Schedule
+ */
+Route::get('/schedule/{type}', 'API\ScheduleController@get')
+    ->where(['type' => 'trainer|playground'])
+    ->name('schedule.get');
+
+/**
  * Authenticated user
  */
 Route::middleware(['auth:api'])->group(function () {
