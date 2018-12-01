@@ -23,6 +23,7 @@ class ScheduleCreateFormRequest extends BaseFormRequest
             'end_time' => 'required|date_format:H:i:s',
             'price_per_hour' => 'required|numeric',
             'currency' => 'required|string|uppercase|currency',
+            'playground_id' => 'required|numeric|exists:playgrounds,id'
         ];
     }
 }

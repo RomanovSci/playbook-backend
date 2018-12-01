@@ -19,6 +19,7 @@ class BookingCreateFormRequest extends BaseFormRequest
         return [
             'start_time' => 'required|date_format:Y-m-d H:i:s',
             'end_time' => 'required|date_format:Y-m-d H:i:s|after:start_time',
+            'schedule_id' => 'required|numeric|exists:schedules,id',
         ];
     }
 }
