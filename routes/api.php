@@ -31,7 +31,7 @@ Route::middleware(['auth:api'])->group(function () {
 
     /** Booking */
     Route::prefix('booking')->group(function () {
-        Route::post('/create/{schedule}', 'API\BookingController@create')
+        Route::post('/create', 'API\BookingController@create')
             ->name('booking.create');
     });
 });
@@ -66,13 +66,13 @@ Route::middleware(['role:'
 
     /** Playground */
     Route::prefix('playground')->group(function () {
-        Route::post('/create/{organization}', 'API\PlaygroundController@create')
+        Route::post('/create', 'API\PlaygroundController@create')
             ->name('playground.create');
     });
 
     /** Schedule */
     Route::prefix('schedule')->group(function () {
-        Route::post('/playground/create/{playground}', 'API\ScheduleController@createForPlayground')
+        Route::post('/playground/create', 'API\ScheduleController@createForPlayground')
             ->name('schedule.playground.create');
     });
 });

@@ -3,6 +3,7 @@
 namespace App\Http\Controllers\API;
 
 use App\Http\Controllers\Controller;
+use App\Http\Requests\Booking\BookingConfirmFormRequest;
 use App\Http\Requests\Booking\BookingCreateFormRequest;
 use App\Models\Booking;
 use App\Models\Schedule;
@@ -33,21 +34,13 @@ class BookingController extends Controller
     }
 
     /**
-     * @param Schedule $schedule
      * @param BookingCreateFormRequest $request
      * @return \Illuminate\Http\JsonResponse
      *
      * @OA\Post(
-     *      path="/api/booking/create/{schedule_id}",
+     *      path="/api/booking/create",
      *      tags={"Booking"},
      *      summary="Create booking",
-     *      @OA\Parameter(
-     *          name="schedule_id",
-     *          description="Schedule id",
-     *          in="path",
-     *          required=true,
-     *          @OA\Schema(type="integer")
-     *      ),
      *      @OA\RequestBody(
      *          @OA\MediaType(
      *              mediaType="application/json",
@@ -55,6 +48,7 @@ class BookingController extends Controller
      *                  example={
      *                      "start_time": "Start booking time. Example: 2018-05-12 09:00:00",
      *                      "end_time": "End booking time. Example: 2018-05-12 17:59:59",
+     *                      "schedule_id": "Schedule id"
      *                  }
      *              )
      *          )
@@ -89,10 +83,11 @@ class BookingController extends Controller
      *      security={{"Bearer":{}}}
      * )
      */
-    public function create(
-        Schedule $schedule,
-        BookingCreateFormRequest $request
-    ) {
+    public function create(BookingCreateFormRequest $request)
+    {
+        /** @var Schedule $schedule */
+        $schedule = Schedule::find($request->post('schedule_id'));
+
         if (Auth::user()->cant('createBooking', $schedule)) {
             return $this->forbidden('Can\'t create booking');
         }
@@ -116,19 +111,22 @@ class BookingController extends Controller
     }
 
     /**
-     * @param Booking $booking
+     * @param BookingConfirmFormRequest $request
      * @return \Illuminate\Http\JsonResponse
      *
      * @OA\Post(
-     *      path="/api/booking/confirm/{booking_id}",
+     *      path="/api/booking/confirm",
      *      tags={"Booking"},
      *      summary="Confirm booking",
-     *      @OA\Parameter(
-     *          name="booking_id",
-     *          description="Booking id",
-     *          in="path",
-     *          required=true,
-     *          @OA\Schema(type="integer")
+     *      @OA\RequestBody(
+     *          @OA\MediaType(
+     *              mediaType="application/json",
+     *              @OA\Schema(
+     *                  example={
+     *                      "booking_id": "Booking id"
+     *                  }
+     *              )
+     *          )
      *      ),
      *      @OA\Response(
      *          response="200",
@@ -160,8 +158,11 @@ class BookingController extends Controller
      *      security={{"Bearer":{}}}
      * )
      */
-    public function confirm(Booking $booking)
+    public function confirm(BookingConfirmFormRequest $request)
     {
+        /** @var Booking $booking */
+        $booking = Booking::find($request->post('booking_id'));
+
         if (Auth::user()->cant('confirmBooking', $booking)) {
             return $this->forbidden('Can\'t confirm booking');
         }

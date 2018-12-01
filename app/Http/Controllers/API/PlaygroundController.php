@@ -6,6 +6,7 @@ use App\Http\Controllers\Controller;
 use App\Http\Requests\Playground\PlaygroundCreateFormRequest;
 use App\Models\Organization;
 use App\Models\Playground;
+use App\Models\User;
 use App\Repositories\PlaygroundRepository;
 use Illuminate\Support\Facades\Auth;
 
@@ -17,21 +18,13 @@ use Illuminate\Support\Facades\Auth;
 class PlaygroundController extends Controller
 {
     /**
-     * @param Organization $organization
      * @param PlaygroundCreateFormRequest $request
      * @return string
      *
      * @OA\Post(
-     *      path="/api/playground/create/{organization_id}",
+     *      path="/api/playground/create",
      *      tags={"Playground"},
      *      summary="Create new playground for organization",
-     *      @OA\Parameter(
-     *          name="organization_id",
-     *          description="Organization id",
-     *          in="path",
-     *          required=true,
-     *          @OA\Schema(type="string")
-     *      ),
      *      @OA\RequestBody(
      *          @OA\MediaType(
      *              mediaType="application/json",
@@ -42,7 +35,8 @@ class PlaygroundController extends Controller
      *                      "address": "Playground address",
      *                      "opening_time": "Playground opening time. Example: 09:00:00",
      *                      "closing_time": "Playground closing time. Example: 23:20:00",
-     *                      "type_id": "Playground type id. Ref to PlaygroundType entity. Example: 1"
+     *                      "type_id": "Playground type id. Ref to PlaygroundType entity. Example: 1",
+     *                      "organization_id": "Organization id"
      *                  }
      *              )
      *          )
@@ -77,11 +71,16 @@ class PlaygroundController extends Controller
      *      security={{"Bearer":{}}}
      * )
      */
-    public function create(
-        Organization $organization,
-        PlaygroundCreateFormRequest $request
-    ) {
-        if (Auth::user()->cant('createPlayground', $organization)) {
+    public function create(PlaygroundCreateFormRequest $request)
+    {
+        /**
+         * @var Organization $organization
+         * @var User $user
+         */
+        $organization = Organization::find($request->post('organization_id'));
+        $user = Auth::user();
+
+        if ($user->cant('createPlayground', $organization)) {
             return $this->forbidden();
         }
 
@@ -92,7 +91,7 @@ class PlaygroundController extends Controller
             $request->all(),
             [
                 'organization_id' => $organization->id,
-                'creator_id' => Auth::user()->id,
+                'creator_id' => $user->id,
             ]
         ));
 

@@ -164,21 +164,13 @@ class ScheduleController extends Controller
     }
 
     /**
-     * @param Playground $playground
      * @param ScheduleCreateFormRequest $request
      * @return JsonResponse
      *
      * @OA\Post(
-     *      path="/api/schedule/playground/create/{playground_id}",
+     *      path="/api/schedule/playground/create",
      *      tags={"Schedule"},
      *      summary="Create playground schedule",
-     *      @OA\Parameter(
-     *          name="playground_id",
-     *          description="Playground id",
-     *          in="path",
-     *          required=true,
-     *          @OA\Schema(type="integer")
-     *      ),
      *      @OA\RequestBody(
      *          @OA\MediaType(
      *              mediaType="application/json",
@@ -188,7 +180,8 @@ class ScheduleController extends Controller
      *                      "start_time": "Period start time. Example: 09:00:00",
      *                      "end_time": "Period end time. Example: 17:00:00",
      *                      "price_per_hour": "Price per hour in cents. Example: 7000. (70RUB)",
-     *                      "currency": "Currency: RUB, UAH, USD, etc. Default: RUB"
+     *                      "currency": "Currency: RUB, UAH, USD, etc. Default: RUB",
+     *                      "playground_id": "Playground id"
      *                  }
      *              )
      *          )
@@ -223,8 +216,11 @@ class ScheduleController extends Controller
      *      security={{"Bearer":{}}}
      * )
      */
-    public function createForPlayground(Playground $playground, ScheduleCreateFormRequest $request)
+    public function createForPlayground(ScheduleCreateFormRequest $request)
     {
+        /** @var Playground $playground */
+        $playground = Playground::find($request->post('playground_id'));
+
         if (Auth::user()->cant('createSchedule', $playground)) {
             return $this->forbidden();
         }
