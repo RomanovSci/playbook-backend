@@ -110,4 +110,14 @@ class User extends Authenticatable
     {
         return $this->morphMany(Schedule::class, 'schedulable');
     }
+
+    /**
+     * Get playgrounds
+     *
+     * @return \Illuminate\Database\Eloquent\Relations\BelongsToMany
+     */
+    public function playgrounds()
+    {
+        return $this->belongsToMany(Playground::class, 'users_playgrounds');
+    }
 }

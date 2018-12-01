@@ -2,7 +2,7 @@
 
 return [
     'api' => [
-        'title' => 'ISport Api doc',
+        'title' => 'Playbook API doc',
     ],
 
     'routes' => [
