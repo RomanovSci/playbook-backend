@@ -20,8 +20,8 @@ class UserCreateFormRequest extends BaseFormRequest
             'first_name' => 'required',
             'last_name' => 'required',
             'phone' => 'required|numeric|min:9|unique:users,phone',
-            'password' => 'required',
-            'c_password' => 'required|same:password',
+            'password' => 'min:3',
+            'c_password' => 'required_with:password|same:password',
             'is_trainer' => 'required|boolean',
         ];
     }

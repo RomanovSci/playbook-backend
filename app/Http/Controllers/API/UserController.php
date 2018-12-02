@@ -11,12 +11,14 @@ use App\Models\Country;
 use App\Models\TrainerInfo;
 use App\Models\User;
 use App\Models\UserPlayground;
+use App\Services\SmsDeliveryService\SmsDeliveryServiceInterface;
 use Carbon\Carbon;
 use Illuminate\Http\JsonResponse;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\DB;
 use Illuminate\Support\Facades\Hash;
+use Laravel\Passport\PersonalAccessTokenResult;
 
 /**
  * Class UserController
@@ -25,6 +27,21 @@ use Illuminate\Support\Facades\Hash;
  */
 class UserController extends Controller
 {
+    /**
+     * @var SmsDeliveryServiceInterface
+     */
+    protected $smsDeliveryService;
+
+    /**
+     * UserController constructor.
+     *
+     * @param SmsDeliveryServiceInterface $smsDeliveryService
+     */
+    public function __construct(SmsDeliveryServiceInterface $smsDeliveryService)
+    {
+        $this->smsDeliveryService = $smsDeliveryService;
+    }
+
     /**
      * @param UserCreateFormRequest $request
      * @return JsonResponse
@@ -87,12 +104,15 @@ class UserController extends Controller
     {
         /** @var Country $country */
         $fields = $request->all();
-        $fields['password'] = bcrypt($fields['password']);
         $fields['verification_code'] = rand(100000, 999999);
+        $fields['password'] = bcrypt($fields['password'] ?? $fields['verification_code']);
 
         DB::beginTransaction();
         try {
-            /** @var User $user */
+            /**
+             * @var User $user
+             * @var PersonalAccessTokenResult $token
+             */
             $user = User::create($fields);
             $user->assignRole($fields['is_trainer'] ? User::ROLE_TRAINER : User::ROLE_USER);
             $token = $user->createToken('MyApp');

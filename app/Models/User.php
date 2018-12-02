@@ -59,6 +59,11 @@ use Spatie\Permission\Traits\HasRoles;
  *                  type="string",
  *                  readOnly=true
  *              ),
+ *              @OA\Property(
+ *                  property="verification_code",
+ *                  type="string",
+ *                  readOnly=true
+ *              ),
  *          ),
  *          @OA\Schema(ref="#/components/schemas/BaseModel"),
  *      }
