@@ -33,11 +33,17 @@ class Controller extends BaseController
      */
     protected function success($data = [], $message = null): JsonResponse
     {
-        return response()->json([
+        $response = [
             'success' => true,
             'message' => $message ?? 'Success',
             'data' => $data,
-        ]);
+        ];
+
+        if (count($response['data']) === 0) {
+            unset($response['data']);
+        }
+
+        return response()->json($response);
     }
 
     /**
@@ -72,10 +78,16 @@ class Controller extends BaseController
      */
     protected function error(int $code, $data = [], $message = null): JsonResponse
     {
-        return response()->json([
+        $response = [
             'success' => false,
             'message' => $message ?? 'Ooops...Something went wrong',
             'data' => $data
-        ], $code);
+        ];
+
+        if (count($response['data']) === 0) {
+            unset($response['data']);
+        }
+
+        return response()->json($response, $code);
     }
 }
