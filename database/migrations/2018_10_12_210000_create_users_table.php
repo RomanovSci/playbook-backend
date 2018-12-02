@@ -19,6 +19,7 @@ class CreateUsersTable extends Migration
             $table->string('last_name');
             $table->string('password');
             $table->string('phone')->unique();
+            $table->char('verification_code', 6)->nullable();
             $table->timestamp('phone_verified_at')->nullable();
             $table->timestamps();
             $table->softDeletes();
