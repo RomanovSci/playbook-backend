@@ -3,6 +3,7 @@
 namespace App\Repositories;
 
 use App\Models\Playground;
+use Illuminate\Database\Eloquent\Collection;
 
 /**
  * Class PlaygroundRepository
@@ -12,12 +13,14 @@ use App\Models\Playground;
 class PlaygroundRepository
 {
     /**
-     * Fetch all playgrounds
+     * Search playgrounds
      *
-     * @return Playground[]|\Illuminate\Database\Eloquent\Collection
+     * @param string $query
+     * @return Collection
      */
-    public static function getAll(): array
+    public static function search(string $query): Collection
     {
-        return Playground::all()->toArray();
+        $playgrounds = Playground::where('name', 'ilike', "%$query%")->get();
+        return $playgrounds;
     }
 }

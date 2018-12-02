@@ -4,6 +4,7 @@ namespace  App\Repositories;
 
 use App\Models\Schedule;
 use Carbon\Carbon;
+use Illuminate\Database\Eloquent\Collection;
 
 /**
  * Class ScheduleRepository
@@ -20,8 +21,11 @@ class ScheduleRepository
      * @param Carbon $endTime
      * @return mixed
      */
-    public static function getActiveByTypeInRange(string $type, Carbon $startTime, Carbon $endTime)
-    {
+    public static function getActiveByTypeInRange(
+        string $type,
+        Carbon $startTime,
+        Carbon $endTime
+    ): Collection {
         return Schedule::where('schedulable_type', $type)
             ->where('start_time', '>=', $startTime->toDateTimeString())
             ->where('end_time', '<=', $endTime->toDayDateTimeString())

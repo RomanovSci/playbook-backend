@@ -49,6 +49,12 @@ Route::middleware(['role:'
         Route::post('/confirm/{booking}', 'API\BookingController@confirm')
             ->name('booking.confirm');
     });
+
+    /** Playground */
+    Route::prefix('playground')->group(function () {
+        Route::get('/search', 'API\PlaygroundController@search')
+            ->name('playground.search');
+    });
 });
 
 /**
