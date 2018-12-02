@@ -6,11 +6,12 @@ use App\Http\Controllers\Controller;
 use App\Http\Requests\TrainerInfo\TrainerInfoCreateFormRequest;
 use App\Http\Requests\User\LoginFormRequest;
 use App\Http\Requests\User\UserCreateFormRequest;
+use App\Http\Requests\User\VerifyPhoneFormRequest;
 use App\Models\Country;
 use App\Models\TrainerInfo;
 use App\Models\User;
 use App\Models\UserPlayground;
-use App\Repositories\CountryRepository;
+use Carbon\Carbon;
 use Illuminate\Http\JsonResponse;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
@@ -27,7 +28,7 @@ class UserController extends Controller
     /**
      * @param UserCreateFormRequest $request
      * @return JsonResponse
-     * @throws \Exception
+     * @throws \Throwable
      *
      * @OA\Post(
      *      path="/api/register",
@@ -87,6 +88,7 @@ class UserController extends Controller
         /** @var Country $country */
         $fields = $request->all();
         $fields['password'] = bcrypt($fields['password']);
+        $fields['verification_code'] = rand(100000, 999999);
 
         DB::beginTransaction();
         try {
@@ -96,7 +98,7 @@ class UserController extends Controller
             $token = $user->createToken('MyApp');
 
             DB::commit();
-        } catch (\Exception $e) {
+        } catch (\Throwable $e) {
             DB::rollBack();
             throw $e;
         }
@@ -219,6 +221,82 @@ class UserController extends Controller
     public function logout(Request $request)
     {
         $request->user()->token()->revoke();
+        return $this->success();
+    }
+
+    /**
+     * @param VerifyPhoneFormRequest $request
+     * @return JsonResponse
+     *
+     * @OA\Post(
+     *      path="/api/phone-verify",
+     *      tags={"User"},
+     *      summary="Verify user phone",
+     *      @OA\RequestBody(
+     *          @OA\MediaType(
+     *              mediaType="application/json",
+     *              @OA\Schema(
+     *                  example={
+     *                      "code": "Verification code. Example: 001122"
+     *                  }
+     *              )
+     *         )
+     *      ),
+     *      @OA\Response(
+     *          response="200",
+     *          description="Ok",
+     *          @OA\MediaType(
+     *              mediaType="application/json",
+     *              @OA\Schema(
+     *                  example={
+     *                      "success": "true | false",
+     *                      "message": "Success | Incorrect verification code"
+     *                  }
+     *              )
+     *         )
+     *      ),
+     *      @OA\Response(
+     *          response="400",
+     *          description="Invalid parameters",
+     *          @OA\MediaType(
+     *              mediaType="application/json",
+     *              @OA\Schema(
+     *                  example={
+     *                      "success": false,
+     *                      "message": "Unauthenticated"
+     *                  },
+     *              )
+     *          )
+     *      ),
+     *      @OA\Response(
+     *          response="422",
+     *          description="Invalid parameters",
+     *          @OA\MediaType(
+     *              mediaType="application/json",
+     *              @OA\Schema(
+     *                  example={
+     *                      "code": {
+     *                          "The code must be 6 digits."
+     *                      }
+     *                  },
+     *              )
+     *          )
+     *      ),
+     *      security={{"Bearer":{}}}
+     * )
+     */
+    public function verifyPhone(VerifyPhoneFormRequest $request)
+    {
+        /** @var User $user */
+        $user = Auth::user();
+
+        if ($user->verification_code !== $request->post('code')) {
+            return $this->error(200, [], 'Incorrect verification code');
+        }
+
+        $user->phone_verified_at = Carbon::now();
+        $user->save();
+
         return $this->success();
     }
 

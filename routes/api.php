@@ -28,6 +28,7 @@ Route::get('/schedule/{type}', 'API\ScheduleController@get')
  */
 Route::middleware(['auth:api'])->group(function () {
     Route::post('/logout', 'API\UserController@logout')->name('user.logout');
+    Route::post('/phone-verify', 'API\UserController@verifyPhone')->name('user.verifyPhone');
 
     /** Booking */
     Route::prefix('booking')->group(function () {

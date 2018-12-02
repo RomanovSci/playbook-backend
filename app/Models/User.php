@@ -17,6 +17,11 @@ use Spatie\Permission\Traits\HasRoles;
  * @property string last_name
  * @property integer phone
  * @property string password
+ * @property integer verification_code
+ * @property string phone_verified_at
+ * @property string created_at
+ * @property string updated_at
+ * @property string deleted_at
  *
  * @OA\Schema(
  *      schema="User",
@@ -83,6 +88,7 @@ class User extends Authenticatable
         'last_name',
         'phone',
         'password',
+        'verification_code',
     ];
 
     /**
@@ -90,7 +96,10 @@ class User extends Authenticatable
      *
      * @var array
      */
-    protected $hidden = ['password'];
+    protected $hidden = [
+        'password',
+        'verification_code',
+    ];
 
     /**
      * @param $username
