@@ -4,6 +4,7 @@ namespace App\Http\Controllers\API;
 
 use App\Http\Controllers\Controller;
 use App\Http\Requests\Playground\PlaygroundCreateFormRequest;
+use App\Http\Requests\Playground\PlaygroundSearchFormRequest;
 use App\Models\Organization;
 use App\Models\Playground;
 use App\Models\User;
@@ -17,6 +18,57 @@ use Illuminate\Support\Facades\Auth;
  */
 class PlaygroundController extends Controller
 {
+    /**
+     * @param PlaygroundSearchFormRequest $request
+     * @return \Illuminate\Http\JsonResponse
+     *
+     * @OA\Get(
+     *      path="/api/playground/search",
+     *      tags={"Playground"},
+     *      summary="Search by playground name",
+     *      @OA\Parameter(
+     *          name="query",
+     *          description="Search string",
+     *          in="query",
+     *          required=true,
+     *          @OA\Schema(type="string")
+     *      ),
+     *      @OA\Response(
+     *          response="200",
+     *          description="Ok",
+     *          @OA\MediaType(
+     *              mediaType="application/json",
+     *              @OA\Schema(
+     *                  type="object",
+     *                  @OA\Property(
+     *                      property="success",
+     *                      type="boolean"
+     *                  ),
+     *                  @OA\Property(
+     *                      property="message",
+     *                      type="string",
+     *                  ),
+     *                  @OA\Property(
+     *                      type="array",
+     *                      property="data",
+     *                      @OA\Items(ref="#/components/schemas/Playground")
+     *                  )
+     *              )
+     *         )
+     *      ),
+     *      @OA\Response(
+     *          response="422",
+     *          description="Invalid parameters"
+     *      ),
+     *      security={{"Bearer":{}}}
+     * )
+     */
+    public function search(PlaygroundSearchFormRequest $request)
+    {
+        $playgrounds = PlaygroundRepository::search($request->get('query'));
+        return $this->success($playgrounds);
+    }
+
     /**
      * @param PlaygroundCreateFormRequest $request
      * @return string

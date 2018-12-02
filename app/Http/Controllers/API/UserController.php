@@ -28,7 +28,7 @@ class UserController extends Controller
      *
      * @OA\Post(
      *      path="/api/register",
-     *      tags={"Passport"},
+     *      tags={"User"},
      *      summary="Register new user",
      *      @OA\RequestBody(
      *          @OA\MediaType(
@@ -109,7 +109,7 @@ class UserController extends Controller
      *
      * @OA\Post(
      *      path="/api/login",
-     *      tags={"Passport"},
+     *      tags={"User"},
      *      summary="Login user",
      *      @OA\RequestBody(
      *          @OA\MediaType(
@@ -182,7 +182,7 @@ class UserController extends Controller
      *
      * @OA\Post(
      *      path="/api/logout",
-     *      tags={"Passport"},
+     *      tags={"User"},
      *      summary="Logout user",
      *      @OA\Response(
      *          response="200",
