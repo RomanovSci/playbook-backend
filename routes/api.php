@@ -97,8 +97,8 @@ Route::middleware(['role:'
     });
 
     /** Trainer info */
-    Route::prefix('trainer-info')->group(function () {
-        Route::post('/create', 'API\TrainerInfoController@create')
-            ->name('trainerInfo.create');
+    Route::prefix('trainer')->group(function () {
+        Route::post('/info-create', 'API\UserController@createTrainerInfo')
+            ->name('user.createTrainerInfo');
     });
 });
