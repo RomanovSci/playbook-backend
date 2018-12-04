@@ -3,10 +3,8 @@
 namespace Tests\Unit\app\Http\Controllers\API;
 
 use App\Http\Controllers\API\UserController;
-use App\Services\SmsDeliveryService\SmsDeliveryServiceInterface;
 use Illuminate\Http\JsonResponse;
 use Illuminate\Http\Request;
-use Tests\Mocks\app\Http\Controllers\API\UserControllerMock;
 use Tests\TestCase;
 
 /**
@@ -16,12 +14,6 @@ use Tests\TestCase;
  */
 class UserControllerTest extends TestCase
 {
-    public function testConstruct()
-    {
-        $controller = new UserControllerMock(app(SmsDeliveryServiceInterface::class));
-        $this->assertInstanceOf(SmsDeliveryServiceInterface::class, $controller->smsDeliveryService);
-    }
-
     public function testLogout()
     {
         /**
