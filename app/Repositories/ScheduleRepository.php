@@ -19,16 +19,23 @@ class ScheduleRepository
      * @param string $type
      * @param Carbon $startTime
      * @param Carbon $endTime
+     * @param int $schedulableId
      * @return mixed
      */
     public static function getActiveByTypeInRange(
         string $type,
         Carbon $startTime,
-        Carbon $endTime
+        Carbon $endTime,
+        int $schedulableId = null
     ): Collection {
-        return Schedule::where('schedulable_type', $type)
+        $query = Schedule::where('schedulable_type', $type)
             ->where('start_time', '>=', $startTime->toDateTimeString())
-            ->where('end_time', '<=', $endTime->toDayDateTimeString())
-            ->get();
+            ->where('end_time', '<=', $endTime->toDayDateTimeString());
+
+        if ($schedulableId) {
+            $query->where('schedulable_id', $schedulableId);
+        }
+
+        return $query->get();
     }
 }

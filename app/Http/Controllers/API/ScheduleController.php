@@ -35,12 +35,13 @@ class ScheduleController extends Controller
     }
 
     /**
-     * @param string $type
      * @param ScheduleGetFormRequest $request
+     * @param string $type
+     * @param int $id
      * @return JsonResponse
      *
      * @OA\Get(
-     *      path="/api/schedule/{type}",
+     *      path="/api/schedule/{type}/{id}",
      *      tags={"Schedule"},
      *      summary="Get schedules for trainer or playground",
      *      @OA\Parameter(
@@ -49,6 +50,13 @@ class ScheduleController extends Controller
      *          in="path",
      *          required=true,
      *          @OA\Schema(type="string")
+     *      ),
+     *      @OA\Parameter(
+     *          name="id",
+     *          description="trainer or playground id",
+     *          in="path",
+     *          required=false,
+     *          @OA\Schema(type="integer")
      *      ),
      *      @OA\Parameter(
      *          name="start_time",
@@ -89,19 +97,18 @@ class ScheduleController extends Controller
      *      )
      * )
      */
-    public function get(string $type, ScheduleGetFormRequest $request)
+    public function get(ScheduleGetFormRequest $request, string $type, int $id = null)
     {
         $schedules = ScheduleRepository::getActiveByTypeInRange(
             Schedule::SCHEDULE_TYPES[$type],
             Carbon::parse($request->get('start_time')),
-            Carbon::parse($request->get('end_time'))
+            Carbon::parse($request->get('end_time')),
+            $id
         );
         return $this->success($schedules->toArray());
     }
 
     /**
-     * Create schedule for trainer
-     *
      * @param string
      * @param Request $request
      * @return JsonResponse

@@ -17,9 +17,9 @@ Route::post('/register', 'API\UserController@register')->name('user.register');
 Route::post('/login', 'API\UserController@login')->name('user.login');
 
 /**
- * Schedule
+ * Schedules
  */
-Route::get('/schedule/{type}', 'API\ScheduleController@get')
+Route::get('/schedule/{type}/{id?}', 'API\ScheduleController@get')
     ->where(['type' => 'trainer|playground'])
     ->name('schedule.get');
 
