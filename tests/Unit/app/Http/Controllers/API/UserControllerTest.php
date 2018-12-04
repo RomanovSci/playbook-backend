@@ -20,6 +20,7 @@ class UserControllerTest extends TestCase
          * @var UserController $controller
          */
         $controller = $this->getMockBuilder(UserController::class)
+            ->disableOriginalConstructor()
             ->setMethods(['success'])
             ->getMock();
         $controller->expects($this->any())

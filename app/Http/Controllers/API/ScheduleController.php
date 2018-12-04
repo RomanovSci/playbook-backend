@@ -3,7 +3,9 @@
 namespace App\Http\Controllers\API;
 
 use App\Http\Controllers\Controller;
+use App\Http\Requests\Schedule\PlaygroundScheduleCreateFormRequest;
 use App\Http\Requests\Schedule\ScheduleGetFormRequest;
+use App\Http\Requests\Schedule\TrainerScheduleCreateFormRequest;
 use App\Models\Playground;
 use App\Models\Schedule;
 use App\Models\User;
@@ -11,7 +13,6 @@ use App\Repositories\ScheduleRepository;
 use Carbon\Carbon;
 use Illuminate\Http\JsonResponse;
 use Illuminate\Support\Facades\Auth;
-use App\Http\Requests\Schedule\ScheduleCreateFormRequest;
 
 /**
  * Class ScheduleController
@@ -86,7 +87,7 @@ class ScheduleController extends Controller
     }
 
     /**
-     * @param ScheduleCreateFormRequest $request
+     * @param TrainerScheduleCreateFormRequest $request
      * @return JsonResponse
      *
      * @OA\Post(
@@ -137,7 +138,7 @@ class ScheduleController extends Controller
      *      security={{"Bearer":{}}}
      * )
      */
-    public function createForTrainer(ScheduleCreateFormRequest $request)
+    public function createForTrainer(TrainerScheduleCreateFormRequest $request)
     {
         /**
          * @var User $user
@@ -164,7 +165,7 @@ class ScheduleController extends Controller
     }
 
     /**
-     * @param ScheduleCreateFormRequest $request
+     * @param PlaygroundScheduleCreateFormRequest $request
      * @return JsonResponse
      *
      * @OA\Post(
@@ -216,7 +217,7 @@ class ScheduleController extends Controller
      *      security={{"Bearer":{}}}
      * )
      */
-    public function createForPlayground(ScheduleCreateFormRequest $request)
+    public function createForPlayground(PlaygroundScheduleCreateFormRequest $request)
     {
         /** @var Playground $playground */
         $playground = Playground::find($request->post('playground_id'));

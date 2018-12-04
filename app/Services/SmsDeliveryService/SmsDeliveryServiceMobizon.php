@@ -50,7 +50,7 @@ class SmsDeliveryServiceMobizon implements SmsDeliveryServiceInterface
 
         if ($success) {
             $data = $this->mobizonApi->getData();
-            // TODO: Save message data
+            Log::info(json_encode($data));
 
             return true;
         }
