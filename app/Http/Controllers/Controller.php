@@ -23,6 +23,7 @@ class Controller extends BaseController
 
     const CODE_UNAUTHORIZED = 401;
     const CODE_FORBIDDEN = 403;
+    const CODE_VALIDATION_ERROR = 422;
 
     /**
      * Simple success response
