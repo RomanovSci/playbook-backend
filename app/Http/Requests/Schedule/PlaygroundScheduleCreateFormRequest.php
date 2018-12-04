@@ -1,15 +1,15 @@
 <?php
 
-namespace App\Http\Requests\Schedule;
+namespace  App\Http\Requests\Schedule;
 
 use App\Http\Requests\BaseFormRequest;
 
 /**
- * Class ScheduleCreateFormRequest
+ * Class PlaygroundScheduleCreateFormRequest
  *
  * @package App\Http\Requests\Schedule
  */
-class ScheduleCreateFormRequest extends BaseFormRequest
+class PlaygroundScheduleCreateFormRequest extends BaseFormRequest
 {
     /**
      * @return array
@@ -23,7 +23,7 @@ class ScheduleCreateFormRequest extends BaseFormRequest
             'end_time' => 'required|date_format:H:i:s',
             'price_per_hour' => 'required|numeric',
             'currency' => 'required|string|uppercase|currency',
-            'playground_id' => 'required|numeric|exists:playgrounds,id'
+            'playground_id' => 'required|numeric|exists:playgrounds,id',
         ];
     }
 }
