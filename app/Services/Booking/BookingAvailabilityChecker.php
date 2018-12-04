@@ -26,8 +26,7 @@ class BookingAvailabilityChecker
         $scheduleStartTime = Carbon::parse($schedule->start_time);
         $scheduleEndTime = Carbon::parse($schedule->end_time);
 
-        if (
-            !$startTime->between($scheduleStartTime, $scheduleEndTime) ||
+        if (!$startTime->between($scheduleStartTime, $scheduleEndTime) ||
             !$endTime->between($scheduleStartTime, $scheduleEndTime)
         ) {
             return false;
@@ -37,8 +36,7 @@ class BookingAvailabilityChecker
             $bookingStartTime = Carbon::parse($booking->start_time);
             $bookingEndTime = Carbon::parse($booking->end_time);
 
-            if (
-                $startTime->between($bookingStartTime, $bookingEndTime) ||
+            if ($startTime->between($bookingStartTime, $bookingEndTime) ||
                 $endTime->between($bookingStartTime, $bookingEndTime)
             ) {
                 return false;
