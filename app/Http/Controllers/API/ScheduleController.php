@@ -99,10 +99,10 @@ class ScheduleController extends Controller
      */
     public function get(ScheduleGetFormRequest $request, string $type, int $id = null)
     {
-        $schedules = ScheduleRepository::getActiveByTypeInRange(
-            Schedule::SCHEDULE_TYPES[$type],
+        $schedules = ScheduleRepository::getActiveInRange(
             Carbon::parse($request->get('start_time')),
             Carbon::parse($request->get('end_time')),
+            Schedule::SCHEDULE_TYPES[$type],
             $id
         );
         return $this->success($schedules->toArray());

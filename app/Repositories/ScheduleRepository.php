@@ -16,24 +16,27 @@ class ScheduleRepository
     /**
      * Get active schedules by schedulable type
      *
-     * @param string $type
      * @param Carbon $startTime
      * @param Carbon $endTime
+     * @param string $schedulableType
      * @param int $schedulableId
      * @return mixed
      */
-    public static function getActiveByTypeInRange(
-        string $type,
+    public static function getActiveInRange(
         Carbon $startTime,
         Carbon $endTime,
+        string $schedulableType = null,
         int $schedulableId = null
     ): Collection {
-        $query = Schedule::where('schedulable_type', $type)
-            ->where('start_time', '>=', $startTime->toDateTimeString())
+        $query = Schedule::where('start_time', '>=', $startTime->toDateTimeString())
             ->where('end_time', '<=', $endTime->toDayDateTimeString());
 
         if ($schedulableId) {
             $query->where('schedulable_id', $schedulableId);
+        }
+
+        if ($schedulableType) {
+            $query->where('schedulable_type', $schedulableType);
         }
 
         return $query->get();
