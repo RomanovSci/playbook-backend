@@ -2,14 +2,15 @@
 
 namespace App\Models;
 
-use Illuminate\Database\Eloquent\Relations\BelongsTo;
+use Illuminate\Database\Eloquent\Relations\MorphTo;
 
 /**
  * Class Booking
  *
  * @package App\Models
  * @property integer id
- * @property integer schedule_id
+ * @property integer bookable_id
+ * @property integer bookable_type
  * @property string start_time
  * @property string end_time
  * @property integer status
@@ -31,23 +32,30 @@ use Illuminate\Database\Eloquent\Relations\BelongsTo;
  *              @OA\Property(
  *                  property="id",
  *                  type="integer",
- *                  readOnly=true
  *              ),
  *              @OA\Property(
- *                  property="schedule_id",
+ *                  property="creator_id",
  *                  type="integer",
  *              ),
  *              @OA\Property(
+ *                  property="bookable_id",
+ *                  type="integer",
+ *              ),
+ *              @OA\Property(
+ *                  property="bookable_type",
+ *                  type="string",
+ *              ),
+ *              @OA\Property(
  *                  property="start_time",
- *                  type="string"
+ *                  type="string",
  *              ),
  *              @OA\Property(
  *                  property="end_time",
- *                  type="string"
+ *                  type="string",
  *              ),
  *              @OA\Property(
  *                  property="status",
- *                  type="integer"
+ *                  type="integer",
  *              ),
  *          ),
  *          @OA\Schema(ref="#/components/schemas/BaseModel"),
@@ -65,26 +73,30 @@ class Booking extends BaseModel
      * @var array
      */
     protected $fillable = [
-        'schedule_id',
+        'bookable_id',
+        'bookable_type',
         'start_time',
         'end_time',
         'status,'
     ];
 
     /**
-     * @var array
-     */
-    protected $with = [
-        'schedule'
-    ];
-
-    /**
      * Bookable entities
      *
-     * @return BelongsTo
+     * @return MorphTo
      */
-    public function schedule()
+    public function bookable()
     {
-        return $this->belongsTo(Schedule::class);
+        return $this->morphTo();
+    }
+
+    /**
+     * Creator entity
+     *
+     * @return \Illuminate\Database\Eloquent\Relations\BelongsTo
+     */
+    public function creator()
+    {
+        return $this->belongsTo(User::class);
     }
 }

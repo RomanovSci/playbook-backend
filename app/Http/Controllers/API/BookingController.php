@@ -34,13 +34,21 @@ class BookingController extends Controller
     }
 
     /**
+     * @param string $type
      * @param BookingCreateFormRequest $request
      * @return \Illuminate\Http\JsonResponse
      *
      * @OA\Post(
-     *      path="/api/booking/create",
+     *      path="/api/booking/{type}/create",
      *      tags={"Booking"},
      *      summary="Create booking",
+     *      @OA\Parameter(
+     *          name="type",
+     *          description="trainer or playground",
+     *          in="path",
+     *          required=true,
+     *          @OA\Schema(type="string")
+     *      ),
      *      @OA\RequestBody(
      *          @OA\MediaType(
      *              mediaType="application/json",
@@ -48,7 +56,7 @@ class BookingController extends Controller
      *                  example={
      *                      "start_time": "Start booking time. Example: 2018-05-12 09:00:00",
      *                      "end_time": "End booking time. Example: 2018-05-12 17:59:59",
-     *                      "schedule_id": "Schedule id"
+     *                      "bookable_id": "Trainer or playground id"
      *                  }
      *              )
      *          )
@@ -83,7 +91,7 @@ class BookingController extends Controller
      *      security={{"Bearer":{}}}
      * )
      */
-    public function create(BookingCreateFormRequest $request)
+    public function create(string $type, BookingCreateFormRequest $request)
     {
         /** @var Schedule $schedule */
         $schedule = Schedule::find($request->post('schedule_id'));

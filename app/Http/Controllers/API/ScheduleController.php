@@ -194,6 +194,11 @@ class ScheduleController extends Controller
         if (!$isForTrainer) {
             $schedulable = Playground::find($request->post('playground_id'));
 
+            /**
+             * We don't need validate createSchedule permission
+             * for $schedulable = Auth::user(), because this action is available
+             * for only trainer, organization-admin and system admin
+             */
             if (Auth::user()->cant('createSchedule', $schedulable)) {
                 return $this->forbidden();
             }

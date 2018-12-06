@@ -21,12 +21,7 @@ class BookingPolicy
      */
     public function confirmBooking(User $user, Booking $booking): bool
     {
-        $schedulable = $booking->schedule->schedulable()->first();
-
-        if ($schedulable instanceof User) {
-            return $schedulable->id === $user->id;
-        }
-
-        return $schedulable->creator_id === $user->id;
+        //TODO: Policy
+        return true;
     }
 }

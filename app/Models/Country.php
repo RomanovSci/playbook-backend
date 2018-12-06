@@ -23,15 +23,14 @@ namespace App\Models;
  *              @OA\Property(
  *                  property="id",
  *                  type="integer",
- *                  readOnly=true
  *              ),
  *              @OA\Property(
  *                  property="name",
- *                  type="string"
+ *                  type="string",
  *              ),
  *              @OA\Property(
  *                  property="dial_code",
- *                  type="string"
+ *                  type="string",
  *              ),
  *          ),
  *          @OA\Schema(ref="#/components/schemas/BaseModel"),

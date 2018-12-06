@@ -32,7 +32,8 @@ Route::middleware(['auth:api'])->group(function () {
 
     /** Booking */
     Route::prefix('booking')->group(function () {
-        Route::post('/create', 'API\BookingController@create')
+        Route::post('/{type}/create', 'API\BookingController@create')
+            ->where(['type' => 'trainer|playground'])
             ->name('booking.create');
     });
 });
