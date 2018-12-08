@@ -34,7 +34,7 @@ class BookingController extends Controller
     }
 
     /**
-     * @param string $type
+     * @param string $bookableType
      * @param BookingCreateFormRequest $request
      * @return \Illuminate\Http\JsonResponse
      *
@@ -91,28 +91,14 @@ class BookingController extends Controller
      *      security={{"Bearer":{}}}
      * )
      */
-    public function create(string $type, BookingCreateFormRequest $request)
+    public function create(string $bookableType, BookingCreateFormRequest $request)
     {
-        /** @var Schedule $schedule */
-        $schedule = Schedule::find($request->post('schedule_id'));
-
-        if (Auth::user()->cant('createBooking', $schedule)) {
-            return $this->forbidden('Can\'t create booking');
-        }
-
-        $startTime = Carbon::parse($request->post('start_time'));
-        $endTime = Carbon::parse($request->post('end_time'));
-
-        if (!$this->bookingAvailabilityChecker->isAvailable($schedule, $startTime, $endTime)) {
-            return $this->forbidden('Period is unavailable');
-        }
-
         /**
          * @var Booking $booking
          */
         $booking = Booking::create(array_merge($request->all(), [
-            'schedule_id' => $schedule->id,
-            'status' => Booking::STATUS_INACTIVE,
+            'bookable_type' => $bookableType,
+            'creator_id' => Auth::user()->id,
         ]));
 
         return $this->success($booking->toArray());

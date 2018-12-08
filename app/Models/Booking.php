@@ -75,6 +75,7 @@ class Booking extends BaseModel
     protected $fillable = [
         'bookable_id',
         'bookable_type',
+        'creator_id',
         'start_time',
         'end_time',
         'status,'

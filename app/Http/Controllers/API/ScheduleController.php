@@ -36,7 +36,7 @@ class ScheduleController extends Controller
 
     /**
      * @param ScheduleGetFormRequest $request
-     * @param string $type
+     * @param string $schedulableType
      * @param int $id
      * @return JsonResponse
      *
@@ -97,19 +97,19 @@ class ScheduleController extends Controller
      *      )
      * )
      */
-    public function get(ScheduleGetFormRequest $request, string $type, int $id = null)
+    public function get(ScheduleGetFormRequest $request, string $schedulableType, int $id = null)
     {
         $schedules = ScheduleRepository::getActiveInRange(
             Carbon::parse($request->get('start_time')),
             Carbon::parse($request->get('end_time')),
-            Schedule::SCHEDULE_TYPES[$type],
+            $schedulableType,
             $id
         );
         return $this->success($schedules->toArray());
     }
 
     /**
-     * @param string
+     * @param string $schedulableType
      * @param Request $request
      * @return JsonResponse
      *
@@ -169,9 +169,9 @@ class ScheduleController extends Controller
      *      security={{"Bearer":{}}}
      * )
      */
-    public function create(string $type, Request $request)
+    public function create(string $schedulableType, Request $request)
     {
-        $isForTrainer = $type === 'trainer';
+        $isForTrainer = $schedulableType === User::class;
         $validator = Validator::make($request->all(), array_merge(
             [
                 'dates' => 'required|array',

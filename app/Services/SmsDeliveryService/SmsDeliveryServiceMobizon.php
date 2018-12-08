@@ -16,18 +16,17 @@ class SmsDeliveryServiceMobizon implements SmsDeliveryServiceInterface
 
     /**
      * SmsDeliveryServiceMobizon constructor.
-     *
-     * @throws \Mobizon\Mobizon_ApiKey_Required
-     * @throws \Mobizon\Mobizon_Curl_Required
-     * @throws \Mobizon\Mobizon_Error
-     * @throws \Mobizon\Mobizon_OpenSSL_Required
      */
     public function __construct()
     {
-        $this->mobizonApi = new MobizonApi([
-            'apiKey' => env('SMS_DELIVERY_MOBIZON_KEY'),
-            'apiServer' => env('SMS_DELIVERY_MOBIZON_DOMAIN')
-        ]);
+        try {
+            $this->mobizonApi = new MobizonApi([
+                'apiKey' => env('SMS_DELIVERY_MOBIZON_KEY'),
+                'apiServer' => env('SMS_DELIVERY_MOBIZON_DOMAIN')
+            ]);
+        } catch (\Throwable $e) {
+            Log::error($e->getMessage());
+        }
     }
 
     /**
