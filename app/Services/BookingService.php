@@ -44,10 +44,8 @@ class BookingService
     }
 
     /**
-     * Check booking availability
+     * Check booking create ability
      *
-     * @param Carbon $startTime
-     * @param Carbon $endTime
      * @param string $bookableType
      * @param int $bookableId
      * @return bool
@@ -55,8 +53,6 @@ class BookingService
      * @throws IncorrectBookableType
      */
     public function canCreate(
-        Carbon $startTime,
-        Carbon $endTime,
         string $bookableType,
         int $bookableId
     ): bool {
@@ -72,18 +68,6 @@ class BookingService
             return false;
         }
 
-        $schedules = ScheduleRepository::getActiveInRange(
-            $startTime,
-            $endTime,
-            $bookableType,
-            $bookableId
-        );
-
-        /** Can't create booking for not exists schedules */
-        if (!$schedules->count()) {
-            return false;
-        }
-
-        return false;
+        return true;
     }
 }

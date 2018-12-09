@@ -39,17 +39,4 @@ class ScheduleService
 
         return $schedules;
     }
-
-    /**
-     * Merge schedules by date interval
-     *
-     * @param array $schedules
-     * @return array
-     */
-    public function merge(array $schedules): array
-    {
-        foreach ($schedules as $schedule) {
-
-        }
-    }
 }

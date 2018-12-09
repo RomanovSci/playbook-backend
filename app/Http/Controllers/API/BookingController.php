@@ -95,14 +95,10 @@ class BookingController extends Controller
     public function create(string $bookableType, BookingCreateFormRequest $request)
     {
         /** @var User $user */
-        $startTime = Carbon::parse($request->post('start_time'));
-        $endTime = Carbon::parse($request->post('end_time'));
         $bookableId = (int) $request->post('bookable_id');
         $user = Auth::user();
 
         $canCreate = $this->bookingService->canCreate(
-            $startTime,
-            $endTime,
             $bookableType,
             $bookableId
         );
@@ -112,8 +108,8 @@ class BookingController extends Controller
         }
 
         $booking = $this->bookingService->create(
-            $startTime,
-            $endTime,
+            Carbon::parse($request->post('start_time')),
+            Carbon::parse($request->post('end_time')),
             $bookableType,
             $bookableId,
             $user

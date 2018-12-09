@@ -14,6 +14,22 @@ use Illuminate\Database\Eloquent\Collection;
 class ScheduleRepository
 {
     /**
+     * Get schedule by schedulable data
+     *
+     * @param string|null $schedulableType
+     * @param int|null $schedulableId
+     * @return Collection
+     */
+    public static function getBySchedulable(
+        string $schedulableType = null,
+        int $schedulableId = null
+    ): Collection {
+        return Schedule::where('schedulable_id', $schedulableId)
+            ->where('schedulable_type', $schedulableType)
+            ->get();
+    }
+
+    /**
      * Get active schedules by schedulable type
      *
      * @param Carbon $startTime
@@ -31,12 +47,12 @@ class ScheduleRepository
         $query = Schedule::where('start_time', '>=', $startTime->toDateTimeString())
             ->where('end_time', '<=', $endTime->toDayDateTimeString());
 
-        if ($schedulableId) {
-            $query->where('schedulable_id', $schedulableId);
-        }
-
         if ($schedulableType) {
             $query->where('schedulable_type', $schedulableType);
+        }
+
+        if ($schedulableId) {
+            $query->where('schedulable_id', $schedulableId);
         }
 
         return $query->get();
