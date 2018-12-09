@@ -44,17 +44,12 @@ namespace App\Models;
  *                  property="currency",
  *                  type="string",
  *                  minLength=3,
- *               maxLength=3
+ *                  maxLength=3
  *              ),
  *              @OA\Property(
- *                  property="schedulable_id",
- *                  type="integer",
- *                  description="Reference to schedulable entity",
- *              ),
- *              @OA\Property(
- *                  property="schedulable_type",
- *                  type="string",
- *                  description="Type of schedulable entity",
+ *                  type="array",
+ *                  property="playgrounds",
+ *                  @OA\Items(ref="#/components/schemas/Playground")
  *              )
  *          ),
  *          @OA\Schema(ref="#/components/schemas/BaseModel"),
@@ -94,10 +89,25 @@ class Schedule extends BaseModel
     ];
 
     /**
+     * @var array
+     */
+    protected $with = [
+        'playgrounds',
+    ];
+
+    /**
      * @return \Illuminate\Database\Eloquent\Relations\MorphTo
      */
     public function schedulable()
     {
         return $this->morphTo();
+    }
+
+    /**
+     * @return \Illuminate\Database\Eloquent\Relations\BelongsToMany
+     */
+    public function playgrounds()
+    {
+        return $this->belongsToMany(Playground::class, 'schedules_playgrounds');
     }
 }

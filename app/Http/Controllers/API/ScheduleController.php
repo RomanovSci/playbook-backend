@@ -4,6 +4,7 @@ namespace App\Http\Controllers\API;
 
 use App\Http\Controllers\Controller;
 use App\Http\Requests\Schedule\ScheduleGetFormRequest;
+use App\Http\Requests\Schedule\ScheduleCreateFormRequest;
 use App\Models\Playground;
 use App\Models\User;
 use App\Repositories\ScheduleRepository;
@@ -12,7 +13,6 @@ use Carbon\Carbon;
 use Illuminate\Http\JsonResponse;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
-use Illuminate\Support\Facades\Validator;
 
 /**
  * Class ScheduleController
@@ -109,7 +109,7 @@ class ScheduleController extends Controller
 
     /**
      * @param string $schedulableType
-     * @param Request $request
+     * @param ScheduleCreateFormRequest $request
      * @return JsonResponse
      *
      * @OA\Post(
@@ -133,7 +133,7 @@ class ScheduleController extends Controller
      *                      "end_time": "Period end time. Example: 17:00:00",
      *                      "price_per_hour": "Price per hour in cents. Example: 7000. (70RUB)",
      *                      "currency": "Currency: RUB, UAH, USD, etc. Default: RUB",
-     *                      "playground_id": "Playground id. Required if type = playground"
+     *                      "playgrounds": "Array of playgrounds id.If type=playground, array should contains only 1 id"
      *                  }
      *              )
      *          )
@@ -168,26 +168,10 @@ class ScheduleController extends Controller
      *      security={{"Bearer":{}}}
      * )
      */
-    public function create(string $schedulableType, Request $request)
+    public function create(ScheduleCreateFormRequest $request, string $schedulableType)
     {
-        $isForTrainer = $schedulableType === User::class;
-        $validator = Validator::make($request->all(), array_merge(
-            [
-                'dates' => 'required|array',
-                'dates.*' => 'required|date_format:Y-m-d',
-                'start_time' => 'required|date_format:H:i:s',
-                'end_time' => 'required|date_format:H:i:s',
-                'price_per_hour' => 'required|numeric',
-                'currency' => 'required|string|uppercase|currency',
-            ],
-            $isForTrainer ? [] : ['playground_id' => 'required|numeric|exists:playgrounds,id']
-        ));
-
-        if ($validator->fails()) {
-            return response()->json($validator->errors(), self::CODE_VALIDATION_ERROR);
-        }
-
         /** @var User $schedulable */
+        $isForTrainer = $schedulableType === User::class;
         $schedulable = Auth::user();
 
         /**
@@ -199,7 +183,7 @@ class ScheduleController extends Controller
         }
 
         if (!$isForTrainer) {
-            $schedulable = Playground::find($request->post('playground_id'));
+            $schedulable = Playground::find($request->post('playgrounds')[0]);
 
             /**
              * We don't need validate createSchedule permission
