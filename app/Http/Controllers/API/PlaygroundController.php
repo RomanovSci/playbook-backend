@@ -132,7 +132,7 @@ class PlaygroundController extends Controller
         $organization = Organization::find($request->post('organization_id'));
         $user = Auth::user();
 
-        if ($user->cant('createPlayground', $organization)) {
+        if ($organization && $user->cant('createPlayground', $organization)) {
             return $this->forbidden();
         }
 
@@ -142,7 +142,7 @@ class PlaygroundController extends Controller
         $playground = Playground::create(array_merge(
             $request->all(),
             [
-                'organization_id' => $organization->id,
+                'organization_id' => $organization->id ?? null,
                 'creator_id' => $user->id,
             ]
         ));
