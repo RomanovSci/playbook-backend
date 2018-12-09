@@ -163,7 +163,12 @@ class UserController extends Controller
      *                              "trainer",
      *                              "organization-admin",
      *                              "admin"
-     *                          }
+     *                          },
+     *                          "id": 1,
+     *                          "first_name": "Play",
+     *                          "last_name": "Book",
+     *                          "phone": 911,
+     *                          "phone_verified_at": "2001-01-01 00:00:00"
      *                      }
      *                  }
      *              )
@@ -195,10 +200,10 @@ class UserController extends Controller
         }
         $token = $user->createToken('MyApp');
 
-        return $this->success([
+        return $this->success(array_merge([
             'access_token' => $token->accessToken,
             'roles' => $user->getRoleNames(),
-        ]);
+        ], $user->toArray()));
     }
 
     /**
