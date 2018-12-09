@@ -3,6 +3,7 @@
 namespace App\Policies;
 
 use App\Models\Booking;
+use App\Models\Playground;
 use App\Models\User;
 
 /**
@@ -21,7 +22,23 @@ class BookingPolicy
      */
     public function confirmBooking(User $user, Booking $booking): bool
     {
-        //TODO: Policy
-        return true;
+        /**
+         * Trainer can confirm
+         * self booking requests
+         */
+        if ($booking->bookable_type === User::class && $user->id === $booking->bookable_id) {
+            return true;
+        }
+
+        /**
+         * Playground admin can confirm
+         * self booking requests
+         */
+        if ($booking->bookable_type === Playground::class) {
+            //TODO: Implement booking confirmation for playground admin
+            return false;
+        }
+
+        return false;
     }
 }

@@ -190,6 +190,14 @@ class ScheduleController extends Controller
         /** @var User $schedulable */
         $schedulable = Auth::user();
 
+        /**
+         * Restrict create schedule
+         * for admin and organization-admin
+         */
+        if ($isForTrainer && !$schedulable->hasRole(['trainer'])) {
+            return $this->forbidden('Only trainer can create schedule.');
+        }
+
         if (!$isForTrainer) {
             $schedulable = Playground::find($request->post('playground_id'));
 
