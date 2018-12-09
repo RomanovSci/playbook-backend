@@ -16,7 +16,6 @@ namespace App\Models;
  *              @OA\Property(
  *                  property="id",
  *                  type="integer",
- *                  readOnly=true
  *              ),
  *              @OA\Property(
  *                  property="type",

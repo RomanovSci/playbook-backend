@@ -5,10 +5,9 @@ namespace App\Http\Controllers\API;
 use App\Http\Controllers\Controller;
 use App\Http\Requests\Schedule\ScheduleGetFormRequest;
 use App\Models\Playground;
-use App\Models\Schedule;
 use App\Models\User;
 use App\Repositories\ScheduleRepository;
-use App\Services\Schedule\ScheduleCreatorService;
+use App\Services\ScheduleService;
 use Carbon\Carbon;
 use Illuminate\Http\JsonResponse;
 use Illuminate\Http\Request;
@@ -22,21 +21,21 @@ use Illuminate\Support\Facades\Validator;
  */
 class ScheduleController extends Controller
 {
-    protected $scheduleCreatorService;
+    protected $scheduleService;
 
     /**
      * ScheduleController constructor.
      *
-     * @param ScheduleCreatorService $scheduleCreatorService
+     * @param ScheduleService $scheduleService
      */
-    public function __construct(ScheduleCreatorService $scheduleCreatorService)
+    public function __construct(ScheduleService $scheduleService)
     {
-        $this->scheduleCreatorService = $scheduleCreatorService;
+        $this->scheduleService = $scheduleService;
     }
 
     /**
      * @param ScheduleGetFormRequest $request
-     * @param string $type
+     * @param string $schedulableType
      * @param int $id
      * @return JsonResponse
      *
@@ -97,19 +96,19 @@ class ScheduleController extends Controller
      *      )
      * )
      */
-    public function get(ScheduleGetFormRequest $request, string $type, int $id = null)
+    public function get(ScheduleGetFormRequest $request, string $schedulableType, int $id = null)
     {
-        $schedules = ScheduleRepository::getActiveByTypeInRange(
-            Schedule::SCHEDULE_TYPES[$type],
+        $schedules = ScheduleRepository::getActiveInRange(
             Carbon::parse($request->get('start_time')),
             Carbon::parse($request->get('end_time')),
+            $schedulableType,
             $id
         );
         return $this->success($schedules->toArray());
     }
 
     /**
-     * @param string
+     * @param string $schedulableType
      * @param Request $request
      * @return JsonResponse
      *
@@ -169,9 +168,9 @@ class ScheduleController extends Controller
      *      security={{"Bearer":{}}}
      * )
      */
-    public function create(string $type, Request $request)
+    public function create(string $schedulableType, Request $request)
     {
-        $isForTrainer = $type === 'trainer';
+        $isForTrainer = $schedulableType === User::class;
         $validator = Validator::make($request->all(), array_merge(
             [
                 'dates' => 'required|array',
@@ -191,15 +190,28 @@ class ScheduleController extends Controller
         /** @var User $schedulable */
         $schedulable = Auth::user();
 
+        /**
+         * Restrict create schedule
+         * for admin and organization-admin
+         */
+        if ($isForTrainer && !$schedulable->hasRole(['trainer'])) {
+            return $this->forbidden('Only trainer can create schedule.');
+        }
+
         if (!$isForTrainer) {
             $schedulable = Playground::find($request->post('playground_id'));
 
+            /**
+             * We don't need validate createSchedule permission
+             * for $schedulable = Auth::user(), because this action is available
+             * for only trainer, organization-admin and system admin
+             */
             if (Auth::user()->cant('createSchedule', $schedulable)) {
                 return $this->forbidden();
             }
         }
 
-        $schedules = $this->scheduleCreatorService->create($schedulable, $request->all());
+        $schedules = $this->scheduleService->create($schedulable, $request->all());
         return $this->success($schedules);
     }
 }

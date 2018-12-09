@@ -14,23 +14,42 @@ use Illuminate\Database\Eloquent\Collection;
 class ScheduleRepository
 {
     /**
+     * Get schedule by schedulable data
+     *
+     * @param string|null $schedulableType
+     * @param int|null $schedulableId
+     * @return Collection
+     */
+    public static function getBySchedulable(
+        string $schedulableType = null,
+        int $schedulableId = null
+    ): Collection {
+        return Schedule::where('schedulable_id', $schedulableId)
+            ->where('schedulable_type', $schedulableType)
+            ->get();
+    }
+
+    /**
      * Get active schedules by schedulable type
      *
-     * @param string $type
      * @param Carbon $startTime
      * @param Carbon $endTime
+     * @param string $schedulableType
      * @param int $schedulableId
      * @return mixed
      */
-    public static function getActiveByTypeInRange(
-        string $type,
+    public static function getActiveInRange(
         Carbon $startTime,
         Carbon $endTime,
+        string $schedulableType = null,
         int $schedulableId = null
     ): Collection {
-        $query = Schedule::where('schedulable_type', $type)
-            ->where('start_time', '>=', $startTime->toDateTimeString())
+        $query = Schedule::where('start_time', '>=', $startTime->toDateTimeString())
             ->where('end_time', '<=', $endTime->toDayDateTimeString());
+
+        if ($schedulableType) {
+            $query->where('schedulable_type', $schedulableType);
+        }
 
         if ($schedulableId) {
             $query->where('schedulable_id', $schedulableId);

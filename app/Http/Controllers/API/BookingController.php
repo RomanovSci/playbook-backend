@@ -6,8 +6,8 @@ use App\Http\Controllers\Controller;
 use App\Http\Requests\Booking\BookingConfirmFormRequest;
 use App\Http\Requests\Booking\BookingCreateFormRequest;
 use App\Models\Booking;
-use App\Models\Schedule;
-use App\Services\Booking\BookingAvailabilityChecker;
+use App\Models\User;
+use App\Services\BookingService;
 use Carbon\Carbon;
 use Illuminate\Support\Facades\Auth;
 
@@ -19,28 +19,37 @@ use Illuminate\Support\Facades\Auth;
 class BookingController extends Controller
 {
     /**
-     * @var BookingAvailabilityChecker
+     * @var BookingService
      */
-    protected $bookingAvailabilityChecker;
+    protected $bookingService;
 
     /**
      * BookingController constructor.
      *
-     * @param BookingAvailabilityChecker $bookingAvailabilityChecker
+     * @param BookingService $bookingService
      */
-    public function __construct(BookingAvailabilityChecker $bookingAvailabilityChecker)
+    public function __construct(BookingService $bookingService)
     {
-        $this->bookingAvailabilityChecker = $bookingAvailabilityChecker;
+        $this->bookingService = $bookingService;
     }
 
     /**
+     * @param string $bookableType
      * @param BookingCreateFormRequest $request
      * @return \Illuminate\Http\JsonResponse
+     * @throws \App\Exceptions\Internal\IncorrectBookableType
      *
      * @OA\Post(
-     *      path="/api/booking/create",
+     *      path="/api/booking/{type}/create",
      *      tags={"Booking"},
      *      summary="Create booking",
+     *      @OA\Parameter(
+     *          name="type",
+     *          description="trainer or playground",
+     *          in="path",
+     *          required=true,
+     *          @OA\Schema(type="string")
+     *      ),
      *      @OA\RequestBody(
      *          @OA\MediaType(
      *              mediaType="application/json",
@@ -48,7 +57,7 @@ class BookingController extends Controller
      *                  example={
      *                      "start_time": "Start booking time. Example: 2018-05-12 09:00:00",
      *                      "end_time": "End booking time. Example: 2018-05-12 17:59:59",
-     *                      "schedule_id": "Schedule id"
+     *                      "bookable_id": "Trainer or playground id"
      *                  }
      *              )
      *          )
@@ -83,29 +92,28 @@ class BookingController extends Controller
      *      security={{"Bearer":{}}}
      * )
      */
-    public function create(BookingCreateFormRequest $request)
+    public function create(string $bookableType, BookingCreateFormRequest $request)
     {
-        /** @var Schedule $schedule */
-        $schedule = Schedule::find($request->post('schedule_id'));
+        /** @var User $user */
+        $bookableId = (int) $request->post('bookable_id');
+        $user = Auth::user();
 
-        if (Auth::user()->cant('createBooking', $schedule)) {
-            return $this->forbidden('Can\'t create booking');
+        $canCreate = $this->bookingService->canCreate(
+            $bookableType,
+            $bookableId
+        );
+
+        if (!$canCreate) {
+            return $this->forbidden();
         }
 
-        $startTime = Carbon::parse($request->post('start_time'));
-        $endTime = Carbon::parse($request->post('end_time'));
-
-        if (!$this->bookingAvailabilityChecker->isAvailable($schedule, $startTime, $endTime)) {
-            return $this->forbidden('Period is unavailable');
-        }
-
-        /**
-         * @var Booking $booking
-         */
-        $booking = Booking::create(array_merge($request->all(), [
-            'schedule_id' => $schedule->id,
-            'status' => Booking::STATUS_INACTIVE,
-        ]));
+        $booking = $this->bookingService->create(
+            Carbon::parse($request->post('start_time')),
+            Carbon::parse($request->post('end_time')),
+            $bookableType,
+            $bookableId,
+            $user
+        );
 
         return $this->success($booking->toArray());
     }

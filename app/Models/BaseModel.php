@@ -14,17 +14,14 @@ use Illuminate\Database\Eloquent\SoftDeletes;
  *      @OA\Property(
  *          property="created_at",
  *          type="string",
- *          readOnly=true
  *      ),
  *      @OA\Property(
  *          property="updated_at",
  *          type="string",
- *          readOnly=true
  *      ),
  *      @OA\Property(
  *          property="deleted_at",
  *          type="string",
- *          readOnly=true
  *      )
  * )
  */

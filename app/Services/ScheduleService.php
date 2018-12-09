@@ -1,6 +1,6 @@
 <?php
 
-namespace App\Services\Schedule;
+namespace App\Services;
 
 use App\Models\Schedule;
 use Illuminate\Database\Eloquent\Model;
@@ -10,7 +10,7 @@ use Illuminate\Database\Eloquent\Model;
  *
  * @package App\Services\Schedule
  */
-class ScheduleCreatorService
+class ScheduleService
 {
     /**
      * Create schedules for schedulable entity
