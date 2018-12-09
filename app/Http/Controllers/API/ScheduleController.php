@@ -5,10 +5,9 @@ namespace App\Http\Controllers\API;
 use App\Http\Controllers\Controller;
 use App\Http\Requests\Schedule\ScheduleGetFormRequest;
 use App\Models\Playground;
-use App\Models\Schedule;
 use App\Models\User;
 use App\Repositories\ScheduleRepository;
-use App\Services\Schedule\ScheduleCreatorService;
+use App\Services\ScheduleService;
 use Carbon\Carbon;
 use Illuminate\Http\JsonResponse;
 use Illuminate\Http\Request;
@@ -22,16 +21,16 @@ use Illuminate\Support\Facades\Validator;
  */
 class ScheduleController extends Controller
 {
-    protected $scheduleCreatorService;
+    protected $scheduleService;
 
     /**
      * ScheduleController constructor.
      *
-     * @param ScheduleCreatorService $scheduleCreatorService
+     * @param ScheduleService $scheduleService
      */
-    public function __construct(ScheduleCreatorService $scheduleCreatorService)
+    public function __construct(ScheduleService $scheduleService)
     {
-        $this->scheduleCreatorService = $scheduleCreatorService;
+        $this->scheduleService = $scheduleService;
     }
 
     /**
@@ -204,7 +203,7 @@ class ScheduleController extends Controller
             }
         }
 
-        $schedules = $this->scheduleCreatorService->create($schedulable, $request->all());
+        $schedules = $this->scheduleService->create($schedulable, $request->all());
         return $this->success($schedules);
     }
 }

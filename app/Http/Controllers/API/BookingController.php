@@ -6,8 +6,8 @@ use App\Http\Controllers\Controller;
 use App\Http\Requests\Booking\BookingConfirmFormRequest;
 use App\Http\Requests\Booking\BookingCreateFormRequest;
 use App\Models\Booking;
-use App\Models\Schedule;
-use App\Services\Booking\BookingAvailabilityChecker;
+use App\Models\User;
+use App\Services\BookingService;
 use Carbon\Carbon;
 use Illuminate\Support\Facades\Auth;
 
@@ -19,24 +19,25 @@ use Illuminate\Support\Facades\Auth;
 class BookingController extends Controller
 {
     /**
-     * @var BookingAvailabilityChecker
+     * @var BookingService
      */
-    protected $bookingAvailabilityChecker;
+    protected $bookingService;
 
     /**
      * BookingController constructor.
      *
-     * @param BookingAvailabilityChecker $bookingAvailabilityChecker
+     * @param BookingService $bookingService
      */
-    public function __construct(BookingAvailabilityChecker $bookingAvailabilityChecker)
+    public function __construct(BookingService $bookingService)
     {
-        $this->bookingAvailabilityChecker = $bookingAvailabilityChecker;
+        $this->bookingService = $bookingService;
     }
 
     /**
      * @param string $bookableType
      * @param BookingCreateFormRequest $request
      * @return \Illuminate\Http\JsonResponse
+     * @throws \App\Exceptions\Internal\IncorrectBookableType
      *
      * @OA\Post(
      *      path="/api/booking/{type}/create",
@@ -93,13 +94,30 @@ class BookingController extends Controller
      */
     public function create(string $bookableType, BookingCreateFormRequest $request)
     {
-        /**
-         * @var Booking $booking
-         */
-        $booking = Booking::create(array_merge($request->all(), [
-            'bookable_type' => $bookableType,
-            'creator_id' => Auth::user()->id,
-        ]));
+        /** @var User $user */
+        $startTime = Carbon::parse($request->post('start_time'));
+        $endTime = Carbon::parse($request->post('end_time'));
+        $bookableId = (int) $request->post('bookable_id');
+        $user = Auth::user();
+
+        $canCreate = $this->bookingService->canCreate(
+            $startTime,
+            $endTime,
+            $bookableType,
+            $bookableId
+        );
+
+        if (!$canCreate) {
+            return $this->forbidden();
+        }
+
+        $booking = $this->bookingService->create(
+            $startTime,
+            $endTime,
+            $bookableType,
+            $bookableId,
+            $user
+        );
 
         return $this->success($booking->toArray());
     }

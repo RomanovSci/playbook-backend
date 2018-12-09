@@ -1,6 +1,6 @@
 <?php
 
-namespace App\Services\Schedule;
+namespace App\Services;
 
 use App\Models\Schedule;
 use Illuminate\Database\Eloquent\Model;
@@ -10,7 +10,7 @@ use Illuminate\Database\Eloquent\Model;
  *
  * @package App\Services\Schedule
  */
-class ScheduleCreatorService
+class ScheduleService
 {
     /**
      * Create schedules for schedulable entity
@@ -38,5 +38,18 @@ class ScheduleCreatorService
         }
 
         return $schedules;
+    }
+
+    /**
+     * Merge schedules by date interval
+     *
+     * @param array $schedules
+     * @return array
+     */
+    public function merge(array $schedules): array
+    {
+        foreach ($schedules as $schedule) {
+
+        }
     }
 }
