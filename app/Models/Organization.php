@@ -23,20 +23,19 @@ namespace App\Models;
  *              @OA\Property(
  *                  property="id",
  *                  type="integer",
- *                  readOnly=true
  *              ),
  *              @OA\Property(
  *                  property="owner_id",
- *                  type="integer"
+ *                  type="integer",
  *              ),
  *              @OA\Property(
  *                  property="name",
- *                  type="string"
+ *                  type="string",
  *              ),
  *              @OA\Property(
  *                  property="city_id",
  *                  type="integer",
- *                  format="int32"
+ *                  format="int32",
  *              ),
  *          ),
  *          @OA\Schema(ref="#/components/schemas/BaseModel"),

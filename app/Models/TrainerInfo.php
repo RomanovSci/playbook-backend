@@ -20,7 +20,6 @@ namespace App\Models;
  *              @OA\Property(
  *                  property="id",
  *                  type="integer",
- *                  readOnly=true
  *              ),
  *              @OA\Property(
  *                  property="user_id",
@@ -32,17 +31,17 @@ namespace App\Models;
  *              ),
  *              @OA\Property(
  *                  property="min_price",
- *                  type="integer"
+ *                  type="integer",
  *              ),
  *              @OA\Property(
  *                  property="max_price",
- *                  type="integer"
+ *                  type="integer",
  *              ),
  *              @OA\Property(
  *                  property="currency",
  *                  type="string",
  *                  minLength=3,
- *                  maxLength=3
+ *                  maxLength=3,
  *              )
  *          ),
  *          @OA\Schema(ref="#/components/schemas/BaseModel")

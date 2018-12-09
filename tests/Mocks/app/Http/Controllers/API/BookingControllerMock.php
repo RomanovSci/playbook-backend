@@ -11,5 +11,5 @@ use App\Http\Controllers\API\BookingController;
  */
 class BookingControllerMock extends BookingController
 {
-    public $bookingAvailabilityChecker;
+    public $bookingService;
 }

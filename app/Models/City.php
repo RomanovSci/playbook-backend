@@ -18,12 +18,11 @@ namespace App\Models;
  *              required={
  *                  "country_id",
  *                  "name",
- *                  "origin_name"
+ *                  "origin_name",
  *              },
  *              @OA\Property(
  *                  property="id",
  *                  type="integer",
- *                  readOnly=true
  *              ),
  *              @OA\Property(
  *                  property="country_id",
@@ -31,7 +30,7 @@ namespace App\Models;
  *              ),
  *              @OA\Property(
  *                  property="name",
- *                  type="string"
+ *                  type="string",
  *              ),
  *          ),
  *          @OA\Schema(ref="#/components/schemas/BaseModel"),

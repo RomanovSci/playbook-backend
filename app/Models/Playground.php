@@ -34,23 +34,22 @@ namespace App\Models;
  *              @OA\Property(
  *                  property="id",
  *                  type="integer",
- *                  readOnly=true
  *              ),
  *              @OA\Property(
  *                  property="type_id",
- *                  type="integer"
+ *                  type="integer",
  *              ),
  *              @OA\Property(
  *                  property="organization_id",
- *                  type="integer"
+ *                  type="integer",
  *              ),
  *              @OA\Property(
  *                  property="creator_id",
- *                  type="integer"
+ *                  type="integer",
  *              ),
  *              @OA\Property(
  *                  property="name",
- *                  type="string"
+ *                  type="string",
  *              ),
  *              @OA\Property(
  *                  property="description",
@@ -146,5 +145,15 @@ class Playground extends BaseModel
     public function schedules()
     {
         return $this->morphMany(Schedule::class, 'schedulable');
+    }
+
+    /**
+     * Get bookings
+     *
+     * @return \Illuminate\Database\Eloquent\Relations\MorphMany
+     */
+    public function bookings()
+    {
+        return $this->morphMany(Booking::class, 'schedulable');
     }
 }

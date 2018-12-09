@@ -36,7 +36,6 @@ use Spatie\Permission\Traits\HasRoles;
  *              @OA\Property(
  *                  property="id",
  *                  type="integer",
- *                  readOnly=true
  *              ),
  *              @OA\Property(
  *                  property="first_name",
@@ -44,25 +43,23 @@ use Spatie\Permission\Traits\HasRoles;
  *              ),
  *              @OA\Property(
  *                  property="last_name",
- *                  type="string"
+ *                  type="string",
  *              ),
  *              @OA\Property(
  *                  property="phone",
- *                  type="string"
+ *                  type="string",
  *              ),
  *              @OA\Property(
  *                  property="password",
- *                  type="string"
+ *                  type="string",
  *              ),
  *              @OA\Property(
  *                  property="phone_verified_at",
  *                  type="string",
- *                  readOnly=true
  *              ),
  *              @OA\Property(
  *                  property="verification_code",
  *                  type="string",
- *                  readOnly=true
  *              ),
  *          ),
  *          @OA\Schema(ref="#/components/schemas/BaseModel"),
@@ -123,6 +120,16 @@ class User extends Authenticatable
     public function schedules()
     {
         return $this->morphMany(Schedule::class, 'schedulable');
+    }
+
+    /**
+     * Get trainer bookings
+     *
+     * @return \Illuminate\Database\Eloquent\Relations\MorphMany
+     */
+    public function trainerBookings()
+    {
+        return $this->morphMany(Booking::class, 'bookable');
     }
 
     /**

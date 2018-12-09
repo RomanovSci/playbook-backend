@@ -27,7 +27,6 @@ namespace App\Models;
  *              @OA\Property(
  *                  property="id",
  *                  type="integer",
- *                  readOnly=true
  *              ),
  *              @OA\Property(
  *                  property="start_time",
@@ -35,11 +34,11 @@ namespace App\Models;
  *              ),
  *              @OA\Property(
  *                  property="end_time",
- *                  type="string"
+ *                  type="string",
  *              ),
  *              @OA\Property(
  *                  property="price_per_hour",
- *                  type="integer"
+ *                  type="integer",
  *              ),
  *              @OA\Property(
  *                  property="currency",
@@ -50,12 +49,12 @@ namespace App\Models;
  *              @OA\Property(
  *                  property="schedulable_id",
  *                  type="integer",
- *                  description="Reference to schedulable entity"
+ *                  description="Reference to schedulable entity",
  *              ),
  *              @OA\Property(
  *                  property="schedulable_type",
  *                  type="string",
- *                  description="Type of schedulable entity"
+ *                  description="Type of schedulable entity",
  *              )
  *          ),
  *          @OA\Schema(ref="#/components/schemas/BaseModel"),

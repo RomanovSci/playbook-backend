@@ -19,8 +19,8 @@ Route::post('/login', 'API\UserController@login')->name('user.login');
 /**
  * Schedules
  */
-Route::get('/schedule/{type}/{id?}', 'API\ScheduleController@get')
-    ->where(['type' => 'trainer|playground'])
+Route::get('/schedule/{schedulable_type}/{id?}', 'API\ScheduleController@get')
+    ->where(['schedulable_type' => 'trainer|playground'])
     ->name('schedule.get');
 
 /**
@@ -32,7 +32,8 @@ Route::middleware(['auth:api'])->group(function () {
 
     /** Booking */
     Route::prefix('booking')->group(function () {
-        Route::post('/create', 'API\BookingController@create')
+        Route::post('/{bookable_type}/create', 'API\BookingController@create')
+            ->where(['bookable_type' => 'trainer|playground'])
             ->name('booking.create');
     });
 });
@@ -59,8 +60,8 @@ Route::middleware(['role:'
 
     /** Schedule */
     Route::prefix('schedule')->group(function () {
-        Route::post('/{type}/create', 'API\ScheduleController@create')
-            ->where(['type' => 'trainer|playground'])
+        Route::post('/{schedulable_type}/create', 'API\ScheduleController@create')
+            ->where(['schedulable_type' => 'trainer|playground'])
             ->name('schedule.create');
     });
 });
