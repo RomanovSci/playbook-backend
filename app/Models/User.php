@@ -101,6 +101,10 @@ class User extends Authenticatable
     protected $hidden = [
         'password',
         'verification_code',
+        'roles',
+        'created_at',
+        'updated_at',
+        'deleted_at',
     ];
 
     /**
