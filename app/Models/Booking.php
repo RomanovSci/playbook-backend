@@ -21,7 +21,6 @@ use Illuminate\Database\Eloquent\Relations\MorphTo;
  * @property Schedule schedule
  *
  * @OA\Schema(
- *      schema="Booking",
  *      allOf={
  *          @OA\Schema(
  *              required={

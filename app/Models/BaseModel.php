@@ -10,7 +10,6 @@ use Illuminate\Database\Eloquent\SoftDeletes;
  *
  * @package App\Models
  * @OA\Schema(
- *      schema="BaseModel",
  *      @OA\Property(
  *          property="created_at",
  *          type="string",

@@ -15,7 +15,6 @@ namespace App\Models;
  * @property string schedulable_type
  *
  * @OA\Schema(
- *      schema="Schedule",
  *      allOf={
  *          @OA\Schema(
  *              required={
