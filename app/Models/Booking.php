@@ -6,8 +6,8 @@ use Illuminate\Database\Eloquent\Relations\MorphTo;
 
 /**
  * Class Booking
- *
  * @package App\Models
+ *
  * @property integer id
  * @property integer bookable_id
  * @property integer bookable_type

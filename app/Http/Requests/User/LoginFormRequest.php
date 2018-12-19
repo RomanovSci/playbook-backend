@@ -6,7 +6,6 @@ use App\Http\Requests\BaseFormRequest;
 
 /**
  * Class CreateUser
- *
  * @package App\Http\Requests\User
  */
 class LoginFormRequest extends BaseFormRequest

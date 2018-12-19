@@ -7,7 +7,6 @@ use Illuminate\Database\Eloquent\Collection;
 
 /**
  * Class PlaygroundRepository
- *
  * @package App\Repositories
  */
 class PlaygroundRepository

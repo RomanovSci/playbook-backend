@@ -6,7 +6,6 @@ use App\Http\Requests\BaseFormRequest;
 
 /**
  * Class VerifyPhoneFormRequest
- *
  * @package App\Http\Requests\User
  */
 class VerifyPhoneFormRequest extends BaseFormRequest

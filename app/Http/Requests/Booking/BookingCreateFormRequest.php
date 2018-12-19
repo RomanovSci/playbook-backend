@@ -6,7 +6,6 @@ use App\Http\Requests\BaseFormRequest;
 
 /**
  * Class BookingCreateFormRequest
- *
  * @package App\Http\Requests\Booking
  */
 class BookingCreateFormRequest extends BaseFormRequest

@@ -6,8 +6,8 @@ use Illuminate\Database\Eloquent\SoftDeletes;
 
 /**
  * Class SchedulePlayground
- *
  * @package App\Models
+ *
  * @property integer id
  * @property integer user_id
  * @property integer playground_id

@@ -10,8 +10,8 @@ use Illuminate\Foundation\Auth\Access\AuthorizesRequests;
 
 /**
  * Class Controller
- *
  * @package App\Http\Controllers
+ *
  * @OA\Info(
  *     title="Playbook API documentation",
  *     version="0.1"

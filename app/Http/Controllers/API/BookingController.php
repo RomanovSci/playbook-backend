@@ -13,7 +13,6 @@ use Illuminate\Support\Facades\Auth;
 
 /**
  * Class BookingController
- *
  * @package App\Http\Controllers\API
  */
 class BookingController extends Controller

@@ -7,8 +7,8 @@ use Illuminate\Database\Eloquent\SoftDeletes;
 
 /**
  * Class BaseModel
- *
  * @package App\Models
+ *
  * @OA\Schema(
  *      @OA\Property(
  *          property="created_at",

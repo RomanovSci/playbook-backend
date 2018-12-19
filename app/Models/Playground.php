@@ -4,8 +4,8 @@ namespace App\Models;
 
 /**
  * Class Playground
- *
  * @package App\Models
+ *
  * @property integer id
  * @property string name
  * @property string description

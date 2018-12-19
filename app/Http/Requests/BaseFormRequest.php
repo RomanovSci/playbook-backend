@@ -8,7 +8,6 @@ use Illuminate\Http\Exceptions\HttpResponseException;
 
 /**
  * Class BaseFormRequest
- *
  * @package App\Http\Requests
  */
 class BaseFormRequest extends FormRequest

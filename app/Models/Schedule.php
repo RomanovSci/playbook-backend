@@ -4,8 +4,8 @@ namespace App\Models;
 
 /**
  * Class PlaygroundSchedule
+ * @package App\Models
  *
- * @package App
  * @property integer id
  * @property string start_time
  * @property string end_time
