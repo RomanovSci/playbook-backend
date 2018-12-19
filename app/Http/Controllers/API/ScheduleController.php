@@ -6,6 +6,7 @@ use App\Http\Controllers\Controller;
 use App\Http\Requests\Schedule\ScheduleGetFormRequest;
 use App\Http\Requests\Schedule\ScheduleCreateFormRequest;
 use App\Models\Playground;
+use App\Models\Schedule;
 use App\Models\User;
 use App\Repositories\ScheduleRepository;
 use App\Services\ScheduleService;
@@ -197,5 +198,60 @@ class ScheduleController extends Controller
 
         $schedules = $this->scheduleService->create($schedulable, $request->all());
         return $this->success($schedules);
+    }
+
+    /**
+     * @param Schedule $schedule
+     * @return JsonResponse
+     * @throws \Exception
+     *
+     * @OA\Delete(
+     *      path="/api/schedule/delete/{schedule_id}",
+     *      tags={"Schedule"},
+     *      summary="Delete schedule",
+     *      @OA\Parameter(
+     *          name="schedule_id",
+     *          description="Schedule id",
+     *          in="path",
+     *          required=true,
+     *          @OA\Schema(type="integer")
+     *      ),
+     *      @OA\Response(
+     *          response="200",
+     *          description="Ok",
+     *          @OA\MediaType(
+     *              mediaType="application/json",
+     *              @OA\Schema(
+     *                  type="object",
+     *                  @OA\Property(
+     *                      property="success",
+     *                      type="boolean"
+     *                  ),
+     *                  @OA\Property(
+     *                      property="message",
+     *                      type="string",
+     *                  )
+     *              )
+     *          )
+     *      ),
+     *      @OA\Response(
+     *          response="403",
+     *          description="Forbidden"
+     *      ),
+     *      @OA\Response(
+     *          response="400",
+     *          description="Invalid schedule id"
+     *      ),
+     *      security={{"Bearer":{}}}
+     * )
+     */
+    public function delete(Schedule $schedule)
+    {
+        if (Auth::user()->cant('deleteSchedule', $schedule)) {
+            return $this->forbidden();
+        }
+
+        $schedule->delete();
+        return $this->success();
     }
 }

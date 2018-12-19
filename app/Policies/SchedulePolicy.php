@@ -30,4 +30,26 @@ class SchedulePolicy
         /** Trainer can't book himself */
         return $user->id !== $schedule->schedulable_id;
     }
+
+    /**
+     * Determine if user can delete schedule
+     *
+     * @param User $user
+     * @param Schedule $schedule
+     * @return bool
+     */
+    public function deleteSchedule(User $user, Schedule $schedule): bool
+    {
+        /** Trainer can delete own schedule */
+        if ($schedule->schedulable_type === User::class && $schedule->schedulable_id === $user->id) {
+            return true;
+        }
+
+        /** Playground schedule creator can delete playground schedule */
+        if ($schedule->schedulable_type === Playground::class && $schedule->schedulable()->creator_id === $user->id) {
+            return true;
+        }
+
+        return false;
+    }
 }

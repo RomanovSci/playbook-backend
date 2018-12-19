@@ -56,6 +56,9 @@ Route::middleware(['role:'
     Route::prefix('playground')->group(function () {
         Route::get('/search', 'API\PlaygroundController@search')
             ->name('playground.search');
+
+        Route::post('/create', 'API\PlaygroundController@create')
+            ->name('playground.create');
     });
 
     /** Schedule */
@@ -63,6 +66,9 @@ Route::middleware(['role:'
         Route::post('/{schedulable_type}/create', 'API\ScheduleController@create')
             ->where(['schedulable_type' => 'trainer|playground'])
             ->name('schedule.create');
+
+        Route::delete('/delete/{schedule}', 'API\ScheduleController@delete')
+            ->name('schedule.delete');
     });
 });
 
@@ -77,12 +83,6 @@ Route::middleware(['role:'
     Route::prefix('organization')->group(function () {
         Route::post('/create', 'API\OrganizationController@create')
             ->name('organization.create');
-    });
-
-    /** Playground */
-    Route::prefix('playground')->group(function () {
-        Route::post('/create', 'API\PlaygroundController@create')
-            ->name('playground.create');
     });
 });
 
