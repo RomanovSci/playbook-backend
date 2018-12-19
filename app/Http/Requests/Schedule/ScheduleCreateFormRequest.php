@@ -6,7 +6,6 @@ use App\Http\Requests\BaseFormRequest;
 
 /**
  * Class ScheduleCreateFormRequest
- *
  * @package App\Http\Requests
  */
 class ScheduleCreateFormRequest extends BaseFormRequest

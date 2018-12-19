@@ -10,7 +10,6 @@ use Illuminate\Support\Facades\Auth;
 
 /**
  * Class OrganizationController
- *
  * @package App\Http\Controllers\API
  */
 class OrganizationController extends Controller

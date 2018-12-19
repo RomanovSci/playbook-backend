@@ -17,7 +17,6 @@ use Illuminate\Support\Facades\Auth;
 
 /**
  * Class ScheduleController
- *
  * @package App\Http\Controllers\API
  */
 class ScheduleController extends Controller

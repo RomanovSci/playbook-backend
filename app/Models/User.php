@@ -10,8 +10,8 @@ use Spatie\Permission\Traits\HasRoles;
 
 /**
  * Class User
- *
  * @package App\Models
+ *
  * @property integer id
  * @property string first_name
  * @property string last_name
@@ -22,6 +22,8 @@ use Spatie\Permission\Traits\HasRoles;
  * @property string created_at
  * @property string updated_at
  * @property string deleted_at
+ *
+ * @property Playground[] $playgrounds
  *
  * @OA\Schema(
  *      allOf={

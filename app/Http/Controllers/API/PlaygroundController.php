@@ -13,7 +13,6 @@ use Illuminate\Support\Facades\Auth;
 
 /**
  * Class PlaygroundController
- *
  * @package App\Http\Controllers\API
  */
 class PlaygroundController extends Controller

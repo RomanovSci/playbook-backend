@@ -4,8 +4,8 @@ namespace App\Models;
 
 /**
  * Class Country
- *
  * @package App\Models
+ *
  * @property int id
  * @property string code
  * @property string name

@@ -11,6 +11,7 @@ use App\Models\Country;
 use App\Models\TrainerInfo;
 use App\Models\User;
 use App\Models\UserPlayground;
+use App\Repositories\TrainerInfoRepository;
 use App\Services\SmsDeliveryService\SmsDeliveryServiceInterface;
 use Carbon\Carbon;
 use Illuminate\Http\JsonResponse;
@@ -22,7 +23,6 @@ use Laravel\Passport\PersonalAccessTokenResult;
 
 /**
  * Class UserController
- *
  * @package App\Http\Controllers\API
  */
 class UserController extends Controller
@@ -326,12 +326,70 @@ class UserController extends Controller
     }
 
     /**
+     * @param User $user
+     * @return JsonResponse
+     *
+     * @OA\Get(
+     *      path="/api/trainer/info/{trainer_id}",
+     *      tags={"User"},
+     *      summary="Get trainer information",
+     *      @OA\Parameter(
+     *          name="trainer_id",
+     *          description="Trainer id",
+     *          in="path",
+     *          required=true,
+     *          @OA\Schema(type="string")
+     *      ),
+     *      @OA\Response(
+     *          response="200",
+     *          description="Ok",
+     *          @OA\MediaType(
+     *              mediaType="application/json",
+     *              @OA\Schema(
+     *                  type="object",
+     *                  @OA\Property(
+     *                      property="success",
+     *                      type="boolean"
+     *                  ),
+     *                  @OA\Property(
+     *                      property="message",
+     *                      type="string",
+     *                  ),
+     *                  @OA\Property(
+     *                      type="object",
+     *                      property="data",
+     *                      allOf={
+     *                          @OA\Schema(ref="#/components/schemas/TrainerInfo"),
+     *                          @OA\Schema(
+     *                              @OA\Property(
+     *                                  property="playgrounds",
+     *                                  type="array",
+     *                                  @OA\Items(ref="#/components/schemas/Playground")
+     *                              ),
+     *                          ),
+     *                      }
+     *                  )
+     *              )
+     *         )
+     *      ),
+     *      @OA\Response(
+     *          response="400",
+     *          description="Invalid trainer id"
+     *      )
+     * )
+     */
+    public function getTrainerInfo(User $user)
+    {
+        return $this->success(TrainerInfoRepository::getWithPlaygroundsByUser($user));
+    }
+
+    /**
      * @param TrainerInfoCreateFormRequest $request
      * @return \Illuminate\Http\JsonResponse
      * @throws \Throwable
      *
      * @OA\Post(
-     *      path="/api/trainer/info-create",
+     *      path="/api/trainer/info/create",
      *      tags={"User"},
      *      summary="Create trainer information",
      *      @OA\RequestBody(

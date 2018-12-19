@@ -6,7 +6,6 @@ use App\Http\Requests\BaseFormRequest;
 
 /**
  * Class PlaygroundSearchFormRequest
- *
  * @package App\Http\Requests\Playground
  */
 class PlaygroundSearchFormRequest extends BaseFormRequest

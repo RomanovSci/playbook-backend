@@ -15,10 +15,7 @@ use App\Models\User;
 */
 Route::post('/register', 'API\UserController@register')->name('user.register');
 Route::post('/login', 'API\UserController@login')->name('user.login');
-
-/**
- * Schedules
- */
+Route::get('/trainer/info/{user}', 'API\UserController@getTrainerInfo')->name('user.getTrainerInfo');
 Route::get('/schedule/{schedulable_type}/{id?}', 'API\ScheduleController@get')
     ->where(['schedulable_type' => 'trainer|playground'])
     ->name('schedule.get');
@@ -95,7 +92,7 @@ Route::middleware(['role:'
 ])->group(function () {
     /** Trainer info */
     Route::prefix('trainer')->group(function () {
-        Route::post('/info-create', 'API\UserController@createTrainerInfo')
+        Route::post('/info/create', 'API\UserController@createTrainerInfo')
             ->name('user.createTrainerInfo');
     });
 });

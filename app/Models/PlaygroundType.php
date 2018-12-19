@@ -4,8 +4,9 @@ namespace App\Models;
 
 /**
  * Class PlaygroundType
- *
  * @package App\Models
+ *
+ * @property integer id
  * @property string type
  *
  * @OA\Schema(

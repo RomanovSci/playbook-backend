@@ -4,8 +4,8 @@ namespace App\Models;
 
 /**
  * Class City
- *
  * @package App\Models
+ *
  * @property integer id
  * @property string name
  * @property string origin_name
