@@ -24,7 +24,6 @@ use Spatie\Permission\Traits\HasRoles;
  * @property string deleted_at
  *
  * @OA\Schema(
- *      schema="User",
  *      allOf={
  *          @OA\Schema(
  *              required={

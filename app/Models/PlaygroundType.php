@@ -9,7 +9,6 @@ namespace App\Models;
  * @property string type
  *
  * @OA\Schema(
- *      schema="PlaygroundType",
  *      required={"type"},
  *      allOf={
  *          @OA\Schema(

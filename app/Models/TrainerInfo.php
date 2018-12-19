@@ -8,7 +8,6 @@ namespace App\Models;
  * @package App\Models
  *
  * @OA\Schema(
- *      schema="TrainerInfo",
  *      allOf={
  *          @OA\Schema(
  *              required={

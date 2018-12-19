@@ -19,7 +19,6 @@ namespace App\Models;
  * @property User creator
  *
  * @OA\Schema(
- *      schema="Playground",
  *      allOf={
  *          @OA\Schema(
  *              required={

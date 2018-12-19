@@ -12,7 +12,6 @@ namespace App\Models;
  * @property integer country_id
  *
  * @OA\Schema(
- *      schema="City",
  *      allOf={
  *          @OA\Schema(
  *              required={

@@ -12,7 +12,6 @@ namespace App\Models;
  * @property string origin_name
  *
  * @OA\Schema(
- *      schema="Country",
  *      allOf={
  *          @OA\Schema(
  *              required={
