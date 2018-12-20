@@ -108,9 +108,12 @@ class ScheduleController extends Controller
     }
 
     /**
-     * @param string $schedulableType
      * @param ScheduleCreateFormRequest $request
+     * @param string $schedulableType
      * @return JsonResponse
+     *
+     * @throws \App\Exceptions\Internal\IncorrectScheduleDateRange
+     * @throws \Throwable
      *
      * @OA\Post(
      *      path="/api/schedule/{type}/create",
