@@ -8,7 +8,6 @@ use App\Models\User;
 
 /**
  * Class SchedulePolicy
- *
  * @package App\Policies
  */
 class SchedulePolicy

@@ -8,7 +8,6 @@ use Illuminate\Database\Eloquent\Collection;
 
 /**
  * Class ScheduleRepository
- *
  * @package App\Repositories
  */
 class ScheduleRepository

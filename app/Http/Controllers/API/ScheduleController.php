@@ -108,9 +108,12 @@ class ScheduleController extends Controller
     }
 
     /**
-     * @param string $schedulableType
      * @param ScheduleCreateFormRequest $request
+     * @param string $schedulableType
      * @return JsonResponse
+     *
+     * @throws \App\Exceptions\Internal\IncorrectScheduleDateRange
+     * @throws \Throwable
      *
      * @OA\Post(
      *      path="/api/schedule/{type}/create",
@@ -173,6 +176,7 @@ class ScheduleController extends Controller
         /** @var User $schedulable */
         $isForTrainer = $schedulableType === User::class;
         $schedulable = Auth::user();
+        $requestData = $request->all();
 
         /**
          * Restrict create schedule
@@ -195,8 +199,8 @@ class ScheduleController extends Controller
             }
         }
 
-        $schedules = $this->scheduleService->create($schedulable, $request->all());
-        return $this->success($schedules);
+        $creationResult = $this->scheduleService->create($schedulable, $requestData);
+        return $this->success($creationResult);
     }
 
     /**

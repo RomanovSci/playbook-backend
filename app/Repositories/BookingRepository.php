@@ -8,7 +8,6 @@ use Illuminate\Database\Eloquent\Collection;
 
 /**
  * Class BookingRepository
- *
  * @package App\Repositories
  */
 class BookingRepository

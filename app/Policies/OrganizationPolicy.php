@@ -7,7 +7,6 @@ use App\Models\User;
 
 /**
  * Class OrganizationPolicy
- *
  * @package App\Policies
  */
 class OrganizationPolicy

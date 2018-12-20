@@ -7,7 +7,6 @@ use Mobizon\MobizonApi;
 
 /**
  * Class SmsDeliveryServiceMobizon
- *
  * @package App\Services\SmsDeliveryService
  */
 class SmsDeliveryServiceMobizon implements SmsDeliveryServiceInterface
