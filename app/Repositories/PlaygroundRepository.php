@@ -19,7 +19,11 @@ class PlaygroundRepository
      */
     public static function search(string $query): Collection
     {
-        $playgrounds = Playground::where('name', 'ilike', "%$query%")->get();
+        $playgrounds = Playground::where('name', 'ilike', "%$query%")
+            ->orWhere('description', 'ilike', "%$query%")
+            ->orWhere('address', 'ilike', "%$query%")
+            ->get();
+
         return $playgrounds;
     }
 }

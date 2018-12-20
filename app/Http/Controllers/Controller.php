@@ -40,10 +40,6 @@ class Controller extends BaseController
             'data' => $data,
         ];
 
-        if (count($response['data']) === 0) {
-            unset($response['data']);
-        }
-
         return response()->json($response);
     }
 
@@ -84,10 +80,6 @@ class Controller extends BaseController
             'message' => $message ?? 'Ooops...Something went wrong',
             'data' => $data
         ];
-
-        if (count($response['data']) === 0) {
-            unset($response['data']);
-        }
 
         return response()->json($response, $code);
     }
