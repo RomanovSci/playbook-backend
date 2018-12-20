@@ -87,7 +87,7 @@ class ScheduleService
      * @param Carbon $endTime
      * @return bool
      *
-     * @throws \Exception
+     * @throws IncorrectScheduleDateRange
      */
     protected function periodsIsOverlaps(Model $schedulable, Carbon $startTime, Carbon $endTime): bool
     {
