@@ -16,7 +16,6 @@ use Laravel\Passport\Passport;
 
 /**
  * Class AuthServiceProvider
- *
  * @package App\Providers
  */
 class AuthServiceProvider extends ServiceProvider

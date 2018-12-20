@@ -10,7 +10,6 @@ use Illuminate\Support\Facades\Log;
 
 /**
  * Class ScheduleCreatorService
- *
  * @package App\Services\Schedule
  */
 class ScheduleService

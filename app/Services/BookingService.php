@@ -6,13 +6,11 @@ use App\Exceptions\Internal\IncorrectBookableType;
 use App\Models\Booking;
 use App\Models\Playground;
 use App\Models\User;
-use App\Repositories\ScheduleRepository;
 use Carbon\Carbon;
 use Illuminate\Support\Facades\Auth;
 
 /**
  * Class BookingAvailabilityChecker
- *
  * @package App\Services\Booking
  */
 class BookingService

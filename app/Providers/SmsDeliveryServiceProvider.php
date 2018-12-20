@@ -8,7 +8,6 @@ use Illuminate\Support\ServiceProvider;
 
 /**
  * Class SmsDeliveryServiceProvider
- *
  * @package App\Providers
  */
 class SmsDeliveryServiceProvider extends ServiceProvider

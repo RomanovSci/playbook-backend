@@ -8,7 +8,6 @@ use App\Models\User;
 
 /**
  * Class BookingPolicy
- *
  * @package App\Policies
  */
 class BookingPolicy

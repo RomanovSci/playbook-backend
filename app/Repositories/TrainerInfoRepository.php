@@ -7,7 +7,6 @@ use App\Models\User;
 
 /**
  * Class TrainerInfoRepository
- *
  * @package App\Repositories
  */
 class TrainerInfoRepository
