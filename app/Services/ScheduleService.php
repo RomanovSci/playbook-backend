@@ -3,6 +3,7 @@
 namespace App\Services;
 
 use App\Exceptions\Internal\IncorrectScheduleDateRange;
+use App\Helpers\DateTimeHelper;
 use App\Models\Schedule;
 use App\Models\SchedulePlayground;
 use App\Repositories\ScheduleRepository;
@@ -38,6 +39,16 @@ class ScheduleService
                 $startTime = Carbon::parse($date . ' ' . $data['start_time']);
                 $endTime = Carbon::parse($date . ' ' . $data['end_time']);
 
+                /**
+                 * Check if range is negative
+                 */
+                if ($startTime->greaterThanOrEqualTo($endTime)) {
+                    throw new IncorrectScheduleDateRange('Range is negative');
+                }
+
+                /**
+                 * Check if time periods is overlaps
+                 */
                 if ($this->periodsIsOverlaps($schedulable, $startTime, $endTime)) {
                     throw new IncorrectScheduleDateRange();
                 }
@@ -96,19 +107,11 @@ class ScheduleService
             $schedulable->id
         );
 
-        if ($startTime->greaterThanOrEqualTo($endTime)) {
-            throw new IncorrectScheduleDateRange('Range is negative');
-        }
-
         foreach ($existedSchedules as $existedSchedule) {
             $scheduleStartTime = Carbon::parse($existedSchedule->start_time);
             $scheduleEndTime = Carbon::parse($existedSchedule->end_time);
 
-            if ($scheduleStartTime->greaterThanOrEqualTo($scheduleEndTime)) {
-                throw new IncorrectScheduleDateRange('Range is negative');
-            }
-
-            if (!($endTime->lessThanOrEqualTo($scheduleStartTime) || $scheduleEndTime->lessThanOrEqualTo($startTime))) {
+            if (DateTimeHelper::timePeriodsIsOverlaps($startTime, $endTime, $scheduleStartTime, $scheduleEndTime)) {
                 return true;
             }
         }
