@@ -5,6 +5,7 @@ namespace App\Http\Controllers\API;
 use App\Http\Controllers\Controller;
 use App\Http\Requests\Schedule\ScheduleGetFormRequest;
 use App\Http\Requests\Schedule\ScheduleCreateFormRequest;
+use App\Http\Requests\Schedule\ScheduleEditFormRequest;
 use App\Models\Playground;
 use App\Models\Schedule;
 use App\Models\User;
@@ -12,7 +13,6 @@ use App\Repositories\ScheduleRepository;
 use App\Services\ScheduleService;
 use Carbon\Carbon;
 use Illuminate\Http\JsonResponse;
-use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
 
 /**
@@ -203,6 +203,17 @@ class ScheduleController extends Controller
         return $this->success($creationResult);
     }
 
+    public function edit(Schedule $schedule, ScheduleEditFormRequest $request)
+    {
+        if (Auth::user()->cant('manageSchedule', $schedule)) {
+            return $this->forbidden();
+        }
+
+//        $schedule->fill()
+
+        return $this->success($schedule);
+    }
+
     /**
      * @param Schedule $schedule
      * @return JsonResponse
@@ -250,7 +261,7 @@ class ScheduleController extends Controller
      */
     public function delete(Schedule $schedule)
     {
-        if (Auth::user()->cant('deleteSchedule', $schedule)) {
+        if (Auth::user()->cant('manageSchedule', $schedule)) {
             return $this->forbidden();
         }
 

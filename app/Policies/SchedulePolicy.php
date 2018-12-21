@@ -31,21 +31,21 @@ class SchedulePolicy
     }
 
     /**
-     * Determine if user can delete schedule
+     * Determine if user can manage schedule
      *
      * @param User $user
      * @param Schedule $schedule
      * @return bool
      */
-    public function deleteSchedule(User $user, Schedule $schedule): bool
+    public function manageSchedule(User $user, Schedule $schedule): bool
     {
-        /** Trainer can delete own schedule */
+        /** Trainer can manage own schedule */
         if ($schedule->schedulable_type === User::class && $schedule->schedulable_id === $user->id) {
             return true;
         }
 
-        /** Playground schedule creator can delete playground schedule */
-        if ($schedule->schedulable_type === Playground::class && $schedule->schedulable()->creator_id === $user->id) {
+        /** Playground schedule creator can manage playground schedule */
+        if ($schedule->schedulable_type === Playground::class && $schedule->schedulable->creator_id === $user->id) {
             return true;
         }
 

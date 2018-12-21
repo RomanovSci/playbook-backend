@@ -34,7 +34,7 @@ class BookingPolicy
          * self booking requests
          */
         if ($booking->bookable_type === Playground::class) {
-            return $booking->bookable()->creator_id === $user->id;
+            return $booking->bookable->creator_id === $user->id;
         }
 
         return false;
