@@ -91,6 +91,27 @@ class ScheduleService
     }
 
     /**
+     * Edit schedule
+     *
+     * @param Schedule $schedule
+     * @param array $data
+     * @return Schedule
+     *
+     * @throws IncorrectScheduleDateRange
+     */
+    public function edit(Schedule $schedule, array $data): Schedule
+    {
+        $newStartTime = Carbon::parse($data['start_time']);
+        $newEndTime = Carbon::parse($data['end_time']);
+
+        if ($this->periodsIsOverlaps($schedule->schedulable, $newStartTime, $newEndTime)) {
+            throw new IncorrectScheduleDateRange();
+        }
+
+        return $schedule;
+    }
+
+    /**
      * Check periods overlaps
      *
      * @param Model $schedulable
@@ -100,8 +121,11 @@ class ScheduleService
      *
      * @throws IncorrectScheduleDateRange
      */
-    protected function periodsIsOverlaps(Model $schedulable, Carbon $startTime, Carbon $endTime): bool
-    {
+    protected function periodsIsOverlaps(
+        Model $schedulable,
+        Carbon $startTime,
+        Carbon $endTime
+    ): bool {
         $existedSchedules = ScheduleRepository::getBySchedulable(
             get_class($schedulable),
             $schedulable->id

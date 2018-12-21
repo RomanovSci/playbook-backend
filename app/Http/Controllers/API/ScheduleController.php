@@ -209,9 +209,9 @@ class ScheduleController extends Controller
             return $this->forbidden();
         }
 
-//        $schedule->fill()
-
-        return $this->success($schedule);
+        return $this->success(
+            $this->scheduleService->edit($schedule, $request->all())
+        );
     }
 
     /**
