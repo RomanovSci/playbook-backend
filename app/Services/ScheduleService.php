@@ -104,10 +104,11 @@ class ScheduleService
         $newStartTime = Carbon::parse($data['start_time']);
         $newEndTime = Carbon::parse($data['end_time']);
 
-        if ($this->periodsIsOverlaps($schedule->schedulable, $newStartTime, $newEndTime)) {
+        if ($this->periodsIsOverlaps($schedule->schedulable, $newStartTime, $newEndTime, [$schedule])) {
             throw new IncorrectScheduleDateRange();
         }
 
+        $schedule->fill($data)->update();
         return $schedule;
     }
 
@@ -117,6 +118,7 @@ class ScheduleService
      * @param Model $schedulable
      * @param Carbon $startTime
      * @param Carbon $endTime
+     * @param array $excludedSchedules
      * @return bool
      *
      * @throws IncorrectScheduleDateRange
@@ -124,13 +126,28 @@ class ScheduleService
     protected function periodsIsOverlaps(
         Model $schedulable,
         Carbon $startTime,
-        Carbon $endTime
+        Carbon $endTime,
+        $excludedSchedules = []
     ): bool {
         $existedSchedules = ScheduleRepository::getBySchedulable(
             get_class($schedulable),
             $schedulable->id
         );
 
+        /** Exclude schedules */
+        $existedSchedules = $existedSchedules->filter(
+            function ($existedSchedule) use ($excludedSchedules) {
+                foreach ($excludedSchedules as $excludedSchedule) {
+                    if ($excludedSchedule->id === $existedSchedule->id) {
+                        return false;
+                    }
+                }
+
+                return true;
+            }
+        );
+
+        /** Check schedules overlaps */
         foreach ($existedSchedules as $existedSchedule) {
             $scheduleStartTime = Carbon::parse($existedSchedule->start_time);
             $scheduleEndTime = Carbon::parse($existedSchedule->end_time);

@@ -203,6 +203,58 @@ class ScheduleController extends Controller
         return $this->success($creationResult);
     }
 
+    /**
+     * @param Schedule $schedule
+     * @param ScheduleEditFormRequest $request
+     * @return JsonResponse
+     *
+     * @throws \App\Exceptions\Internal\IncorrectScheduleDateRange
+     *
+     * @OA\Post(
+     *      path="/api/schedule/edit/{schedule_id}",
+     *      tags={"Schedule"},
+     *      summary="Edit schedule",
+     *      @OA\Parameter(
+     *          name="schedule_id",
+     *          description="Schedule id",
+     *          in="path",
+     *          required=true,
+     *          @OA\Schema(type="integer")
+     *      ),
+     *      @OA\Response(
+     *          response="200",
+     *          description="Ok",
+     *          @OA\MediaType(
+     *              mediaType="application/json",
+     *              @OA\Schema(
+     *                  type="object",
+     *                  @OA\Property(
+     *                      property="success",
+     *                      type="boolean"
+     *                  ),
+     *                  @OA\Property(
+     *                      property="message",
+     *                      type="string",
+     *                  ),
+     *                  @OA\Property(
+     *                      type="object",
+     *                      property="data",
+     *                      ref="#/components/schemas/Schedule"
+     *                  )
+     *              )
+     *          )
+     *      ),
+     *      @OA\Response(
+     *          response="403",
+     *          description="Forbidden"
+     *      ),
+     *      @OA\Response(
+     *          response="400",
+     *          description="Invalid schedule id"
+     *      ),
+     *      security={{"Bearer":{}}}
+     * )
+     */
     public function edit(Schedule $schedule, ScheduleEditFormRequest $request)
     {
         if (Auth::user()->cant('manageSchedule', $schedule)) {
@@ -217,6 +269,7 @@ class ScheduleController extends Controller
     /**
      * @param Schedule $schedule
      * @return JsonResponse
+     *
      * @throws \Exception
      *
      * @OA\Delete(
