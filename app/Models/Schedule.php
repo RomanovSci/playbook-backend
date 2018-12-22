@@ -14,6 +14,8 @@ namespace App\Models;
  * @property integer schedulable_id
  * @property string schedulable_type
  *
+ * @property Playground|User $schedulable
+ *
  * @OA\Schema(
  *      allOf={
  *          @OA\Schema(

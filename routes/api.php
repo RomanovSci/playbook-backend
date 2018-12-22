@@ -64,6 +64,9 @@ Route::middleware(['role:'
             ->where(['schedulable_type' => 'trainer|playground'])
             ->name('schedule.create');
 
+        Route::post('/edit/{schedule}', 'API\ScheduleController@edit')
+            ->name('schedule.edit');
+
         Route::delete('/delete/{schedule}', 'API\ScheduleController@delete')
             ->name('schedule.delete');
     });

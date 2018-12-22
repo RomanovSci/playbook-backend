@@ -19,6 +19,7 @@ use Illuminate\Database\Eloquent\Relations\MorphTo;
  * @property string deleted_at
  *
  * @property Schedule schedule
+ * @property Playground|User $bookable
  *
  * @OA\Schema(
  *      allOf={
