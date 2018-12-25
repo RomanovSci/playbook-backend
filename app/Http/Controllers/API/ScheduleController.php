@@ -113,7 +113,7 @@ class ScheduleController extends Controller
      * @param string $schedulableType
      * @return JsonResponse
      *
-     * @throws \App\Exceptions\Internal\IncorrectScheduleDateRange
+     * @throws \App\Exceptions\Internal\IncorrectDateRange
      * @throws \Throwable
      *
      * @OA\Post(
@@ -209,7 +209,7 @@ class ScheduleController extends Controller
      * @param ScheduleEditFormRequest $request
      * @return JsonResponse
      *
-     * @throws \App\Exceptions\Internal\IncorrectScheduleDateRange
+     * @throws \App\Exceptions\Internal\IncorrectDateRange
      *
      * @OA\Post(
      *      path="/api/schedule/edit/{schedule_id}",

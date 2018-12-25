@@ -94,22 +94,29 @@ class BookingController extends Controller
      */
     public function create(string $bookableType, BookingCreateFormRequest $request)
     {
-        /** @var User $user */
-        $user = Auth::user();
+        /** @var User $creator */
+        $creator = Auth::user();
         $bookableId = (int) $request->post('bookable_id');
-        $canCreate = $this->bookingService->canCreate($user, $bookableType, $bookableId);
+        $canCreate = $this->bookingService->canCreate(
+            Carbon::parse($request->post('start_time')),
+            Carbon::parse($request->post('end_time')),
+            $bookableType,
+            $bookableId,
+            $creator
+        );
 
         if (!$canCreate['success']) {
             throw new ForbiddenHttpException($canCreate['message']);
         }
 
-        $booking = $this->bookingService->create(
-            Carbon::parse($request->post('start_time')),
-            Carbon::parse($request->post('end_time')),
-            $bookableType,
-            $bookableId,
-            $user
-        );
+        /** @var Booking $booking */
+        $booking = Booking::create([
+            'start_time' => $request->post('start_time'),
+            'end_time' => $request->post('end_time'),
+            'bookable_type' => $bookableType,
+            'bookable_id' => $bookableId,
+            'creator_id' => $creator->id,
+        ]);
 
         return $this->success($booking->toArray());
     }

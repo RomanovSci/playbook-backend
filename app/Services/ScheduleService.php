@@ -2,7 +2,7 @@
 
 namespace App\Services;
 
-use App\Exceptions\Internal\IncorrectScheduleDateRange;
+use App\Exceptions\Internal\IncorrectDateRange;
 use App\Helpers\DateTimeHelper;
 use App\Models\Schedule;
 use App\Models\SchedulePlayground;
@@ -25,7 +25,7 @@ class ScheduleService
      * @param array $data
      * @return array
      *
-     * @throws IncorrectScheduleDateRange
+     * @throws IncorrectDateRange
      * @throws \Throwable
      */
     public function create(Model $schedulable, array $data): array
@@ -43,14 +43,14 @@ class ScheduleService
                  * Check if range is negative
                  */
                 if ($startTime->greaterThanOrEqualTo($endTime)) {
-                    throw new IncorrectScheduleDateRange('Range is negative');
+                    throw new IncorrectDateRange('Range is negative');
                 }
 
                 /**
                  * Check if time periods is overlaps
                  */
                 if ($this->periodsIsOverlaps($schedulable, $startTime, $endTime)) {
-                    throw new IncorrectScheduleDateRange();
+                    throw new IncorrectDateRange();
                 }
 
                 /**
@@ -80,7 +80,7 @@ class ScheduleService
             DB::rollBack();
             Log::error($e->getMessage());
 
-            if ($e instanceof IncorrectScheduleDateRange) {
+            if ($e instanceof IncorrectDateRange) {
                 throw $e;
             }
 
@@ -97,7 +97,7 @@ class ScheduleService
      * @param array $data
      * @return Schedule
      *
-     * @throws IncorrectScheduleDateRange
+     * @throws IncorrectDateRange
      */
     public function edit(Schedule $schedule, array $data): Schedule
     {
@@ -105,7 +105,7 @@ class ScheduleService
         $newEndTime = Carbon::parse($data['end_time']);
 
         if ($this->periodsIsOverlaps($schedule->schedulable, $newStartTime, $newEndTime, [$schedule])) {
-            throw new IncorrectScheduleDateRange();
+            throw new IncorrectDateRange();
         }
 
         $schedule->fill($data)->update();
@@ -121,7 +121,7 @@ class ScheduleService
      * @param array $excludedSchedules
      * @return bool
      *
-     * @throws IncorrectScheduleDateRange
+     * @throws IncorrectDateRange
      */
     protected function periodsIsOverlaps(
         Model $schedulable,
@@ -134,7 +134,10 @@ class ScheduleService
             $schedulable->id
         );
 
-        /** Exclude schedules */
+        /**
+         * Exclude schedules that contains
+         * in $excludedSchedules array
+         */
         $existedSchedules = $existedSchedules->filter(
             function ($existedSchedule) use ($excludedSchedules) {
                 foreach ($excludedSchedules as $excludedSchedule) {

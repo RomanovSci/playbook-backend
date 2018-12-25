@@ -2,9 +2,9 @@
 
 namespace App\Services;
 
-use App\Models\Booking;
 use App\Models\Playground;
 use App\Models\User;
+use App\Repositories\ScheduleRepository;
 use Carbon\Carbon;
 
 /**
@@ -14,43 +14,21 @@ use Carbon\Carbon;
 class BookingService
 {
     /**
-     * Create booking
+     * Determinate if booking can create
      *
      * @param Carbon $startTime
      * @param Carbon $endTime
-     * @param string $bookableType
-     * @param int $bookableId
-     * @param User $user
-     * @return Booking
-     */
-    public function create(
-        Carbon $startTime,
-        Carbon $endTime,
-        string $bookableType,
-        int $bookableId,
-        User $user
-    ): Booking {
-        return Booking::create([
-            'start_time' => $startTime->toDateTimeString(),
-            'end_time' => $endTime->toDateTimeString(),
-            'bookable_type' => $bookableType,
-            'bookable_id' => $bookableId,
-            'creator_id' => $user->id,
-        ]);
-    }
-
-    /**
-     * Check booking create ability
-     *
      * @param User $creator
      * @param string $bookableType
      * @param int $bookableId
      * @return array
      */
     public function canCreate(
-        User $creator,
+        Carbon $startTime,
+        Carbon $endTime,
         string $bookableType,
-        int $bookableId
+        int $bookableId,
+        User $creator
     ): array {
         $result = [
             'success' => false,
@@ -65,7 +43,23 @@ class BookingService
 
         /** Can't create booking for myself */
         if ($bookableType === User::class && $creator->id === $bookableId) {
-            $result['message'] = 'Incorrect bookable id';
+            $result['message'] = 'Can\'t create booking for myself';
+            return $result;
+        }
+
+        $properSchedule = null;
+        $mergedSchedules = ScheduleRepository::getMergedSchedules($bookableType, $bookableId);
+
+        foreach ($mergedSchedules as $mergedSchedule) {
+            if (Carbon::parse($mergedSchedule->start_time)->lessThanOrEqualTo($startTime) &&
+                Carbon::parse($mergedSchedule->end_time)->greaterThanOrEqualTo($endTime)) {
+                $properSchedule = $mergedSchedule;
+            }
+        }
+
+        /** Can't create booking for not existed schedules */
+        if (!$properSchedule) {
+            $result['message'] = 'Schedules for this time interval doesn\'t exists';
             return $result;
         }
 

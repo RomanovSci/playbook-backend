@@ -2,7 +2,7 @@
 
 namespace App\Helpers;
 
-use App\Exceptions\Internal\IncorrectScheduleDateRange;
+use App\Exceptions\Internal\IncorrectDateRange;
 use Carbon\Carbon;
 
 class DateTimeHelper
@@ -16,7 +16,7 @@ class DateTimeHelper
      * @param Carbon $secondEnd
      * @return boolean
      *
-     * @throws IncorrectScheduleDateRange
+     * @throws IncorrectDateRange
      */
     public static function timePeriodsIsOverlaps(
         Carbon $firstStart,
@@ -25,7 +25,7 @@ class DateTimeHelper
         Carbon $secondEnd
     ): bool {
         if ($firstStart->greaterThanOrEqualTo($firstEnd) || $secondStart->greaterThanOrEqualTo($secondEnd)) {
-            throw new IncorrectScheduleDateRange('Range is negative');
+            throw new IncorrectDateRange('Range is negative');
         }
 
         return !($firstStart->greaterThanOrEqualTo($secondEnd) || $secondStart->greaterThanOrEqualTo($firstEnd));
