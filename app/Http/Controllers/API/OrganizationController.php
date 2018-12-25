@@ -50,7 +50,8 @@ class OrganizationController extends Controller
      */
     public function getAll()
     {
-        return $this->success(OrganizationRepository::getAll());
+        $organizations = OrganizationRepository::getAll();
+        return $this->success($organizations);
     }
 
     /**

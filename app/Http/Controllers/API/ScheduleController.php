@@ -105,7 +105,8 @@ class ScheduleController extends Controller
             $schedulableType,
             $id
         );
-        return $this->success($schedules->toArray());
+        
+        return $this->success($schedules);
     }
 
     /**
