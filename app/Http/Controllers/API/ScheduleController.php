@@ -2,6 +2,7 @@
 
 namespace App\Http\Controllers\API;
 
+use App\Exceptions\Http\ForbiddenHttpException;
 use App\Http\Controllers\Controller;
 use App\Http\Requests\Schedule\ScheduleGetFormRequest;
 use App\Http\Requests\Schedule\ScheduleCreateFormRequest;
@@ -183,7 +184,7 @@ class ScheduleController extends Controller
          * for admin and organization-admin
          */
         if ($isForTrainer && !$schedulable->hasRole(['trainer'])) {
-            return $this->forbidden('Only trainer can create schedule.');
+            throw new ForbiddenHttpException('Only trainer can create schedule.');
         }
 
         if (!$isForTrainer) {
@@ -195,7 +196,7 @@ class ScheduleController extends Controller
              * for only trainer, organization-admin and system admin
              */
             if (Auth::user()->cant('createSchedule', $schedulable)) {
-                return $this->forbidden();
+                throw new ForbiddenHttpException();
             }
         }
 
@@ -258,7 +259,7 @@ class ScheduleController extends Controller
     public function edit(Schedule $schedule, ScheduleEditFormRequest $request)
     {
         if (Auth::user()->cant('manageSchedule', $schedule)) {
-            return $this->forbidden();
+            throw new ForbiddenHttpException();
         }
 
         return $this->success(
@@ -315,7 +316,7 @@ class ScheduleController extends Controller
     public function delete(Schedule $schedule)
     {
         if (Auth::user()->cant('manageSchedule', $schedule)) {
-            return $this->forbidden();
+            throw new ForbiddenHttpException();
         }
 
         $schedule->delete();

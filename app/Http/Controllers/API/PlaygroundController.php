@@ -2,6 +2,7 @@
 
 namespace App\Http\Controllers\API;
 
+use App\Exceptions\Http\ForbiddenHttpException;
 use App\Http\Controllers\Controller;
 use App\Http\Requests\Playground\PlaygroundCreateFormRequest;
 use App\Http\Requests\Playground\PlaygroundSearchFormRequest;
@@ -132,19 +133,16 @@ class PlaygroundController extends Controller
         $user = Auth::user();
 
         if ($organization && $user->cant('createPlayground', $organization)) {
-            return $this->forbidden();
+            throw new ForbiddenHttpException();
         }
 
         /**
          * @var Playground $playground
          */
-        $playground = Playground::create(array_merge(
-            $request->all(),
-            [
-                'organization_id' => $organization->id ?? null,
-                'creator_id' => $user->id,
-            ]
-        ));
+        $playground = Playground::create(array_merge($request->all(), [
+            'organization_id' => $organization->id ?? null,
+            'creator_id' => $user->id,
+        ]));
 
         return $this->success($playground->toArray());
     }

@@ -44,25 +44,22 @@ class BookingService
     /**
      * Check booking create ability
      *
+     * @param User $creator
      * @param string $bookableType
      * @param int $bookableId
      * @return bool
      *
      * @throws IncorrectBookableType
      */
-    public function canCreate(
-        string $bookableType,
-        int $bookableId
-    ): bool {
-        /** @var User $user */
-        $user = Auth::user();
-
+    public function canCreate(User $creator, string $bookableType, int $bookableId): bool
+    {
+        /** Can't book unbookable entities */
         if (!in_array($bookableType, [User::class, Playground::class])) {
             throw new IncorrectBookableType();
         }
 
         /** Can't create booking for myself */
-        if ($bookableType === User::class && $user->id === $bookableId) {
+        if ($bookableType === User::class && $creator->id === $bookableId) {
             return false;
         }
 

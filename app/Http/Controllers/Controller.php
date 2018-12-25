@@ -21,10 +21,6 @@ class Controller extends BaseController
 {
     use AuthorizesRequests, DispatchesJobs, ValidatesRequests;
 
-    const CODE_UNAUTHORIZED = 401;
-    const CODE_FORBIDDEN = 403;
-    const CODE_VALIDATION_ERROR = 422;
-
     /**
      * Simple success response
      *
@@ -41,28 +37,6 @@ class Controller extends BaseController
         ];
 
         return response()->json($response);
-    }
-
-    /**
-     * Simple forbidden response
-     *
-     * @param null $message
-     * @return JsonResponse
-     */
-    protected function forbidden($message = null): JsonResponse
-    {
-        return $this->error(self::CODE_FORBIDDEN, [], $message ?? 'Forbidden');
-    }
-
-    /**
-     * Simple unauthorized response
-     *
-     * @param null $message
-     * @return JsonResponse
-     */
-    protected function unauthorized($message = null): JsonResponse
-    {
-        return $this->error(self::CODE_UNAUTHORIZED, [], $message ?? 'Unauthorized');
     }
 
     /**

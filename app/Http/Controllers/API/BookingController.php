@@ -2,6 +2,7 @@
 
 namespace App\Http\Controllers\API;
 
+use App\Exceptions\Http\ForbiddenHttpException;
 use App\Http\Controllers\Controller;
 use App\Http\Requests\Booking\BookingConfirmFormRequest;
 use App\Http\Requests\Booking\BookingCreateFormRequest;
@@ -94,16 +95,12 @@ class BookingController extends Controller
     public function create(string $bookableType, BookingCreateFormRequest $request)
     {
         /** @var User $user */
-        $bookableId = (int) $request->post('bookable_id');
         $user = Auth::user();
-
-        $canCreate = $this->bookingService->canCreate(
-            $bookableType,
-            $bookableId
-        );
+        $bookableId = (int) $request->post('bookable_id');
+        $canCreate = $this->bookingService->canCreate($user, $bookableType, $bookableId);
 
         if (!$canCreate) {
-            return $this->forbidden();
+            throw new ForbiddenHttpException();
         }
 
         $booking = $this->bookingService->create(
@@ -171,7 +168,7 @@ class BookingController extends Controller
         $booking = Booking::find($request->post('booking_id'));
 
         if (Auth::user()->cant('confirmBooking', $booking)) {
-            return $this->forbidden('Can\'t confirm booking');
+            throw new ForbiddenHttpException('Can\'t confirm booking');
         }
 
         $booking->status = Booking::STATUS_ACTIVE;
