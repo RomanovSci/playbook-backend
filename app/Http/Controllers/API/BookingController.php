@@ -100,7 +100,7 @@ class BookingController extends Controller
         /** @var User $creator */
         $creator = Auth::user();
         $bookableId = (int) $request->post('bookable_id');
-        $canCreate = $this->bookingService->checkBookingRequest(
+        $checkResult = $this->bookingService->checkBookingRequest(
             Carbon::parse($request->post('start_time')),
             Carbon::parse($request->post('end_time')),
             $bookableType,
@@ -108,8 +108,8 @@ class BookingController extends Controller
             $creator
         );
 
-        if (!$canCreate['success']) {
-            throw new ForbiddenHttpException($canCreate['message']);
+        if (!$checkResult['success']) {
+            throw new ForbiddenHttpException($checkResult['message']);
         }
 
         /** @var Booking $booking */

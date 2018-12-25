@@ -12,6 +12,17 @@ use Illuminate\Database\Eloquent\Collection;
 class PlaygroundRepository
 {
     /**
+     * Get all playgrounds
+     *
+     * @return Collection
+     */
+    public static function getAll(): Collection
+    {
+        $playgrounds = Playground::all();
+        return $playgrounds;
+    }
+
+    /**
      * Search playgrounds
      *
      * @param string $query

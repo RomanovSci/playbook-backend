@@ -33,6 +33,21 @@ Route::middleware(['auth:api'])->group(function () {
             ->where(['bookable_type' => 'trainer|playground'])
             ->name('booking.create');
     });
+
+    /** Playground */
+    Route::prefix('playground')->group(function () {
+        Route::get('/search', 'API\PlaygroundController@search')
+            ->name('playground.search');
+
+        Route::get('/all', 'API\PlaygroundController@getAll')
+            ->name('playground.all');
+    });
+
+    /** Organization */
+    Route::prefix('organization')->group(function () {
+        Route::get('/all', 'API\OrganizationController@getAll')
+            ->name('organization.all');
+    });
 });
 
 /**
@@ -51,9 +66,6 @@ Route::middleware(['role:'
 
     /** Playground */
     Route::prefix('playground')->group(function () {
-        Route::get('/search', 'API\PlaygroundController@search')
-            ->name('playground.search');
-
         Route::post('/create', 'API\PlaygroundController@create')
             ->name('playground.create');
     });
