@@ -2,8 +2,8 @@
 
 namespace App\Http\Controllers\API;
 
+use App\Exceptions\Http\ForbiddenHttpException;
 use App\Http\Controllers\Controller;
-use App\Http\Requests\Booking\BookingConfirmFormRequest;
 use App\Http\Requests\Booking\BookingCreateFormRequest;
 use App\Models\Booking;
 use App\Models\User;
@@ -36,7 +36,8 @@ class BookingController extends Controller
      * @param string $bookableType
      * @param BookingCreateFormRequest $request
      * @return \Illuminate\Http\JsonResponse
-     * @throws \App\Exceptions\Internal\IncorrectBookableType
+     *
+     * @throws \App\Exceptions\Internal\IncorrectDateRange
      *
      * @OA\Post(
      *      path="/api/booking/{type}/create",
@@ -63,7 +64,7 @@ class BookingController extends Controller
      *      ),
      *      @OA\Response(
      *          response="200",
-     *          description="Ok",
+     *          description="Success",
      *          @OA\MediaType(
      *              mediaType="application/json",
      *              @OA\Schema(
@@ -86,58 +87,63 @@ class BookingController extends Controller
      *      ),
      *      @OA\Response(
      *          response="403",
-     *          description="Can't create booking || Period is unavailable"
+     *          description="
+     *              Can't create booking for myself
+     *              Schedules for this time interval doesn't exists
+     *              This time already reserved"
      *      ),
      *      security={{"Bearer":{}}}
      * )
      */
     public function create(string $bookableType, BookingCreateFormRequest $request)
     {
-        /** @var User $user */
+        /** @var User $creator */
+        $creator = Auth::user();
         $bookableId = (int) $request->post('bookable_id');
-        $user = Auth::user();
-
-        $canCreate = $this->bookingService->canCreate(
-            $bookableType,
-            $bookableId
-        );
-
-        if (!$canCreate) {
-            return $this->forbidden();
-        }
-
-        $booking = $this->bookingService->create(
+        $canCreate = $this->bookingService->checkBookingRequest(
             Carbon::parse($request->post('start_time')),
             Carbon::parse($request->post('end_time')),
             $bookableType,
             $bookableId,
-            $user
+            $creator
         );
+
+        if (!$canCreate['success']) {
+            throw new ForbiddenHttpException($canCreate['message']);
+        }
+
+        /** @var Booking $booking */
+        $booking = Booking::create([
+            'start_time' => $request->post('start_time'),
+            'end_time' => $request->post('end_time'),
+            'bookable_type' => $bookableType,
+            'bookable_id' => $bookableId,
+            'creator_id' => $creator->id,
+        ]);
 
         return $this->success($booking->toArray());
     }
 
     /**
-     * @param BookingConfirmFormRequest $request
+     * @param Booking $booking
      * @return \Illuminate\Http\JsonResponse
      *
      * @OA\Post(
-     *      path="/api/booking/confirm",
+     *      path="/api/booking/confirm/{booking_id}",
      *      tags={"Booking"},
      *      summary="Confirm booking",
-     *      @OA\RequestBody(
-     *          @OA\MediaType(
-     *              mediaType="application/json",
-     *              @OA\Schema(
-     *                  example={
-     *                      "booking_id": "Booking id"
-     *                  }
-     *              )
-     *          )
+     *      @OA\Parameter(
+     *          name="booking_id",
+     *          description="Booking id",
+     *          in="path",
+     *          required=true,
+     *          @OA\Schema(type="integer")
      *      ),
      *      @OA\Response(
      *          response="200",
-     *          description="Ok",
+     *          description="
+     *              Success
+     *              Booking already confirmed",
      *          @OA\MediaType(
      *              mediaType="application/json",
      *              @OA\Schema(
@@ -165,20 +171,18 @@ class BookingController extends Controller
      *      security={{"Bearer":{}}}
      * )
      */
-    public function confirm(BookingConfirmFormRequest $request)
+    public function confirm(Booking $booking)
     {
-        /** @var Booking $booking */
-        $booking = Booking::find($request->post('booking_id'));
-
         if (Auth::user()->cant('confirmBooking', $booking)) {
-            return $this->forbidden('Can\'t confirm booking');
+            throw new ForbiddenHttpException('Can\'t confirm booking');
         }
 
-        $booking->status = Booking::STATUS_ACTIVE;
-
-        if (!$booking->update(['status'])) {
-            return $this->error(200, [], 'Can\'t update booking');
+        if ($booking->status === Booking::STATUS_CONFIRMED) {
+            return $this->error(200, $booking->toArray(), 'Booking already confirmed');
         }
+
+        $booking->status = Booking::STATUS_CONFIRMED;
+        $booking->update(['status']);
 
         return $this->success($booking->toArray());
     }

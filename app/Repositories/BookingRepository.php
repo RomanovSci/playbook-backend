@@ -3,7 +3,7 @@
 namespace App\Repositories;
 
 use App\Models\Booking;
-use App\Models\Schedule;
+use Carbon\Carbon;
 use Illuminate\Database\Eloquent\Collection;
 
 /**
@@ -12,10 +12,28 @@ use Illuminate\Database\Eloquent\Collection;
  */
 class BookingRepository
 {
-    public static function getActiveBySchedule(Schedule $schedule): Collection
-    {
-        return Booking::where('status', Booking::STATUS_ACTIVE)
-            ->where('schedule_id', $schedule->id)
-            ->get();
+    public static function getByDateRange(
+        Carbon $startTime,
+        Carbon $endTime,
+        string $bookableType = null,
+        int $bookableId = null,
+        int $status = null
+    ): Collection {
+        $query = Booking::where('start_time', '>=', $startTime->toDateTimeString())
+            ->where('end_time', '<=', $endTime->toDayDateTimeString());
+
+        if ($bookableType) {
+            $query->where('bookable_type', $bookableType);
+        }
+
+        if ($bookableId) {
+            $query->where('bookable_id', $bookableId);
+        }
+
+        if (isset($status)) {
+            $query->where('status', $status);
+        }
+
+        return $query->get();
     }
 }

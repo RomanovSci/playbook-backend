@@ -8,7 +8,6 @@ use Tests\TestCase;
 
 /**
  * Class ControllerTest
- *
  * @package Tests\Unit\app\Http\Controllers
  */
 class ControllerTest extends TestCase
@@ -20,26 +19,6 @@ class ControllerTest extends TestCase
          */
         $controller = $this->getMockBuilder(ControllerMock::class)->getMock();
         $actualResult = $controller->success();
-        $this->assertInstanceOf(JsonResponse::class, $actualResult);
-    }
-
-    public function testForbidden()
-    {
-        /**
-         * @var ControllerMock $controller
-         */
-        $controller = $this->getMockBuilder(ControllerMock::class)->getMock();
-        $actualResult = $controller->forbidden();
-        $this->assertInstanceOf(JsonResponse::class, $actualResult);
-    }
-
-    public function testUnauthorized()
-    {
-        /**
-         * @var ControllerMock $controller
-         */
-        $controller = $this->getMockBuilder(ControllerMock::class)->getMock();
-        $actualResult = $controller->unauthorized();
         $this->assertInstanceOf(JsonResponse::class, $actualResult);
     }
 

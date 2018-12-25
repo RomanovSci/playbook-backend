@@ -2,6 +2,7 @@
 
 namespace App\Http\Controllers\API;
 
+use App\Exceptions\Http\UnauthorizedHttpException;
 use App\Http\Controllers\Controller;
 use App\Http\Requests\TrainerInfo\TrainerInfoCreateFormRequest;
 use App\Http\Requests\User\LoginFormRequest;
@@ -196,7 +197,7 @@ class UserController extends Controller
         $user = User::where('phone', $phone)->first();
 
         if (!$user || !Hash::check($password, $user->password)) {
-            return $this->unauthorized();
+            throw new UnauthorizedHttpException();
         }
         $token = $user->createToken('MyApp');
 
