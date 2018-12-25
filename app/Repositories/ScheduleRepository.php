@@ -38,7 +38,7 @@ class ScheduleRepository
      * @param int $schedulableId
      * @return mixed
      */
-    public static function getActiveInRange(
+    public static function getByDateRange(
         Carbon $startTime,
         Carbon $endTime,
         string $schedulableType = null,

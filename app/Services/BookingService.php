@@ -2,8 +2,11 @@
 
 namespace App\Services;
 
+use App\Helpers\DateTimeHelper;
+use App\Models\Booking;
 use App\Models\Playground;
 use App\Models\User;
+use App\Repositories\BookingRepository;
 use App\Repositories\ScheduleRepository;
 use Carbon\Carbon;
 
@@ -14,7 +17,7 @@ use Carbon\Carbon;
 class BookingService
 {
     /**
-     * Determinate if booking can create
+     * Determinate if booking can be create
      *
      * @param Carbon $startTime
      * @param Carbon $endTime
@@ -22,8 +25,10 @@ class BookingService
      * @param string $bookableType
      * @param int $bookableId
      * @return array
+     *
+     * @throws \App\Exceptions\Internal\IncorrectDateRange
      */
-    public function canCreate(
+    public function checkBookingRequest(
         Carbon $startTime,
         Carbon $endTime,
         string $bookableType,
@@ -47,6 +52,7 @@ class BookingService
             return $result;
         }
 
+        /** Find the proper schedule for booking dates */
         $properSchedule = null;
         $mergedSchedules = ScheduleRepository::getMergedSchedules($bookableType, $bookableId);
 
@@ -61,6 +67,31 @@ class BookingService
         if (!$properSchedule) {
             $result['message'] = 'Schedules for this time interval doesn\'t exists';
             return $result;
+        }
+
+        /**
+         * Check if exists confirmed
+         * booking for the proper schedule
+         */
+        $confirmedBookings = BookingRepository::getByDateRange(
+            Carbon::parse($properSchedule->start_time),
+            Carbon::parse($properSchedule->end_time),
+            $bookableType,
+            $bookableId,
+            Booking::STATUS_CONFIRMED
+        );
+
+        foreach ($confirmedBookings as $confirmedBooking) {
+            if (DateTimeHelper::timePeriodsIsOverlaps(
+                Carbon::parse($confirmedBooking->start_time),
+                Carbon::parse($confirmedBooking->end_time),
+                $startTime,
+                $endTime
+            )) {
+                /** Can't book reserved period */
+                $result['message'] = 'This time already reserved';
+                return $result;
+            }
         }
 
         $result['success'] = true;

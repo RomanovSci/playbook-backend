@@ -99,7 +99,7 @@ class ScheduleController extends Controller
      */
     public function get(ScheduleGetFormRequest $request, string $schedulableType, int $id = null)
     {
-        $schedules = ScheduleRepository::getActiveInRange(
+        $schedules = ScheduleRepository::getByDateRange(
             Carbon::parse($request->get('start_time')),
             Carbon::parse($request->get('end_time')),
             $schedulableType,
