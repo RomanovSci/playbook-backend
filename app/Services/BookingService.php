@@ -2,12 +2,10 @@
 
 namespace App\Services;
 
-use App\Exceptions\Internal\IncorrectBookableType;
 use App\Models\Booking;
 use App\Models\Playground;
 use App\Models\User;
 use Carbon\Carbon;
-use Illuminate\Support\Facades\Auth;
 
 /**
  * Class BookingAvailabilityChecker
@@ -47,22 +45,31 @@ class BookingService
      * @param User $creator
      * @param string $bookableType
      * @param int $bookableId
-     * @return bool
-     *
-     * @throws IncorrectBookableType
+     * @return array
      */
-    public function canCreate(User $creator, string $bookableType, int $bookableId): bool
-    {
+    public function canCreate(
+        User $creator,
+        string $bookableType,
+        int $bookableId
+    ): array {
+        $result = [
+            'success' => false,
+            'message' => '',
+        ];
+
         /** Can't book unbookable entities */
         if (!in_array($bookableType, [User::class, Playground::class])) {
-            throw new IncorrectBookableType();
+            $result['message'] = 'Incorrect bookable type';
+            return $result;
         }
 
         /** Can't create booking for myself */
         if ($bookableType === User::class && $creator->id === $bookableId) {
-            return false;
+            $result['message'] = 'Incorrect bookable id';
+            return $result;
         }
 
-        return true;
+        $result['success'] = true;
+        return $result;
     }
 }

@@ -99,8 +99,8 @@ class BookingController extends Controller
         $bookableId = (int) $request->post('bookable_id');
         $canCreate = $this->bookingService->canCreate($user, $bookableType, $bookableId);
 
-        if (!$canCreate) {
-            throw new ForbiddenHttpException();
+        if (!$canCreate['success']) {
+            throw new ForbiddenHttpException($canCreate['message']);
         }
 
         $booking = $this->bookingService->create(
