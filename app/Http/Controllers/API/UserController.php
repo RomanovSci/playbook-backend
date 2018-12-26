@@ -368,6 +368,13 @@ class UserController extends Controller
      *                                  @OA\Items(ref="#/components/schemas/Playground")
      *                              ),
      *                          ),
+     *                          @OA\Schema(
+     *                              @OA\Property(
+     *                                  property="user",
+     *                                  type="object",
+     *                                  ref="#/components/schemas/User"
+     *                              ),
+     *                          ),
      *                      }
      *                  )
      *              )

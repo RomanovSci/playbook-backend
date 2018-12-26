@@ -60,4 +60,19 @@ class TrainerInfo extends BaseModel
         'user_id', 'about', 'min_price',
         'max_price', 'currency'
     ];
+
+    /**
+     * @var array
+     */
+    protected $with = [
+        'user',
+    ];
+
+    /**
+     * @return \Illuminate\Database\Eloquent\Relations\BelongsTo
+     */
+    public function user()
+    {
+        return $this->belongsTo(User::class);
+    }
 }
