@@ -45,6 +45,7 @@ class ScheduleRepository
         int $schedulableId = null
     ): Collection {
         $query = Schedule::where('start_time', '>=', $startTime->toDateTimeString())
+            ->orderBy('start_time', 'asc')
             ->where('end_time', '<=', $endTime->toDayDateTimeString());
 
         if ($schedulableType) {

@@ -19,6 +19,45 @@ use Illuminate\Support\Facades\Auth;
 class PlaygroundController extends Controller
 {
     /**
+     * @return \Illuminate\Http\JsonResponse
+     *
+     * @OA\Get(
+     *      path="/api/playground/all",
+     *      tags={"Playground"},
+     *      summary="Get all playgrounds",
+     *      @OA\Response(
+     *          response="200",
+     *          description="Success",
+     *          @OA\MediaType(
+     *              mediaType="application/json",
+     *              @OA\Schema(
+     *                  type="object",
+     *                  @OA\Property(
+     *                      property="success",
+     *                      type="boolean"
+     *                  ),
+     *                  @OA\Property(
+     *                      property="message",
+     *                      type="string",
+     *                  ),
+     *                  @OA\Property(
+     *                      type="array",
+     *                      property="data",
+     *                      @OA\Items(ref="#/components/schemas/Playground")
+     *                  )
+     *              )
+     *         )
+     *      ),
+     *      security={{"Bearer":{}}}
+     * )
+     */
+    public function getAll()
+    {
+        $playgrounds = PlaygroundRepository::getAll();
+        return $this->success($playgrounds);
+    }
+
+    /**
      * @param PlaygroundSearchFormRequest $request
      * @return \Illuminate\Http\JsonResponse
      *
@@ -35,7 +74,7 @@ class PlaygroundController extends Controller
      *      ),
      *      @OA\Response(
      *          response="200",
-     *          description="Ok",
+     *          description="Success",
      *          @OA\MediaType(
      *              mediaType="application/json",
      *              @OA\Schema(
@@ -95,7 +134,7 @@ class PlaygroundController extends Controller
      *      ),
      *      @OA\Response(
      *          response="200",
-     *          description="Ok",
+     *          description="Success",
      *          @OA\MediaType(
      *              mediaType="application/json",
      *              @OA\Schema(

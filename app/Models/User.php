@@ -52,7 +52,7 @@ use Spatie\Permission\Traits\HasRoles;
  *              ),
  *              @OA\Property(
  *                  property="password",
- *                  type="string",
+ *                  description="hidden",
  *              ),
  *              @OA\Property(
  *                  property="phone_verified_at",
@@ -60,7 +60,7 @@ use Spatie\Permission\Traits\HasRoles;
  *              ),
  *              @OA\Property(
  *                  property="verification_code",
- *                  type="string",
+ *                  description="hidden",
  *              ),
  *          ),
  *          @OA\Schema(ref="#/components/schemas/BaseModel"),

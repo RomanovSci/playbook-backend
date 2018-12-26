@@ -12,15 +12,15 @@ use Illuminate\Database\Eloquent\SoftDeletes;
  * @OA\Schema(
  *      @OA\Property(
  *          property="created_at",
- *          type="string",
+ *          description="hidden",
  *      ),
  *      @OA\Property(
  *          property="updated_at",
- *          type="string",
+ *          description="hidden",
  *      ),
  *      @OA\Property(
  *          property="deleted_at",
- *          type="string",
+ *          description="hidden",
  *      )
  * )
  */

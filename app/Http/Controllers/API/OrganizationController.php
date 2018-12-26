@@ -5,6 +5,7 @@ namespace App\Http\Controllers\API;
 use App\Http\Controllers\Controller;
 use App\Http\Requests\Organization\OrganizationCreateFormRequest;
 use App\Models\Organization;
+use App\Repositories\OrganizationRepository;
 use Illuminate\Http\JsonResponse;
 use Illuminate\Support\Facades\Auth;
 
@@ -14,6 +15,45 @@ use Illuminate\Support\Facades\Auth;
  */
 class OrganizationController extends Controller
 {
+    /**
+     * @return JsonResponse
+     *
+     * @OA\Get(
+     *      path="/api/organization/all",
+     *      tags={"Organization"},
+     *      summary="Get all organizations",
+     *      @OA\Response(
+     *          response="200",
+     *          description="Success",
+     *          @OA\MediaType(
+     *              mediaType="application/json",
+     *              @OA\Schema(
+     *                  type="object",
+     *                  @OA\Property(
+     *                      property="success",
+     *                      type="boolean"
+     *                  ),
+     *                  @OA\Property(
+     *                      property="message",
+     *                      type="string",
+     *                  ),
+     *                  @OA\Property(
+     *                      type="array",
+     *                      property="data",
+     *                      @OA\Items(ref="#/components/schemas/Organization")
+     *                  )
+     *              )
+     *          )
+     *      ),
+     *      security={{"Bearer":{}}}
+     * )
+     */
+    public function getAll()
+    {
+        $organizations = OrganizationRepository::getAll();
+        return $this->success($organizations);
+    }
+
     /**
      * @param OrganizationCreateFormRequest $request
      * @return JsonResponse
@@ -35,7 +75,7 @@ class OrganizationController extends Controller
      *      ),
      *      @OA\Response(
      *          response="200",
-     *          description="Ok",
+     *          description="Success",
      *          @OA\MediaType(
      *              mediaType="application/json",
      *              @OA\Schema(
@@ -65,9 +105,7 @@ class OrganizationController extends Controller
      */
     public function create(OrganizationCreateFormRequest $request)
     {
-        /**
-         * @var Organization $organization
-         */
+        /** @var Organization $organization */
         $organization = Organization::create(array_merge(
             $request->all(),
             ['owner_id' => Auth::user()->id]
