@@ -3,6 +3,7 @@
 namespace App\Http\Controllers\API;
 
 use App\Http\Controllers\Controller;
+use App\Http\Requests\Common\GetFormRequest;
 use App\Http\Requests\Organization\OrganizationCreateFormRequest;
 use App\Models\Organization;
 use App\Repositories\OrganizationRepository;
@@ -16,12 +17,27 @@ use Illuminate\Support\Facades\Auth;
 class OrganizationController extends Controller
 {
     /**
+     * @param GetFormRequest $request
      * @return JsonResponse
      *
      * @OA\Get(
-     *      path="/api/organization/all",
+     *      path="/api/organization",
      *      tags={"Organization"},
-     *      summary="Get all organizations",
+     *      summary="Get organizations",
+     *      @OA\Parameter(
+     *          name="limit",
+     *          description="Limit",
+     *          in="query",
+     *          required=true,
+     *          @OA\Schema(type="integer")
+     *      ),
+     *      @OA\Parameter(
+     *          name="offset",
+     *          description="Offset",
+     *          in="query",
+     *          required=true,
+     *          @OA\Schema(type="integer")
+     *      ),
      *      @OA\Response(
      *          response="200",
      *          description="Success",
@@ -48,9 +64,12 @@ class OrganizationController extends Controller
      *      security={{"Bearer":{}}}
      * )
      */
-    public function all()
+    public function get(GetFormRequest $request)
     {
-        $organizations = OrganizationRepository::getAll();
+        $organizations = OrganizationRepository::get(
+            $request->get('limit'),
+            $request->get('offset')
+        );
         return $this->success($organizations);
     }
 

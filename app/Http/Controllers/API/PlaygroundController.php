@@ -4,6 +4,7 @@ namespace App\Http\Controllers\API;
 
 use App\Exceptions\Http\ForbiddenHttpException;
 use App\Http\Controllers\Controller;
+use App\Http\Requests\Common\GetFormRequest;
 use App\Http\Requests\Common\SearchFormRequest;
 use App\Http\Requests\Playground\PlaygroundCreateFormRequest;
 use App\Models\Organization;
@@ -19,12 +20,27 @@ use Illuminate\Support\Facades\Auth;
 class PlaygroundController extends Controller
 {
     /**
+     * @param GetFormRequest $request
      * @return \Illuminate\Http\JsonResponse
      *
      * @OA\Get(
-     *      path="/api/playground/all",
+     *      path="/api/playground",
      *      tags={"Playground"},
-     *      summary="Get all playgrounds",
+     *      summary="Get playgrounds",
+     *      @OA\Parameter(
+     *          name="limit",
+     *          description="Limit",
+     *          in="query",
+     *          required=true,
+     *          @OA\Schema(type="integer")
+     *      ),
+     *      @OA\Parameter(
+     *          name="offset",
+     *          description="Offset",
+     *          in="query",
+     *          required=true,
+     *          @OA\Schema(type="integer")
+     *      ),
      *      @OA\Response(
      *          response="200",
      *          description="Success",
@@ -51,9 +67,12 @@ class PlaygroundController extends Controller
      *      security={{"Bearer":{}}}
      * )
      */
-    public function all()
+    public function get(GetFormRequest $request)
     {
-        $playgrounds = PlaygroundRepository::getAll();
+        $playgrounds = PlaygroundRepository::get(
+            $request->get('limit'),
+            $request->get('offset')
+        );
         return $this->success($playgrounds);
     }
 

@@ -18,8 +18,7 @@ class CityRepository
      */
     public static function get(int $limit, int $offset): Collection
     {
-        $cities = City::limit($limit)->offset($offset)->get();
-        return $cities;
+        return City::limit($limit)->offset($offset)->get();
     }
 
     /**
@@ -30,7 +29,6 @@ class CityRepository
      */
     public static function search(string $query): Collection
     {
-        $cities = City::where('name', 'ilike', "%$query%")->get();
-        return $cities;
+        return City::where('name', 'ilike', "%$query%")->get();
     }
 }

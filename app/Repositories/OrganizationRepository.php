@@ -11,13 +11,14 @@ use Illuminate\Support\Collection;
 class OrganizationRepository
 {
     /**
-     * Get all organizations
-     *
+     * @param int $limit
+     * @param int $offset
      * @return Collection
      */
-    public static function getAll(): Collection
+    public static function get(int $limit, int $offset): Collection
     {
-        $organizations = Organization::all();
-        return $organizations;
+        return Organization::limit($limit)
+            ->offset($offset)
+            ->get();
     }
 }

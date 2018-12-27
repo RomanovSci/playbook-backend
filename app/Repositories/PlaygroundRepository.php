@@ -12,14 +12,13 @@ use Illuminate\Database\Eloquent\Collection;
 class PlaygroundRepository
 {
     /**
-     * Get all playgrounds
-     *
+     * @param int $limit
+     * @param int $offset
      * @return Collection
      */
-    public static function getAll(): Collection
+    public static function get(int $limit, int $offset): Collection
     {
-        $playgrounds = Playground::all();
-        return $playgrounds;
+        return Playground::limit($limit)->offset($offset)->get();
     }
 
     /**
@@ -30,11 +29,9 @@ class PlaygroundRepository
      */
     public static function search(string $query): Collection
     {
-        $playgrounds = Playground::where('name', 'ilike', "%$query%")
+        return Playground::where('name', 'ilike', "%$query%")
             ->orWhere('description', 'ilike', "%$query%")
             ->orWhere('address', 'ilike', "%$query%")
             ->get();
-
-        return $playgrounds;
     }
 }
