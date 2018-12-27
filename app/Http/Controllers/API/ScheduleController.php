@@ -10,6 +10,7 @@ use App\Http\Requests\Schedule\ScheduleEditFormRequest;
 use App\Models\Playground;
 use App\Models\Schedule;
 use App\Models\User;
+use App\Repositories\BookingRepository;
 use App\Repositories\ScheduleRepository;
 use App\Services\ScheduleService;
 use Carbon\Carbon;
@@ -90,8 +91,19 @@ class ScheduleController extends Controller
      *                  @OA\Property(
      *                      type="array",
      *                      property="data",
-     *                      @OA\Items(ref="#/components/schemas/Schedule")
-     *                  )
+     *                      @OA\Items(
+     *                          allOf={
+     *                              @OA\Schema(ref="#/components/schemas/Schedule"),
+     *                              @OA\Schema(
+     *                                  @OA\Property(
+     *                                      property="confirmed_bookings",
+     *                                      type="array",
+     *                                      @OA\Items(ref="#/components/schemas/Booking")
+     *                                  ),
+     *                              ),
+     *                          }
+     *                      )
+     *                  ),
      *              )
      *         )
      *      )
@@ -105,6 +117,17 @@ class ScheduleController extends Controller
             $schedulableType,
             $id
         );
+
+        /**
+         * Append confirmed bookings to each schedule
+         * @var Schedule $schedule
+         */
+        foreach ($schedules as $schedule) {
+            $schedule->setAttribute(
+                'confirmed_bookings',
+                BookingRepository::getConfirmedBookingsForSchedule($schedule)
+            );
+        }
         
         return $this->success($schedules);
     }

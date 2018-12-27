@@ -1,6 +1,7 @@
 <?php
 
 namespace App\Repositories;
+
 use App\Models\Organization;
 use Illuminate\Support\Collection;
 
