@@ -33,6 +33,12 @@ Route::middleware(['auth:api'])->group(function () {
         Route::get('/search', 'API\CityController@search')->name('city.search');
     });
 
+    /** Country */
+    Route::prefix('country')->group(function () {
+        Route::get('/', 'API\CountryController@get')->name('country.get');
+        Route::get('/search', 'API\CountryController@search')->name('country.search');
+    });
+
     /** Booking */
     Route::prefix('booking')->group(function () {
         Route::post('/{bookable_type}/create', 'API\BookingController@create')
