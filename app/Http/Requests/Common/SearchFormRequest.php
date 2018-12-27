@@ -1,14 +1,14 @@
 <?php
 
-namespace App\Http\Requests\Playground;
+namespace App\Http\Requests\Common;
 
 use App\Http\Requests\BaseFormRequest;
 
 /**
- * Class PlaygroundSearchFormRequest
- * @package App\Http\Requests\Playground
+ * Class SearchFormRequest
+ * @package App\Http\Requests\Common
  */
-class PlaygroundSearchFormRequest extends BaseFormRequest
+class SearchFormRequest extends BaseFormRequest
 {
     /**
      * @return array

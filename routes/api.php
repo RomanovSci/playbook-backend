@@ -27,6 +27,15 @@ Route::middleware(['auth:api'])->group(function () {
     Route::post('/logout', 'API\UserController@logout')->name('user.logout');
     Route::post('/phone-verify', 'API\UserController@verifyPhone')->name('user.verifyPhone');
 
+    /** City */
+    Route::prefix('city')->group(function () {
+        Route::get('/', 'API\CityController@get')
+            ->name('playground.get');
+
+        Route::get('/search', 'API\CityController@search')
+            ->name('playground.search');
+    });
+
     /** Booking */
     Route::prefix('booking')->group(function () {
         Route::post('/{bookable_type}/create', 'API\BookingController@create')
@@ -36,16 +45,16 @@ Route::middleware(['auth:api'])->group(function () {
 
     /** Playground */
     Route::prefix('playground')->group(function () {
+        Route::get('/all', 'API\PlaygroundController@all')
+            ->name('playground.all');
+
         Route::get('/search', 'API\PlaygroundController@search')
             ->name('playground.search');
-
-        Route::get('/all', 'API\PlaygroundController@getAll')
-            ->name('playground.all');
     });
 
     /** Organization */
     Route::prefix('organization')->group(function () {
-        Route::get('/all', 'API\OrganizationController@getAll')
+        Route::get('/all', 'API\OrganizationController@all')
             ->name('organization.all');
     });
 });

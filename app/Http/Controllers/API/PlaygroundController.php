@@ -4,8 +4,8 @@ namespace App\Http\Controllers\API;
 
 use App\Exceptions\Http\ForbiddenHttpException;
 use App\Http\Controllers\Controller;
+use App\Http\Requests\Common\SearchFormRequest;
 use App\Http\Requests\Playground\PlaygroundCreateFormRequest;
-use App\Http\Requests\Playground\PlaygroundSearchFormRequest;
 use App\Models\Organization;
 use App\Models\Playground;
 use App\Models\User;
@@ -51,14 +51,14 @@ class PlaygroundController extends Controller
      *      security={{"Bearer":{}}}
      * )
      */
-    public function getAll()
+    public function all()
     {
         $playgrounds = PlaygroundRepository::getAll();
         return $this->success($playgrounds);
     }
 
     /**
-     * @param PlaygroundSearchFormRequest $request
+     * @param SearchFormRequest $request
      * @return \Illuminate\Http\JsonResponse
      *
      * @OA\Get(
@@ -102,7 +102,7 @@ class PlaygroundController extends Controller
      *      security={{"Bearer":{}}}
      * )
      */
-    public function search(PlaygroundSearchFormRequest $request)
+    public function search(SearchFormRequest $request)
     {
         $playgrounds = PlaygroundRepository::search($request->get('query'));
         return $this->success($playgrounds);

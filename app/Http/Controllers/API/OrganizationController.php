@@ -48,7 +48,7 @@ class OrganizationController extends Controller
      *      security={{"Bearer":{}}}
      * )
      */
-    public function getAll()
+    public function all()
     {
         $organizations = OrganizationRepository::getAll();
         return $this->success($organizations);
