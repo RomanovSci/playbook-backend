@@ -103,8 +103,6 @@ class User extends Authenticatable
         'password',
         'verification_code',
         'roles',
-        'created_at',
-        'updated_at',
         'deleted_at',
     ];
 

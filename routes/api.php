@@ -27,6 +27,18 @@ Route::middleware(['auth:api'])->group(function () {
     Route::post('/logout', 'API\UserController@logout')->name('user.logout');
     Route::post('/phone-verify', 'API\UserController@verifyPhone')->name('user.verifyPhone');
 
+    /** City */
+    Route::prefix('city')->group(function () {
+        Route::get('/', 'API\CityController@get')->name('city.get');
+        Route::get('/search', 'API\CityController@search')->name('city.search');
+    });
+
+    /** Country */
+    Route::prefix('country')->group(function () {
+        Route::get('/', 'API\CountryController@get')->name('country.get');
+        Route::get('/search', 'API\CountryController@search')->name('country.search');
+    });
+
     /** Booking */
     Route::prefix('booking')->group(function () {
         Route::post('/{bookable_type}/create', 'API\BookingController@create')
@@ -36,17 +48,13 @@ Route::middleware(['auth:api'])->group(function () {
 
     /** Playground */
     Route::prefix('playground')->group(function () {
-        Route::get('/search', 'API\PlaygroundController@search')
-            ->name('playground.search');
-
-        Route::get('/all', 'API\PlaygroundController@getAll')
-            ->name('playground.all');
+        Route::get('/', 'API\PlaygroundController@get')->name('playground.get');
+        Route::get('/search', 'API\PlaygroundController@search')->name('playground.search');
     });
 
     /** Organization */
     Route::prefix('organization')->group(function () {
-        Route::get('/all', 'API\OrganizationController@getAll')
-            ->name('organization.all');
+        Route::get('/', 'API\OrganizationController@get')->name('organization.get');
     });
 });
 
@@ -66,21 +74,16 @@ Route::middleware(['role:'
 
     /** Playground */
     Route::prefix('playground')->group(function () {
-        Route::post('/create', 'API\PlaygroundController@create')
-            ->name('playground.create');
+        Route::post('/create', 'API\PlaygroundController@create')->name('playground.create');
     });
 
     /** Schedule */
     Route::prefix('schedule')->group(function () {
+        Route::post('/edit/{schedule}', 'API\ScheduleController@edit')->name('schedule.edit');
+        Route::delete('/delete/{schedule}', 'API\ScheduleController@delete')->name('schedule.delete');
         Route::post('/{schedulable_type}/create', 'API\ScheduleController@create')
             ->where(['schedulable_type' => 'trainer|playground'])
             ->name('schedule.create');
-
-        Route::post('/edit/{schedule}', 'API\ScheduleController@edit')
-            ->name('schedule.edit');
-
-        Route::delete('/delete/{schedule}', 'API\ScheduleController@delete')
-            ->name('schedule.delete');
     });
 });
 
@@ -93,8 +96,7 @@ Route::middleware(['role:'
 ])->group(function () {
     /** Organization */
     Route::prefix('organization')->group(function () {
-        Route::post('/create', 'API\OrganizationController@create')
-            ->name('organization.create');
+        Route::post('/create', 'API\OrganizationController@create')->name('organization.create');
     });
 });
 
@@ -107,7 +109,6 @@ Route::middleware(['role:'
 ])->group(function () {
     /** Trainer info */
     Route::prefix('trainer')->group(function () {
-        Route::post('/info/create', 'API\UserController@createTrainerInfo')
-            ->name('user.createTrainerInfo');
+        Route::post('/info/create', 'API\UserController@createTrainerInfo')->name('user.createTrainerInfo');
     });
 });

@@ -4,26 +4,23 @@ namespace App\Http\Controllers\API;
 
 use App\Http\Controllers\Controller;
 use App\Http\Requests\Common\GetFormRequest;
-use App\Http\Requests\Organization\OrganizationCreateFormRequest;
-use App\Models\Organization;
-use App\Repositories\OrganizationRepository;
-use Illuminate\Http\JsonResponse;
-use Illuminate\Support\Facades\Auth;
+use App\Http\Requests\Common\SearchFormRequest;
+use App\Repositories\CountryRepository;
 
 /**
- * Class OrganizationController
+ * Class CountryController
  * @package App\Http\Controllers\API
  */
-class OrganizationController extends Controller
+class CountryController extends Controller
 {
     /**
      * @param GetFormRequest $request
-     * @return JsonResponse
+     * @return \Illuminate\Http\JsonResponse
      *
      * @OA\Get(
-     *      path="/api/organization",
-     *      tags={"Organization"},
-     *      summary="Get organizations",
+     *      path="/api/country",
+     *      tags={"Country"},
+     *      summary="Get countries",
      *      @OA\Parameter(
      *          name="limit",
      *          description="Limit",
@@ -56,41 +53,41 @@ class OrganizationController extends Controller
      *                  @OA\Property(
      *                      type="array",
      *                      property="data",
-     *                      @OA\Items(ref="#/components/schemas/Organization")
+     *                      @OA\Items(ref="#/components/schemas/Country")
      *                  )
      *              )
-     *          )
+     *         )
+     *      ),
+     *      @OA\Response(
+     *          response="422",
+     *          description="Invalid parameters"
      *      ),
      *      security={{"Bearer":{}}}
      * )
      */
     public function get(GetFormRequest $request)
     {
-        $organizations = OrganizationRepository::get(
+        $cities = CountryRepository::get(
             $request->get('limit'),
             $request->get('offset')
         );
-        return $this->success($organizations);
+        return $this->success($cities);
     }
 
     /**
-     * @param OrganizationCreateFormRequest $request
-     * @return JsonResponse
+     * @param SearchFormRequest $request
+     * @return \Illuminate\Http\JsonResponse
      *
-     * @OA\Post(
-     *      path="/api/organization/create",
-     *      tags={"Organization"},
-     *      summary="Create organization",
-     *      @OA\RequestBody(
-     *          @OA\MediaType(
-     *              mediaType="application/json",
-     *              @OA\Schema(
-     *                  example={
-     *                      "name": "Organization name",
-     *                      "city_id": "City id. Ref to City entity. Example: 1",
-     *                  }
-     *              )
-     *          )
+     * @OA\Get(
+     *      path="/api/country/search",
+     *      tags={"Country"},
+     *      summary="Search countries",
+     *      @OA\Parameter(
+     *          name="query",
+     *          description="Search string",
+     *          in="query",
+     *          required=true,
+     *          @OA\Schema(type="string")
      *      ),
      *      @OA\Response(
      *          response="200",
@@ -108,12 +105,12 @@ class OrganizationController extends Controller
      *                      type="string",
      *                  ),
      *                  @OA\Property(
-     *                      type="object",
+     *                      type="array",
      *                      property="data",
-     *                      ref="#/components/schemas/Organization"
+     *                      @OA\Items(ref="#/components/schemas/Country")
      *                  )
      *              )
-     *          )
+     *         )
      *      ),
      *      @OA\Response(
      *          response="422",
@@ -122,14 +119,9 @@ class OrganizationController extends Controller
      *      security={{"Bearer":{}}}
      * )
      */
-    public function create(OrganizationCreateFormRequest $request)
+    public function search(SearchFormRequest $request)
     {
-        /** @var Organization $organization */
-        $organization = Organization::create(array_merge(
-            $request->all(),
-            ['owner_id' => Auth::user()->id]
-        ));
-
-        return $this->success($organization->toArray());
+        $cities = CountryRepository::search($request->get('query'));
+        return $this->success($cities);
     }
 }

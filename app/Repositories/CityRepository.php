@@ -2,14 +2,14 @@
 
 namespace App\Repositories;
 
-use App\Models\Playground;
+use App\Models\City;
 use Illuminate\Database\Eloquent\Collection;
 
 /**
- * Class PlaygroundRepository
+ * Class CityRepository
  * @package App\Repositories
  */
-class PlaygroundRepository
+class CityRepository
 {
     /**
      * @param int $limit
@@ -18,20 +18,17 @@ class PlaygroundRepository
      */
     public static function get(int $limit, int $offset): Collection
     {
-        return Playground::limit($limit)->offset($offset)->get();
+        return City::limit($limit)->offset($offset)->get();
     }
 
     /**
-     * Search playgrounds
+     * Search cities
      *
      * @param string $query
      * @return Collection
      */
     public static function search(string $query): Collection
     {
-        return Playground::where('name', 'ilike', "%$query%")
-            ->orWhere('description', 'ilike', "%$query%")
-            ->orWhere('address', 'ilike', "%$query%")
-            ->get();
+        return City::where('name', 'ilike', "%$query%")->get();
     }
 }

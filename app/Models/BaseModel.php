@@ -12,11 +12,11 @@ use Illuminate\Database\Eloquent\SoftDeletes;
  * @OA\Schema(
  *      @OA\Property(
  *          property="created_at",
- *          description="hidden",
+ *          type="string"
  *      ),
  *      @OA\Property(
  *          property="updated_at",
- *          description="hidden",
+ *          type="string"
  *      ),
  *      @OA\Property(
  *          property="deleted_at",
@@ -29,8 +29,6 @@ abstract class BaseModel extends Model
     use SoftDeletes;
 
     protected $hidden = [
-        'created_at',
-        'updated_at',
         'deleted_at',
     ];
 
