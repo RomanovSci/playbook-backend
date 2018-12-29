@@ -6,6 +6,13 @@ namespace App\Models;
  * Class TrainerInfo
  * @package App\Models
  *
+ * @property integer id
+ * @property integer user_id
+ * @property string about
+ * @property integer min_price
+ * @property integer max_price
+ * @property string currency
+ *
  * @OA\Schema(
  *      allOf={
  *          @OA\Schema(

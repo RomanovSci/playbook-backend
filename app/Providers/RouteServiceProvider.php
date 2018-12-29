@@ -28,12 +28,18 @@ class RouteServiceProvider extends ServiceProvider
      */
     public function boot()
     {
+        /** Patterns */
+        Route::pattern('user', '[0-9]+');
+        Route::pattern('info', '[0-9]+');
+        Route::pattern('bookable_type', 'trainer|playground');
+        Route::pattern('schedulable_type', 'trainer|playground');
+
         parent::boot();
 
+        /** Bindings */
         Route::bind('bookable_type', function ($value) {
             return $value === 'trainer' ? User::class : Playground::class;
         });
-
         Route::bind('schedulable_type', function ($value) {
             return $value === 'trainer' ? User::class : Playground::class;
         });
