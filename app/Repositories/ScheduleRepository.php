@@ -86,7 +86,7 @@ class ScheduleRepository
         $schedules = self::getBySchedulable($schedulableType, $schedulableId);
         $mergedSchedules = new Collection();
 
-        foreach ($schedules as $index => $schedule) {
+        foreach ($schedules as $schedule) {
             if (!$mergedSchedules->count()) {
                 $mergedSchedule = new Schedule();
                 $mergedSchedule->start_time = $schedule->start_time;
