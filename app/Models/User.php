@@ -13,6 +13,7 @@ use Spatie\Permission\Traits\HasRoles;
  * @package App\Models
  *
  * @property integer id
+ * @property integer timezone_id
  * @property string first_name
  * @property string last_name
  * @property integer phone
@@ -36,6 +37,10 @@ use Spatie\Permission\Traits\HasRoles;
  *              },
  *              @OA\Property(
  *                  property="id",
+ *                  type="integer",
+ *              ),
+ *              @OA\Property(
+ *                  property="timezone_id",
  *                  type="integer",
  *              ),
  *              @OA\Property(
@@ -87,6 +92,7 @@ class User extends Authenticatable
      * @var array
      */
     protected $fillable = [
+        'timezone_id',
         'first_name',
         'last_name',
         'phone',
