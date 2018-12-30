@@ -128,7 +128,7 @@ class ScheduleController extends Controller
                 BookingRepository::getConfirmedBookingsForSchedule($schedule)
             );
         }
-        
+
         return $this->success($schedules);
     }
 
@@ -245,6 +245,19 @@ class ScheduleController extends Controller
      *          in="path",
      *          required=true,
      *          @OA\Schema(type="integer")
+     *      ),
+     *      @OA\RequestBody(
+     *          @OA\MediaType(
+     *              mediaType="application/json",
+     *              @OA\Schema(
+     *                  example={
+     *                      "start_time": "Period start time. Example: 2018-01-01 09:00:00",
+     *                      "end_time": "Period end time. Example: 2018-01-01 17:00:00",
+     *                      "price_per_hour": "Price per hour in cents. Example: 7000. (70RUB)",
+     *                      "currency": "Currency: RUB, UAH, USD, etc. Default: RUB"
+     *                  }
+     *              )
+     *          )
      *      ),
      *      @OA\Response(
      *          response="200",
