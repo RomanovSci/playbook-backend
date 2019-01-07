@@ -10,8 +10,8 @@ use Illuminate\Foundation\Auth\Access\AuthorizesRequests;
 
 /**
  * Class Controller
- *
  * @package App\Http\Controllers
+ *
  * @OA\Info(
  *     title="Playbook API documentation",
  *     version="0.1"
@@ -20,10 +20,6 @@ use Illuminate\Foundation\Auth\Access\AuthorizesRequests;
 class Controller extends BaseController
 {
     use AuthorizesRequests, DispatchesJobs, ValidatesRequests;
-
-    const CODE_UNAUTHORIZED = 401;
-    const CODE_FORBIDDEN = 403;
-    const CODE_VALIDATION_ERROR = 422;
 
     /**
      * Simple success response
@@ -40,33 +36,7 @@ class Controller extends BaseController
             'data' => $data,
         ];
 
-        if (count($response['data']) === 0) {
-            unset($response['data']);
-        }
-
         return response()->json($response);
-    }
-
-    /**
-     * Simple forbidden response
-     *
-     * @param null $message
-     * @return JsonResponse
-     */
-    protected function forbidden($message = null): JsonResponse
-    {
-        return $this->error(self::CODE_FORBIDDEN, [], $message ?? 'Forbidden');
-    }
-
-    /**
-     * Simple unauthorized response
-     *
-     * @param null $message
-     * @return JsonResponse
-     */
-    protected function unauthorized($message = null): JsonResponse
-    {
-        return $this->error(self::CODE_UNAUTHORIZED, [], $message ?? 'Unauthorized');
     }
 
     /**
@@ -84,10 +54,6 @@ class Controller extends BaseController
             'message' => $message ?? 'Ooops...Something went wrong',
             'data' => $data
         ];
-
-        if (count($response['data']) === 0) {
-            unset($response['data']);
-        }
 
         return response()->json($response, $code);
     }

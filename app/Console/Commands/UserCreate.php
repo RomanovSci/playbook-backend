@@ -7,7 +7,6 @@ use Illuminate\Console\Command;
 
 /**
  * Class UserCreate
- *
  * @package App\Console\Commands
  */
 class UserCreate extends Command

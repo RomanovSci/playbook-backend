@@ -4,8 +4,8 @@ namespace App\Models;
 
 /**
  * Class Playground
- *
  * @package App\Models
+ *
  * @property integer id
  * @property string name
  * @property string description
@@ -19,7 +19,6 @@ namespace App\Models;
  * @property User creator
  *
  * @OA\Schema(
- *      schema="Playground",
  *      allOf={
  *          @OA\Schema(
  *              required={

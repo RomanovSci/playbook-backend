@@ -2,21 +2,23 @@
 
 namespace App\Http\Controllers\API;
 
+use App\Exceptions\Http\ForbiddenHttpException;
 use App\Http\Controllers\Controller;
 use App\Http\Requests\Schedule\ScheduleGetFormRequest;
 use App\Http\Requests\Schedule\ScheduleCreateFormRequest;
+use App\Http\Requests\Schedule\ScheduleEditFormRequest;
 use App\Models\Playground;
+use App\Models\Schedule;
 use App\Models\User;
+use App\Repositories\BookingRepository;
 use App\Repositories\ScheduleRepository;
 use App\Services\ScheduleService;
 use Carbon\Carbon;
 use Illuminate\Http\JsonResponse;
-use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
 
 /**
  * Class ScheduleController
- *
  * @package App\Http\Controllers\API
  */
 class ScheduleController extends Controller
@@ -89,8 +91,19 @@ class ScheduleController extends Controller
      *                  @OA\Property(
      *                      type="array",
      *                      property="data",
-     *                      @OA\Items(ref="#/components/schemas/Schedule")
-     *                  )
+     *                      @OA\Items(
+     *                          allOf={
+     *                              @OA\Schema(ref="#/components/schemas/Schedule"),
+     *                              @OA\Schema(
+     *                                  @OA\Property(
+     *                                      property="confirmed_bookings",
+     *                                      type="array",
+     *                                      @OA\Items(ref="#/components/schemas/Booking")
+     *                                  ),
+     *                              ),
+     *                          }
+     *                      )
+     *                  ),
      *              )
      *         )
      *      )
@@ -98,19 +111,34 @@ class ScheduleController extends Controller
      */
     public function get(ScheduleGetFormRequest $request, string $schedulableType, int $id = null)
     {
-        $schedules = ScheduleRepository::getActiveInRange(
+        $schedules = ScheduleRepository::getByDateRange(
             Carbon::parse($request->get('start_time')),
             Carbon::parse($request->get('end_time')),
             $schedulableType,
             $id
         );
-        return $this->success($schedules->toArray());
+
+        /**
+         * Append confirmed bookings to each schedule
+         * @var Schedule $schedule
+         */
+        foreach ($schedules as $schedule) {
+            $schedule->setAttribute(
+                'confirmed_bookings',
+                BookingRepository::getConfirmedBookingsForSchedule($schedule)
+            );
+        }
+
+        return $this->success($schedules);
     }
 
     /**
-     * @param string $schedulableType
      * @param ScheduleCreateFormRequest $request
+     * @param string $schedulableType
      * @return JsonResponse
+     *
+     * @throws \App\Exceptions\Internal\IncorrectDateRange
+     * @throws \Throwable
      *
      * @OA\Post(
      *      path="/api/schedule/{type}/create",
@@ -173,13 +201,14 @@ class ScheduleController extends Controller
         /** @var User $schedulable */
         $isForTrainer = $schedulableType === User::class;
         $schedulable = Auth::user();
+        $requestData = $request->all();
 
         /**
          * Restrict create schedule
          * for admin and organization-admin
          */
         if ($isForTrainer && !$schedulable->hasRole(['trainer'])) {
-            return $this->forbidden('Only trainer can create schedule.');
+            throw new ForbiddenHttpException('Only trainer can create schedule.');
         }
 
         if (!$isForTrainer) {
@@ -191,11 +220,143 @@ class ScheduleController extends Controller
              * for only trainer, organization-admin and system admin
              */
             if (Auth::user()->cant('createSchedule', $schedulable)) {
-                return $this->forbidden();
+                throw new ForbiddenHttpException();
             }
         }
 
-        $schedules = $this->scheduleService->create($schedulable, $request->all());
-        return $this->success($schedules);
+        $creationResult = $this->scheduleService->create($schedulable, $requestData);
+        return $this->success($creationResult);
+    }
+
+    /**
+     * @param Schedule $schedule
+     * @param ScheduleEditFormRequest $request
+     * @return JsonResponse
+     *
+     * @throws \App\Exceptions\Internal\IncorrectDateRange
+     *
+     * @OA\Post(
+     *      path="/api/schedule/edit/{schedule_id}",
+     *      tags={"Schedule"},
+     *      summary="Edit schedule",
+     *      @OA\Parameter(
+     *          name="schedule_id",
+     *          description="Schedule id",
+     *          in="path",
+     *          required=true,
+     *          @OA\Schema(type="integer")
+     *      ),
+     *      @OA\RequestBody(
+     *          @OA\MediaType(
+     *              mediaType="application/json",
+     *              @OA\Schema(
+     *                  example={
+     *                      "start_time": "Period start time. Example: 2018-01-01 09:00:00",
+     *                      "end_time": "Period end time. Example: 2018-01-01 17:00:00",
+     *                      "price_per_hour": "Price per hour in cents. Example: 7000. (70RUB)",
+     *                      "currency": "Currency: RUB, UAH, USD, etc. Default: RUB"
+     *                  }
+     *              )
+     *          )
+     *      ),
+     *      @OA\Response(
+     *          response="200",
+     *          description="Ok",
+     *          @OA\MediaType(
+     *              mediaType="application/json",
+     *              @OA\Schema(
+     *                  type="object",
+     *                  @OA\Property(
+     *                      property="success",
+     *                      type="boolean"
+     *                  ),
+     *                  @OA\Property(
+     *                      property="message",
+     *                      type="string",
+     *                  ),
+     *                  @OA\Property(
+     *                      type="object",
+     *                      property="data",
+     *                      ref="#/components/schemas/Schedule"
+     *                  )
+     *              )
+     *          )
+     *      ),
+     *      @OA\Response(
+     *          response="403",
+     *          description="Forbidden"
+     *      ),
+     *      @OA\Response(
+     *          response="400",
+     *          description="Invalid schedule id"
+     *      ),
+     *      security={{"Bearer":{}}}
+     * )
+     */
+    public function edit(Schedule $schedule, ScheduleEditFormRequest $request)
+    {
+        if (Auth::user()->cant('manageSchedule', $schedule)) {
+            throw new ForbiddenHttpException();
+        }
+
+        return $this->success(
+            $this->scheduleService->edit($schedule, $request->all())
+        );
+    }
+
+    /**
+     * @param Schedule $schedule
+     * @return JsonResponse
+     *
+     * @throws \Exception
+     *
+     * @OA\Delete(
+     *      path="/api/schedule/delete/{schedule_id}",
+     *      tags={"Schedule"},
+     *      summary="Delete schedule",
+     *      @OA\Parameter(
+     *          name="schedule_id",
+     *          description="Schedule id",
+     *          in="path",
+     *          required=true,
+     *          @OA\Schema(type="integer")
+     *      ),
+     *      @OA\Response(
+     *          response="200",
+     *          description="Ok",
+     *          @OA\MediaType(
+     *              mediaType="application/json",
+     *              @OA\Schema(
+     *                  type="object",
+     *                  @OA\Property(
+     *                      property="success",
+     *                      type="boolean"
+     *                  ),
+     *                  @OA\Property(
+     *                      property="message",
+     *                      type="string",
+     *                  )
+     *              )
+     *          )
+     *      ),
+     *      @OA\Response(
+     *          response="403",
+     *          description="Forbidden"
+     *      ),
+     *      @OA\Response(
+     *          response="400",
+     *          description="Invalid schedule id"
+     *      ),
+     *      security={{"Bearer":{}}}
+     * )
+     */
+    public function delete(Schedule $schedule)
+    {
+        if (Auth::user()->cant('manageSchedule', $schedule)) {
+            throw new ForbiddenHttpException();
+        }
+
+        $schedule->delete();
+        return $this->success();
     }
 }

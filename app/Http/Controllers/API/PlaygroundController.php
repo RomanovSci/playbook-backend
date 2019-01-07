@@ -2,9 +2,11 @@
 
 namespace App\Http\Controllers\API;
 
+use App\Exceptions\Http\ForbiddenHttpException;
 use App\Http\Controllers\Controller;
+use App\Http\Requests\Common\GetFormRequest;
+use App\Http\Requests\Common\SearchFormRequest;
 use App\Http\Requests\Playground\PlaygroundCreateFormRequest;
-use App\Http\Requests\Playground\PlaygroundSearchFormRequest;
 use App\Models\Organization;
 use App\Models\Playground;
 use App\Models\User;
@@ -13,13 +15,69 @@ use Illuminate\Support\Facades\Auth;
 
 /**
  * Class PlaygroundController
- *
  * @package App\Http\Controllers\API
  */
 class PlaygroundController extends Controller
 {
     /**
-     * @param PlaygroundSearchFormRequest $request
+     * @param GetFormRequest $request
+     * @return \Illuminate\Http\JsonResponse
+     *
+     * @OA\Get(
+     *      path="/api/playground",
+     *      tags={"Playground"},
+     *      summary="Get playgrounds",
+     *      @OA\Parameter(
+     *          name="limit",
+     *          description="Limit",
+     *          in="query",
+     *          required=true,
+     *          @OA\Schema(type="integer")
+     *      ),
+     *      @OA\Parameter(
+     *          name="offset",
+     *          description="Offset",
+     *          in="query",
+     *          required=true,
+     *          @OA\Schema(type="integer")
+     *      ),
+     *      @OA\Response(
+     *          response="200",
+     *          description="Success",
+     *          @OA\MediaType(
+     *              mediaType="application/json",
+     *              @OA\Schema(
+     *                  type="object",
+     *                  @OA\Property(
+     *                      property="success",
+     *                      type="boolean"
+     *                  ),
+     *                  @OA\Property(
+     *                      property="message",
+     *                      type="string",
+     *                  ),
+     *                  @OA\Property(
+     *                      type="array",
+     *                      property="data",
+     *                      @OA\Items(ref="#/components/schemas/Playground")
+     *                  )
+     *              )
+     *         )
+     *      ),
+     *      security={{"Bearer":{}}}
+     * )
+     */
+    public function get(GetFormRequest $request)
+    {
+        $playgrounds = PlaygroundRepository::get(
+            $request->get('limit'),
+            $request->get('offset')
+        );
+        return $this->success($playgrounds);
+    }
+
+    /**
+     * @param SearchFormRequest $request
      * @return \Illuminate\Http\JsonResponse
      *
      * @OA\Get(
@@ -35,7 +93,7 @@ class PlaygroundController extends Controller
      *      ),
      *      @OA\Response(
      *          response="200",
-     *          description="Ok",
+     *          description="Success",
      *          @OA\MediaType(
      *              mediaType="application/json",
      *              @OA\Schema(
@@ -63,7 +121,7 @@ class PlaygroundController extends Controller
      *      security={{"Bearer":{}}}
      * )
      */
-    public function search(PlaygroundSearchFormRequest $request)
+    public function search(SearchFormRequest $request)
     {
         $playgrounds = PlaygroundRepository::search($request->get('query'));
         return $this->success($playgrounds);
@@ -95,7 +153,7 @@ class PlaygroundController extends Controller
      *      ),
      *      @OA\Response(
      *          response="200",
-     *          description="Ok",
+     *          description="Success",
      *          @OA\MediaType(
      *              mediaType="application/json",
      *              @OA\Schema(
@@ -133,19 +191,16 @@ class PlaygroundController extends Controller
         $user = Auth::user();
 
         if ($organization && $user->cant('createPlayground', $organization)) {
-            return $this->forbidden();
+            throw new ForbiddenHttpException();
         }
 
         /**
          * @var Playground $playground
          */
-        $playground = Playground::create(array_merge(
-            $request->all(),
-            [
-                'organization_id' => $organization->id ?? null,
-                'creator_id' => $user->id,
-            ]
-        ));
+        $playground = Playground::create(array_merge($request->all(), [
+            'organization_id' => $organization->id ?? null,
+            'creator_id' => $user->id,
+        ]));
 
         return $this->success($playground->toArray());
     }

@@ -7,7 +7,6 @@ use Illuminate\Http\JsonResponse;
 
 /**
  * Class ControllerMock
- *
  * @package Tests\Mocks\app\Http\Controllers
  */
 class ControllerMock extends Controller
@@ -21,26 +20,6 @@ class ControllerMock extends Controller
     public function success($data = [], $message = null): JsonResponse
     {
         return parent::success($data, $message);
-    }
-
-    /**
-     * @inheritdoc
-     * @param null $message
-     * @return JsonResponse
-     */
-    public function forbidden($message = null): JsonResponse
-    {
-        return parent::forbidden($message);
-    }
-
-    /**
-     * @inheritdoc
-     * @param null $message
-     * @return JsonResponse
-     */
-    public function unauthorized($message = null): JsonResponse
-    {
-        return parent::unauthorized($message);
     }
 
     /**

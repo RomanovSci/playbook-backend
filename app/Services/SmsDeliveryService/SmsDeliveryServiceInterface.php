@@ -3,8 +3,7 @@
 namespace App\Services\SmsDeliveryService;
 
 /**
- * Interface ISmsDeliveryService
- *
+ * Interface SmsDeliveryServiceInterface
  * @package App\Services\SmsDeliveryService
  */
 interface SmsDeliveryServiceInterface

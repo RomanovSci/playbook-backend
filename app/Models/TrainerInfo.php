@@ -4,11 +4,16 @@ namespace App\Models;
 
 /**
  * Class TrainerInfo
- *
  * @package App\Models
  *
+ * @property integer id
+ * @property integer user_id
+ * @property string about
+ * @property integer min_price
+ * @property integer max_price
+ * @property string currency
+ *
  * @OA\Schema(
- *      schema="TrainerInfo",
  *      allOf={
  *          @OA\Schema(
  *              required={
@@ -62,4 +67,19 @@ class TrainerInfo extends BaseModel
         'user_id', 'about', 'min_price',
         'max_price', 'currency'
     ];
+
+    /**
+     * @var array
+     */
+    protected $with = [
+        'user',
+    ];
+
+    /**
+     * @return \Illuminate\Database\Eloquent\Relations\BelongsTo
+     */
+    public function user()
+    {
+        return $this->belongsTo(User::class);
+    }
 }

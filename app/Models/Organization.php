@@ -4,15 +4,14 @@ namespace App\Models;
 
 /**
  * Class Organization
- *
  * @package App\Models
+ *
  * @property integer id
  * @property string name
  * @property integer owner_id
  * @property integer city_id
  *
  * @OA\Schema(
- *      schema="Organization",
  *      allOf={
  *          @OA\Schema(
  *              required={

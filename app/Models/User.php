@@ -10,9 +10,10 @@ use Spatie\Permission\Traits\HasRoles;
 
 /**
  * Class User
- *
  * @package App\Models
+ *
  * @property integer id
+ * @property integer timezone_id
  * @property string first_name
  * @property string last_name
  * @property integer phone
@@ -23,8 +24,9 @@ use Spatie\Permission\Traits\HasRoles;
  * @property string updated_at
  * @property string deleted_at
  *
+ * @property Playground[] $playgrounds
+ *
  * @OA\Schema(
- *      schema="User",
  *      allOf={
  *          @OA\Schema(
  *              required={
@@ -35,6 +37,10 @@ use Spatie\Permission\Traits\HasRoles;
  *              },
  *              @OA\Property(
  *                  property="id",
+ *                  type="integer",
+ *              ),
+ *              @OA\Property(
+ *                  property="timezone_id",
  *                  type="integer",
  *              ),
  *              @OA\Property(
@@ -51,7 +57,7 @@ use Spatie\Permission\Traits\HasRoles;
  *              ),
  *              @OA\Property(
  *                  property="password",
- *                  type="string",
+ *                  description="hidden",
  *              ),
  *              @OA\Property(
  *                  property="phone_verified_at",
@@ -59,7 +65,7 @@ use Spatie\Permission\Traits\HasRoles;
  *              ),
  *              @OA\Property(
  *                  property="verification_code",
- *                  type="string",
+ *                  description="hidden",
  *              ),
  *          ),
  *          @OA\Schema(ref="#/components/schemas/BaseModel"),
@@ -86,6 +92,7 @@ class User extends Authenticatable
      * @var array
      */
     protected $fillable = [
+        'timezone_id',
         'first_name',
         'last_name',
         'phone',
@@ -102,8 +109,6 @@ class User extends Authenticatable
         'password',
         'verification_code',
         'roles',
-        'created_at',
-        'updated_at',
         'deleted_at',
     ];
 

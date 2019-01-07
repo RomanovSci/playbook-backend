@@ -2,14 +2,12 @@
 
 namespace Tests\Unit\app\Http\Controllers\API;
 
-use App\Services\Booking\BookingAvailabilityChecker;
 use App\Services\BookingService;
 use Tests\Mocks\app\Http\Controllers\API\BookingControllerMock;
 use Tests\TestCase;
 
 /**
  * Class BookingControllerTest
- *
  * @package Tests\Unit\app\Http\Controllers\API
  */
 class BookingControllerTest extends TestCase

@@ -8,7 +8,6 @@ use App\Models\User;
 
 /**
  * Class BookingPolicy
- *
  * @package App\Policies
  */
 class BookingPolicy
@@ -26,8 +25,8 @@ class BookingPolicy
          * Trainer can confirm
          * self booking requests
          */
-        if ($booking->bookable_type === User::class && $user->id === $booking->bookable_id) {
-            return true;
+        if ($booking->bookable_type === User::class) {
+            return $booking->bookable_id === $user->id;
         }
 
         /**
@@ -35,8 +34,7 @@ class BookingPolicy
          * self booking requests
          */
         if ($booking->bookable_type === Playground::class) {
-            //TODO: Implement booking confirmation for playground admin
-            return false;
+            return $booking->bookable->creator_id === $user->id;
         }
 
         return false;

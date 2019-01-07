@@ -4,8 +4,8 @@ namespace App\Models;
 
 /**
  * Class PlaygroundSchedule
+ * @package App\Models
  *
- * @package App
  * @property integer id
  * @property string start_time
  * @property string end_time
@@ -14,8 +14,9 @@ namespace App\Models;
  * @property integer schedulable_id
  * @property string schedulable_type
  *
+ * @property Playground|User $schedulable
+ *
  * @OA\Schema(
- *      schema="Schedule",
  *      allOf={
  *          @OA\Schema(
  *              required={

@@ -4,15 +4,14 @@ namespace App\Models;
 
 /**
  * Class Country
- *
  * @package App\Models
+ *
  * @property int id
  * @property string code
  * @property string name
  * @property string origin_name
  *
  * @OA\Schema(
- *      schema="Country",
  *      allOf={
  *          @OA\Schema(
  *              required={

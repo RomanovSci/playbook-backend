@@ -5,6 +5,10 @@ namespace App\Policies;
 use App\Models\Playground;
 use App\Models\User;
 
+/**
+ * Class PlaygroundPolicy
+ * @package App\Policies
+ */
 class PlaygroundPolicy
 {
     /**

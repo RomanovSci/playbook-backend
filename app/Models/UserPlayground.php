@@ -7,8 +7,8 @@ use Illuminate\Database\Eloquent\SoftDeletes;
 
 /**
  * Class UserPlayground
- *
  * @package App\Models
+ *
  * @property integer id
  * @property integer user_id
  * @property integer playground_id

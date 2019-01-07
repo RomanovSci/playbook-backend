@@ -15,13 +15,8 @@ use App\Models\User;
 */
 Route::post('/register', 'API\UserController@register')->name('user.register');
 Route::post('/login', 'API\UserController@login')->name('user.login');
-
-/**
- * Schedules
- */
-Route::get('/schedule/{schedulable_type}/{id?}', 'API\ScheduleController@get')
-    ->where(['schedulable_type' => 'trainer|playground'])
-    ->name('schedule.get');
+Route::get('/trainer/info/{user}', 'API\TrainerController@getTrainerInfo')->name('trainer.getTrainerInfo');
+Route::get('/schedule/{schedulable_type}/{id?}', 'API\ScheduleController@get')->name('schedule.get');
 
 /**
  * Authenticated user
@@ -30,11 +25,32 @@ Route::middleware(['auth:api'])->group(function () {
     Route::post('/logout', 'API\UserController@logout')->name('user.logout');
     Route::post('/phone-verify', 'API\UserController@verifyPhone')->name('user.verifyPhone');
 
+    /** City */
+    Route::prefix('city')->group(function () {
+        Route::get('/', 'API\CityController@get')->name('city.get');
+        Route::get('/search', 'API\CityController@search')->name('city.search');
+    });
+
+    /** Country */
+    Route::prefix('country')->group(function () {
+        Route::get('/', 'API\CountryController@get')->name('country.get');
+        Route::get('/search', 'API\CountryController@search')->name('country.search');
+    });
+
     /** Booking */
     Route::prefix('booking')->group(function () {
-        Route::post('/{bookable_type}/create', 'API\BookingController@create')
-            ->where(['bookable_type' => 'trainer|playground'])
-            ->name('booking.create');
+        Route::post('/{bookable_type}/create', 'API\BookingController@create')->name('booking.create');
+    });
+
+    /** Playground */
+    Route::prefix('playground')->group(function () {
+        Route::get('/', 'API\PlaygroundController@get')->name('playground.get');
+        Route::get('/search', 'API\PlaygroundController@search')->name('playground.search');
+    });
+
+    /** Organization */
+    Route::prefix('organization')->group(function () {
+        Route::get('/', 'API\OrganizationController@get')->name('organization.get');
     });
 });
 
@@ -48,21 +64,19 @@ Route::middleware(['role:'
 ])->group(function () {
     /** Booking */
     Route::prefix('booking')->group(function () {
-        Route::post('/confirm/{booking}', 'API\BookingController@confirm')
-            ->name('booking.confirm');
+        Route::post('/confirm/{booking}', 'API\BookingController@confirm')->name('booking.confirm');
     });
 
     /** Playground */
     Route::prefix('playground')->group(function () {
-        Route::get('/search', 'API\PlaygroundController@search')
-            ->name('playground.search');
+        Route::post('/create', 'API\PlaygroundController@create')->name('playground.create');
     });
 
     /** Schedule */
     Route::prefix('schedule')->group(function () {
-        Route::post('/{schedulable_type}/create', 'API\ScheduleController@create')
-            ->where(['schedulable_type' => 'trainer|playground'])
-            ->name('schedule.create');
+        Route::post('/{schedulable_type}/create', 'API\ScheduleController@create')->name('schedule.create');
+        Route::post('/edit/{schedule}', 'API\ScheduleController@edit')->name('schedule.edit');
+        Route::delete('/delete/{schedule}', 'API\ScheduleController@delete')->name('schedule.delete');
     });
 });
 
@@ -75,14 +89,7 @@ Route::middleware(['role:'
 ])->group(function () {
     /** Organization */
     Route::prefix('organization')->group(function () {
-        Route::post('/create', 'API\OrganizationController@create')
-            ->name('organization.create');
-    });
-
-    /** Playground */
-    Route::prefix('playground')->group(function () {
-        Route::post('/create', 'API\PlaygroundController@create')
-            ->name('playground.create');
+        Route::post('/create', 'API\OrganizationController@create')->name('organization.create');
     });
 });
 
@@ -93,9 +100,9 @@ Route::middleware(['role:'
     . User::ROLE_ADMIN . '|'
     . User::ROLE_TRAINER
 ])->group(function () {
-    /** Trainer info */
+    /** Trainer */
     Route::prefix('trainer')->group(function () {
-        Route::post('/info-create', 'API\UserController@createTrainerInfo')
-            ->name('user.createTrainerInfo');
+        Route::post('/info/create', 'API\TrainerController@createInfo')->name('trainer.createInfo');
+        Route::post('/info/edit/{info}', 'API\TrainerController@editInfo')->name('trainer.editInfo');
     });
 });

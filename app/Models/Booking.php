@@ -6,8 +6,8 @@ use Illuminate\Database\Eloquent\Relations\MorphTo;
 
 /**
  * Class Booking
- *
  * @package App\Models
+ *
  * @property integer id
  * @property integer bookable_id
  * @property integer bookable_type
@@ -19,9 +19,9 @@ use Illuminate\Database\Eloquent\Relations\MorphTo;
  * @property string deleted_at
  *
  * @property Schedule schedule
+ * @property Playground|User $bookable
  *
  * @OA\Schema(
- *      schema="Booking",
  *      allOf={
  *          @OA\Schema(
  *              required={
@@ -64,6 +64,9 @@ use Illuminate\Database\Eloquent\Relations\MorphTo;
  */
 class Booking extends BaseModel
 {
+    const STATUS_CREATED = 0;
+    const STATUS_CONFIRMED = 1;
+
     /**
      * @var string
      */
