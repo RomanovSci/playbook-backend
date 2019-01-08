@@ -19,7 +19,9 @@ class TrainerInfoRepository
      */
     public static function getByUser(User $user)
     {
-        return TrainerInfo::where('user_id', $user->id)->first();
+        return TrainerInfo::where('user_id', $user->id)
+            ->with('user')
+            ->first();
     }
 
     /**
@@ -31,7 +33,9 @@ class TrainerInfoRepository
     public static function getWithPlaygroundsByUser(User $user): array
     {
         /** @var TrainerInfo $trainerInfo */
-        $trainerInfo = TrainerInfo::where('user_id', $user->id)->first();
+        $trainerInfo = TrainerInfo::where('user_id', $user->id)
+            ->with('user')
+            ->first();
 
         if (!$trainerInfo instanceof TrainerInfo) {
             return [];

@@ -15,6 +15,7 @@ use App\Models\User;
 */
 Route::post('/register', 'API\UserController@register')->name('user.register');
 Route::post('/login', 'API\UserController@login')->name('user.login');
+Route::get('/trainer/list', 'API\TrainerController@getTrainers')->name('trainer.getTrainers');
 Route::get('/trainer/info/{user}', 'API\TrainerController@getTrainerInfo')->name('trainer.getTrainerInfo');
 Route::get('/schedule/{schedulable_type}/{id?}', 'API\ScheduleController@get')->name('schedule.get');
 
