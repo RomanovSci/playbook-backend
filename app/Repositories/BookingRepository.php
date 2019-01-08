@@ -14,6 +14,20 @@ use Illuminate\Database\Eloquent\Collection;
 class BookingRepository
 {
     /**
+     * Get bookings by bookable data
+     *
+     * @param string $bookableType
+     * @param int $bookableId
+     * @return Collection
+     */
+    public static function getByBookable(string $bookableType, int $bookableId): Collection
+    {
+        return Booking::where('bookable_type', $bookableType)
+            ->where('bookable_id', $bookableId)
+            ->get();
+    }
+
+    /**
      * Get bookings in time range
      *
      * @param Carbon $startTime
