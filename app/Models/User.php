@@ -132,6 +132,16 @@ class User extends Authenticatable
     }
 
     /**
+     * Get trainer info
+     *
+     * @return \Illuminate\Database\Eloquent\Relations\HasOne
+     */
+    public function trainerInfo()
+    {
+        return $this->hasOne(TrainerInfo::class);
+    }
+
+    /**
      * Get trainer bookings
      *
      * @return \Illuminate\Database\Eloquent\Relations\MorphMany
