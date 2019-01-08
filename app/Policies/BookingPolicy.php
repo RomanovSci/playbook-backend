@@ -13,6 +13,24 @@ use App\Models\User;
 class BookingPolicy
 {
     /**
+     * Determine if user can get bookings
+     *
+     * @param User $user
+     * @param string $bookableType
+     * @param int $bookableId
+     * @return bool
+     */
+    public function getBookingsList(User $user, string $bookableType, int $bookableId): bool
+    {
+        if ($bookableType === User::class) {
+            return $user->id === $bookableId;
+        }
+        //TODO: Checking for playground owner
+
+        return false;
+    }
+
+    /**
      * Determine if the booking can be confirmed by user
      *
      * @param User $user

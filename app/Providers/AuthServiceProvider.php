@@ -14,6 +14,7 @@ use App\Policies\SchedulePolicy;
 use App\Policies\TrainerInfoPolicy;
 use Carbon\Carbon;
 use Illuminate\Foundation\Support\Providers\AuthServiceProvider as ServiceProvider;
+use Illuminate\Support\Facades\Gate;
 use Laravel\Passport\Passport;
 
 /**
@@ -44,9 +45,10 @@ class AuthServiceProvider extends ServiceProvider
     {
         $this->registerPolicies();
 
-        /**
-         * Passport setup
-         */
+        /** Gates */
+        Gate::define('getBookingsList', 'App\Policies\BookingPolicy@getBookingsList');
+
+        /** Passport setup */
         Passport::routes();
         Passport::tokensExpireIn(Carbon::now()->addDays(15));
         Passport::refreshTokensExpireIn(Carbon::now()->addDays(30));

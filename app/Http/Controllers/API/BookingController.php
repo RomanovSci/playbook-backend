@@ -7,9 +7,11 @@ use App\Http\Controllers\Controller;
 use App\Http\Requests\Booking\BookingCreateFormRequest;
 use App\Models\Booking;
 use App\Models\User;
+use App\Repositories\BookingRepository;
 use App\Services\BookingService;
 use Carbon\Carbon;
 use Illuminate\Support\Facades\Auth;
+use Illuminate\Support\Facades\Gate;
 
 /**
  * Class BookingController
@@ -30,6 +32,65 @@ class BookingController extends Controller
     public function __construct(BookingService $bookingService)
     {
         $this->bookingService = $bookingService;
+    }
+
+    /**
+     * @param string $bookableType
+     * @param int $bookableId
+     * @return \Illuminate\Http\JsonResponse
+     *
+     * @OA\Get(
+     *      path="/api/booking/{type}/{id}",
+     *      tags={"Booking"},
+     *      summary="Get bookings for trainer or playground",
+     *      @OA\Parameter(
+     *          name="type",
+     *          description="trainer or playground",
+     *          in="path",
+     *          required=true,
+     *          @OA\Schema(type="string")
+     *      ),
+     *      @OA\Parameter(
+     *          name="id",
+     *          description="trainer or playground id",
+     *          in="path",
+     *          required=false,
+     *          @OA\Schema(type="integer")
+     *      ),
+     *      @OA\Response(
+     *          response="200",
+     *          description="Ok",
+     *          @OA\MediaType(
+     *              mediaType="application/json",
+     *              @OA\Schema(
+     *                  type="object",
+     *                  @OA\Property(
+     *                      property="success",
+     *                      type="boolean"
+     *                  ),
+     *                  @OA\Property(
+     *                      property="message",
+     *                      type="string",
+     *                  ),
+     *                  @OA\Property(
+     *                      type="array",
+     *                      property="data",
+     *                      @OA\Items(ref="#/components/schemas/Booking"),
+     *                  ),
+     *              )
+     *         )
+     *      )
+     * )
+     */
+    public function get(string $bookableType, int $bookableId)
+    {
+        if (Gate::denies('getBookingsList', [$bookableType, $bookableId])) {
+            throw new ForbiddenHttpException('Can\'t get booking list');
+        }
+
+        return $this->success(
+            BookingRepository::getByBookable($bookableType, $bookableId)
+        );
     }
 
     /**
