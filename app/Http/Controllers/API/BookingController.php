@@ -75,7 +75,18 @@ class BookingController extends Controller
      *                  @OA\Property(
      *                      type="array",
      *                      property="data",
-     *                      @OA\Items(ref="#/components/schemas/Booking"),
+     *                      @OA\Items(
+     *                          allOf={
+     *                              @OA\Schema(ref="#/components/schemas/Booking"),
+     *                              @OA\Schema(
+     *                                  @OA\Property(
+     *                                      property="playground",
+     *                                      type="object",
+     *                                      ref="#/components/schemas/Playground"
+     *                                  ),
+     *                              ),
+     *                          }
+     *                      ),
      *                  ),
      *              )
      *         )
