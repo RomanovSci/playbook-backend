@@ -14,6 +14,7 @@ use Illuminate\Database\Eloquent\Relations\MorphTo;
  * @property string start_time
  * @property string end_time
  * @property integer status
+ * @property integer playground_id
  * @property string created_at
  * @property string updated_at
  * @property string deleted_at
@@ -57,6 +58,10 @@ use Illuminate\Database\Eloquent\Relations\MorphTo;
  *                  property="status",
  *                  type="integer",
  *              ),
+ *              @OA\Property(
+ *                  property="playground_id",
+ *                  type="integer",
+ *              ),
  *          ),
  *          @OA\Schema(ref="#/components/schemas/BaseModel"),
  *      }
@@ -81,7 +86,17 @@ class Booking extends BaseModel
         'creator_id',
         'start_time',
         'end_time',
-        'status,'
+        'status',
+        'playground_id',
+    ];
+
+    /**
+     * @var array
+     */
+    protected $casts = [
+        'bookable_id' => 'integer',
+        'creator_id' => 'integer',
+        'playground_id' => 'integer',
     ];
 
     /**
@@ -102,5 +117,15 @@ class Booking extends BaseModel
     public function creator()
     {
         return $this->belongsTo(User::class);
+    }
+
+    /**
+     * Playground entity
+     *
+     * @return \Illuminate\Database\Eloquent\Relations\BelongsTo
+     */
+    public function playground()
+    {
+        return $this->belongsTo(Playground::class);
     }
 }

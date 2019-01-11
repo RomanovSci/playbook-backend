@@ -118,7 +118,8 @@ class BookingController extends Controller
      *                  example={
      *                      "start_time": "Start booking time. Example: 2018-05-12 09:00:00",
      *                      "end_time": "End booking time. Example: 2018-05-12 17:59:59",
-     *                      "bookable_id": "Trainer or playground id"
+     *                      "bookable_id": "Trainer or playground id",
+     *                      "playground_id": "Required if {type} = trainer"
      *                  }
      *              )
      *          )
@@ -174,13 +175,10 @@ class BookingController extends Controller
         }
 
         /** @var Booking $booking */
-        $booking = Booking::create([
-            'start_time' => $request->post('start_time'),
-            'end_time' => $request->post('end_time'),
+        $booking = Booking::create(array_merge($request->all(), [
             'bookable_type' => $bookableType,
-            'bookable_id' => $bookableId,
             'creator_id' => $creator->id,
-        ]);
+        ]));
 
         return $this->success($booking->toArray());
     }

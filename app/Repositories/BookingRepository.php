@@ -23,6 +23,7 @@ class BookingRepository
     public static function getByBookable(string $bookableType, int $bookableId): Collection
     {
         return Booking::where('bookable_type', $bookableType)
+            ->with('playground')
             ->where('bookable_id', $bookableId)
             ->get();
     }
