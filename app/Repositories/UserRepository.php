@@ -22,12 +22,21 @@ class UserRepository
      */
     public static function getByRole(string $role ,int $limit, int $offset): Collection
     {
-        $users = User::role($role)
+        return User::role($role)
             ->with('trainerInfo')
             ->limit($limit)
             ->offset($offset)
             ->get();
+    }
 
-        return $users;
+    /**
+     * Get user by phone
+     *
+     * @param string $phone
+     * @return mixed
+     */
+    public static function getByPhone(string $phone)
+    {
+        return User::where('phone', $phone)->firstOrFail();
     }
 }

@@ -5,10 +5,12 @@ namespace App\Http\Controllers\API;
 use App\Exceptions\Http\UnauthorizedHttpException;
 use App\Http\Controllers\Controller;
 use App\Http\Requests\User\LoginFormRequest;
+use App\Http\Requests\User\ResendVerificationCodeFormRequest;
 use App\Http\Requests\User\UserCreateFormRequest;
 use App\Http\Requests\User\VerifyPhoneFormRequest;
 use App\Models\Country;
 use App\Models\User;
+use App\Repositories\UserRepository;
 use App\Services\SmsDeliveryService\SmsDeliveryServiceInterface;
 use Carbon\Carbon;
 use Illuminate\Http\JsonResponse;
@@ -80,7 +82,7 @@ class UserController extends Controller
      *         )
      *      ),
      *      @OA\Response(
-     *          response="422",
+     *          response="400",
      *          description="Invalid parameters",
      *          @OA\MediaType(
      *              mediaType="application/json",
@@ -90,10 +92,6 @@ class UserController extends Controller
      *                  },
      *              )
      *          )
-     *      ),
-     *      @OA\Response(
-     *          response="400",
-     *          description="Bad request"
      *      )
      * )
      */
@@ -173,7 +171,7 @@ class UserController extends Controller
      *         )
      *      ),
      *      @OA\Response(
-     *          response="422",
+     *          response="400",
      *          description="Invalid parameters",
      *          @OA\MediaType(
      *              mediaType="application/json",
@@ -252,7 +250,7 @@ class UserController extends Controller
      * @return JsonResponse
      *
      * @OA\Post(
-     *      path="/api/phone-verify",
+     *      path="/api/phone_verify",
      *      tags={"User"},
      *      summary="Verify user phone",
      *      @OA\RequestBody(
@@ -285,19 +283,6 @@ class UserController extends Controller
      *              mediaType="application/json",
      *              @OA\Schema(
      *                  example={
-     *                      "success": false,
-     *                      "message": "Unauthenticated"
-     *                  },
-     *              )
-     *          )
-     *      ),
-     *      @OA\Response(
-     *          response="422",
-     *          description="Invalid parameters",
-     *          @OA\MediaType(
-     *              mediaType="application/json",
-     *              @OA\Schema(
-     *                  example={
      *                      "code": {
      *                          "The code must be 6 digits."
      *                      }
@@ -321,5 +306,62 @@ class UserController extends Controller
         $user->save();
 
         return $this->success();
+    }
+
+    /**
+     * @param ResendVerificationCodeFormRequest $request
+     * @return JsonResponse
+     *
+     * @OA\Post(
+     *      path="/api/resend_verification_code",
+     *      tags={"User"},
+     *      summary="Resend verification code to phone number",
+     *      @OA\RequestBody(
+     *          @OA\MediaType(
+     *              mediaType="application/json",
+     *              @OA\Schema(
+     *                  example={
+     *                      "phone": "Requested phone number. Example: 0501234567"
+     *                  }
+     *              )
+     *         )
+     *      ),
+     *      @OA\Response(
+     *          response="200",
+     *          description="Ok",
+     *          @OA\MediaType(
+     *              mediaType="application/json",
+     *              @OA\Schema(
+     *                  example={
+     *                      "success": "true",
+     *                      "message": "Success"
+     *                  }
+     *              )
+     *         )
+     *      ),
+     *      @OA\Response(
+     *          response="400",
+     *          description="Invalid parameters",
+     *          @OA\MediaType(
+     *              mediaType="application/json",
+     *              @OA\Schema(
+     *                  example={
+     *                      "code": {
+     *                          "The code must be 6 digits."
+     *                      }
+     *                  },
+     *              )
+     *          )
+     *      ),
+     *      security={{"Bearer":{}}}
+     * )
+     */
+    public function resendVerificationCode(ResendVerificationCodeFormRequest $request)
+    {
+        /** @var User $user */
+        $user = UserRepository::getByPhone($request->get('phone'));
+        return $this->success([
+            'verification_code' => $user->verification_code,
+        ]);
     }
 }
