@@ -15,6 +15,7 @@ use App\Models\User;
 */
 Route::post('/register', 'API\UserController@register')->name('user.register');
 Route::post('/login', 'API\UserController@login')->name('user.login');
+Route::post('/resend_verification_code', 'API\UserController@resendVerificationCode')->name('user.resendVerificationCode');
 Route::get('/trainer/list', 'API\TrainerController@getTrainers')->name('trainer.getTrainers');
 Route::get('/trainer/info/{user}', 'API\TrainerController@getTrainerInfo')->name('trainer.getTrainerInfo');
 Route::get('/schedule/{schedulable_type}/{id?}', 'API\ScheduleController@get')->name('schedule.get');
@@ -24,7 +25,7 @@ Route::get('/schedule/{schedulable_type}/{id?}', 'API\ScheduleController@get')->
  */
 Route::middleware(['auth:api'])->group(function () {
     Route::post('/logout', 'API\UserController@logout')->name('user.logout');
-    Route::post('/phone-verify', 'API\UserController@verifyPhone')->name('user.verifyPhone');
+    Route::post('/phone_verify', 'API\UserController@verifyPhone')->name('user.verifyPhone');
 
     /** City */
     Route::prefix('city')->group(function () {
