@@ -21,9 +21,12 @@ class CreateBookingsTable extends Migration
             $table->timestamp('start_time');
             $table->timestamp('end_time');
             $table->smallInteger('status')->default(0);
+            $table->integer('playground_id', false, true)->nullable();
             $table->timestamps();
             $table->softDeletes();
+
             $table->foreign('creator_id')->references('id')->on('users');
+            $table->foreign('playground_id')->references('id')->on('playgrounds');
         });
     }
 
