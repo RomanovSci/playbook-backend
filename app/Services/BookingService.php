@@ -46,12 +46,6 @@ class BookingService
             return $result;
         }
 
-        /** Can't create booking for myself */
-        if ($bookableType === User::class && $creator->id === $bookableId) {
-            $result['message'] = 'Can\'t create booking for myself';
-            return $result;
-        }
-
         /** Find the proper schedule for booking dates */
         $properSchedule = null;
         $mergedSchedules = ScheduleRepository::getMergedSchedules($bookableType, $bookableId);
