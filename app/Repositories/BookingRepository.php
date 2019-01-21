@@ -24,6 +24,7 @@ class BookingRepository
     {
         return Booking::where('bookable_type', $bookableType)
             ->with('playground')
+            ->with('creator')
             ->where('bookable_id', $bookableId)
             ->get();
     }

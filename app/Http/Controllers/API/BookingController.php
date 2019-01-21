@@ -85,6 +85,13 @@ class BookingController extends Controller
      *                                      ref="#/components/schemas/Playground"
      *                                  ),
      *                              ),
+     *                              @OA\Schema(
+     *                                  @OA\Property(
+     *                                      property="creator",
+     *                                      type="object",
+     *                                      ref="#/components/schemas/User"
+     *                                  ),
+     *                              ),
      *                          }
      *                      ),
      *                  ),
