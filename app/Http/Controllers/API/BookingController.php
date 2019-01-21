@@ -129,6 +129,7 @@ class BookingController extends Controller
      *                  example={
      *                      "start_time": "Start booking time. Example: 2018-05-12 09:00:00",
      *                      "end_time": "End booking time. Example: 2018-05-12 17:59:59",
+     *                      "note": "Optional",
      *                      "bookable_id": "Trainer or playground id",
      *                      "playground_id": "Required if {type} = trainer"
      *                  }
@@ -161,7 +162,6 @@ class BookingController extends Controller
      *      @OA\Response(
      *          response="403",
      *          description="
-     *              Can't create booking for myself
      *              Schedules for this time interval doesn't exists
      *              This time already reserved"
      *      ),
