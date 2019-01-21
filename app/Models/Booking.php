@@ -55,6 +55,10 @@ use Illuminate\Database\Eloquent\Relations\MorphTo;
  *                  type="string",
  *              ),
  *              @OA\Property(
+ *                  property="note",
+ *                  type="string",
+ *              ),
+ *              @OA\Property(
  *                  property="status",
  *                  type="integer",
  *              ),
@@ -71,6 +75,7 @@ class Booking extends BaseModel
 {
     const STATUS_CREATED = 0;
     const STATUS_CONFIRMED = 1;
+    const STATUS_DECLINED = 2;
 
     /**
      * @var string
@@ -86,6 +91,7 @@ class Booking extends BaseModel
         'creator_id',
         'start_time',
         'end_time',
+        'note',
         'status',
         'playground_id',
     ];

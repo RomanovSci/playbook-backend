@@ -20,6 +20,7 @@ class CreateBookingsTable extends Migration
             $table->integer('creator_id', false, true);
             $table->timestamp('start_time');
             $table->timestamp('end_time');
+            $table->string('note')->nullable();
             $table->smallInteger('status')->default(0);
             $table->integer('playground_id', false, true)->nullable();
             $table->timestamps();

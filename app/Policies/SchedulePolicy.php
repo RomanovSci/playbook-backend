@@ -13,24 +13,6 @@ use App\Models\User;
 class SchedulePolicy
 {
     /**
-     * Determine if the booking can be created by user
-     *
-     * @param User $user
-     * @param Schedule $schedule
-     * @return bool
-     */
-    public function createBooking(User $user, Schedule $schedule): bool
-    {
-        /** Anybody can book playground */
-        if ($schedule->schedulable_type === Playground::class) {
-            return true;
-        }
-
-        /** Trainer can't book himself */
-        return $user->id !== $schedule->schedulable_id;
-    }
-
-    /**
      * Determine if user can manage schedule
      *
      * @param User $user
