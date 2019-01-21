@@ -72,6 +72,7 @@ class BookingRepository
     public static function getConfirmedBookingsForSchedule(Schedule $schedule): Collection
     {
         return Booking::where('bookable_id', $schedule->schedulable_id)
+            ->with('creator')
             ->where('bookable_type', $schedule->schedulable_type)
             ->where('status', Booking::STATUS_CONFIRMED)
             ->whereRaw("tsrange(bookings.start_time, bookings.end_time, '()') && tsrange(?, ?, '()')", [
