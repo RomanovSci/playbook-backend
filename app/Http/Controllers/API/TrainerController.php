@@ -93,6 +93,13 @@ class TrainerController extends Controller
      *                                                  ref="#/components/schemas/TrainerInfo"
      *                                              ),
      *                                          ),
+     *                                          @OA\Schema(
+     *                                              @OA\Property(
+     *                                                  property="playgrounds",
+     *                                                  type="array",
+     *                                                  @OA\Items(ref="#/components/schemas/Playground")
+     *                                              ),
+     *                                          ),
      *                                      }
      *                                  )
      *                              ),
@@ -156,19 +163,19 @@ class TrainerController extends Controller
      *                      type="object",
      *                      property="data",
      *                      allOf={
-     *                          @OA\Schema(ref="#/components/schemas/TrainerInfo"),
+     *                          @OA\Schema(ref="#/components/schemas/User"),
+     *                          @OA\Schema(
+     *                              @OA\Property(
+     *                                  property="trainer_info",
+     *                                  type="Object",
+     *                                  ref="#/components/schemas/TrainerInfo"
+     *                              ),
+     *                          ),
      *                          @OA\Schema(
      *                              @OA\Property(
      *                                  property="playgrounds",
      *                                  type="array",
      *                                  @OA\Items(ref="#/components/schemas/Playground")
-     *                              ),
-     *                          ),
-     *                          @OA\Schema(
-     *                              @OA\Property(
-     *                                  property="user",
-     *                                  type="object",
-     *                                  ref="#/components/schemas/User"
      *                              ),
      *                          ),
      *                      }
@@ -184,7 +191,10 @@ class TrainerController extends Controller
      */
     public function getTrainerInfo(User $user)
     {
-        return $this->success(TrainerInfoRepository::getWithPlaygroundsByUser($user));
+        return $this->success(array_merge($user->toArray(), [
+            'playgrounds' => $user->playgrounds,
+            'trainer_info' => $user->trainerInfo
+        ]));
     }
 
     /**

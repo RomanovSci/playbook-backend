@@ -25,6 +25,7 @@ use Spatie\Permission\Traits\HasRoles;
  * @property string deleted_at
  *
  * @property Playground[] $playgrounds
+ * @property TrainerInfo $trainerInfo
  *
  * @OA\Schema(
  *      allOf={
