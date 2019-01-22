@@ -73,12 +73,28 @@ class TrainerController extends Controller
      *                      type="object",
      *                      property="data",
      *                      allOf={
-     *                          @OA\Schema(ref="#/components/schemas/User"),
      *                          @OA\Schema(
      *                              @OA\Property(
-     *                                  property="trainer_info",
-     *                                  type="Object",
-     *                                  ref="#/components/schemas/TrainerInfo"
+     *                                  property="total_count",
+     *                                  type="integer",
+     *                              ),
+     *                          ),
+     *                          @OA\Schema(
+     *                              @OA\Property(
+     *                                  property="list",
+     *                                  type="array",
+     *                                  @OA\Items(
+     *                                      allOf={
+     *                                          @OA\Schema(ref="#/components/schemas/User"),
+     *                                          @OA\Schema(
+     *                                              @OA\Property(
+     *                                                  property="trainer_info",
+     *                                                  type="Object",
+     *                                                  ref="#/components/schemas/TrainerInfo"
+     *                                              ),
+     *                                          ),
+     *                                      }
+     *                                  )
      *                              ),
      *                          ),
      *                      }
@@ -100,7 +116,10 @@ class TrainerController extends Controller
             $request->get('offset')
         );
 
-        return $this->success($trainers);
+        return $this->success([
+            'total_count' => UserRepository::getCountByRole(User::ROLE_TRAINER),
+            'list' => $trainers,
+        ]);
     }
 
     /**

@@ -2,7 +2,6 @@
 
 namespace App\Repositories;
 
-use App\Models\TrainerInfo;
 use App\Models\User;
 use Illuminate\Database\Eloquent\Collection;
 
@@ -13,7 +12,7 @@ use Illuminate\Database\Eloquent\Collection;
 class UserRepository
 {
     /**
-     * Get trainers list
+     * Get users list by role
      *
      * @param string $role
      * @param int $limit
@@ -27,6 +26,17 @@ class UserRepository
             ->limit($limit)
             ->offset($offset)
             ->get();
+    }
+
+    /**
+     * Get users count by role
+     *
+     * @param string $role
+     * @return int
+     */
+    public static function getCountByRole(string $role): int
+    {
+        return User::role($role)->count();
     }
 
     /**
