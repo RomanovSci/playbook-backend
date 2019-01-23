@@ -1,0 +1,1712 @@
+[
+  {
+    "name": "Volgodonsk"
+  },
+  {
+    "name": "Saskylakh"
+  },
+  {
+    "name": "Polevskoy"
+  },
+  {
+    "name": "Saranpaul"
+  },
+  {
+    "name": "Severnyy"
+  },
+  {
+    "name": "Pervouralsk"
+  },
+  {
+    "name": "Novy Port"
+  },
+  {
+    "name": "Pugachev"
+  },
+  {
+    "name": "Numto"
+  },
+  {
+    "name": "Novy Urengoy"
+  },
+  {
+    "name": "Novyy Uoyin"
+  },
+  {
+    "name": "Nizhny Novgorod"
+  },
+  {
+    "name": "Miass"
+  },
+  {
+    "name": "Omsk"
+  },
+  {
+    "name": "Naltchik"
+  },
+  {
+    "name": "Mirnyy"
+  },
+  {
+    "name": "Monchegorsk"
+  },
+  {
+    "name": "Nyagan"
+  },
+  {
+    "name": "Maykop"
+  },
+  {
+    "name": "Kirensk"
+  },
+  {
+    "name": "Kolpino"
+  },
+  {
+    "name": "Khorgo"
+  },
+  {
+    "name": "Kislovodsk"
+  },
+  {
+    "name": "Guryevsk"
+  },
+  {
+    "name": "Ivdel"
+  },
+  {
+    "name": "Gusinoozyorsk"
+  },
+  {
+    "name": "Kamenka"
+  },
+  {
+    "name": "Kargat"
+  },
+  {
+    "name": "Kasimov"
+  },
+  {
+    "name": "Kolomna"
+  },
+  {
+    "name": "Khanty Mansiysk"
+  },
+  {
+    "name": "Dimitrovgrad"
+  },
+  {
+    "name": "Cheremkhovo"
+  },
+  {
+    "name": "Gornyak"
+  },
+  {
+    "name": "Blagodarnyy"
+  },
+  {
+    "name": "Bodaybo"
+  },
+  {
+    "name": "Biysk"
+  },
+  {
+    "name": "Abakan"
+  },
+  {
+    "name": "Angarsk"
+  },
+  {
+    "name": "Birsk"
+  },
+  {
+    "name": "Pskov"
+  },
+  {
+    "name": "Smolensk"
+  },
+  {
+    "name": "Put Lenina"
+  },
+  {
+    "name": "Kemerovo"
+  },
+  {
+    "name": "Kolpashevo"
+  },
+  {
+    "name": "Polyarnyy"
+  },
+  {
+    "name": "St. Petersburg"
+  },
+  {
+    "name": "Pyatigorsk"
+  },
+  {
+    "name": "Nefteyugansk"
+  },
+  {
+    "name": "Chernogorsk"
+  },
+  {
+    "name": "Lensk"
+  },
+  {
+    "name": "Krasnoarmeysk"
+  },
+  {
+    "name": "Saratov"
+  },
+  {
+    "name": "Shira"
+  },
+  {
+    "name": "Solnechnogorsk"
+  },
+  {
+    "name": "Irkutsk"
+  },
+  {
+    "name": "Noyabrsk"
+  },
+  {
+    "name": "Yurga"
+  },
+  {
+    "name": "Zelenokumsk"
+  },
+  {
+    "name": "Olenek"
+  },
+  {
+    "name": "Salekhard"
+  },
+  {
+    "name": "Borovichi"
+  },
+  {
+    "name": "Kaluga"
+  },
+  {
+    "name": "Izhevsk"
+  },
+  {
+    "name": "Volsk"
+  },
+  {
+    "name": "Cherepovets"
+  },
+  {
+    "name": "Pallasovka"
+  },
+  {
+    "name": "Peregrebnoye"
+  },
+  {
+    "name": "Tyumen"
+  },
+  {
+    "name": "Toguchin"
+  },
+  {
+    "name": "Nadym"
+  },
+  {
+    "name": "Matochkin Shar"
+  },
+  {
+    "name": "Kurtamysh"
+  },
+  {
+    "name": "Barnaul"
+  },
+  {
+    "name": "Kimry"
+  },
+  {
+    "name": "Elista"
+  },
+  {
+    "name": "Gorno Altaysk"
+  },
+  {
+    "name": "Surgut"
+  },
+  {
+    "name": "Cheboksary"
+  },
+  {
+    "name": "Mariinsk"
+  },
+  {
+    "name": "Safonovo"
+  },
+  {
+    "name": "Sayanogorsk"
+  },
+  {
+    "name": "Roslavl"
+  },
+  {
+    "name": "Rubtsovsk"
+  },
+  {
+    "name": "Slyudyanka"
+  },
+  {
+    "name": "Laryak"
+  },
+  {
+    "name": "Abaza"
+  },
+  {
+    "name": "Velikiy Novgorod"
+  },
+  {
+    "name": "Klin"
+  },
+  {
+    "name": "Bagdarin"
+  },
+  {
+    "name": "Kovrov"
+  },
+  {
+    "name": "Sokol"
+  },
+  {
+    "name": "Engels"
+  },
+  {
+    "name": "Gatchina"
+  },
+  {
+    "name": "Nizhnyaya Tura"
+  },
+  {
+    "name": "Mundybash"
+  },
+  {
+    "name": "Prokopyevsk"
+  },
+  {
+    "name": "Kiselevsk"
+  },
+  {
+    "name": "Novokuznetsk"
+  },
+  {
+    "name": "Luga"
+  },
+  {
+    "name": "Moscow"
+  },
+  {
+    "name": "Slavgorod"
+  },
+  {
+    "name": "Kulunda"
+  },
+  {
+    "name": "Krasnoturinsk"
+  },
+  {
+    "name": "Vladikavkaz"
+  },
+  {
+    "name": "Amderma"
+  },
+  {
+    "name": "Varnek"
+  },
+  {
+    "name": "Leninsk Kuznetsky"
+  },
+  {
+    "name": "Mozdok"
+  },
+  {
+    "name": "Tashtagol"
+  },
+  {
+    "name": "Megion"
+  },
+  {
+    "name": "Balashov"
+  },
+  {
+    "name": "Zima"
+  },
+  {
+    "name": "Samara"
+  },
+  {
+    "name": "Vyazma"
+  },
+  {
+    "name": "Igrim"
+  },
+  {
+    "name": "Norilsk"
+  },
+  {
+    "name": "Belebey"
+  },
+  {
+    "name": "Kalachinsk"
+  },
+  {
+    "name": "Vologda"
+  },
+  {
+    "name": "Orenburg"
+  },
+  {
+    "name": "Vyborg"
+  },
+  {
+    "name": "Svetogorsk"
+  },
+  {
+    "name": "Cherlak"
+  },
+  {
+    "name": "Mezen"
+  },
+  {
+    "name": "Buzuluk"
+  },
+  {
+    "name": "Kupina"
+  },
+  {
+    "name": "Karasuk"
+  },
+  {
+    "name": "Saransk"
+  },
+  {
+    "name": "Barabinsk"
+  },
+  {
+    "name": "Bukachacha"
+  },
+  {
+    "name": "Alatyr"
+  },
+  {
+    "name": "Shilka"
+  },
+  {
+    "name": "Sherlovaya Gora"
+  },
+  {
+    "name": "Nerchinsk"
+  },
+  {
+    "name": "Olovyannaya"
+  },
+  {
+    "name": "Borzya"
+  },
+  {
+    "name": "Bugulma"
+  },
+  {
+    "name": "Strezhevoy"
+  },
+  {
+    "name": "Nizhenvartovsk"
+  },
+  {
+    "name": "Anzhero Sudzhensk"
+  },
+  {
+    "name": "Rayevskiy"
+  },
+  {
+    "name": "Chita"
+  },
+  {
+    "name": "Artemovskiy"
+  },
+  {
+    "name": "Ryazan"
+  },
+  {
+    "name": "Bezhetsk"
+  },
+  {
+    "name": "Novomoskovsk"
+  },
+  {
+    "name": "Zheleznogorsk"
+  },
+  {
+    "name": "Alapayevsk"
+  },
+  {
+    "name": "Starsy Oskol"
+  },
+  {
+    "name": "Rostov"
+  },
+  {
+    "name": "Gubkin"
+  },
+  {
+    "name": "Kumertau"
+  },
+  {
+    "name": "Oktyabrskiy"
+  },
+  {
+    "name": "Zheleznogorsk Ilimskiy"
+  },
+  {
+    "name": "Noginsk"
+  },
+  {
+    "name": "Staraya Russa"
+  },
+  {
+    "name": "Tikhvin"
+  },
+  {
+    "name": "Asbest"
+  },
+  {
+    "name": "Yoshkar Ola"
+  },
+  {
+    "name": "Ufa"
+  },
+  {
+    "name": "Krasnokamensk"
+  },
+  {
+    "name": "Orsk"
+  },
+  {
+    "name": "Novotroitsk"
+  },
+  {
+    "name": "Bologoye"
+  },
+  {
+    "name": "Mikhaylovka"
+  },
+  {
+    "name": "Novozybkov"
+  },
+  {
+    "name": "Chapayevsk"
+  },
+  {
+    "name": "Novokuybishevsk"
+  },
+  {
+    "name": "Tavda"
+  },
+  {
+    "name": "Michurinsk"
+  },
+  {
+    "name": "Serov"
+  },
+  {
+    "name": "Alekseyevka"
+  },
+  {
+    "name": "Valuyki"
+  },
+  {
+    "name": "Tuymazy"
+  },
+  {
+    "name": "Lgov"
+  },
+  {
+    "name": "Rybinsk"
+  },
+  {
+    "name": "Uglich"
+  },
+  {
+    "name": "Slantsy"
+  },
+  {
+    "name": "Vyska"
+  },
+  {
+    "name": "Armavir"
+  },
+  {
+    "name": "Stavropol"
+  },
+  {
+    "name": "Bryansk"
+  },
+  {
+    "name": "Kropotkin"
+  },
+  {
+    "name": "Shchekino"
+  },
+  {
+    "name": "Derbent"
+  },
+  {
+    "name": "Nikolayevsk"
+  },
+  {
+    "name": "Tula"
+  },
+  {
+    "name": "Murom"
+  },
+  {
+    "name": "Plast"
+  },
+  {
+    "name": "Kamyshin"
+  },
+  {
+    "name": "Syzran"
+  },
+  {
+    "name": "Kuznetsk"
+  },
+  {
+    "name": "Gelendzhik"
+  },
+  {
+    "name": "Sharya"
+  },
+  {
+    "name": "Murmansk"
+  },
+  {
+    "name": "Isikul"
+  },
+  {
+    "name": "Frolovo"
+  },
+  {
+    "name": "Severomorsk"
+  },
+  {
+    "name": "Dzerzhinsk"
+  },
+  {
+    "name": "Yalutorovsk"
+  },
+  {
+    "name": "Uryupinsk"
+  },
+  {
+    "name": "Golyshmanovo"
+  },
+  {
+    "name": "Nazyvayevsk"
+  },
+  {
+    "name": "Tatarsk"
+  },
+  {
+    "name": "Sarapul"
+  },
+  {
+    "name": "Tayshet"
+  },
+  {
+    "name": "Nevinnomyssk"
+  },
+  {
+    "name": "Velikiye Luki"
+  },
+  {
+    "name": "Nizhnekamsk"
+  },
+  {
+    "name": "Kirov"
+  },
+  {
+    "name": "Dyatkovo"
+  },
+  {
+    "name": "Tara"
+  },
+  {
+    "name": "Borisoglebsk"
+  },
+  {
+    "name": "Klintsy"
+  },
+  {
+    "name": "Mozhga"
+  },
+  {
+    "name": "Rzhev"
+  },
+  {
+    "name": "Naberezhnyye Chelny"
+  },
+  {
+    "name": "Vichuga"
+  },
+  {
+    "name": "Mtsensk"
+  },
+  {
+    "name": "Kanash"
+  },
+  {
+    "name": "Topki"
+  },
+  {
+    "name": "Shuya"
+  },
+  {
+    "name": "Torzhok"
+  },
+  {
+    "name": "Biryusinsk"
+  },
+  {
+    "name": "Otradnyy"
+  },
+  {
+    "name": "Serpukhov"
+  },
+  {
+    "name": "Balakovo"
+  },
+  {
+    "name": "Atkarsk"
+  },
+  {
+    "name": "Kirovo-Chepetsk"
+  },
+  {
+    "name": "Kirov"
+  },
+  {
+    "name": "Serdobsk"
+  },
+  {
+    "name": "Aleksin"
+  },
+  {
+    "name": "Shumerlya"
+  },
+  {
+    "name": "Yefremov"
+  },
+  {
+    "name": "Buynaksk"
+  },
+  {
+    "name": "Kaspiysk"
+  },
+  {
+    "name": "Makhachkala"
+  },
+  {
+    "name": "Yaroslavl"
+  },
+  {
+    "name": "Sovetsk"
+  },
+  {
+    "name": "Salavat"
+  },
+  {
+    "name": "Sterlitamak"
+  },
+  {
+    "name": "Bogoroditsk"
+  },
+  {
+    "name": "Morshansk"
+  },
+  {
+    "name": "Obninsk"
+  },
+  {
+    "name": "Georgievsk"
+  },
+  {
+    "name": "Sol-lletsk"
+  },
+  {
+    "name": "Vladimir"
+  },
+  {
+    "name": "Pechora"
+  },
+  {
+    "name": "Ulyanovsk"
+  },
+  {
+    "name": "Kirsanov"
+  },
+  {
+    "name": "Kotovsk"
+  },
+  {
+    "name": "Tambov"
+  },
+  {
+    "name": "Volkhov"
+  },
+  {
+    "name": "Vyshnniy Volochek"
+  },
+  {
+    "name": "Orel"
+  },
+  {
+    "name": "Kandalaksha"
+  },
+  {
+    "name": "Ussuriysk"
+  },
+  {
+    "name": "Petrozavodsk"
+  },
+  {
+    "name": "Votkinsk"
+  },
+  {
+    "name": "Omutninsk"
+  },
+  {
+    "name": "Novoaltaysk"
+  },
+  {
+    "name": "Ust' Ordynskiy"
+  },
+  {
+    "name": "Kirs"
+  },
+  {
+    "name": "Kondopoga"
+  },
+  {
+    "name": "Ruzayevka"
+  },
+  {
+    "name": "Tver"
+  },
+  {
+    "name": "Kotelnich"
+  },
+  {
+    "name": "Kaliningrad"
+  },
+  {
+    "name": "Perm’"
+  },
+  {
+    "name": "Penza"
+  },
+  {
+    "name": "Velikiy Ustyug"
+  },
+  {
+    "name": "Aleysk"
+  },
+  {
+    "name": "Balakhna"
+  },
+  {
+    "name": "Podolsk"
+  },
+  {
+    "name": "Kineshma"
+  },
+  {
+    "name": "Yegoryevsk"
+  },
+  {
+    "name": "Volzhskiy"
+  },
+  {
+    "name": "Volgograd"
+  },
+  {
+    "name": "Onega"
+  },
+  {
+    "name": "Cherepanovo"
+  },
+  {
+    "name": "Apatity"
+  },
+  {
+    "name": "Umba"
+  },
+  {
+    "name": "Kovda"
+  },
+  {
+    "name": "Kirovsk"
+  },
+  {
+    "name": "Iskitim"
+  },
+  {
+    "name": "Belgorod"
+  },
+  {
+    "name": "Taganrog"
+  },
+  {
+    "name": "Velsk"
+  },
+  {
+    "name": "Sasovo"
+  },
+  {
+    "name": "Voronezh"
+  },
+  {
+    "name": "Syktyvkar"
+  },
+  {
+    "name": "Krasnoufimsk"
+  },
+  {
+    "name": "Lipetsk"
+  },
+  {
+    "name": "Yelets"
+  },
+  {
+    "name": "Ust Kut"
+  },
+  {
+    "name": "Magnitogorsk"
+  },
+  {
+    "name": "Gryazi"
+  },
+  {
+    "name": "Kazan"
+  },
+  {
+    "name": "Arzamas"
+  },
+  {
+    "name": "Buy"
+  },
+  {
+    "name": "Kostroma"
+  },
+  {
+    "name": "Zelenodolsk"
+  },
+  {
+    "name": "Nizhneudinsk"
+  },
+  {
+    "name": "Chistopol"
+  },
+  {
+    "name": "Perm"
+  },
+  {
+    "name": "Nizhny Tagil"
+  },
+  {
+    "name": "Kem"
+  },
+  {
+    "name": "Belomorsk"
+  },
+  {
+    "name": "Ob"
+  },
+  {
+    "name": "Novosibirsk"
+  },
+  {
+    "name": "Cherkessk"
+  },
+  {
+    "name": "Livny"
+  },
+  {
+    "name": "Sibay"
+  },
+  {
+    "name": "Kursk"
+  },
+  {
+    "name": "Verkhnyaya Salda"
+  },
+  {
+    "name": "Naryan Mar"
+  },
+  {
+    "name": "Kyshtym"
+  },
+  {
+    "name": "Krasnouralsk"
+  },
+  {
+    "name": "Almetyevsk"
+  },
+  {
+    "name": "Archangel"
+  },
+  {
+    "name": "Verkhniy Ufaley"
+  },
+  {
+    "name": "Chusovoy"
+  },
+  {
+    "name": "Nikel"
+  },
+  {
+    "name": "Zlatoust"
+  },
+  {
+    "name": "Nevyansk"
+  },
+  {
+    "name": "Sochi"
+  },
+  {
+    "name": "Novoshakhtinsk"
+  },
+  {
+    "name": "Bugrino"
+  },
+  {
+    "name": "Shakhty"
+  },
+  {
+    "name": "Bataysk"
+  },
+  {
+    "name": "Astrakhan"
+  },
+  {
+    "name": "Kotlas"
+  },
+  {
+    "name": "Indiga"
+  },
+  {
+    "name": "Severouralsk"
+  },
+  {
+    "name": "Akhtubinsk"
+  },
+  {
+    "name": "Shoyna"
+  },
+  {
+    "name": "Sosnogorsk"
+  },
+  {
+    "name": "Shebekino"
+  },
+  {
+    "name": "Ukhta"
+  },
+  {
+    "name": "Yemanzhelinsk"
+  },
+  {
+    "name": "Bakal"
+  },
+  {
+    "name": "Troitsk"
+  },
+  {
+    "name": "Yekaterinburg"
+  },
+  {
+    "name": "Segezha"
+  },
+  {
+    "name": "Kamensk Uralskiy"
+  },
+  {
+    "name": "Karpinsk"
+  },
+  {
+    "name": "Usinsk"
+  },
+  {
+    "name": "Kudymkar"
+  },
+  {
+    "name": "Vikhorevka"
+  },
+  {
+    "name": "Bratsk"
+  },
+  {
+    "name": "Glazov"
+  },
+  {
+    "name": "Solikamsk"
+  },
+  {
+    "name": "Severodvinsk"
+  },
+  {
+    "name": "Mednogorsk"
+  },
+  {
+    "name": "Gay"
+  },
+  {
+    "name": "Dombarovskiy"
+  },
+  {
+    "name": "Kungur"
+  },
+  {
+    "name": "Gubakha"
+  },
+  {
+    "name": "Kurgan"
+  },
+  {
+    "name": "Ust-Ulimsk"
+  },
+  {
+    "name": "Slobodskoy"
+  },
+  {
+    "name": "Kizel"
+  },
+  {
+    "name": "Leninogorsk"
+  },
+  {
+    "name": "Rostov"
+  },
+  {
+    "name": "Orekhovo-Zuevo"
+  },
+  {
+    "name": "Buguruslan"
+  },
+  {
+    "name": "Turukhansk"
+  },
+  {
+    "name": "Zmeinogorsk"
+  },
+  {
+    "name": "Ulan Ude"
+  },
+  {
+    "name": "Teli"
+  },
+  {
+    "name": "Asino"
+  },
+  {
+    "name": "Vladivostok"
+  },
+  {
+    "name": "Shadrinsk"
+  },
+  {
+    "name": "Vorontsovo"
+  },
+  {
+    "name": "Kyzyl"
+  },
+  {
+    "name": "Tazovsky"
+  },
+  {
+    "name": "Magas"
+  },
+  {
+    "name": "Nazran"
+  },
+  {
+    "name": "Groznyy"
+  },
+  {
+    "name": "Krasnokamsk"
+  },
+  {
+    "name": "Asha"
+  },
+  {
+    "name": "Berezniki"
+  },
+  {
+    "name": "Nelidovo"
+  },
+  {
+    "name": "Ivanovo"
+  },
+  {
+    "name": "Sergiyev Posad"
+  },
+  {
+    "name": "Tolyatti"
+  },
+  {
+    "name": "Uelen"
+  },
+  {
+    "name": "Skovorodino"
+  },
+  {
+    "name": "Kyakhta"
+  },
+  {
+    "name": "Zvezdnyy"
+  },
+  {
+    "name": "Dalnerechensk"
+  },
+  {
+    "name": "Bikin"
+  },
+  {
+    "name": "Magdagachi"
+  },
+  {
+    "name": "Shimanovsk"
+  },
+  {
+    "name": "Zeya"
+  },
+  {
+    "name": "Neftekamsk"
+  },
+  {
+    "name": "Nordvik"
+  },
+  {
+    "name": "Khatanga"
+  },
+  {
+    "name": "Agapa"
+  },
+  {
+    "name": "Yessey"
+  },
+  {
+    "name": "Nakhodka"
+  },
+  {
+    "name": "Partizansk"
+  },
+  {
+    "name": "Kodinskiy"
+  },
+  {
+    "name": "Khabarovsk"
+  },
+  {
+    "name": "Boyarka"
+  },
+  {
+    "name": "Savetskaya Gavan"
+  },
+  {
+    "name": "Uyar"
+  },
+  {
+    "name": "Bogotol"
+  },
+  {
+    "name": "Lesosibirsk"
+  },
+  {
+    "name": "Noginsk"
+  },
+  {
+    "name": "Artemovsk"
+  },
+  {
+    "name": "Podkamennaya"
+  },
+  {
+    "name": "Dikson"
+  },
+  {
+    "name": "Igarka"
+  },
+  {
+    "name": "Komsa"
+  },
+  {
+    "name": "Kansk"
+  },
+  {
+    "name": "Arsenyev"
+  },
+  {
+    "name": "Starorybnoye"
+  },
+  {
+    "name": "Zaozernyy"
+  },
+  {
+    "name": "Achinsk"
+  },
+  {
+    "name": "Omolon"
+  },
+  {
+    "name": "Pevek"
+  },
+  {
+    "name": "Mikhalkino"
+  },
+  {
+    "name": "Lesozavodsk"
+  },
+  {
+    "name": "Pokrovsk"
+  },
+  {
+    "name": "Olyokminsk"
+  },
+  {
+    "name": "Svobodnyy"
+  },
+  {
+    "name": "Omsukchan"
+  },
+  {
+    "name": "Tynda"
+  },
+  {
+    "name": "Omchak"
+  },
+  {
+    "name": "Progress"
+  },
+  {
+    "name": "Belogorsk"
+  },
+  {
+    "name": "Susuman"
+  },
+  {
+    "name": "Amursk"
+  },
+  {
+    "name": "Kavalerovo"
+  },
+  {
+    "name": "Dalnegorsk"
+  },
+  {
+    "name": "Ishim"
+  },
+  {
+    "name": "Yakutsk"
+  },
+  {
+    "name": "Kamenna Obi"
+  },
+  {
+    "name": "Severobaykalsk"
+  },
+  {
+    "name": "Trofimovsk"
+  },
+  {
+    "name": "Novorossiysk"
+  },
+  {
+    "name": "Inta"
+  },
+  {
+    "name": "Gyda"
+  },
+  {
+    "name": "Uray"
+  },
+  {
+    "name": "Tobolsk"
+  },
+  {
+    "name": "Suntar"
+  },
+  {
+    "name": "Vorkuta"
+  },
+  {
+    "name": "Uzhur"
+  },
+  {
+    "name": "Bilibino"
+  },
+  {
+    "name": "Tiksi"
+  },
+  {
+    "name": "Beringovskiy"
+  },
+  {
+    "name": "Okha"
+  },
+  {
+    "name": "Nogliki"
+  },
+  {
+    "name": "Ambarchik"
+  },
+  {
+    "name": "Spassk Dalniy"
+  },
+  {
+    "name": "Komsomolsk na Amure"
+  },
+  {
+    "name": "Ust Kamchatsk"
+  },
+  {
+    "name": "Sagastyr"
+  },
+  {
+    "name": "Birobidzhan"
+  },
+  {
+    "name": "Obluchye"
+  },
+  {
+    "name": "Manily"
+  },
+  {
+    "name": "Chersky"
+  },
+  {
+    "name": "Bol'sheretsk"
+  },
+  {
+    "name": "Oktyabrskiy"
+  },
+  {
+    "name": "Chegdomyn"
+  },
+  {
+    "name": "Evensk"
+  },
+  {
+    "name": "Utkholok"
+  },
+  {
+    "name": "Karamken"
+  },
+  {
+    "name": "Kartaly"
+  },
+  {
+    "name": "Siglan"
+  },
+  {
+    "name": "Ust Nera"
+  },
+  {
+    "name": "Pakhachi"
+  },
+  {
+    "name": "Nakhodka"
+  },
+  {
+    "name": "Magadan"
+  },
+  {
+    "name": "Menkere"
+  },
+  {
+    "name": "Strelka"
+  },
+  {
+    "name": "Tunguskhaya"
+  },
+  {
+    "name": "Sangar"
+  },
+  {
+    "name": "Terbyas"
+  },
+  {
+    "name": "Zhigansk"
+  },
+  {
+    "name": "Vilyuysk"
+  },
+  {
+    "name": "Verkhnevilyuysk"
+  },
+  {
+    "name": "Klyuchi"
+  },
+  {
+    "name": "Palatka"
+  },
+  {
+    "name": "Krasnoyarsk"
+  },
+  {
+    "name": "Mukhomornoye"
+  },
+  {
+    "name": "Anadyr"
+  },
+  {
+    "name": "Logashkino"
+  },
+  {
+    "name": "Srednekolymsk"
+  },
+  {
+    "name": "Zyryanka"
+  },
+  {
+    "name": "Ayan"
+  },
+  {
+    "name": "Vyazemskiy"
+  },
+  {
+    "name": "Chumikan"
+  },
+  {
+    "name": "Ugolnye Kopi"
+  },
+  {
+    "name": "Ulkan"
+  },
+  {
+    "name": "Zhilinda"
+  },
+  {
+    "name": "Yeniseysk"
+  },
+  {
+    "name": "Ust Olensk"
+  },
+  {
+    "name": "Udachnyy"
+  },
+  {
+    "name": "Chernyshevskiy"
+  },
+  {
+    "name": "Okhotsk"
+  },
+  {
+    "name": "Makarov"
+  },
+  {
+    "name": "Dolinsk"
+  },
+  {
+    "name": "Lavrentiya"
+  },
+  {
+    "name": "Korsakov"
+  },
+  {
+    "name": "Yuzhno Sakhalinsk"
+  },
+  {
+    "name": "Khilok"
+  },
+  {
+    "name": "Khandyga"
+  },
+  {
+    "name": "Nikolayevsk na Amure"
+  },
+  {
+    "name": "Ust Maya"
+  },
+  {
+    "name": "Chagda"
+  },
+  {
+    "name": "Eldikan"
+  },
+  {
+    "name": "Verkhoyansk"
+  },
+  {
+    "name": "Ust Kuyga"
+  },
+  {
+    "name": "Poronaysk"
+  },
+  {
+    "name": "Aldan"
+  },
+  {
+    "name": "Uglegorsk"
+  },
+  {
+    "name": "Nizhneyansk"
+  },
+  {
+    "name": "Neryungri"
+  },
+  {
+    "name": "Taksimo"
+  },
+  {
+    "name": "Vanino"
+  },
+  {
+    "name": "De Kastri"
+  },
+  {
+    "name": "Provideniya"
+  },
+  {
+    "name": "Tukchi"
+  },
+  {
+    "name": "Nyukzha"
+  },
+  {
+    "name": "Severo Kurilsk"
+  },
+  {
+    "name": "Egvekinot"
+  },
+  {
+    "name": "Khakhar"
+  },
+  {
+    "name": "Batagay"
+  },
+  {
+    "name": "Il'pyrskiy"
+  },
+  {
+    "name": "Enurmino"
+  },
+  {
+    "name": "Korf"
+  },
+  {
+    "name": "Vitim"
+  },
+  {
+    "name": "Timashevsk"
+  },
+  {
+    "name": "Tikhoretsk"
+  },
+  {
+    "name": "Tuapse"
+  },
+  {
+    "name": "Apsheronsk"
+  },
+  {
+    "name": "Yeysk"
+  },
+  {
+    "name": "Labinsk"
+  },
+  {
+    "name": "Yerema"
+  },
+  {
+    "name": "Tomsk"
+  },
+  {
+    "name": "Krasnogorsk"
+  },
+  {
+    "name": "Kholmsk"
+  },
+  {
+    "name": "Aleksandrovsk Sakhalinskiy"
+  },
+  {
+    "name": "Nevelsk"
+  },
+  {
+    "name": "Zemlya Bunge"
+  },
+  {
+    "name": "Chokurdakh"
+  },
+  {
+    "name": "Tulun"
+  },
+  {
+    "name": "Chelyabinsk"
+  },
+  {
+    "name": "Shalaurova"
+  },
+  {
+    "name": "Mogocha"
+  },
+  {
+    "name": "Petrovsk Zabaykalskiy"
+  },
+  {
+    "name": "Blagoveshchensk"
+  },
+  {
+    "name": "Usolye Sibirskoye"
+  },
+  {
+    "name": "Gorod Maykop"
+  },
+  {
+    "name": "Krasnodar"
+  },
+  {
+    "name": "Petropavlovsk Kamchatskiy"
+  },
+  {
+    "name": "Millerovo"
+  },
+  {
+    "name": "Salsk"
+  },
+  {
+    "name": "Belaya Kalitva"
+  },
+  {
+    "name": "Kamensk Shakhtinskiy"
+  },
+  {
+    "name": "Chernyakhovsk"
+  },
+  {
+    "name": "Sovetsk"
+  },
+  {
+    "name": "Aginskoye"
+  },
+  {
+    "name": "Tura"
+  },
+  {
+    "name": "Palana"
+  },
+  {
+    "name": "Dudinka"
+  },
+  {
+    "name": "Novocherkassk"
+  }
+]

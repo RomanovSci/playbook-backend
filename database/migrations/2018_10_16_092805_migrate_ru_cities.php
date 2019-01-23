@@ -26,7 +26,7 @@ class MigrateRuCities extends Migration
      */
     public function up()
     {
-        $filename = resource_path('data/cities/ru.json');
+        $filename = resource_path('data/cities/RU.json');
         $cities = json_decode(File::get($filename));
 
         foreach ($cities as $city) {

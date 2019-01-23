@@ -26,7 +26,7 @@ class MigrateUaCities extends Migration
      */
     public function up()
     {
-        $filename = resource_path('data/cities/ua.json');
+        $filename = resource_path('data/cities/UA.json');
         $cities = json_decode(File::get($filename));
 
         foreach ($cities as $city) {
