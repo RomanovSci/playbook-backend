@@ -23,6 +23,7 @@ class UserRepository
     {
         return User::role($role)
             ->with('trainerInfo')
+            ->with('playgrounds')
             ->limit($limit)
             ->offset($offset)
             ->get();
