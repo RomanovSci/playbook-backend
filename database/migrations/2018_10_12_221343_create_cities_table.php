@@ -23,6 +23,10 @@ class CreateCitiesTable extends Migration
             $table->softDeletes();
             $table->foreign('country_id')->references('id')->on('countries');
         });
+
+        Schema::table('users', function (Blueprint $table) {
+            $table->foreign('city_id')->references('id')->on('cities');
+        });
     }
 
     /**

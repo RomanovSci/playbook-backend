@@ -17,14 +17,15 @@ class CreateUsersTable extends Migration
             $table->increments('id');
             $table->string('first_name');
             $table->string('last_name');
+            $table->string('middle_name')->nullable();
             $table->string('password');
             $table->string('phone')->unique();
             $table->char('verification_code', 6)->nullable();
             $table->integer('timezone_id', false, true)->nullable();
+            $table->integer('city_id', false, true)->nullable();
             $table->timestamp('phone_verified_at')->nullable();
             $table->timestamps();
             $table->softDeletes();
-            $table->foreign('timezone_id')->references('id')->on('timezones');
         });
     }
 

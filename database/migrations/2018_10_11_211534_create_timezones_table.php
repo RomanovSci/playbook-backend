@@ -43,6 +43,10 @@ class CreateTimezonesTable extends Migration
                 ]);
             }
         }
+
+        Schema::table('users', function (Blueprint $table) {
+            $table->foreign('timezone_id')->references('id')->on('timezones');
+        });
     }
 
     /**
