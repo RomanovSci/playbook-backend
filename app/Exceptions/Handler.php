@@ -4,6 +4,7 @@ namespace App\Exceptions;
 
 use Exception;
 use Illuminate\Foundation\Exceptions\Handler as ExceptionHandler;
+use Illuminate\Support\Facades\Log;
 
 /**
  * Class Handler
@@ -51,28 +52,24 @@ class Handler extends ExceptionHandler
      */
     public function render($request, Exception $e)
     {
+        Log::error($e->getMessage(), $e->getTrace());
+
         if ($request->is('api/*')) {
-            // Define the response
             $response = [
                 'success' => false,
                 'message' => $e->getMessage(),
             ];
 
-            // If the app is in debug mode
             if (config('app.debug')) {
                 $response['trace'] = $e->getTrace();
             }
 
-            // Default response of 400
             $status = 400;
 
-            // If this exception is an instance of HttpException
             if ($this->isHttpException($e)) {
-                // Grab the HTTP status code from the Exception
                 $status = $e->getStatusCode();
             }
 
-            // Return a JSON response with the response array and status code
             return response()->json($response, $status);
         }
 
