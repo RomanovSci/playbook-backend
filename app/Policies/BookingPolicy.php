@@ -25,7 +25,17 @@ class BookingPolicy
         if ($bookableType === User::class) {
             return $user->id === $bookableId;
         }
-        //TODO: Checking for playground owner
+
+        if ($bookableType === Playground::class) {
+            /** @var Playground $playground */
+            $playground = Playground::find($bookableId);
+
+            if (!$playground || !$playground->organization_id) {
+                return false;
+            }
+
+            return $playground->organization->owner_id === $user->id;
+        }
 
         return false;
     }
