@@ -2,9 +2,6 @@
 
 namespace App\Models;
 
-use Illuminate\Database\Eloquent\Model;
-use Illuminate\Database\Eloquent\SoftDeletes;
-
 /**
  * Class UserPlayground
  * @package App\Models
@@ -13,10 +10,8 @@ use Illuminate\Database\Eloquent\SoftDeletes;
  * @property integer user_id
  * @property integer playground_id
  */
-class UserPlayground extends Model
+class UserPlayground extends BaseModel
 {
-    use SoftDeletes;
-
     /**
      * @var array
      */

@@ -22,6 +22,7 @@ class CreateUsersTable extends Migration
             $table->string('phone')->unique();
             $table->char('verification_code', 6)->nullable();
             $table->integer('timezone_id', false, true)->nullable();
+            $table->integer('language_id', false, true)->nullable();
             $table->integer('city_id', false, true)->nullable();
             $table->timestamp('phone_verified_at')->nullable();
             $table->timestamps();

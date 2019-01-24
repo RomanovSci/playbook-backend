@@ -49,6 +49,10 @@ use Spatie\Permission\Traits\HasRoles;
  *                  type="integer",
  *              ),
  *              @OA\Property(
+ *                  property="language_id",
+ *                  type="integer",
+ *              ),
+ *              @OA\Property(
  *                  property="first_name",
  *                  type="string",
  *              ),
