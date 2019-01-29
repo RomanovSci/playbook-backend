@@ -67,6 +67,7 @@ Route::middleware(['role:'
     /** Booking */
     Route::prefix('booking')->group(function () {
         Route::post('/confirm/{booking}', 'API\BookingController@confirm')->name('booking.confirm');
+        Route::post('/decline/{booking}', 'API\BookingController@decline')->name('booking.decline');
         Route::get('/{bookable_type}/{bookable_id}', 'API\BookingController@get')->name("booking.get");
     });
 

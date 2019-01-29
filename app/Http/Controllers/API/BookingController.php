@@ -5,11 +5,13 @@ namespace App\Http\Controllers\API;
 use App\Exceptions\Http\ForbiddenHttpException;
 use App\Http\Controllers\Controller;
 use App\Http\Requests\Booking\BookingCreateFormRequest;
+use App\Http\Requests\Booking\BookingDeclineFormRequest;
 use App\Models\Booking;
 use App\Models\User;
 use App\Repositories\BookingRepository;
 use App\Services\BookingService;
 use Carbon\Carbon;
+use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\Gate;
 
@@ -203,6 +205,7 @@ class BookingController extends Controller
 
     /**
      * @param Booking $booking
+     * @param Request $request
      * @return \Illuminate\Http\JsonResponse
      *
      * @OA\Post(
@@ -220,7 +223,7 @@ class BookingController extends Controller
      *          response="200",
      *          description="
      *              Success
-     *              Booking already confirmed",
+     *              Status already set",
      *          @OA\MediaType(
      *              mediaType="application/json",
      *              @OA\Schema(
@@ -243,23 +246,100 @@ class BookingController extends Controller
      *      ),
      *      @OA\Response(
      *          response="403",
-     *          description="Can't confirm booking"
+     *          description="Can't manage booking"
      *      ),
      *      security={{"Bearer":{}}}
      * )
      */
-    public function confirm(Booking $booking)
+    public function confirm(Booking $booking, Request $request)
     {
-        if (Auth::user()->cant('confirmBooking', $booking)) {
-            throw new ForbiddenHttpException('Can\'t confirm booking');
+        return $this->changeStatus($booking, $request, Booking::STATUS_CONFIRMED);
+    }
+
+    /**
+     * @param Booking $booking
+     * @param BookingDeclineFormRequest $request
+     * @return \Illuminate\Http\JsonResponse
+     *
+     * @OA\Post(
+     *      path="/api/booking/decline/{booking_id}",
+     *      tags={"Booking"},
+     *      summary="Decline booking",
+     *      @OA\Parameter(
+     *          name="booking_id",
+     *          description="Booking id",
+     *          in="path",
+     *          required=true,
+     *          @OA\Schema(type="integer")
+     *      ),
+     *      @OA\RequestBody(
+     *          @OA\MediaType(
+     *              mediaType="application/json",
+     *              @OA\Schema(
+     *                  example={
+     *                      "note": "Booking note",
+     *                  }
+     *              )
+     *          )
+     *      ),
+     *      @OA\Response(
+     *          response="200",
+     *          description="
+     *              Success
+     *              Status already set",
+     *          @OA\MediaType(
+     *              mediaType="application/json",
+     *              @OA\Schema(
+     *                  type="object",
+     *                  @OA\Property(
+     *                      property="success",
+     *                      type="boolean"
+     *                  ),
+     *                  @OA\Property(
+     *                      property="message",
+     *                      type="string",
+     *                  ),
+     *                  @OA\Property(
+     *                      type="object",
+     *                      property="data",
+     *                      ref="#/components/schemas/Booking"
+     *                  )
+     *              )
+     *         )
+     *      ),
+     *      @OA\Response(
+     *          response="403",
+     *          description="Can't manage booking"
+     *      ),
+     *      security={{"Bearer":{}}}
+     * )
+     */
+    public function decline(Booking $booking, BookingDeclineFormRequest $request)
+    {
+        return $this->changeStatus($booking, $request, Booking::STATUS_DECLINED);
+    }
+
+    /**
+     * Change booking status
+     *
+     * @param Booking $booking
+     * @param Request $request
+     * @param int $status
+     * @return \Illuminate\Http\JsonResponse
+     */
+    public function changeStatus(Booking $booking, Request $request, int $status)
+    {
+        if (Auth::user()->cant('manageBooking', $booking)) {
+            throw new ForbiddenHttpException('Can\'t manage booking');
         }
 
-        if ($booking->status === Booking::STATUS_CONFIRMED) {
-            return $this->error(200, $booking->toArray(), 'Booking already confirmed');
+        if ($booking->status === $status) {
+            return $this->error(200, $booking->toArray(), 'Status already set');
         }
 
-        $booking->status = Booking::STATUS_CONFIRMED;
-        $booking->update(['status']);
+        $booking->status = $status;
+        $booking->note = $request->post('note');
+        $booking->update(['status', 'note']);
 
         return $this->success($booking->toArray());
     }

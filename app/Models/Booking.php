@@ -15,6 +15,7 @@ use Illuminate\Database\Eloquent\Relations\MorphTo;
  * @property string end_time
  * @property integer status
  * @property integer playground_id
+ * @property string note
  * @property string created_at
  * @property string updated_at
  * @property string deleted_at

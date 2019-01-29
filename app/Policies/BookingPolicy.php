@@ -41,13 +41,13 @@ class BookingPolicy
     }
 
     /**
-     * Determine if the booking can be confirmed by user
+     * Determine if the booking can be manage by user
      *
      * @param User $user
      * @param Booking $booking
      * @return bool
      */
-    public function confirmBooking(User $user, Booking $booking): bool
+    public function manageBooking(User $user, Booking $booking): bool
     {
         /**
          * Trainer can confirm
