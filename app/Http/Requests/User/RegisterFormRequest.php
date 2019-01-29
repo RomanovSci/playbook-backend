@@ -8,7 +8,7 @@ use App\Http\Requests\BaseFormRequest;
  * Class CreateUser
  * @package App\Http\Requests\User
  */
-class UserCreateFormRequest extends BaseFormRequest
+class RegisterFormRequest extends BaseFormRequest
 {
     /**
      * @return array

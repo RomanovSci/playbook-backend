@@ -5,8 +5,8 @@ namespace App\Http\Controllers\API;
 use App\Exceptions\Http\UnauthorizedHttpException;
 use App\Http\Controllers\Controller;
 use App\Http\Requests\User\LoginFormRequest;
+use App\Http\Requests\User\RegisterFormRequest;
 use App\Http\Requests\User\ResendVerificationCodeFormRequest;
-use App\Http\Requests\User\UserCreateFormRequest;
 use App\Http\Requests\User\VerifyPhoneFormRequest;
 use App\Models\Country;
 use App\Models\User;
@@ -42,7 +42,7 @@ class UserController extends Controller
     }
 
     /**
-     * @param UserCreateFormRequest $request
+     * @param RegisterFormRequest $request
      * @return JsonResponse
      * @throws \Throwable
      *
@@ -95,7 +95,7 @@ class UserController extends Controller
      *      )
      * )
      */
-    public function register(UserCreateFormRequest $request)
+    public function register(RegisterFormRequest $request)
     {
         /** @var Country $country */
         $fields = $request->all();
