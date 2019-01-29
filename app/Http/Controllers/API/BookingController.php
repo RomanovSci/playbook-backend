@@ -179,15 +179,12 @@ class BookingController extends Controller
      */
     public function create(string $bookableType, BookingCreateFormRequest $request)
     {
-        /** @var User $creator */
-        $creator = Auth::user();
         $bookableId = (int) $request->post('bookable_id');
         $checkResult = $this->bookingService->checkBookingRequest(
             Carbon::parse($request->post('start_time')),
             Carbon::parse($request->post('end_time')),
             $bookableType,
-            $bookableId,
-            $creator
+            $bookableId
         );
 
         if (!$checkResult['success']) {
@@ -197,7 +194,7 @@ class BookingController extends Controller
         /** @var Booking $booking */
         $booking = Booking::create(array_merge($request->all(), [
             'bookable_type' => $bookableType,
-            'creator_id' => $creator->id,
+            'creator_id' => Auth::user()->id,
         ]));
 
         return $this->success($booking->toArray());
@@ -253,6 +250,12 @@ class BookingController extends Controller
      */
     public function confirm(Booking $booking, Request $request)
     {
+        $canConfirm = $this->bookingService->canConfirm($booking);
+
+        if (!$canConfirm['success']) {
+            throw new ForbiddenHttpException($canConfirm['message']);
+        }
+
         return $this->changeStatus($booking, $request, Booking::STATUS_CONFIRMED);
     }
 

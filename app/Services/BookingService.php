@@ -21,7 +21,6 @@ class BookingService
      *
      * @param Carbon $startTime
      * @param Carbon $endTime
-     * @param User $creator
      * @param string $bookableType
      * @param int $bookableId
      * @return array
@@ -32,13 +31,9 @@ class BookingService
         Carbon $startTime,
         Carbon $endTime,
         string $bookableType,
-        int $bookableId,
-        User $creator
+        int $bookableId
     ): array {
-        $result = [
-            'success' => false,
-            'message' => '',
-        ];
+        $result = ['success' => false, 'message' => ''];
 
         /** Can't book unbookable entities */
         if (!in_array($bookableType, [User::class, Playground::class])) {
@@ -67,7 +62,7 @@ class BookingService
          * Check if exists confirmed
          * booking for the proper schedule
          */
-        $confirmedBookings = BookingRepository::getByDateRange(
+        $confirmedBookings = BookingRepository::getBetween(
             Carbon::parse($properSchedule->start_time),
             Carbon::parse($properSchedule->end_time),
             $bookableType,
@@ -89,6 +84,29 @@ class BookingService
         }
 
         $result['success'] = true;
+        return $result;
+    }
+
+    /**
+     * Determinate if booking can be confirmed
+     *
+     * @param Booking $booking
+     * @return array
+     */
+    public function canConfirm(Booking $booking): array
+    {
+        $result = ['success' => false, 'message' => '',];
+        $confirmedBookingsCount = BookingRepository::getConfirmedInDatesRange(
+            Carbon::parse($booking->start_time),
+            Carbon::parse($booking->end_time)
+        )->count();
+
+        if ($confirmedBookingsCount === 0) {
+            $result['success'] = true;
+        } else {
+            $result['message'] = 'Can\'t confirm booking. Current dates range is busy.';
+        }
+
         return $result;
     }
 }

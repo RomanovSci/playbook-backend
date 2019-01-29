@@ -136,7 +136,7 @@ class ScheduleController extends Controller
         foreach ($schedules as $schedule) {
             $schedule->setAttribute(
                 'confirmed_bookings',
-                BookingRepository::getConfirmedBookingsForSchedule($schedule)
+                BookingRepository::getConfirmedForSchedule($schedule)
             );
         }
 

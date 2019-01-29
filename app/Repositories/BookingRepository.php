@@ -30,7 +30,7 @@ class BookingRepository
     }
 
     /**
-     * Get bookings in time range
+     * Get bookings between dates
      *
      * @param Carbon $startTime
      * @param Carbon $endTime
@@ -39,7 +39,7 @@ class BookingRepository
      * @param int|null $status
      * @return Collection
      */
-    public static function getByDateRange(
+    public static function getBetween(
         Carbon $startTime,
         Carbon $endTime,
         string $bookableType = null,
@@ -70,7 +70,7 @@ class BookingRepository
      * @param Schedule $schedule
      * @return Collection
      */
-    public static function getConfirmedBookingsForSchedule(Schedule $schedule): Collection
+    public static function getConfirmedForSchedule(Schedule $schedule): Collection
     {
         return Booking::where('bookable_id', $schedule->schedulable_id)
             ->with('creator')
@@ -79,6 +79,24 @@ class BookingRepository
             ->whereRaw("tsrange(bookings.start_time, bookings.end_time, '()') && tsrange(?, ?, '()')", [
                 $schedule->start_time,
                 $schedule->end_time
+            ])
+            ->orderBy('start_time', 'asc')
+            ->get();
+    }
+
+    /**
+     * Get confirmed bookings in date range
+     *
+     * @param Carbon $startTime
+     * @param Carbon $endTime
+     * @return Collection
+     */
+    public static function getConfirmedInDatesRange(Carbon $startTime, Carbon $endTime): Collection
+    {
+        return Booking::where('status', Booking::STATUS_CONFIRMED)
+            ->whereRaw("tsrange(bookings.start_time, bookings.end_time, '()') && tsrange(?, ?, '()')", [
+                $startTime,
+                $endTime
             ])
             ->orderBy('start_time', 'asc')
             ->get();
