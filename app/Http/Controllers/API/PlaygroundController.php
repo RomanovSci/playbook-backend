@@ -191,7 +191,7 @@ class PlaygroundController extends Controller
         $user = Auth::user();
 
         if ($organization && $user->cant('createPlayground', $organization)) {
-            throw new ForbiddenHttpException();
+            throw new ForbiddenHttpException(__('errors.cant_create_playground'));
         }
 
         /**

@@ -43,7 +43,7 @@ class ScheduleService
                  * Check if range is negative
                  */
                 if ($startTime->greaterThanOrEqualTo($endTime)) {
-                    throw new IncorrectDateRange('Range is negative');
+                    throw new IncorrectDateRange(__('errors.range_is_negative'));
                 }
 
                 /**

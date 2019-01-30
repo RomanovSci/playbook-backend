@@ -299,7 +299,7 @@ class UserController extends Controller
         $user = Auth::user();
 
         if ($user->verification_code !== $request->post('code')) {
-            return $this->error(200, [], 'Incorrect verification code');
+            return $this->error(200, [], __('errors.incorrect_verification_code'));
         }
 
         $user->phone_verified_at = Carbon::now();

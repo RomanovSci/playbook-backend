@@ -278,7 +278,7 @@ class TrainerController extends Controller
         $user = Auth::user();
 
         if ($user->trainerInfo) {
-            return $this->error(200, [], 'Info already exists');
+            return $this->error(200, [], __('errors.trainer_info_exists'));
         }
 
         $info = $this->trainerService->createInfo($user, $request->all());
@@ -373,7 +373,7 @@ class TrainerController extends Controller
         $user = Auth::user();
 
         if ($user->cant('edit', $info)) {
-            throw new ForbiddenHttpException('User can\'t edit info');
+            throw new ForbiddenHttpException(__('errors.user_cant_edit_info'));
         }
 
         $info = $this->trainerService->editInfo($user, $info, $request->all());

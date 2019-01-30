@@ -105,7 +105,7 @@ class BookingController extends Controller
     public function get(string $bookableType, int $bookableId)
     {
         if (Gate::denies('getBookingsList', [$bookableType, $bookableId])) {
-            throw new ForbiddenHttpException('Can\'t get booking list');
+            throw new ForbiddenHttpException(__('errors.cant_get_bookings'));
         }
 
         return $this->success(
@@ -333,11 +333,11 @@ class BookingController extends Controller
     public function changeStatus(Booking $booking, Request $request, int $status)
     {
         if (Auth::user()->cant('manageBooking', $booking)) {
-            throw new ForbiddenHttpException('Can\'t manage booking');
+            throw new ForbiddenHttpException(__('errors.cant_manage_booking'));
         }
 
         if ($booking->status === $status) {
-            return $this->error(200, $booking->toArray(), 'Status already set');
+            return $this->error(200, $booking->toArray(), __('errors.status_already_set'));
         }
 
         $booking->status = $status;

@@ -37,7 +37,7 @@ class BookingService
 
         /** Can't book unbookable entities */
         if (!in_array($bookableType, [User::class, Playground::class])) {
-            $result['message'] = 'Incorrect bookable type';
+            $result['message'] = __('errors.incorrect_bookable_type');
             return $result;
         }
 
@@ -54,7 +54,7 @@ class BookingService
 
         /** Can't create booking for not existed schedules */
         if (!$properSchedule) {
-            $result['message'] = 'Schedules for this time interval doesn\'t exists';
+            $result['message'] = __('errors.schedule_time_unavailable');
             return $result;
         }
 
@@ -78,7 +78,7 @@ class BookingService
                 $endTime
             )) {
                 /** Can't book reserved period */
-                $result['message'] = 'This time already reserved';
+                $result['message'] = __('errors.time_already_reserved');
                 return $result;
             }
         }
@@ -104,7 +104,7 @@ class BookingService
         if ($confirmedBookingsCount === 0) {
             $result['success'] = true;
         } else {
-            $result['message'] = 'Can\'t confirm booking. Current dates range is busy.';
+            $result['message'] = __('errors.cant_confirm_booking');
         }
 
         return $result;

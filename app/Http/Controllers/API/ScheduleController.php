@@ -219,7 +219,7 @@ class ScheduleController extends Controller
          * for admin and organization-admin
          */
         if ($isForTrainer && !$schedulable->hasRole(['trainer'])) {
-            throw new ForbiddenHttpException('Only trainer can create schedule.');
+            throw new ForbiddenHttpException(__('errors.only_trainer_can_create_schedule'));
         }
 
         if (!$isForTrainer) {
@@ -231,7 +231,7 @@ class ScheduleController extends Controller
              * for only trainer, organization-admin and system admin
              */
             if (Auth::user()->cant('createSchedule', $schedulable)) {
-                throw new ForbiddenHttpException();
+                throw new ForbiddenHttpException(__('errors.cant_create_schedule_for_playground'));
             }
         }
 
@@ -307,7 +307,7 @@ class ScheduleController extends Controller
     public function edit(Schedule $schedule, ScheduleEditFormRequest $request)
     {
         if (Auth::user()->cant('manageSchedule', $schedule)) {
-            throw new ForbiddenHttpException();
+            throw new ForbiddenHttpException(__('errors.cant_manage_schedule'));
         }
 
         return $this->success(
@@ -364,7 +364,7 @@ class ScheduleController extends Controller
     public function delete(Schedule $schedule)
     {
         if (Auth::user()->cant('manageSchedule', $schedule)) {
-            throw new ForbiddenHttpException();
+            throw new ForbiddenHttpException(__('errors.cant_manage_schedule'));
         }
 
         $schedule->delete();
