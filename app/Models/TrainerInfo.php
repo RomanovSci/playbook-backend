@@ -13,6 +13,8 @@ namespace App\Models;
  * @property integer max_price
  * @property string currency
  *
+ * @property File[] images
+ *
  * @OA\Schema(
  *      allOf={
  *          @OA\Schema(
@@ -74,5 +76,13 @@ class TrainerInfo extends BaseModel
     public function user()
     {
         return $this->belongsTo(User::class);
+    }
+
+    /**
+     * @return \Illuminate\Database\Eloquent\Relations\MorphMany
+     */
+    public function images()
+    {
+        return $this->morphMany(File::class, 'entity');
     }
 }

@@ -13,6 +13,18 @@ use Illuminate\Support\Facades\DB;
  */
 class TrainerService
 {
+    protected $fileService;
+
+    /**
+     * TrainerService constructor.
+     *
+     * @param FileService $fileService
+     */
+    public function __construct(FileService $fileService)
+    {
+        $this->fileService = $fileService;
+    }
+
     /**
      * Create trainer info
      *
@@ -34,6 +46,10 @@ class TrainerService
                     'user_id' => $user->id,
                     'playground_id' => $playgroundId
                 ]);
+            }
+
+            if ($data['image']) {
+                $this->fileService->upload('trainer/' . $user->id, $data['image'], $info);
             }
         } catch (\Throwable $e) {
             DB::rollBack();
@@ -58,13 +74,18 @@ class TrainerService
         try {
             DB::beginTransaction();
             $info->fill($data)->update();
-            UserPlayground::where('user_id', $user->id)->forceDelete();
+            UserPlayground::where('user_id', $user->id)->delete();
 
             foreach ($data['playgrounds'] as $playgroundId) {
                 UserPlayground::create([
                     'user_id' => $user->id,
                     'playground_id' => $playgroundId
                 ]);
+            }
+
+            if ($data['image']) {
+                $info->images()->delete();
+                $this->fileService->upload('trainer/' . $user->id, $data['image'], $info);
             }
         } catch (\Throwable $e) {
             DB::rollBack();

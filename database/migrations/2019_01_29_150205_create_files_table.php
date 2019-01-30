@@ -17,7 +17,7 @@ class CreateFilesTable extends Migration
             $table->increments('id');
             $table->integer('entity_id', false, true);
             $table->string('entity_type');
-            $table->string('path');
+            $table->string('url');
             $table->string('name');
             $table->string('origin_name');
             $table->string('mime_type');

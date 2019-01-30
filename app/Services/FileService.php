@@ -5,6 +5,7 @@ namespace App\Services;
 use App\Models\File;
 use Illuminate\Database\Eloquent\Model;
 use Illuminate\Http\UploadedFile;
+use Illuminate\Support\Facades\Storage;
 
 /**
  * Class FileService
@@ -30,8 +31,8 @@ class FileService
         $file = new File();
         $file->entity_id = $relatedModel->id;
         $file->entity_type = get_class($relatedModel);
-        $file->path = $path;
         $file->name = $uploadedFile->hashName();
+        $file->url = Storage::url($path . '/' . $file->name);
         $file->origin_name = $uploadedFile->getClientOriginalName();
         $file->mime_type = $uploadedFile->getMimeType();
         $file->save();

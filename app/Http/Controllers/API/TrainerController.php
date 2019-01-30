@@ -11,6 +11,7 @@ use App\Models\TrainerInfo;
 use App\Models\User;
 use App\Repositories\TrainerInfoRepository;
 use App\Repositories\UserRepository;
+use App\Services\FileService;
 use App\Services\TrainerService;
 use Illuminate\Http\JsonResponse;
 use Illuminate\Support\Facades\Auth;
@@ -22,14 +23,18 @@ use Illuminate\Support\Facades\Auth;
 class TrainerController extends Controller
 {
     protected $trainerService;
+    protected $fileService;
 
     /**
      * TrainerController constructor.
+     *
      * @param TrainerService $trainerService
+     * @param FileService $fileService
      */
-    public function __construct(TrainerService $trainerService)
+    public function __construct(TrainerService $trainerService, FileService $fileService)
     {
         $this->trainerService = $trainerService;
+        $this->fileService = $fileService;
     }
 
     /**
@@ -215,7 +220,8 @@ class TrainerController extends Controller
      *                      "about": "Short information about trainer",
      *                      "min_price": "Min price in cents. Example: 7000. (70RUB)",
      *                      "max_price": "Max price in cents.",
-     *                      "currency": "Currency: RUB, UAH, USD, etc. Default: RUB"
+     *                      "currency": "Currency: RUB, UAH, USD, etc. Default: RUB",
+     *                      "image": "Trainer image"
      *                  }
      *              )
      *          )
@@ -249,9 +255,9 @@ class TrainerController extends Controller
      *                          ),
      *                          @OA\Schema(
      *                              @OA\Property(
-     *                                  property="user",
-     *                                  type="object",
-     *                                  ref="#/components/schemas/User"
+     *                                  property="images",
+     *                                  type="array",
+     *                                  @OA\Items(ref="#/components/schemas/File")
      *                              ),
      *                          ),
      *                      }
@@ -268,15 +274,18 @@ class TrainerController extends Controller
      */
     public function createInfo(TrainerInfoCreateFormRequest $request)
     {
-        /**
-         * @var User $user
-         * @var TrainerInfo $trainerInfo
-         */
+        /** @var User $user */
         $user = Auth::user();
+
+        if ($user->trainerInfo) {
+            return $this->error(200, [], 'Info already exists');
+        }
+
         $info = $this->trainerService->createInfo($user, $request->all());
 
         return $this->success(array_merge($info->toArray(), [
             'playgrounds' => $user->playgrounds,
+            'images' => $info->images,
         ]));
     }
 
@@ -306,7 +315,8 @@ class TrainerController extends Controller
      *                      "about": "Short information about trainer",
      *                      "min_price": "Min price in cents. Example: 7000. (70RUB)",
      *                      "max_price": "Max price in cents.",
-     *                      "currency": "Currency: RUB, UAH, USD, etc. Default: RUB"
+     *                      "currency": "Currency: RUB, UAH, USD, etc. Default: RUB",
+     *                      "image": "Trainer image"
      *                  }
      *              )
      *          )
@@ -340,9 +350,9 @@ class TrainerController extends Controller
      *                          ),
      *                          @OA\Schema(
      *                              @OA\Property(
-     *                                  property="user",
-     *                                  type="object",
-     *                                  ref="#/components/schemas/User"
+     *                                  property="images",
+     *                                  type="array",
+     *                                  @OA\Items(ref="#/components/schemas/File")
      *                              ),
      *                          ),
      *                      }
@@ -369,6 +379,7 @@ class TrainerController extends Controller
         $info = $this->trainerService->editInfo($user, $info, $request->all());
         return $this->success(array_merge($info->toArray(), [
             'playgrounds' => $user->playgrounds,
+            'images' => $info->images,
         ]));
     }
 }

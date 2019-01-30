@@ -22,6 +22,7 @@ class TrainerInfoCreateFormRequest extends BaseFormRequest
             'min_price' => 'required|numeric',
             'max_price' => 'required|numeric|gte:min_price',
             'currency' => 'required|string|uppercase|currency',
+            'image' => 'image|max:1024',
         ];
     }
 }

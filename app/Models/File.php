@@ -9,7 +9,7 @@ namespace App\Models;
  * @property integer id
  * @property integer entity_id
  * @property integer entity_type
- * @property string path
+ * @property string url
  * @property string name
  * @property string origin_name
  * @property string mime_type
@@ -27,23 +27,23 @@ namespace App\Models;
  *              },
  *              @OA\Property(
  *                  property="id",
- *                  type="integer",
+ *                  description="hidden",
  *              ),
  *              @OA\Property(
  *                  property="entity_id",
- *                  type="integer",
+ *                  description="hidden",
  *              ),
  *              @OA\Property(
  *                  property="entity_type",
- *                  type="string",
+ *                  description="hidden",
  *              ),
  *              @OA\Property(
- *                  property="path",
+ *                  property="url",
  *                  type="string",
  *              ),
  *              @OA\Property(
  *                  property="name",
- *                  type="string",
+ *                  description="hidden",
  *              ),
  *              @OA\Property(
  *                  property="origin_name",
@@ -51,7 +51,7 @@ namespace App\Models;
  *              ),
  *              @OA\Property(
  *                  property="mime_type",
- *                  type="string",
+ *                  description="hidden",
  *              )
  *          ),
  *          @OA\Schema(ref="#/components/schemas/BaseModel")
@@ -60,5 +60,16 @@ namespace App\Models;
  */
 class File extends BaseModel
 {
+    /**
+     * @var string
+     */
     protected $table = 'files';
+
+    /**
+     * @var array
+     */
+    protected $hidden = [
+        'id', 'entity_id', 'entity_type',
+        'name', 'mime_type'
+    ];
 }

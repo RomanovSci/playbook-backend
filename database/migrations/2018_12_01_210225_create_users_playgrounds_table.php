@@ -18,7 +18,6 @@ class CreateUsersPlaygroundsTable extends Migration
             $table->integer('user_id', false, true);
             $table->integer('playground_id', false, true);
             $table->timestamps();
-            $table->softDeletes();
             $table->foreign('user_id')->references('id')->on('users');
             $table->foreign('playground_id')->references('id')->on('playgrounds');
             $table->unique(['user_id', 'playground_id']);

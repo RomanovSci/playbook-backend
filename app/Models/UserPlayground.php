@@ -2,6 +2,8 @@
 
 namespace App\Models;
 
+use Illuminate\Database\Eloquent\Model;
+
 /**
  * Class UserPlayground
  * @package App\Models
@@ -10,7 +12,7 @@ namespace App\Models;
  * @property integer user_id
  * @property integer playground_id
  */
-class UserPlayground extends BaseModel
+class UserPlayground extends Model
 {
     /**
      * @var array
