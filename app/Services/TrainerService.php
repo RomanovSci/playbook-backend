@@ -48,7 +48,7 @@ class TrainerService
                 ]);
             }
 
-            if ($data['image']) {
+            if (isset($data['image'])) {
                 $this->fileService->upload('trainer/' . $user->id, $data['image'], $info);
             }
         } catch (\Throwable $e) {
@@ -83,7 +83,7 @@ class TrainerService
                 ]);
             }
 
-            if ($data['image']) {
+            if (isset($data['image'])) {
                 $info->images()->delete();
                 $this->fileService->upload('trainer/' . $user->id, $data['image'], $info);
             }
