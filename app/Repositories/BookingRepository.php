@@ -16,16 +16,30 @@ class BookingRepository
     /**
      * Get bookings by bookable data
      *
+     * @param Carbon $startTime
+     * @param Carbon $endTime
+     * @param int $limit
+     * @param int $offset
      * @param string $bookableType
      * @param int $bookableId
      * @return Collection
      */
-    public static function getByBookable(string $bookableType, int $bookableId): Collection
-    {
+    public static function getByBookable(
+        Carbon $startTime,
+        Carbon $endTime,
+        int $limit,
+        int $offset,
+        string $bookableType,
+        int $bookableId
+    ): Collection {
         return Booking::where('bookable_type', $bookableType)
+            ->where('bookable_id', $bookableId)
+            ->where('start_time', '>=', $startTime->toDayDateTimeString())
+            ->where('end_time', '<=', $endTime->toDayDateTimeString())
             ->with('playground')
             ->with('creator')
-            ->where('bookable_id', $bookableId)
+            ->limit($limit)
+            ->offset($offset)
             ->get();
     }
 

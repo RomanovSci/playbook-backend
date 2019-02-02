@@ -1,14 +1,14 @@
 <?php
 
-namespace App\Http\Requests\Schedule;
+namespace App\Http\Requests\Common;
 
 use App\Http\Requests\BaseFormRequest;
 
 /**
- * Class ScheduleGetFormRequest
- * @package App\Http\Requests\Schedule
+ * Class TimeIntervalFormRequest
+ * @package App\Http\Requests\Common
  */
-class ScheduleGetFormRequest extends BaseFormRequest
+class TimeIntervalFormRequest extends BaseFormRequest
 {
     /**
      * @return array
@@ -18,6 +18,8 @@ class ScheduleGetFormRequest extends BaseFormRequest
         return [
             'start_time' => 'required|date_format:Y-m-d H:i:s',
             'end_time' => 'required|date_format:Y-m-d H:i:s|after:start_time',
+            'limit' => 'required|integer|max:100',
+            'offset' => 'required|integer'
         ];
     }
 }

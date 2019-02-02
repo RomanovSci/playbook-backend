@@ -34,6 +34,8 @@ class ScheduleRepository
      *
      * @param Carbon $startTime
      * @param Carbon $endTime
+     * @param int $limit
+     * @param int $offset
      * @param string $schedulableType
      * @param int $schedulableId
      * @return mixed
@@ -41,6 +43,8 @@ class ScheduleRepository
     public static function getByDateRange(
         Carbon $startTime,
         Carbon $endTime,
+        int $limit = 100,
+        int $offset = 0,
         string $schedulableType = null,
         int $schedulableId = null
     ): Collection {
@@ -56,7 +60,10 @@ class ScheduleRepository
             $query->where('schedulable_id', $schedulableId);
         }
 
-        return $query->get();
+        return $query
+            ->limit($limit)
+            ->offset($offset)
+            ->get();
     }
 
     /**

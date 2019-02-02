@@ -6,6 +6,7 @@ use App\Exceptions\Http\ForbiddenHttpException;
 use App\Http\Controllers\Controller;
 use App\Http\Requests\Booking\BookingCreateFormRequest;
 use App\Http\Requests\Booking\BookingDeclineFormRequest;
+use App\Http\Requests\Common\TimeIntervalFormRequest;
 use App\Models\Booking;
 use App\Models\User;
 use App\Repositories\BookingRepository;
@@ -37,8 +38,9 @@ class BookingController extends Controller
     }
 
     /**
+     * @param TimeIntervalFormRequest $request
      * @param string $bookableType
-     * @param int $bookableId
+     * @param int $id
      * @return \Illuminate\Http\JsonResponse
      *
      * @OA\Get(
@@ -58,6 +60,34 @@ class BookingController extends Controller
      *          in="path",
      *          required=false,
      *          @OA\Schema(type="integer")
+     *      ),
+     *      @OA\Parameter(
+     *          name="limit",
+     *          description="Records limit. Max: 100",
+     *          in="path",
+     *          required=true,
+     *          @OA\Schema(type="integer")
+     *      ),
+     *      @OA\Parameter(
+     *          name="offset",
+     *          description="Offset",
+     *          in="path",
+     *          required=true,
+     *          @OA\Schema(type="integer")
+     *      ),
+     *      @OA\Parameter(
+     *          name="start_time",
+     *          description="Start time. Example: 2018-05-13 09:00:00",
+     *          in="query",
+     *          required=true,
+     *          @OA\Schema(type="string")
+     *      ),
+     *      @OA\Parameter(
+     *          name="end_time",
+     *          description="End time. Example: 2018-05-13 17:00:00",
+     *          in="query",
+     *          required=true,
+     *          @OA\Schema(type="string")
      *      ),
      *      @OA\Response(
      *          response="200",
@@ -102,14 +132,21 @@ class BookingController extends Controller
      *      )
      * )
      */
-    public function get(string $bookableType, int $bookableId)
+    public function get(TimeIntervalFormRequest $request, string $bookableType, int $id)
     {
-        if (Gate::denies('getBookingsList', [$bookableType, $bookableId])) {
+        if (Gate::denies('getBookingsList', [$bookableType, $id])) {
             throw new ForbiddenHttpException(__('errors.cant_get_bookings'));
         }
 
         return $this->success(
-            BookingRepository::getByBookable($bookableType, $bookableId)
+            BookingRepository::getByBookable(
+                Carbon::parse($request->get('start_time')),
+                Carbon::parse($request->get('end_time')),
+                $request->get('limit'),
+                $request->get('offset'),
+                $bookableType,
+                $id
+            )
         );
     }
 

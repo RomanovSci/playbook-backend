@@ -4,7 +4,7 @@ namespace App\Http\Controllers\API;
 
 use App\Exceptions\Http\ForbiddenHttpException;
 use App\Http\Controllers\Controller;
-use App\Http\Requests\Schedule\ScheduleGetFormRequest;
+use App\Http\Requests\Common\TimeIntervalFormRequest;
 use App\Http\Requests\Schedule\ScheduleCreateFormRequest;
 use App\Http\Requests\Schedule\ScheduleEditFormRequest;
 use App\Models\Playground;
@@ -36,7 +36,7 @@ class ScheduleController extends Controller
     }
 
     /**
-     * @param ScheduleGetFormRequest $request
+     * @param TimeIntervalFormRequest $request
      * @param string $schedulableType
      * @param int $id
      * @return JsonResponse
@@ -57,6 +57,20 @@ class ScheduleController extends Controller
      *          description="trainer or playground id",
      *          in="path",
      *          required=false,
+     *          @OA\Schema(type="integer")
+     *      ),
+     *      @OA\Parameter(
+     *          name="limit",
+     *          description="Records limit. Max: 100",
+     *          in="path",
+     *          required=true,
+     *          @OA\Schema(type="integer")
+     *      ),
+     *      @OA\Parameter(
+     *          name="offset",
+     *          description="Offset",
+     *          in="path",
+     *          required=true,
      *          @OA\Schema(type="integer")
      *      ),
      *      @OA\Parameter(
@@ -120,11 +134,13 @@ class ScheduleController extends Controller
      *      )
      * )
      */
-    public function get(ScheduleGetFormRequest $request, string $schedulableType, int $id = null)
+    public function get(TimeIntervalFormRequest $request, string $schedulableType, int $id = null)
     {
         $schedules = ScheduleRepository::getByDateRange(
             Carbon::parse($request->get('start_time')),
             Carbon::parse($request->get('end_time')),
+            $request->get('limit'),
+            $request->get('offset'),
             $schedulableType,
             $id
         );
