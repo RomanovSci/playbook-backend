@@ -71,6 +71,13 @@ class TrainerInfo extends BaseModel
     ];
 
     /**
+     * @var array
+     */
+    protected $with = [
+        'images'
+    ];
+
+    /**
      * @return \Illuminate\Database\Eloquent\Relations\BelongsTo
      */
     public function user()
