@@ -1,12 +1,13 @@
 {
-  "main.css": "static/css/main.49a55574.css",
-  "main.css.map": "static/css/main.49a55574.css.map",
-  "main.js": "static/js/main.3f6717e2.js",
-  "main.js.map": "static/js/main.3f6717e2.js.map",
+  "main.css": "static/css/main.92c0859a.css",
+  "main.css.map": "static/css/main.92c0859a.css.map",
+  "main.js": "static/js/main.29aecc0a.js",
+  "main.js.map": "static/js/main.29aecc0a.js.map",
   "static/media/add-info.svg": "static/media/add-info.78c80b69.svg",
   "static/media/add-schedule.svg": "static/media/add-schedule.0585ca8f.svg",
   "static/media/delete.svg": "static/media/delete.9f302ddd.svg",
   "static/media/invitation-reserve.svg": "static/media/invitation-reserve.89ffb1dd.svg",
+  "static/media/logo.svg": "static/media/logo.8d1f1f04.svg",
   "static/media/montserrat-bold.ttf": "static/media/montserrat-bold.661b0bcf.ttf",
   "static/media/montserrat-bold.woff": "static/media/montserrat-bold.0ae4e18a.woff",
   "static/media/montserrat-bold.woff2": "static/media/montserrat-bold.17005101.woff2",
@@ -19,6 +20,5 @@
   "static/media/montserrat-regular.ttf": "static/media/montserrat-regular.46361210.ttf",
   "static/media/montserrat-regular.woff": "static/media/montserrat-regular.cfd91231.woff",
   "static/media/montserrat-regular.woff2": "static/media/montserrat-regular.1ef33541.woff2",
-  "static/media/my-schedule.svg": "static/media/my-schedule.98733714.svg",
-  "static/media/tennis-ball.svg": "static/media/tennis-ball.00428ba2.svg"
+  "static/media/my-schedule.svg": "static/media/my-schedule.98733714.svg"
 }

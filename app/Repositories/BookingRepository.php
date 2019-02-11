@@ -4,6 +4,7 @@ namespace App\Repositories;
 
 use App\Models\Booking;
 use App\Models\Schedule;
+use App\Models\User;
 use Carbon\Carbon;
 use Illuminate\Database\Eloquent\Collection;
 
@@ -38,6 +39,32 @@ class BookingRepository
             ->where('end_time', '<=', $endTime->toDayDateTimeString())
             ->with('playground')
             ->with('creator')
+            ->limit($limit)
+            ->offset($offset)
+            ->get();
+    }
+
+    /**
+     * Get bookings by creator
+     *
+     * @param Carbon $startTime
+     * @param Carbon $endTime
+     * @param int $limit
+     * @param int $offset
+     * @param User $user
+     * @return Collection
+     */
+    public static function getByCreator(
+        Carbon $startTime,
+        Carbon $endTime,
+        int $limit,
+        int $offset,
+        User $user
+    ): Collection {
+        return Booking::where('creator_id', $user->id)
+            ->where('start_time', '>=', $startTime->toDayDateTimeString())
+            ->where('end_time', '<=', $endTime->toDayDateTimeString())
+            ->with('playground')
             ->limit($limit)
             ->offset($offset)
             ->get();

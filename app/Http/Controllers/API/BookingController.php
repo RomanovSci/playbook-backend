@@ -151,6 +151,95 @@ class BookingController extends Controller
     }
 
     /**
+     * @param TimeIntervalFormRequest $request
+     * @return \Illuminate\Http\JsonResponse
+     *
+     * @OA\Get(
+     *      path="/api/booking/all",
+     *      tags={"Booking"},
+     *      summary="Get all bookings for user",
+     *      @OA\Parameter(
+     *          name="limit",
+     *          description="Records limit. Max: 100",
+     *          in="path",
+     *          required=true,
+     *          @OA\Schema(type="integer")
+     *      ),
+     *      @OA\Parameter(
+     *          name="offset",
+     *          description="Offset",
+     *          in="path",
+     *          required=true,
+     *          @OA\Schema(type="integer")
+     *      ),
+     *      @OA\Parameter(
+     *          name="start_time",
+     *          description="Start time. Example: 2018-05-13 09:00:00",
+     *          in="query",
+     *          required=true,
+     *          @OA\Schema(type="string")
+     *      ),
+     *      @OA\Parameter(
+     *          name="end_time",
+     *          description="End time. Example: 2018-05-13 17:00:00",
+     *          in="query",
+     *          required=true,
+     *          @OA\Schema(type="string")
+     *      ),
+     *      @OA\Response(
+     *          response="200",
+     *          description="Ok",
+     *          @OA\MediaType(
+     *              mediaType="application/json",
+     *              @OA\Schema(
+     *                  type="object",
+     *                  @OA\Property(
+     *                      property="success",
+     *                      type="boolean"
+     *                  ),
+     *                  @OA\Property(
+     *                      property="message",
+     *                      type="string",
+     *                  ),
+     *                  @OA\Property(
+     *                      type="array",
+     *                      property="data",
+     *                      @OA\Items(
+     *                          allOf={
+     *                              @OA\Schema(ref="#/components/schemas/Booking"),
+     *                              @OA\Schema(
+     *                                  @OA\Property(
+     *                                      property="playground",
+     *                                      type="object",
+     *                                      ref="#/components/schemas/Playground"
+     *                                  ),
+     *                              )
+     *                          }
+     *                      ),
+     *                  ),
+     *              )
+     *         )
+     *      ),
+     *      security={{"Bearer":{}}}
+     * )
+     */
+    public function getUserBookings(TimeIntervalFormRequest $request)
+    {
+        /** @var User $user */
+        $user = Auth::user();
+
+        return $this->success(
+            BookingRepository::getByCreator(
+                Carbon::parse($request->get('start_time')),
+                Carbon::parse($request->get('end_time')),
+                $request->get('limit'),
+                $request->get('offset'),
+                $user
+            )
+        );
+    }
+
+    /**
      * @param string $bookableType
      * @param BookingCreateFormRequest $request
      * @return \Illuminate\Http\JsonResponse
@@ -367,7 +456,7 @@ class BookingController extends Controller
      * @param int $status
      * @return \Illuminate\Http\JsonResponse
      */
-    public function changeStatus(Booking $booking, Request $request, int $status)
+    protected function changeStatus(Booking $booking, Request $request, int $status)
     {
         if (Auth::user()->cant('manageBooking', $booking)) {
             throw new ForbiddenHttpException(__('errors.cant_manage_booking'));
