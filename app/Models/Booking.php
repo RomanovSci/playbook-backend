@@ -11,6 +11,7 @@ use Illuminate\Database\Eloquent\Relations\MorphTo;
  * @property integer id
  * @property integer bookable_id
  * @property integer bookable_type
+ * @property integer creator_id
  * @property string start_time
  * @property string end_time
  * @property integer status

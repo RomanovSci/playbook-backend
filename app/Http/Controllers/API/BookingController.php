@@ -378,8 +378,8 @@ class BookingController extends Controller
     {
         $canConfirm = $this->bookingService->canConfirm($booking);
 
-        if (!$canConfirm['success']) {
-            throw new ForbiddenHttpException($canConfirm['message']);
+        if (!$canConfirm['success'] || Auth::user()->cant('confirmBooking', $booking)) {
+            throw new ForbiddenHttpException($canConfirm['message'] ?: __('errors.cant_confirm_booking'));
         }
 
         return $this->changeStatus($booking, $request, Booking::STATUS_CONFIRMED);
@@ -445,6 +445,10 @@ class BookingController extends Controller
      */
     public function decline(Booking $booking, BookingDeclineFormRequest $request)
     {
+        if (Auth::user()->cant('declineBooking', $booking)) {
+            throw new ForbiddenHttpException(__('errors.cant_decline_booking'));
+        }
+
         return $this->changeStatus($booking, $request, Booking::STATUS_DECLINED);
     }
 
@@ -458,10 +462,6 @@ class BookingController extends Controller
      */
     protected function changeStatus(Booking $booking, Request $request, int $status)
     {
-        if (Auth::user()->cant('manageBooking', $booking)) {
-            throw new ForbiddenHttpException(__('errors.cant_manage_booking'));
-        }
-
         if ($booking->status === $status) {
             return $this->error(200, $booking->toArray(), __('errors.status_already_set'));
         }

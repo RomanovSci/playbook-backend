@@ -41,13 +41,37 @@ class BookingPolicy
     }
 
     /**
+     * Determine if the booking can be confirm by user
+     *
+     * @param User $user
+     * @param Booking $booking
+     * @return bool
+     */
+    public function confirmBooking(User $user, Booking $booking): bool
+    {
+        return $this->manageBooking($user, $booking);
+    }
+
+    /**
+     * Determine if the booking can be decline by user
+     *
+     * @param User $user
+     * @param Booking $booking
+     * @return bool
+     */
+    public function declineBooking(User $user, Booking $booking): bool
+    {
+        return $this->manageBooking($user, $booking) || $booking->creator_id == $user->id;
+    }
+
+    /**
      * Determine if the booking can be manage by user
      *
      * @param User $user
      * @param Booking $booking
      * @return bool
      */
-    public function manageBooking(User $user, Booking $booking): bool
+    protected function manageBooking(User $user, Booking $booking): bool
     {
         /**
          * Trainer can confirm

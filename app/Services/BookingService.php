@@ -104,7 +104,7 @@ class BookingService
         if ($confirmedBookingsCount === 0) {
             $result['success'] = true;
         } else {
-            $result['message'] = __('errors.cant_confirm_booking');
+            $result['message'] = __('errors.booking_time_busy');
         }
 
         return $result;
