@@ -42,11 +42,11 @@ use Illuminate\Database\Eloquent\Relations\MorphTo;
  *              ),
  *              @OA\Property(
  *                  property="bookable_id",
- *                  type="integer",
+ *                  description="hidden",
  *              ),
  *              @OA\Property(
  *                  property="bookable_type",
- *                  type="string",
+ *                  description="hidden",
  *              ),
  *              @OA\Property(
  *                  property="start_time",
@@ -106,6 +106,27 @@ class Booking extends BaseModel
         'creator_id' => 'integer',
         'playground_id' => 'integer',
     ];
+
+    /**
+     * @var array
+     */
+    protected $with = [
+        'bookable',
+    ];
+
+    /**
+     * Booking constructor.
+     *
+     * @param array $attributes
+     */
+    public function __construct(array $attributes = [])
+    {
+        parent::__construct($attributes);
+        $this->hidden = array_merge($this->hidden, [
+            'bookable_id',
+            'bookable_type',
+        ]);
+    }
 
     /**
      * Bookable entities

@@ -119,6 +119,13 @@ class BookingController extends Controller
      *                              ),
      *                              @OA\Schema(
      *                                  @OA\Property(
+     *                                      property="bookable",
+     *                                      type="object",
+     *                                      ref="#/components/schemas/User"
+     *                                  ),
+     *                              ),
+     *                              @OA\Schema(
+     *                                  @OA\Property(
      *                                      property="creator",
      *                                      type="object",
      *                                      ref="#/components/schemas/User"
@@ -209,6 +216,13 @@ class BookingController extends Controller
      *                              @OA\Schema(ref="#/components/schemas/Booking"),
      *                              @OA\Schema(
      *                                  @OA\Property(
+     *                                      property="bookable",
+     *                                      type="object",
+     *                                      ref="#/components/schemas/User"
+     *                                  ),
+     *                              ),
+     *                              @OA\Schema(
+     *                                  @OA\Property(
      *                                      property="playground",
      *                                      type="object",
      *                                      ref="#/components/schemas/Playground"
@@ -289,7 +303,16 @@ class BookingController extends Controller
      *                  @OA\Property(
      *                      type="object",
      *                      property="data",
-     *                      ref="#/components/schemas/Booking"
+     *                      allOf={
+     *                          @OA\Schema(ref="#/components/schemas/Booking"),
+     *                          @OA\Schema(
+     *                              @OA\Property(
+     *                                  property="bookable",
+     *                                  type="object",
+     *                                  ref="#/components/schemas/User"
+     *                              ),
+     *                          )
+     *                      }
      *                  )
      *              )
      *         )
@@ -362,7 +385,16 @@ class BookingController extends Controller
      *                  @OA\Property(
      *                      type="object",
      *                      property="data",
-     *                      ref="#/components/schemas/Booking"
+     *                      allOf={
+     *                          @OA\Schema(ref="#/components/schemas/Booking"),
+     *                          @OA\Schema(
+     *                              @OA\Property(
+     *                                  property="bookable",
+     *                                  type="object",
+     *                                  ref="#/components/schemas/User"
+     *                              ),
+     *                          )
+     *                      }
      *                  )
      *              )
      *         )
@@ -431,7 +463,16 @@ class BookingController extends Controller
      *                  @OA\Property(
      *                      type="object",
      *                      property="data",
-     *                      ref="#/components/schemas/Booking"
+     *                      allOf={
+     *                          @OA\Schema(ref="#/components/schemas/Booking"),
+     *                          @OA\Schema(
+     *                              @OA\Property(
+     *                                  property="bookable",
+     *                                  type="object",
+     *                                  ref="#/components/schemas/User"
+     *                              ),
+     *                          )
+     *                      }
      *                  )
      *              )
      *         )

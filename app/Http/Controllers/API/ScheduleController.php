@@ -121,7 +121,14 @@ class ScheduleController extends Controller
      *                                                      type="object",
      *                                                      ref="#/components/schemas/User",
      *                                                  )
-     *                                              )
+     *                                              ),
+     *                                              @OA\Schema(
+     *                                                  @OA\Property(
+     *                                                      property="bookable",
+     *                                                      type="object",
+     *                                                      ref="#/components/schemas/User"
+     *                                                  ),
+     *                                              ),
      *                                          }
      *                                      )
      *                                  ),
