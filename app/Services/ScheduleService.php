@@ -4,7 +4,7 @@ namespace App\Services;
 
 use App\Exceptions\Internal\IncorrectDateRange;
 use App\Helpers\DateTimeHelper;
-use App\Models\Schedule;
+use App\Models\Schedule\Schedule;
 use App\Models\SchedulePlayground;
 use App\Repositories\ScheduleRepository;
 use Carbon\Carbon;

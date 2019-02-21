@@ -2,6 +2,8 @@
 
 namespace App\Models;
 
+use App\Models\Schedule\Schedule;
+
 /**
  * Class Playground
  * @package App\Models

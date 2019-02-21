@@ -3,7 +3,7 @@
 namespace App\Repositories;
 
 use App\Models\Booking;
-use App\Models\Schedule;
+use App\Models\Schedule\Schedule;
 use App\Models\User;
 use Carbon\Carbon;
 use Illuminate\Database\Eloquent\Collection;

@@ -8,7 +8,7 @@ use App\Http\Requests\Common\TimeIntervalFormRequest;
 use App\Http\Requests\Schedule\ScheduleCreateFormRequest;
 use App\Http\Requests\Schedule\ScheduleEditFormRequest;
 use App\Models\Playground;
-use App\Models\Schedule;
+use App\Models\Schedule\Schedule;
 use App\Models\User;
 use App\Repositories\BookingRepository;
 use App\Repositories\ScheduleRepository;

@@ -17,7 +17,8 @@ use Carbon\Carbon;
 class BookingService
 {
     /**
-     * Determinate if booking can be create
+     * Determinate if booking can be create and get booking price
+     * TODO: Refactoring
      *
      * @param Carbon $startTime
      * @param Carbon $endTime
@@ -27,15 +28,15 @@ class BookingService
      *
      * @throws \App\Exceptions\Internal\IncorrectDateRange
      */
-    public function checkBookingRequest(
+    public function getBookingPrice(
         Carbon $startTime,
         Carbon $endTime,
         string $bookableType,
         int $bookableId
     ): array {
-        $result = ['success' => false, 'message' => ''];
+        $result = ['success' => false, 'message' => 0];
 
-        /** Can't book unbookable entities */
+        /** Can't get price for unbookable entities */
         if (!in_array($bookableType, [User::class, Playground::class])) {
             $result['message'] = __('errors.incorrect_bookable_type');
             return $result;
@@ -43,7 +44,12 @@ class BookingService
 
         /** Find the proper schedule for booking dates */
         $properSchedule = null;
-        $mergedSchedules = ScheduleRepository::getMergedSchedules($bookableType, $bookableId);
+        $mergedSchedules = ScheduleRepository::getMergedSchedules(
+            $bookableType,
+            $bookableId,
+            $startTime,
+            $endTime
+        );
 
         foreach ($mergedSchedules as $mergedSchedule) {
             if (Carbon::parse($mergedSchedule->start_time)->lessThanOrEqualTo($startTime) &&
@@ -52,7 +58,7 @@ class BookingService
             }
         }
 
-        /** Can't create booking for not existed schedules */
+        /** Can't get booking price for not existed schedules */
         if (!$properSchedule) {
             $result['message'] = __('errors.schedule_time_unavailable');
             return $result;
@@ -77,11 +83,18 @@ class BookingService
                 $startTime,
                 $endTime
             )) {
-                /** Can't book reserved period */
+                /** Can't get price for reserved period */
                 $result['message'] = __('errors.time_already_reserved');
                 return $result;
             }
         }
+
+        $allProperSchedules = ScheduleRepository::getBySchedulable(
+            $bookableType,
+            $bookableId,
+            $startTime,
+            $endTime
+        );
 
         $result['success'] = true;
         return $result;

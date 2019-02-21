@@ -1,6 +1,10 @@
 <?php
 
-namespace App\Models;
+namespace App\Models\Schedule;
+
+use App\Models\BaseModel;
+use App\Models\Playground;
+use App\Models\User;
 
 /**
  * Class PlaygroundSchedule

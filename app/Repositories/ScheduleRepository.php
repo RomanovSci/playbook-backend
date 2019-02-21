@@ -2,7 +2,7 @@
 
 namespace  App\Repositories;
 
-use App\Models\Schedule;
+use App\Models\Schedule\Schedule;
 use Carbon\Carbon;
 use Illuminate\Database\Eloquent\Collection;
 
@@ -17,16 +17,28 @@ class ScheduleRepository
      *
      * @param string|null $schedulableType
      * @param int|null $schedulableId
+     * @param Carbon $startTime
+     * @param Carbon $endTime
      * @return Collection
      */
     public static function getBySchedulable(
         string $schedulableType = null,
-        int $schedulableId = null
+        int $schedulableId = null,
+        Carbon $startTime = null,
+        Carbon $endTime = null
     ): Collection {
-        return Schedule::where('schedulable_id', $schedulableId)
+        $query = Schedule::where('schedulable_id', $schedulableId)
             ->where('schedulable_type', $schedulableType)
-            ->orderBy('start_time', 'asc')
-            ->get();
+            ->orderBy('start_time', 'asc');
+
+        if ($startTime && $endTime) {
+            $query->whereRaw("tsrange(schedules.start_time, schedules.end_time, '()') && tsrange(?, ?, '()')", [
+                $startTime,
+                $endTime
+            ]);
+        }
+
+        return $query->get();
     }
 
     /**
@@ -50,7 +62,9 @@ class ScheduleRepository
     ): Collection {
         $query = Schedule::where('start_time', '>=', $startTime->toDateTimeString())
             ->orderBy('start_time', 'asc')
-            ->where('end_time', '<=', $endTime->toDayDateTimeString());
+            ->where('end_time', '<=', $endTime->toDayDateTimeString())
+            ->limit($limit)
+            ->offset($offset);
 
         if ($schedulableType) {
             $query->where('schedulable_type', $schedulableType);
@@ -60,10 +74,7 @@ class ScheduleRepository
             $query->where('schedulable_id', $schedulableId);
         }
 
-        return $query
-            ->limit($limit)
-            ->offset($offset)
-            ->get();
+        return $query->get();
     }
 
     /**
@@ -86,11 +97,22 @@ class ScheduleRepository
      *
      * @param string $schedulableType
      * @param int $schedulableId
+     * @param Carbon $startTime
+     * @param Carbon $endTime
      * @return Collection
      */
-    public static function getMergedSchedules(string $schedulableType, int $schedulableId): Collection
-    {
-        $schedules = self::getBySchedulable($schedulableType, $schedulableId);
+    public static function getMergedSchedules(
+        string $schedulableType,
+        int $schedulableId,
+        Carbon $startTime = null,
+        Carbon $endTime = null
+    ): Collection {
+        $schedules = self::getBySchedulable(
+            $schedulableType,
+            $schedulableId,
+            $startTime,
+            $endTime
+        );
         $mergedSchedules = new Collection();
 
         foreach ($schedules as $schedule) {

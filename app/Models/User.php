@@ -2,6 +2,7 @@
 
 namespace App\Models;
 
+use App\Models\Schedule\Schedule;
 use Illuminate\Database\Eloquent\SoftDeletes;
 use Illuminate\Notifications\Notifiable;
 use Illuminate\Foundation\Auth\User as Authenticatable;
