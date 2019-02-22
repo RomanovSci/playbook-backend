@@ -7,6 +7,7 @@ use App\Helpers\ScheduleHelper;
 use App\Models\Booking;
 use App\Models\Playground;
 use App\Models\Schedule\MergedSchedule;
+use App\Models\Schedule\Schedule;
 use App\Models\User;
 use App\Repositories\BookingRepository;
 use App\Repositories\ScheduleRepository;
@@ -19,8 +20,7 @@ use Carbon\Carbon;
 class BookingService
 {
     /**
-     * Determinate if booking can be create and get booking price
-     * TODO: Refactoring
+     * Get booking price
      *
      * @param Carbon $startTime
      * @param Carbon $endTime
@@ -36,20 +36,88 @@ class BookingService
         string $bookableType,
         int $bookableId
     ): array {
-        $result = ['success' => false, 'message' => '', 'data' => []];
+        $findScheduleResult = BookingService::findAppropriateSchedule(
+            $startTime,
+            $endTime,
+            $bookableType,
+            $bookableId
+        );
 
-        /** Can't get price for unbookable entities */
+        if (!$findScheduleResult['success']) {
+            return $findScheduleResult['message'];
+        }
+
+        $appropriateSchedule = $findScheduleResult['schedule'];
+        $scheduleAvailabilityCheckResult = BookingService::checkScheduleTimeAvailability(
+            $startTime,
+            $endTime,
+            $bookableType,
+            $bookableId,
+            $appropriateSchedule
+        );
+
+        if (!$scheduleAvailabilityCheckResult['success']) {
+            return $scheduleAvailabilityCheckResult['message'];
+        }
+
+        $price = 0;
+        $currencySubunit = currency($appropriateSchedule->currency)->getSubunit();
+
+        foreach ($appropriateSchedule->getSchedules() as $schedule) {
+            $minutesRate = ScheduleHelper::getMinutesRate($schedule);
+            $overlappedMinutes = DateTimeHelper::getOverlappedMinutesAmount(
+                $startTime,
+                $endTime,
+                Carbon::parse($schedule->start_time),
+                Carbon::parse($schedule->end_time)
+            );
+            $price += round(
+                (
+                    money($minutesRate, $appropriateSchedule->currency)
+                        ->multiply($overlappedMinutes)
+                        ->getAmount()) / $currencySubunit
+                ) * $currencySubunit;
+        }
+
+        $result['success'] = true;
+        $result['data'] = [
+            'currency' => $appropriateSchedule->currency,
+            'price' => $price,
+        ];
+
+        return $result;
+    }
+
+    /**
+     * Find appropriate schedule for dates range
+     *
+     * @param Carbon $startTime
+     * @param Carbon $endTime
+     * @param string $bookableType
+     * @param int $bookableId
+     * @return array
+     */
+    public static function findAppropriateSchedule(
+        Carbon $startTime,
+        Carbon $endTime,
+        string $bookableType,
+        int $bookableId
+    ): array {
+        $result = [
+            'success' => false,
+            'message' => '',
+        ];
+
         if (!in_array($bookableType, [User::class, Playground::class])) {
             $result['message'] = __('errors.incorrect_bookable_type');
             return $result;
         }
 
         /**
-         * Find the proper schedule for booking dates
-         *
-         * @var MergedSchedule $properSchedule
+         * Find the appropriate schedule for required dates
+         * @var MergedSchedule $appropriateSchedule
          */
-        $properSchedule = null;
+        $appropriateSchedule = null;
         $mergedSchedules = ScheduleRepository::getMergedSchedules(
             $bookableType,
             $bookableId,
@@ -60,23 +128,44 @@ class BookingService
         foreach ($mergedSchedules as $mergedSchedule) {
             if (Carbon::parse($mergedSchedule->start_time)->lessThanOrEqualTo($startTime) &&
                 Carbon::parse($mergedSchedule->end_time)->greaterThanOrEqualTo($endTime)) {
-                $properSchedule = $mergedSchedule;
+                $appropriateSchedule = $mergedSchedule;
             }
         }
 
-        /** Can't get booking price for not existed schedules */
-        if (!$properSchedule) {
+        if (!$appropriateSchedule) {
             $result['message'] = __('errors.schedule_time_unavailable');
             return $result;
         }
 
-        /**
-         * Check if exists confirmed
-         * booking for the proper schedule
-         */
+        $result['success'] = true;
+        $result['schedule'] = $appropriateSchedule;
+
+        return $result;
+    }
+
+    /**
+     * Check schedule time availability
+     *
+     * @param Carbon $startTime
+     * @param Carbon $endTime
+     * @param string $bookableType
+     * @param int $bookableId
+     * @param Schedule $schedule
+     * @return array
+     * @throws \App\Exceptions\Internal\IncorrectDateRange
+     */
+    public static function checkScheduleTimeAvailability(
+        Carbon $startTime,
+        Carbon $endTime,
+        string $bookableType,
+        int $bookableId,
+        Schedule $schedule
+    ): array {
+        $result = ['success' => false, 'message' => ''];
+
         $confirmedBookings = BookingRepository::getBetween(
-            Carbon::parse($properSchedule->start_time),
-            Carbon::parse($properSchedule->end_time),
+            Carbon::parse($schedule->start_time),
+            Carbon::parse($schedule->end_time),
             $bookableType,
             $bookableId,
             Booking::STATUS_CONFIRMED
@@ -95,31 +184,7 @@ class BookingService
             }
         }
 
-        $price = 0;
-        $currencySubunit = currency($properSchedule->currency)->getSubunit();
-
-        foreach ($properSchedule->getSchedules() as $schedule) {
-            $minutesRate = ScheduleHelper::getMinutesRate($schedule);
-            $overlappedMinutes = DateTimeHelper::getOverlappedMinutesAmount(
-                $startTime,
-                $endTime,
-                Carbon::parse($schedule->start_time),
-                Carbon::parse($schedule->end_time)
-            );
-            $price += round(
-                (
-                    money($minutesRate, $properSchedule->currency)
-                        ->multiply($overlappedMinutes)
-                        ->getAmount()) / $currencySubunit
-                ) * $currencySubunit;
-        }
-
         $result['success'] = true;
-        $result['data'] = [
-            'currency' => $properSchedule->currency,
-            'price' => $price,
-        ];
-
         return $result;
     }
 
