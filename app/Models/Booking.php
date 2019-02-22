@@ -18,6 +18,8 @@ use Illuminate\Database\Eloquent\Relations\MorphTo;
  * @property integer status
  * @property integer playground_id
  * @property string note
+ * @property integer price
+ * @property string currency
  * @property string created_at
  * @property string updated_at
  * @property string deleted_at
@@ -62,6 +64,14 @@ use Illuminate\Database\Eloquent\Relations\MorphTo;
  *                  type="string",
  *              ),
  *              @OA\Property(
+ *                  property="price",
+ *                  type="integer",
+ *              ),
+ *              @OA\Property(
+ *                  property="currency",
+ *                  type="string",
+ *              ),
+ *              @OA\Property(
  *                  property="status",
  *                  type="integer",
  *              ),
@@ -95,6 +105,8 @@ class Booking extends BaseModel
         'start_time',
         'end_time',
         'note',
+        'price',
+        'currency',
         'status',
         'playground_id',
     ];

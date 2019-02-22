@@ -143,7 +143,7 @@ class ScheduleController extends Controller
      */
     public function get(TimeIntervalFormRequest $request, string $schedulableType, int $id = null)
     {
-        $schedules = ScheduleRepository::getByDateRange(
+        $schedules = ScheduleRepository::getBetween(
             Carbon::parse($request->get('start_time')),
             Carbon::parse($request->get('end_time')),
             $request->get('limit'),

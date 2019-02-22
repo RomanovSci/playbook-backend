@@ -4,7 +4,12 @@ namespace App\Helpers;
 
 use App\Exceptions\Internal\IncorrectDateRange;
 use Carbon\Carbon;
+use Carbon\CarbonPeriod;
 
+/**
+ * Class DateTimeHelper
+ * @package App\Helpers
+ */
 class DateTimeHelper
 {
     /**
@@ -29,5 +34,32 @@ class DateTimeHelper
         }
 
         return !($firstStart->greaterThanOrEqualTo($secondEnd) || $secondStart->greaterThanOrEqualTo($firstEnd));
+    }
+
+    /**
+     * Get overlapped minutes amount
+     *
+     * @param Carbon $firstStart
+     * @param Carbon $firstEnd
+     * @param Carbon $secondStart
+     * @param Carbon $secondEnd
+     * @return int
+     *
+     * @throws IncorrectDateRange
+     */
+    public static function getOverlappedMinutesAmount(
+        Carbon $firstStart,
+        Carbon $firstEnd,
+        Carbon $secondStart,
+        Carbon $secondEnd
+    ): int {
+        if (!DateTimeHelper::timePeriodsIsOverlaps($firstStart, $firstEnd, $secondStart, $secondEnd)) {
+            return 0;
+        }
+
+        $resultStartTime = $firstStart->greaterThanOrEqualTo($secondStart) ? $firstStart : $secondStart;
+        $resultEndTime = $firstEnd->greaterThanOrEqualTo($secondEnd) ? $secondEnd : $firstEnd;
+
+        return $resultEndTime->diffInMinutes($resultStartTime);
     }
 }

@@ -2,6 +2,7 @@
 
 namespace  App\Repositories;
 
+use App\Models\Schedule\MergedSchedule;
 use App\Models\Schedule\Schedule;
 use Carbon\Carbon;
 use Illuminate\Database\Eloquent\Collection;
@@ -42,7 +43,7 @@ class ScheduleRepository
     }
 
     /**
-     * Get active schedules by schedulable type
+     * Get all schedules between dates
      *
      * @param Carbon $startTime
      * @param Carbon $endTime
@@ -52,7 +53,7 @@ class ScheduleRepository
      * @param int $schedulableId
      * @return mixed
      */
-    public static function getByDateRange(
+    public static function getBetween(
         Carbon $startTime,
         Carbon $endTime,
         int $limit = 100,
@@ -107,7 +108,7 @@ class ScheduleRepository
         Carbon $startTime = null,
         Carbon $endTime = null
     ): Collection {
-        $schedules = self::getBySchedulable(
+        $schedules = ScheduleRepository::getBySchedulable(
             $schedulableType,
             $schedulableId,
             $startTime,
@@ -116,23 +117,28 @@ class ScheduleRepository
         $mergedSchedules = new Collection();
 
         foreach ($schedules as $schedule) {
-            if (!$mergedSchedules->count()) {
-                $mergedSchedule = new Schedule();
-                $mergedSchedule->start_time = $schedule->start_time;
-                $mergedSchedule->end_time = $schedule->end_time;
+            $mergedSchedule = new MergedSchedule();
+            $mergedSchedule->start_time = $schedule->start_time;
+            $mergedSchedule->end_time = $schedule->end_time;
+            $mergedSchedule->price_per_hour = null;
+            $mergedSchedule->currency = $schedule->currency;
+            $mergedSchedule->setSchedule(clone $schedule);
 
+            if (!$mergedSchedules->count()) {
                 $mergedSchedules->push($mergedSchedule);
                 continue;
             }
 
+            /** @var MergedSchedule $lastMerged */
             $lastMerged = $mergedSchedules->last();
 
             if ($schedule->start_time === $lastMerged->end_time) {
                 $lastMerged->end_time = $schedule->end_time;
+                $lastMerged->setSchedule(clone $schedule);
                 continue;
             }
 
-            $mergedSchedules->push(clone $schedule);
+            $mergedSchedules->push($mergedSchedule);
         }
 
         return $mergedSchedules;

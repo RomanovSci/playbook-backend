@@ -22,6 +22,7 @@ class CreateBookingsTable extends Migration
             $table->timestamp('end_time');
             $table->string('note')->nullable();
             $table->integer('price');
+            $table->char('currency', 3)->default('RUB');
             $table->smallInteger('status')->default(0);
             $table->integer('playground_id', false, true)->nullable();
             $table->timestamps();

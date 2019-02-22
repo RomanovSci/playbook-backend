@@ -344,7 +344,8 @@ class BookingController extends Controller
         $booking = Booking::create(array_merge($request->all(), [
             'bookable_type' => $bookableType,
             'creator_id' => Auth::user()->id,
-            'price' => $result['message'],
+            'price' => $result['data']['price'],
+            'currency' => $result['data']['currency'],
         ]));
 
         return $this->success($booking->toArray());

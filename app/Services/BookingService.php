@@ -3,8 +3,10 @@
 namespace App\Services;
 
 use App\Helpers\DateTimeHelper;
+use App\Helpers\ScheduleHelper;
 use App\Models\Booking;
 use App\Models\Playground;
+use App\Models\Schedule\MergedSchedule;
 use App\Models\User;
 use App\Repositories\BookingRepository;
 use App\Repositories\ScheduleRepository;
@@ -34,7 +36,7 @@ class BookingService
         string $bookableType,
         int $bookableId
     ): array {
-        $result = ['success' => false, 'message' => 0];
+        $result = ['success' => false, 'message' => '', 'data' => []];
 
         /** Can't get price for unbookable entities */
         if (!in_array($bookableType, [User::class, Playground::class])) {
@@ -42,7 +44,11 @@ class BookingService
             return $result;
         }
 
-        /** Find the proper schedule for booking dates */
+        /**
+         * Find the proper schedule for booking dates
+         *
+         * @var MergedSchedule $properSchedule
+         */
         $properSchedule = null;
         $mergedSchedules = ScheduleRepository::getMergedSchedules(
             $bookableType,
@@ -89,14 +95,31 @@ class BookingService
             }
         }
 
-        $allProperSchedules = ScheduleRepository::getBySchedulable(
-            $bookableType,
-            $bookableId,
-            $startTime,
-            $endTime
-        );
+        $price = 0;
+        $currencySubunit = currency($properSchedule->currency)->getSubunit();
+
+        foreach ($properSchedule->getSchedules() as $schedule) {
+            $minutesRate = ScheduleHelper::getMinutesRate($schedule);
+            $overlappedMinutes = DateTimeHelper::getOverlappedMinutesAmount(
+                $startTime,
+                $endTime,
+                Carbon::parse($schedule->start_time),
+                Carbon::parse($schedule->end_time)
+            );
+            $price += round(
+                (
+                    money($minutesRate, $properSchedule->currency)
+                        ->multiply($overlappedMinutes)
+                        ->getAmount()) / $currencySubunit
+                ) * $currencySubunit;
+        }
 
         $result['success'] = true;
+        $result['data'] = [
+            'currency' => $properSchedule->currency,
+            'price' => $price,
+        ];
+
         return $result;
     }
 
