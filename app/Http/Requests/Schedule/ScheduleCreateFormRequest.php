@@ -17,9 +17,8 @@ class ScheduleCreateFormRequest extends BaseFormRequest
     {
         return [
             'dates' => 'required|array',
-            'dates.*' => 'required|date_format:Y-m-d',
-            'start_time' => 'required|date_format:H:i:s',
-            'end_time' => 'required|date_format:H:i:s',
+            'dates.*.start_time' => 'required|date_format:Y-m-d H:i:s',
+            'dates.*.end_time' => 'required|date_format:Y-m-d H:i:s|after:dates.*.start_time',
             'price_per_hour' => 'required|numeric',
             'currency' => 'required|string|uppercase|currency',
             'playgrounds' => 'required|array',

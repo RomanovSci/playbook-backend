@@ -3,6 +3,7 @@
 return [
     "cant_get_bookings" => "Невозможно получить список броней",
     "incorrect_bookable_type" => "Некоректный формат бронируемой сущности",
+    "schedule_already_exists" => "Для данного промежутка времени расписание уже существует",
     "schedule_time_unavailable" => "Нету доступных расписаний под данный промежуток времени",
     "time_already_reserved" => "Время зарезервировано",
     "booking_time_busy" => "Данное время уже занято",

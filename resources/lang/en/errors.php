@@ -3,6 +3,7 @@
 return [
     "cant_get_bookings" => "Can't get bookings list",
     "incorrect_bookable_type" => "Incorrect bookable type",
+    "schedule_already_exists" => "Schedule already exists",
     "schedule_time_unavailable" => "Schedules for this time interval doesn't exists",
     "time_already_reserved" => "This time already reserved",
     "booking_time_busy" => "Time is already reserved",

@@ -35,22 +35,15 @@ class ScheduleService
 
         DB::beginTransaction();
         try {
-            foreach ($data['dates'] as $index => $date) {
-                $startTime = Carbon::parse($date . ' ' . $data['start_time']);
-                $endTime = Carbon::parse($date . ' ' . $data['end_time']);
-
-                /**
-                 * Check if range is negative
-                 */
-                if ($startTime->greaterThanOrEqualTo($endTime)) {
-                    throw new IncorrectDateRange(__('errors.range_is_negative'));
-                }
+            foreach ($data['dates'] as $date) {
+                $startTime = Carbon::parse($date['start_time']);
+                $endTime = Carbon::parse($date['end_time']);
 
                 /**
                  * Check if time periods is overlaps
                  */
                 if ($this->periodsIsOverlaps($schedulable, $startTime, $endTime)) {
-                    throw new IncorrectDateRange();
+                    throw new IncorrectDateRange(__('errors.schedule_already_exists'));
                 }
 
                 /**

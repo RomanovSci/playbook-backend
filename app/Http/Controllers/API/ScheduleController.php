@@ -190,9 +190,7 @@ class ScheduleController extends Controller
      *              mediaType="application/json",
      *              @OA\Schema(
      *                  example={
-     *                      "dates": "Array with dates of periods. Example: [2018-05-12, 2018-05-13]",
-     *                      "start_time": "Period start time. Example: 09:00:00",
-     *                      "end_time": "Period end time. Example: 17:00:00",
+     *                      "dates": "Array with date objects. Example: [{start_time: 2018-05-12 17:00:00, end_time: 2018-05-12 19:00:00}]",
      *                      "price_per_hour": "Price per hour in cents. Example: 7000. (70RUB)",
      *                      "currency": "Currency: RUB, UAH, USD, etc. Default: RUB",
      *                      "playgrounds": "Array of playgrounds id.If type=playground, array should contains only 1 id"
