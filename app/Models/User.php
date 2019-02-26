@@ -14,7 +14,6 @@ use Spatie\Permission\Traits\HasRoles;
  * Class User
  * @package App\Models
  *
- * @property integer id
  * @property string uuid
  * @property string timezone_uuid
  * @property string city_uuid
@@ -42,10 +41,6 @@ use Spatie\Permission\Traits\HasRoles;
  *                  "phone",
  *                  "password"
  *              },
- *              @OA\Property(
- *                  property="id",
- *                  type="integer",
- *              ),
  *              @OA\Property(
  *                  property="uuid",
  *                  type="string",
