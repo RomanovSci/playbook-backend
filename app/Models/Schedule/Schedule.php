@@ -88,6 +88,14 @@ class Schedule extends BaseModel
     /**
      * @var array
      */
+    protected $casts = [
+        'start_time' => 'datetime:Y-m-d H:i:s P',
+        'end_time' => 'datetime:Y-m-d H:i:s P',
+    ];
+
+    /**
+     * @var array
+     */
     protected $hidden = [
         'schedulable_id',
         'schedulable_type',

@@ -115,6 +115,8 @@ class Booking extends BaseModel
      * @var array
      */
     protected $casts = [
+        'start_time' => 'datetime:Y-m-d H:i:s P',
+        'end_time' => 'datetime:Y-m-d H:i:s P',
         'bookable_id' => 'integer',
         'creator_id' => 'integer',
         'playground_id' => 'integer',
