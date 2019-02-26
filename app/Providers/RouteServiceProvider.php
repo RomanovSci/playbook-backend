@@ -29,9 +29,6 @@ class RouteServiceProvider extends ServiceProvider
     public function boot()
     {
         /** Patterns */
-        Route::pattern('user', '[0-9]+');
-        Route::pattern('info', '[0-9]+');
-        Route::pattern('bookable_id', '[0-9]+');
         Route::pattern('bookable_type', 'trainer|playground');
         Route::pattern('schedulable_type', 'trainer|playground');
 

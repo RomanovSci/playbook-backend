@@ -12,15 +12,13 @@ use App\Models\User;
 class TrainerInfoRepository
 {
     /**
-     * Get trainer info by user id
+     * Get trainer info by user uuid
      *
      * @param User $user
      * @return mixed
      */
     public static function getByUser(User $user)
     {
-        return TrainerInfo::where('user_id', $user->id)
-            ->with('user')
-            ->first();
+        return TrainerInfo::where('user_uuid', $user->uuid)->with('user')->first();
     }
 }

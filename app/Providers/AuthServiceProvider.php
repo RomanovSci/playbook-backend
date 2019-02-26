@@ -53,4 +53,13 @@ class AuthServiceProvider extends ServiceProvider
         Passport::tokensExpireIn(Carbon::now()->addDays(15));
         Passport::refreshTokensExpireIn(Carbon::now()->addDays(30));
     }
+
+    /**
+     * @inheritdoc
+     * @return voidphp artisan vendor:publish --tag=passport-migrations
+     */
+    public function register()
+    {
+        Passport::ignoreMigrations();
+    }
 }

@@ -14,20 +14,20 @@ class CreatePlaygroundsTable extends Migration
     public function up()
     {
         Schema::create('playgrounds', function (Blueprint $table) {
-            $table->increments('id');
-            $table->integer('organization_id', false, true)->nullable()->default(null);
-            $table->integer('creator_id', false, true);
+            $table->uuid('uuid')->unique();
+            $table->uuid('organization_uuid')->nullable()->default(null);
+            $table->uuid('creator_uuid');
             $table->string('name');
             $table->string('description');
             $table->string('address');
             $table->time('opening_time');
             $table->time('closing_time');
-            $table->integer('type_id')->unsigned();
+            $table->uuid('type_uuid');
             $table->smallInteger('status')->default(0);
             $table->timestamps();
             $table->softDeletes();
-            $table->foreign('organization_id')->references('id')->on('organizations');
-            $table->foreign('creator_id')->references('id')->on('users');
+            $table->foreign('organization_uuid')->references('uuid')->on('organizations');
+            $table->foreign('creator_uuid')->references('uuid')->on('users');
         });
     }
 

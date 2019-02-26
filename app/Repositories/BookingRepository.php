@@ -22,7 +22,7 @@ class BookingRepository
      * @param int $limit
      * @param int $offset
      * @param string $bookableType
-     * @param int $bookableId
+     * @param string $bookableUuid
      * @return Collection
      */
     public static function getByBookable(
@@ -31,10 +31,10 @@ class BookingRepository
         int $limit,
         int $offset,
         string $bookableType,
-        int $bookableId
+        string $bookableUuid
     ): Collection {
         return Booking::where('bookable_type', $bookableType)
-            ->where('bookable_id', $bookableId)
+            ->where('bookable_uuid', $bookableUuid)
             ->where('start_time', '>=', $startTime->toDayDateTimeString())
             ->where('end_time', '<=', $endTime->toDayDateTimeString())
             ->with('playground')
@@ -61,7 +61,7 @@ class BookingRepository
         int $offset,
         User $user
     ): Collection {
-        return Booking::where('creator_id', $user->id)
+        return Booking::where('creator_uuid', $user->uuid)
             ->where('start_time', '>=', $startTime->toDayDateTimeString())
             ->where('end_time', '<=', $endTime->toDayDateTimeString())
             ->with('playground')
@@ -76,7 +76,7 @@ class BookingRepository
      * @param Carbon $startTime
      * @param Carbon $endTime
      * @param string|null $bookableType
-     * @param int|null $bookableId
+     * @param string|null $bookableUuid
      * @param int|null $status
      * @return Collection
      */
@@ -84,7 +84,7 @@ class BookingRepository
         Carbon $startTime,
         Carbon $endTime,
         string $bookableType = null,
-        int $bookableId = null,
+        string $bookableUuid = null,
         int $status = null
     ): Collection {
         $query = Booking::where('start_time', '>=', $startTime->toDateTimeString())
@@ -94,8 +94,8 @@ class BookingRepository
             $query->where('bookable_type', $bookableType);
         }
 
-        if ($bookableId) {
-            $query->where('bookable_id', $bookableId);
+        if ($bookableUuid) {
+            $query->where('bookable_uuid', $bookableUuid);
         }
 
         if (isset($status)) {
@@ -113,7 +113,7 @@ class BookingRepository
      */
     public static function getConfirmedForSchedule(Schedule $schedule): Collection
     {
-        return Booking::where('bookable_id', $schedule->schedulable_id)
+        return Booking::where('bookable_uuid', $schedule->schedulable_uuid)
             ->with('creator')
             ->where('bookable_type', $schedule->schedulable_type)
             ->where('status', Booking::STATUS_CONFIRMED)

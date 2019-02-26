@@ -10,7 +10,6 @@ use App\Models\User;
  * Class PlaygroundSchedule
  * @package App\Models
  *
- * @property integer id
  * @property string start_time
  * @property string end_time
  * @property integer price_per_hour
@@ -26,12 +25,12 @@ use App\Models\User;
  *              required={
  *                  "price_per_hour",
  *                  "currency",
- *                  "schedulable_id",
+ *                  "schedulable_uuid",
  *                  "schedulable_type"
  *              },
  *              @OA\Property(
- *                  property="id",
- *                  type="integer",
+ *                  property="uuid",
+ *                  type="string",
  *              ),
  *              @OA\Property(
  *                  property="start_time",
@@ -81,7 +80,7 @@ class Schedule extends BaseModel
         'end_time',
         'price_per_hour',
         'currency',
-        'schedulable_id',
+        'schedulable_uuid',
         'schedulable_type',
     ];
 
@@ -97,7 +96,7 @@ class Schedule extends BaseModel
      * @var array
      */
     protected $hidden = [
-        'schedulable_id',
+        'schedulable_uuid',
         'schedulable_type',
     ];
 

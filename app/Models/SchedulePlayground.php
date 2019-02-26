@@ -8,9 +8,8 @@ use Illuminate\Database\Eloquent\SoftDeletes;
  * Class SchedulePlayground
  * @package App\Models
  *
- * @property integer id
- * @property integer user_id
- * @property integer playground_id
+ * @property string user_uuid
+ * @property string playground_uuid
  */
 class SchedulePlayground extends BaseModel
 {
@@ -20,7 +19,8 @@ class SchedulePlayground extends BaseModel
      * @var array
      */
     protected $fillable = [
-        'schedule_id', 'playground_id'
+        'schedule_uuid',
+        'playground_uuid'
     ];
 
     /**

@@ -14,13 +14,13 @@ class CreateUsersPlaygroundsTable extends Migration
     public function up()
     {
         Schema::create('users_playgrounds', function (Blueprint $table) {
-            $table->increments('id');
-            $table->integer('user_id', false, true);
-            $table->integer('playground_id', false, true);
+            $table->uuid('uuid')->unique();
+            $table->uuid('user_uuid');
+            $table->uuid('playground_uuid');
             $table->timestamps();
-            $table->foreign('user_id')->references('id')->on('users');
-            $table->foreign('playground_id')->references('id')->on('playgrounds');
-            $table->unique(['user_id', 'playground_id']);
+            $table->foreign('user_uuid')->references('uuid')->on('users');
+            $table->foreign('playground_uuid')->references('uuid')->on('playgrounds');
+            $table->unique(['user_uuid', 'playground_uuid']);
         });
     }
 

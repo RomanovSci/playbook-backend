@@ -22,12 +22,12 @@ class SchedulePolicy
     public function manageSchedule(User $user, Schedule $schedule): bool
     {
         /** Trainer can manage own schedule */
-        if ($schedule->schedulable_type === User::class && $schedule->schedulable_id === $user->id) {
+        if ($schedule->schedulable_type === User::class && $schedule->schedulable_uuid === $user->uuid) {
             return true;
         }
 
         /** Playground schedule creator can manage playground schedule */
-        if ($schedule->schedulable_type === Playground::class && $schedule->schedulable->creator_id === $user->id) {
+        if ($schedule->schedulable_type === Playground::class && $schedule->schedulable->creator_uuid === $user->uuid) {
             return true;
         }
 

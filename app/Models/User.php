@@ -7,6 +7,7 @@ use Illuminate\Database\Eloquent\SoftDeletes;
 use Illuminate\Notifications\Notifiable;
 use Illuminate\Foundation\Auth\User as Authenticatable;
 use Laravel\Passport\HasApiTokens;
+use Ramsey\Uuid\Uuid;
 use Spatie\Permission\Traits\HasRoles;
 
 /**
@@ -14,9 +15,13 @@ use Spatie\Permission\Traits\HasRoles;
  * @package App\Models
  *
  * @property integer id
- * @property integer timezone_id
+ * @property string uuid
+ * @property string timezone_uuid
+ * @property string city_uuid
+ * @property string language_uuid
  * @property string first_name
  * @property string last_name
+ * @property string middle_name
  * @property integer phone
  * @property string password
  * @property integer verification_code
@@ -42,16 +47,20 @@ use Spatie\Permission\Traits\HasRoles;
  *                  type="integer",
  *              ),
  *              @OA\Property(
- *                  property="timezone_id",
- *                  type="integer",
+ *                  property="uuid",
+ *                  type="string",
  *              ),
  *              @OA\Property(
- *                  property="city_id",
- *                  type="integer",
+ *                  property="timezone_uuid",
+ *                  type="string",
  *              ),
  *              @OA\Property(
- *                  property="language_id",
- *                  type="integer",
+ *                  property="city_uuid",
+ *                  type="string",
+ *              ),
+ *              @OA\Property(
+ *                  property="language_uuid",
+ *                  type="string",
  *              ),
  *              @OA\Property(
  *                  property="first_name",
@@ -101,13 +110,23 @@ class User extends Authenticatable
     protected $guard_name = 'api';
 
     /**
+     * @var string
+     */
+    protected $primaryKey = 'uuid';
+
+    /**
+     * @var bool
+     */
+    public $incrementing = false;
+
+    /**
      * The attributes that are mass assignable.
      *
      * @var array
      */
     protected $fillable = [
-        'timezone_id',
-        'city_id',
+        'timezone_uuid',
+        'city_uuid',
         'first_name',
         'last_name',
         'middle_name',
@@ -122,11 +141,32 @@ class User extends Authenticatable
      * @var array
      */
     protected $hidden = [
+        'id',
         'password',
         'verification_code',
         'roles',
         'deleted_at',
     ];
+
+    /**
+     * @inheritdoc
+     */
+    public static function boot()
+    {
+        parent::boot();
+        self::creating(function ($model) {
+            $model->uuid = Uuid::uuid4();
+        });
+    }
+
+    /**
+     * @inheritdoc
+     * @return string
+     */
+    public function getRouteKeyName()
+    {
+        return 'uuid';
+    }
 
     /**
      * @param $username
@@ -144,7 +184,7 @@ class User extends Authenticatable
      */
     public function schedules()
     {
-        return $this->morphMany(Schedule::class, 'schedulable');
+        return $this->morphMany(Schedule::class, 'schedulable', null, 'schedulable_uuid');
     }
 
     /**
@@ -164,7 +204,7 @@ class User extends Authenticatable
      */
     public function trainerBookings()
     {
-        return $this->morphMany(Booking::class, 'bookable');
+        return $this->morphMany(Booking::class, 'bookable', null, 'bookable_uuid');
     }
 
     /**

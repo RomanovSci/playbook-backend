@@ -17,24 +17,24 @@ class BookingPolicy
      *
      * @param User $user
      * @param string $bookableType
-     * @param int $bookableId
+     * @param string $bookableUuid
      * @return bool
      */
-    public function getBookingsList(User $user, string $bookableType, int $bookableId): bool
+    public function getBookingsList(User $user, string $bookableType, string $bookableUuid): bool
     {
         if ($bookableType === User::class) {
-            return $user->id === $bookableId;
+            return $user->uuid === $bookableUuid;
         }
 
         if ($bookableType === Playground::class) {
             /** @var Playground $playground */
-            $playground = Playground::find($bookableId);
+            $playground = Playground::find($bookableUuid);
 
-            if (!$playground || !$playground->organization_id) {
+            if (!$playground || !$playground->organization_uuid) {
                 return false;
             }
 
-            return $playground->organization->owner_id === $user->id;
+            return $playground->organization->owner_uuid === $user->uuid;
         }
 
         return false;
@@ -61,7 +61,7 @@ class BookingPolicy
      */
     public function declineBooking(User $user, Booking $booking): bool
     {
-        return $this->manageBooking($user, $booking) || $booking->creator_id == $user->id;
+        return $this->manageBooking($user, $booking) || $booking->creator_uuid == $user->uuid;
     }
 
     /**
@@ -78,7 +78,7 @@ class BookingPolicy
          * self booking requests
          */
         if ($booking->bookable_type === User::class) {
-            return $booking->bookable_id === $user->id;
+            return $booking->bookable_uuid === $user->uuid;
         }
 
         /**
@@ -86,7 +86,7 @@ class BookingPolicy
          * self booking requests
          */
         if ($booking->bookable_type === Playground::class) {
-            return $booking->bookable->creator_id === $user->id;
+            return $booking->bookable->creator_uuid === $user->uuid;
         }
 
         return false;

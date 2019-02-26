@@ -6,35 +6,29 @@ namespace App\Models;
  * Class Organization
  * @package App\Models
  *
- * @property integer id
  * @property string name
- * @property integer owner_id
- * @property integer city_id
+ * @property integer owner_uuid
+ * @property integer city_uuid
  *
  * @OA\Schema(
  *      allOf={
  *          @OA\Schema(
  *              required={
- *                  "owner_id",
+ *                  "owner_uuid",
  *                  "name",
  *                  "city_id"
  *              },
  *              @OA\Property(
- *                  property="id",
- *                  type="integer",
- *              ),
- *              @OA\Property(
- *                  property="owner_id",
- *                  type="integer",
+ *                  property="owner_uuid",
+ *                  type="string",
  *              ),
  *              @OA\Property(
  *                  property="name",
  *                  type="string",
  *              ),
  *              @OA\Property(
- *                  property="city_id",
- *                  type="integer",
- *                  format="int32",
+ *                  property="city_uuid",
+ *                  type="string",
  *              ),
  *          ),
  *          @OA\Schema(ref="#/components/schemas/BaseModel"),
@@ -52,6 +46,8 @@ class Organization extends BaseModel
      * @var array
      */
     protected $fillable = [
-        'name', 'owner_id', 'city_id',
+        'name',
+        'owner_uuid',
+        'city_uuid',
     ];
 }

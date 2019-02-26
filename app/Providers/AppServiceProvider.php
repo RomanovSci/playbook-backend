@@ -6,6 +6,7 @@ use App\Models\Playground;
 use App\Models\User;
 use Illuminate\Support\Facades\Validator;
 use Illuminate\Support\ServiceProvider;
+use Laravel\Passport\Passport;
 
 /**
  * Class AppServiceProvider
@@ -42,7 +43,7 @@ class AppServiceProvider extends ServiceProvider
                 return false;
             }
 
-            return User::where('id', $value)->exists() || Playground::where('id', $value)->exists();
+            return User::where('uuid', $value)->exists() || Playground::where('uuid', $value)->exists();
         }, 'Bookable does not exists ');
     }
 

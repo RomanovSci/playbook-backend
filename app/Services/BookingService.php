@@ -25,7 +25,7 @@ class BookingService
      * @param Carbon $startTime
      * @param Carbon $endTime
      * @param string $bookableType
-     * @param int $bookableId
+     * @param string $bookableUuid
      * @return array
      *
      * @throws \App\Exceptions\Internal\IncorrectDateRange
@@ -34,13 +34,13 @@ class BookingService
         Carbon $startTime,
         Carbon $endTime,
         string $bookableType,
-        int $bookableId
+        string $bookableUuid
     ): array {
         $findScheduleResult = BookingService::findAppropriateSchedule(
             $startTime,
             $endTime,
             $bookableType,
-            $bookableId
+            $bookableUuid
         );
 
         if (!$findScheduleResult['success']) {
@@ -52,7 +52,7 @@ class BookingService
             $startTime,
             $endTime,
             $bookableType,
-            $bookableId,
+            $bookableUuid,
             $appropriateSchedule
         );
 
@@ -94,14 +94,14 @@ class BookingService
      * @param Carbon $startTime
      * @param Carbon $endTime
      * @param string $bookableType
-     * @param int $bookableId
+     * @param string $bookableUuid
      * @return array
      */
     public static function findAppropriateSchedule(
         Carbon $startTime,
         Carbon $endTime,
         string $bookableType,
-        int $bookableId
+        string $bookableUuid
     ): array {
         $result = [
             'success' => false,
@@ -120,7 +120,7 @@ class BookingService
         $appropriateSchedule = null;
         $mergedSchedules = ScheduleRepository::getMergedSchedules(
             $bookableType,
-            $bookableId,
+            $bookableUuid,
             $startTime,
             $endTime
         );
@@ -149,7 +149,7 @@ class BookingService
      * @param Carbon $startTime
      * @param Carbon $endTime
      * @param string $bookableType
-     * @param int $bookableId
+     * @param string $bookableUuid
      * @param Schedule $schedule
      * @return array
      * @throws \App\Exceptions\Internal\IncorrectDateRange
@@ -158,7 +158,7 @@ class BookingService
         Carbon $startTime,
         Carbon $endTime,
         string $bookableType,
-        int $bookableId,
+        string $bookableUuid,
         Schedule $schedule
     ): array {
         $result = ['success' => false, 'message' => ''];
@@ -167,7 +167,7 @@ class BookingService
             Carbon::parse($schedule->start_time),
             Carbon::parse($schedule->end_time),
             $bookableType,
-            $bookableId,
+            $bookableUuid,
             Booking::STATUS_CONFIRMED
         );
 

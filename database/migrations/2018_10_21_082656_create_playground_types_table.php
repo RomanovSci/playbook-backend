@@ -14,14 +14,14 @@ class CreatePlaygroundTypesTable extends Migration
     public function up()
     {
         Schema::create('playground_types', function (Blueprint $table) {
-            $table->increments('id');
+            $table->uuid('uuid')->unique();
             $table->string('type')->unique();
             $table->timestamps();
             $table->softDeletes();
         });
 
         Schema::table('playgrounds', function (Blueprint $table) {
-            $table->foreign('type_id')->references('id')->on('playground_types');
+            $table->foreign('type_uuid')->references('uuid')->on('playground_types');
         });
     }
 

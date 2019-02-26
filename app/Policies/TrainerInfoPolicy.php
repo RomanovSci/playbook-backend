@@ -20,6 +20,6 @@ class TrainerInfoPolicy
      */
     public function edit(User $user, TrainerInfo $info): bool
     {
-        return $user->id === $info->user_id;
+        return $user->uuid === $info->user_uuid;
     }
 }

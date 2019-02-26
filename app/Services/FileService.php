@@ -29,7 +29,7 @@ class FileService
         $uploadedFile->store($path);
 
         $file = new File();
-        $file->entity_id = $relatedModel->id;
+        $file->entity_uuid = $relatedModel->uuid;
         $file->entity_type = get_class($relatedModel);
         $file->name = $uploadedFile->hashName();
         $file->url = Storage::url($path . '/' . $file->name);

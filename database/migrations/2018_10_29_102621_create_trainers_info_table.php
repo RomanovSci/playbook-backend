@@ -14,15 +14,15 @@ class CreateTrainersInfoTable extends Migration
     public function up()
     {
         Schema::create('trainers_info', function (Blueprint $table) {
-            $table->increments('id');
-            $table->integer('user_id', false, true);
+            $table->uuid('uuid')->unique();
+            $table->uuid('user_uuid');
             $table->text('about')->nullable();
             $table->integer('min_price', false, true);
             $table->integer('max_price', false, true);
             $table->char('currency', 3)->default('RUB');
             $table->timestamps();
             $table->softDeletes();
-            $table->foreign('user_id')->references('id')->on('users');
+            $table->foreign('user_uuid')->references('uuid')->on('users');
         });
     }
 

@@ -8,7 +8,6 @@ use App\Models\Schedule\Schedule;
  * Class Playground
  * @package App\Models
  *
- * @property integer id
  * @property string name
  * @property string description
  * @property string address
@@ -24,7 +23,7 @@ use App\Models\Schedule\Schedule;
  *      allOf={
  *          @OA\Schema(
  *              required={
- *                  "type_id",
+ *                  "type_uuid",
  *                  "name",
  *                  "description",
  *                  "address",
@@ -33,20 +32,16 @@ use App\Models\Schedule\Schedule;
  *
  *              },
  *              @OA\Property(
- *                  property="id",
- *                  type="integer",
+ *                  property="type_uuid",
+ *                  type="string",
  *              ),
  *              @OA\Property(
- *                  property="type_id",
- *                  type="integer",
+ *                  property="organization_uuid",
+ *                  type="string",
  *              ),
  *              @OA\Property(
- *                  property="organization_id",
- *                  type="integer",
- *              ),
- *              @OA\Property(
- *                  property="creator_id",
- *                  type="integer",
+ *                  property="creator_uuid",
+ *                  type="string",
  *              ),
  *              @OA\Property(
  *                  property="name",
@@ -93,9 +88,9 @@ class Playground extends BaseModel
         'address',
         'opening_time',
         'closing_time',
-        'type_id',
-        'organization_id',
-        'creator_id',
+        'type_uuid',
+        'organization_uuid',
+        'creator_uuid',
     ];
 
     /**
@@ -145,7 +140,7 @@ class Playground extends BaseModel
      */
     public function schedules()
     {
-        return $this->morphMany(Schedule::class, 'schedulable');
+        return $this->morphMany(Schedule::class, 'schedulable', null, 'schedulable_uuid');
     }
 
     /**
@@ -155,6 +150,6 @@ class Playground extends BaseModel
      */
     public function bookings()
     {
-        return $this->morphMany(Booking::class, 'schedulable');
+        return $this->morphMany(Booking::class, 'schedulable', null, 'schedulable_uuid');
     }
 }

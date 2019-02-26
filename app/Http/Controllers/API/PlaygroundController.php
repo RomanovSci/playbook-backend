@@ -145,8 +145,8 @@ class PlaygroundController extends Controller
      *                      "address": "Playground address",
      *                      "opening_time": "Playground opening time. Example: 09:00:00",
      *                      "closing_time": "Playground closing time. Example: 23:20:00",
-     *                      "type_id": "Playground type id. Ref to PlaygroundType entity. Example: 1",
-     *                      "organization_id": "Organization id"
+     *                      "type_uuid": "Playground type uuid",
+     *                      "organization_uuid": "Organization uuid"
      *                  }
      *              )
      *          )
@@ -187,7 +187,7 @@ class PlaygroundController extends Controller
          * @var Organization $organization
          * @var User $user
          */
-        $organization = Organization::find($request->post('organization_id'));
+        $organization = Organization::find($request->post('organization_uuid'));
         $user = Auth::user();
 
         if ($organization && $user->cant('createPlayground', $organization)) {
@@ -198,8 +198,8 @@ class PlaygroundController extends Controller
          * @var Playground $playground
          */
         $playground = Playground::create(array_merge($request->all(), [
-            'organization_id' => $organization->id ?? null,
-            'creator_id' => $user->id,
+            'organization_uuid' => $organization->uuid ?? null,
+            'creator_uuid' => $user->uuid,
         ]));
 
         return $this->success($playground->toArray());

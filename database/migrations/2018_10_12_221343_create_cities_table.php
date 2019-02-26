@@ -3,8 +3,6 @@
 use Illuminate\Support\Facades\Schema;
 use Illuminate\Database\Schema\Blueprint;
 use Illuminate\Database\Migrations\Migration;
-use App\Models\Country;
-use App\Models\City;
 
 class CreateCitiesTable extends Migration
 {
@@ -16,16 +14,16 @@ class CreateCitiesTable extends Migration
     public function up()
     {
         Schema::create('cities', function (Blueprint $table) {
-            $table->increments('id');
-            $table->integer('country_id', false, true);
+            $table->uuid('uuid')->unique();
+            $table->uuid('country_uuid');
             $table->string('name');
             $table->timestamps();
             $table->softDeletes();
-            $table->foreign('country_id')->references('id')->on('countries');
+            $table->foreign('country_uuid')->references('uuid')->on('countries');
         });
 
         Schema::table('users', function (Blueprint $table) {
-            $table->foreign('city_id')->references('id')->on('cities');
+            $table->foreign('city_uuid')->references('uuid')->on('cities');
         });
     }
 

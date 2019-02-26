@@ -20,6 +20,6 @@ class OrganizationPolicy
      */
     public function createPlayground(User $user, Organization $organization): bool
     {
-        return $user->id === $organization->owner_id;
+        return $user->uuid === $organization->owner_uuid;
     }
 }

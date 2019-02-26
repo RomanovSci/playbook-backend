@@ -6,26 +6,21 @@ namespace App\Models;
  * Class City
  * @package App\Models
  *
- * @property integer id
  * @property string name
  * @property string origin_name
- * @property integer country_id
+ * @property string country_uuid
  *
  * @OA\Schema(
  *      allOf={
  *          @OA\Schema(
  *              required={
- *                  "country_id",
+ *                  "country_uuid",
  *                  "name",
  *                  "origin_name",
  *              },
  *              @OA\Property(
- *                  property="id",
- *                  type="integer",
- *              ),
- *              @OA\Property(
- *                  property="country_id",
- *                  type="integer",
+ *                  property="country_uuid",
+ *                  type="string",
  *              ),
  *              @OA\Property(
  *                  property="name",

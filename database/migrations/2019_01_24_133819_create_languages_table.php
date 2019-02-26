@@ -14,7 +14,6 @@ class CreateLanguagesTable extends Migration
     public function up()
     {
         Schema::create('languages', function (Blueprint $table) {
-            $table->increments('id');
             $table->char('code', 2)->unique();
             $table->string('name');
             $table->string('native_name');
@@ -23,7 +22,7 @@ class CreateLanguagesTable extends Migration
         });
 
         Schema::table('users', function (Blueprint $table) {
-            $table->foreign('language_id')->references('id')->on('languages');
+            $table->foreign('language_code')->references('code')->on('languages');
         });
     }
 

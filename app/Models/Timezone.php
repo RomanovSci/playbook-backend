@@ -6,7 +6,6 @@ namespace App\Models;
  * Class Timezone
  * @package App\Models
  *
- * @property integer id
  * @property string value
  * @property string abbreviation
  * @property float offset
@@ -25,10 +24,6 @@ namespace App\Models;
  *                  "text",
  *                  "utc",
  *              },
- *              @OA\Property(
- *                  property="id",
- *                  type="integer",
- *              ),
  *              @OA\Property(
  *                  property="value",
  *                  type="string",

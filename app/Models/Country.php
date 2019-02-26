@@ -6,7 +6,6 @@ namespace App\Models;
  * Class Country
  * @package App\Models
  *
- * @property int id
  * @property string code
  * @property string name
  * @property string origin_name
@@ -19,10 +18,6 @@ namespace App\Models;
  *                  "name",
  *                  "origin_name"
  *              },
- *              @OA\Property(
- *                  property="id",
- *                  type="integer",
- *              ),
  *              @OA\Property(
  *                  property="name",
  *                  type="string",

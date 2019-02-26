@@ -4,6 +4,7 @@ use Illuminate\Support\Facades\Schema;
 use Illuminate\Database\Schema\Blueprint;
 use Illuminate\Database\Migrations\Migration;
 use Illuminate\Support\Facades\DB;
+use Ramsey\Uuid\Uuid;
 
 class CreateTimezonesTable extends Migration
 {
@@ -11,11 +12,12 @@ class CreateTimezonesTable extends Migration
      * Run the migrations.
      *
      * @return void
+     * @throws Exception
      */
     public function up()
     {
         Schema::create('timezones', function (Blueprint $table) {
-            $table->increments('id');
+            $table->uuid('uuid')->unique();
             $table->string('value');
             $table->string('abbreviation');
             $table->float('offset');
@@ -32,6 +34,7 @@ class CreateTimezonesTable extends Migration
         foreach ($timezones as $timezone) {
             foreach ($timezone->utc as $utc) {
                 DB::table('timezones')->insert([
+                    'uuid' => Uuid::uuid4(),
                     'value' => $timezone->value,
                     'abbreviation' => $timezone->abbr,
                     'offset' => $timezone->offset,
@@ -45,7 +48,7 @@ class CreateTimezonesTable extends Migration
         }
 
         Schema::table('users', function (Blueprint $table) {
-            $table->foreign('timezone_id')->references('id')->on('timezones');
+            $table->foreign('timezone_uuid')->references('uuid')->on('timezones');
         });
     }
 

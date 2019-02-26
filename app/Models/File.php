@@ -6,8 +6,7 @@ namespace App\Models;
  * Class File
  * @package App\Models
  *
- * @property integer id
- * @property integer entity_id
+ * @property integer entity_uuid
  * @property integer entity_type
  * @property string url
  * @property string name
@@ -18,7 +17,7 @@ namespace App\Models;
  *      allOf={
  *          @OA\Schema(
  *              required={
- *                  "entity_id",
+ *                  "entity_uuid",
  *                  "entity_type",
  *                  "path",
  *                  "name",
@@ -26,11 +25,7 @@ namespace App\Models;
  *                  "mime_type",
  *              },
  *              @OA\Property(
- *                  property="id",
- *                  description="hidden",
- *              ),
- *              @OA\Property(
- *                  property="entity_id",
+ *                  property="entity_uuid",
  *                  description="hidden",
  *              ),
  *              @OA\Property(
@@ -69,7 +64,9 @@ class File extends BaseModel
      * @var array
      */
     protected $hidden = [
-        'id', 'entity_id', 'entity_type',
-        'name', 'mime_type'
+        'entity_uuid',
+        'entity_type',
+        'name',
+        'mime_type'
     ];
 }

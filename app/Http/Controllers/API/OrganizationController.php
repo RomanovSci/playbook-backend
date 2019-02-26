@@ -87,7 +87,7 @@ class OrganizationController extends Controller
      *              @OA\Schema(
      *                  example={
      *                      "name": "Organization name",
-     *                      "city_id": "City id. Ref to City entity. Example: 1",
+     *                      "city_uuid": "City uuid",
      *                  }
      *              )
      *          )
@@ -127,7 +127,7 @@ class OrganizationController extends Controller
         /** @var Organization $organization */
         $organization = Organization::create(array_merge(
             $request->all(),
-            ['owner_id' => Auth::user()->id]
+            ['owner_uuid' => Auth::user()->uuid]
         ));
 
         return $this->success($organization->toArray());

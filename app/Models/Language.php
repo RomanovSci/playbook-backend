@@ -19,10 +19,6 @@ namespace App\Models;
  *                  "native_name",
  *              },
  *              @OA\Property(
- *                  property="id",
- *                  type="integer",
- *              ),
- *              @OA\Property(
  *                  property="code",
  *                  type="string",
  *              ),

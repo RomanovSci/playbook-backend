@@ -3,26 +3,28 @@
 use Illuminate\Database\Migrations\Migration;
 use App\Models\Country;
 use Illuminate\Support\Facades\DB;
+use Ramsey\Uuid\Uuid;
 
 class MigrateUaCities extends Migration
 {
     /**
      * @var integer
      */
-    protected $countryId;
+    protected $countryUuid;
 
     /**
      * MigrateUaCities constructor.
      */
     public function __construct()
     {
-        $this->countryId = Country::where('code', 'UA')->first()->id;
+        $this->countryUuid = Country::where('code', 'UA')->first()->uuid;
     }
 
     /**
      * Run the migrations.
      *
      * @return void
+     * @throws Exception
      */
     public function up()
     {
@@ -31,7 +33,8 @@ class MigrateUaCities extends Migration
 
         foreach ($cities as $city) {
             DB::table('cities')->insert([
-                'country_id' => $this->countryId,
+                'uuid' => Uuid::uuid4(),
+                'country_uuid' => $this->countryUuid,
                 'name' => $city->name,
                 'created_at' => DB::raw('NOW()'),
                 'updated_at' => DB::raw('NOW()'),
@@ -47,7 +50,7 @@ class MigrateUaCities extends Migration
     public function down()
     {
         DB::table('cities')
-            ->where('country_id', $this->countryId)
+            ->where('country_id', $this->countryUuid)
             ->delete();
     }
 }

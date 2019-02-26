@@ -38,18 +38,18 @@ class TrainerService
         try {
             DB::beginTransaction();
             $info = TrainerInfo::create(array_merge($data, [
-                'user_id' => $user->id,
+                'user_id' => $user->uuid,
             ]));
 
-            foreach ($data['playgrounds'] as $playgroundId) {
+            foreach ($data['playgrounds'] as $playgroundUuid) {
                 UserPlayground::create([
-                    'user_id' => $user->id,
-                    'playground_id' => $playgroundId
+                    'user_uuid' => $user->uuid,
+                    'playground_uuid' => $playgroundUuid
                 ]);
             }
 
             if (isset($data['image'])) {
-                $this->fileService->upload('trainer/' . $user->id, $data['image'], $info);
+                $this->fileService->upload('trainer/' . $user->uuid, $data['image'], $info);
             }
         } catch (\Throwable $e) {
             DB::rollBack();
@@ -74,18 +74,18 @@ class TrainerService
         try {
             DB::beginTransaction();
             $info->fill($data)->update();
-            UserPlayground::where('user_id', $user->id)->delete();
+            UserPlayground::where('user_uuid', $user->uuid)->delete();
 
-            foreach ($data['playgrounds'] as $playgroundId) {
+            foreach ($data['playgrounds'] as $playgroundUuid) {
                 UserPlayground::create([
-                    'user_id' => $user->id,
-                    'playground_id' => $playgroundId
+                    'user_uuid' => $user->uuid,
+                    'playground_uuid' => $playgroundUuid
                 ]);
             }
 
             if (isset($data['image'])) {
                 $info->images()->delete();
-                $this->fileService->upload('trainer/' . $user->id, $data['image'], $info);
+                $this->fileService->upload('trainer/' . $user->uuid, $data['image'], $info);
             }
         } catch (\Throwable $e) {
             DB::rollBack();

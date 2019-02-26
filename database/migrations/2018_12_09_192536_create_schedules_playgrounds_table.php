@@ -14,14 +14,14 @@ class CreateSchedulesPlaygroundsTable extends Migration
     public function up()
     {
         Schema::create('schedules_playgrounds', function (Blueprint $table) {
-            $table->increments('id');
-            $table->integer('schedule_id', false, true);
-            $table->integer('playground_id', false, true);
+            $table->uuid('uuid')->unique();
+            $table->uuid('schedule_uuid');
+            $table->uuid('playground_uuid');
             $table->timestamps();
             $table->softDeletes();
-            $table->foreign('schedule_id')->references('id')->on('schedules');
-            $table->foreign('playground_id')->references('id')->on('playgrounds');
-            $table->unique(['schedule_id', 'playground_id']);
+            $table->foreign('schedule_uuid')->references('uuid')->on('schedules');
+            $table->foreign('playground_uuid')->references('uuid')->on('playgrounds');
+            $table->unique(['schedule_uuid', 'playground_uuid']);
         });
     }
 

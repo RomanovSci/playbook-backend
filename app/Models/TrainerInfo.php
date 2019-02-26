@@ -6,8 +6,7 @@ namespace App\Models;
  * Class TrainerInfo
  * @package App\Models
  *
- * @property integer id
- * @property integer user_id
+ * @property integer user_uuid
  * @property string about
  * @property integer min_price
  * @property integer max_price
@@ -19,18 +18,14 @@ namespace App\Models;
  *      allOf={
  *          @OA\Schema(
  *              required={
- *                  "user_id",
+ *                  "user_uuid",
  *                  "min_price",
  *                  "max_price",
  *                  "currency"
  *              },
  *              @OA\Property(
- *                  property="id",
- *                  type="integer",
- *              ),
- *              @OA\Property(
- *                  property="user_id",
- *                  type="integer",
+ *                  property="user_uuid",
+ *                  type="string",
  *              ),
  *              @OA\Property(
  *                  property="about",
@@ -66,8 +61,11 @@ class TrainerInfo extends BaseModel
      * @var array
      */
     protected $fillable = [
-        'user_id', 'about', 'min_price',
-        'max_price', 'currency'
+        'user_uuid',
+        'about',
+        'min_price',
+        'max_price',
+        'currency',
     ];
 
     /**
@@ -90,6 +88,6 @@ class TrainerInfo extends BaseModel
      */
     public function images()
     {
-        return $this->morphMany(File::class, 'entity');
+        return $this->morphMany(File::class, 'entity', null, 'entity_uuid');
     }
 }

@@ -38,11 +38,11 @@ class ScheduleController extends Controller
     /**
      * @param TimeIntervalFormRequest $request
      * @param string $schedulableType
-     * @param int $id
+     * @param string $uuid
      * @return JsonResponse
      *
      * @OA\Get(
-     *      path="/api/schedule/{type}/{id}",
+     *      path="/api/schedule/{type}/{uuid}",
      *      tags={"Schedule"},
      *      summary="Get schedules for trainer or playground",
      *      @OA\Parameter(
@@ -54,10 +54,10 @@ class ScheduleController extends Controller
      *      ),
      *      @OA\Parameter(
      *          name="id",
-     *          description="trainer or playground id",
+     *          description="trainer or playground uuid",
      *          in="path",
      *          required=false,
-     *          @OA\Schema(type="integer")
+     *          @OA\Schema(type="string")
      *      ),
      *      @OA\Parameter(
      *          name="limit",
@@ -141,7 +141,7 @@ class ScheduleController extends Controller
      *      )
      * )
      */
-    public function get(TimeIntervalFormRequest $request, string $schedulableType, int $id = null)
+    public function get(TimeIntervalFormRequest $request, string $schedulableType, string $uuid = null)
     {
         $schedules = ScheduleRepository::getBetween(
             Carbon::parse($request->get('start_time')),
@@ -149,7 +149,7 @@ class ScheduleController extends Controller
             $request->get('limit'),
             $request->get('offset'),
             $schedulableType,
-            $id
+            $uuid
         );
 
         /**
@@ -193,7 +193,7 @@ class ScheduleController extends Controller
      *                      "dates": "Array with date objects. Example: [{start_time: 2018-05-12 17:00:00, end_time: 2018-05-12 19:00:00}]",
      *                      "price_per_hour": "Price per hour in cents. Example: 7000. (70RUB)",
      *                      "currency": "Currency: RUB, UAH, USD, etc. Default: RUB",
-     *                      "playgrounds": "Array of playgrounds id.If type=playground, array should contains only 1 id"
+     *                      "playgrounds": "Array of playgrounds uuids. If type=playground, array should contains only 1 uuid"
      *                  }
      *              )
      *          )
@@ -268,15 +268,15 @@ class ScheduleController extends Controller
      * @throws \App\Exceptions\Internal\IncorrectDateRange
      *
      * @OA\Post(
-     *      path="/api/schedule/edit/{schedule_id}",
+     *      path="/api/schedule/edit/{schedule_uuid}",
      *      tags={"Schedule"},
      *      summary="Edit schedule",
      *      @OA\Parameter(
-     *          name="schedule_id",
-     *          description="Schedule id",
+     *          name="schedule_uuid",
+     *          description="Schedule uuid",
      *          in="path",
      *          required=true,
-     *          @OA\Schema(type="integer")
+     *          @OA\Schema(type="string")
      *      ),
      *      @OA\RequestBody(
      *          @OA\MediaType(
@@ -343,15 +343,15 @@ class ScheduleController extends Controller
      * @throws \Exception
      *
      * @OA\Delete(
-     *      path="/api/schedule/delete/{schedule_id}",
+     *      path="/api/schedule/delete/{schedule_uuid}",
      *      tags={"Schedule"},
      *      summary="Delete schedule",
      *      @OA\Parameter(
-     *          name="schedule_id",
-     *          description="Schedule id",
+     *          name="schedule_uuid",
+     *          description="Schedule uuid",
      *          in="path",
      *          required=true,
-     *          @OA\Schema(type="integer")
+     *          @OA\Schema(type="string")
      *      ),
      *      @OA\Response(
      *          response="200",

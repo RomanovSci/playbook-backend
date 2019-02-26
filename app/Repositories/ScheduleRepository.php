@@ -17,18 +17,18 @@ class ScheduleRepository
      * Get schedule by schedulable data
      *
      * @param string|null $schedulableType
-     * @param int|null $schedulableId
+     * @param string|null $schedulableUuid
      * @param Carbon $startTime
      * @param Carbon $endTime
      * @return Collection
      */
     public static function getBySchedulable(
         string $schedulableType = null,
-        int $schedulableId = null,
+        string $schedulableUuid = null,
         Carbon $startTime = null,
         Carbon $endTime = null
     ): Collection {
-        $query = Schedule::where('schedulable_id', $schedulableId)
+        $query = Schedule::where('schedulable_uuid', $schedulableUuid)
             ->where('schedulable_type', $schedulableType)
             ->orderBy('start_time', 'asc');
 
@@ -50,7 +50,7 @@ class ScheduleRepository
      * @param int $limit
      * @param int $offset
      * @param string $schedulableType
-     * @param int $schedulableId
+     * @param string $schedulableUuid
      * @return mixed
      */
     public static function getBetween(
@@ -59,7 +59,7 @@ class ScheduleRepository
         int $limit = 100,
         int $offset = 0,
         string $schedulableType = null,
-        int $schedulableId = null
+        string $schedulableUuid = null
     ): Collection {
         $query = Schedule::where('start_time', '>=', $startTime->toDateTimeString())
             ->orderBy('start_time', 'asc')
@@ -71,8 +71,8 @@ class ScheduleRepository
             $query->where('schedulable_type', $schedulableType);
         }
 
-        if ($schedulableId) {
-            $query->where('schedulable_id', $schedulableId);
+        if ($schedulableUuid) {
+            $query->where('schedulable_uuid', $schedulableUuid);
         }
 
         return $query->get();
@@ -97,20 +97,20 @@ class ScheduleRepository
      * ]
      *
      * @param string $schedulableType
-     * @param int $schedulableId
+     * @param string $schedulableUuid
      * @param Carbon $startTime
      * @param Carbon $endTime
      * @return Collection
      */
     public static function getMergedSchedules(
         string $schedulableType,
-        int $schedulableId,
+        string $schedulableUuid,
         Carbon $startTime = null,
         Carbon $endTime = null
     ): Collection {
         $schedules = ScheduleRepository::getBySchedulable(
             $schedulableType,
-            $schedulableId,
+            $schedulableUuid,
             $startTime,
             $endTime
         );

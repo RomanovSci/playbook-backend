@@ -9,7 +9,6 @@ use App\Http\Requests\TrainerInfo\TrainerInfoCreateFormRequest;
 use App\Http\Requests\TrainerInfo\TrainerInfoEditFormRequest;
 use App\Models\TrainerInfo;
 use App\Models\User;
-use App\Repositories\TrainerInfoRepository;
 use App\Repositories\UserRepository;
 use App\Services\FileService;
 use App\Services\TrainerService;
@@ -139,12 +138,12 @@ class TrainerController extends Controller
      * @return JsonResponse
      *
      * @OA\Get(
-     *      path="/api/trainer/info/{trainer_id}",
+     *      path="/api/trainer/info/{trainer_uuid}",
      *      tags={"Trainer"},
      *      summary="Get trainer information",
      *      @OA\Parameter(
-     *          name="trainer_id",
-     *          description="Trainer id",
+     *          name="trainer_uuid",
+     *          description="Trainer uuid",
      *          in="path",
      *          required=true,
      *          @OA\Schema(type="string")
@@ -216,7 +215,7 @@ class TrainerController extends Controller
      *              mediaType="application/json",
      *              @OA\Schema(
      *                  example={
-     *                      "playgrounds": "Array of playgrounds ids. Example: [1,2,3]",
+     *                      "playgrounds": "Array of playgrounds uuids",
      *                      "about": "Short information about trainer",
      *                      "min_price": "Min price in cents. Example: 7000. (70RUB)",
      *                      "max_price": "Max price in cents.",
@@ -296,22 +295,22 @@ class TrainerController extends Controller
      * @throws \Throwable
      *
      * @OA\Post(
-     *      path="/api/trainer/info/edit/{trainer_info_id}",
+     *      path="/api/trainer/info/edit/{trainer_info_uuid}",
      *      tags={"Trainer"},
      *      summary="Edit trainer information",
      *      @OA\Parameter(
-     *          name="trainer_info_id",
-     *          description="Trainer info id",
+     *          name="trainer_info_uuid",
+     *          description="Trainer info uuid",
      *          in="path",
      *          required=true,
-     *          @OA\Schema(type="integer")
+     *          @OA\Schema(type="string")
      *      ),
      *      @OA\RequestBody(
      *          @OA\MediaType(
      *              mediaType="application/json",
      *              @OA\Schema(
      *                  example={
-     *                      "playgrounds": "Array of playgrounds ids. Example: [1,2,3]",
+     *                      "playgrounds": "Array of playgrounds uuids",
      *                      "about": "Short information about trainer",
      *                      "min_price": "Min price in cents. Example: 7000. (70RUB)",
      *                      "max_price": "Max price in cents.",

@@ -2,6 +2,7 @@
 
 use Illuminate\Support\Facades\DB;
 use Illuminate\Database\Migrations\Migration;
+use Ramsey\Uuid\Uuid;
 
 class CreatePlaygroundTypes extends Migration
 {
@@ -9,6 +10,7 @@ class CreatePlaygroundTypes extends Migration
      * Run the migrations.
      *
      * @return void
+     * @throws Exception
      */
     public function up()
     {
@@ -24,6 +26,7 @@ class CreatePlaygroundTypes extends Migration
 
         foreach ($types as $type) {
             DB::table('playground_types')->insert([
+                'uuid' => Uuid::uuid4(),
                 'type' => $type,
                 'created_at' => DB::raw('NOW()'),
                 'updated_at' => DB::raw('NOW()'),

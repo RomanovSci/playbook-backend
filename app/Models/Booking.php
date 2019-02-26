@@ -9,7 +9,6 @@ use Illuminate\Database\Eloquent\Relations\MorphTo;
  * Class Booking
  * @package App\Models
  *
- * @property integer id
  * @property integer bookable_id
  * @property integer bookable_type
  * @property integer creator_id
@@ -20,9 +19,6 @@ use Illuminate\Database\Eloquent\Relations\MorphTo;
  * @property string note
  * @property integer price
  * @property string currency
- * @property string created_at
- * @property string updated_at
- * @property string deleted_at
  *
  * @property Schedule schedule
  * @property Playground|User $bookable
@@ -31,20 +27,15 @@ use Illuminate\Database\Eloquent\Relations\MorphTo;
  *      allOf={
  *          @OA\Schema(
  *              required={
- *                  "schedule_id",
  *                  "start_time",
  *                  "end_time"
  *              },
  *              @OA\Property(
- *                  property="id",
- *                  type="integer",
+ *                  property="creator_uuid",
+ *                  type="string",
  *              ),
  *              @OA\Property(
- *                  property="creator_id",
- *                  type="integer",
- *              ),
- *              @OA\Property(
- *                  property="bookable_id",
+ *                  property="bookable_uuid",
  *                  description="hidden",
  *              ),
  *              @OA\Property(
@@ -76,8 +67,8 @@ use Illuminate\Database\Eloquent\Relations\MorphTo;
  *                  type="integer",
  *              ),
  *              @OA\Property(
- *                  property="playground_id",
- *                  type="integer",
+ *                  property="playground_uuid",
+ *                  type="string",
  *              ),
  *          ),
  *          @OA\Schema(ref="#/components/schemas/BaseModel"),
@@ -99,16 +90,16 @@ class Booking extends BaseModel
      * @var array
      */
     protected $fillable = [
-        'bookable_id',
+        'bookable_uuid',
         'bookable_type',
-        'creator_id',
+        'creator_uuid',
         'start_time',
         'end_time',
         'note',
         'price',
         'currency',
         'status',
-        'playground_id',
+        'playground_uuid',
     ];
 
     /**
@@ -117,9 +108,6 @@ class Booking extends BaseModel
     protected $casts = [
         'start_time' => 'datetime:Y-m-d H:i:s P',
         'end_time' => 'datetime:Y-m-d H:i:s P',
-        'bookable_id' => 'integer',
-        'creator_id' => 'integer',
-        'playground_id' => 'integer',
     ];
 
     /**
@@ -138,7 +126,7 @@ class Booking extends BaseModel
     {
         parent::__construct($attributes);
         $this->hidden = array_merge($this->hidden, [
-            'bookable_id',
+            'bookable_uuid',
             'bookable_type',
         ]);
     }

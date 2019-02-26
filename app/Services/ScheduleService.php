@@ -54,14 +54,14 @@ class ScheduleService
                 $schedule = Schedule::create(array_merge($data, [
                     'start_time' => $startTime,
                     'end_time' => $endTime,
-                    'schedulable_id' => $schedulable->id,
+                    'schedulable_uuid' => $schedulable->uuid,
                     'schedulable_type' => get_class($schedulable)
                 ]));
 
-                foreach ($data['playgrounds'] as $playgroundId) {
+                foreach ($data['playgrounds'] as $playgroundUuid) {
                     $playgrounds[] = SchedulePlayground::create([
-                        'playground_id' => $playgroundId,
-                        'schedule_id' => $schedule->id,
+                        'playground_uuid' => $playgroundUuid,
+                        'schedule_uuid' => $schedule->uuid,
                     ]);
                 }
 
@@ -77,7 +77,7 @@ class ScheduleService
                 throw $e;
             }
 
-            return [];
+            throw $e;
         }
 
         return $schedules;
@@ -124,7 +124,7 @@ class ScheduleService
     ): bool {
         $existedSchedules = ScheduleRepository::getBySchedulable(
             get_class($schedulable),
-            $schedulable->id
+            $schedulable->uuid
         );
 
         /**
@@ -134,7 +134,7 @@ class ScheduleService
         $existedSchedules = $existedSchedules->filter(
             function ($existedSchedule) use ($excludedSchedules) {
                 foreach ($excludedSchedules as $excludedSchedule) {
-                    if ($excludedSchedule->id === $existedSchedule->id) {
+                    if ($excludedSchedule->uuid === $existedSchedule->uuid) {
                         return false;
                     }
                 }

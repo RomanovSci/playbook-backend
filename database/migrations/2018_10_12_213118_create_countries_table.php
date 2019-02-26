@@ -4,6 +4,7 @@ use Illuminate\Support\Facades\Schema;
 use Illuminate\Database\Schema\Blueprint;
 use Illuminate\Database\Migrations\Migration;
 use Illuminate\Support\Facades\DB;
+use Ramsey\Uuid\Uuid;
 
 class CreateCountriesTable extends Migration
 {
@@ -11,11 +12,12 @@ class CreateCountriesTable extends Migration
      * Run the migrations.
      *
      * @return void
+     * @throws Exception
      */
     public function up()
     {
         Schema::create('countries', function (Blueprint $table) {
-            $table->increments('id');
+            $table->uuid('uuid')->unique();
             $table->char('code', 2);
             $table->string('name');
             $table->string('dial_code');
@@ -28,6 +30,7 @@ class CreateCountriesTable extends Migration
 
         foreach ($countries as $country) {
             DB::table('countries')->insert([
+                'uuid' => Uuid::uuid4(),
                 'code' => $country->code,
                 'name' => $country->name,
                 'dial_code' => $country->dial_code,

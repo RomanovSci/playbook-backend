@@ -18,8 +18,6 @@ class OrganizationRepository
      */
     public static function get(int $limit, int $offset): Collection
     {
-        return Organization::limit($limit)
-            ->offset($offset)
-            ->get();
+        return Organization::limit($limit)->offset($offset)->get();
     }
 }

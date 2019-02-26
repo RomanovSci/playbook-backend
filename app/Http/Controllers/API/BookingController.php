@@ -40,11 +40,11 @@ class BookingController extends Controller
     /**
      * @param TimeIntervalFormRequest $request
      * @param string $bookableType
-     * @param int $id
+     * @param string $uuid
      * @return \Illuminate\Http\JsonResponse
      *
      * @OA\Get(
-     *      path="/api/booking/{type}/{id}",
+     *      path="/api/booking/{type}/{uuid}",
      *      tags={"Booking"},
      *      summary="Get bookings for trainer or playground",
      *      @OA\Parameter(
@@ -55,11 +55,11 @@ class BookingController extends Controller
      *          @OA\Schema(type="string")
      *      ),
      *      @OA\Parameter(
-     *          name="id",
-     *          description="trainer or playground id",
+     *          name="uuid",
+     *          description="trainer or playground uuid",
      *          in="path",
      *          required=false,
-     *          @OA\Schema(type="integer")
+     *          @OA\Schema(type="string")
      *      ),
      *      @OA\Parameter(
      *          name="limit",
@@ -139,9 +139,9 @@ class BookingController extends Controller
      *      )
      * )
      */
-    public function get(TimeIntervalFormRequest $request, string $bookableType, int $id)
+    public function get(TimeIntervalFormRequest $request, string $bookableType, string $uuid)
     {
-        if (Gate::denies('getBookingsList', [$bookableType, $id])) {
+        if (Gate::denies('getBookingsList', [$bookableType, $uuid])) {
             throw new ForbiddenHttpException(__('errors.cant_get_bookings'));
         }
 
@@ -152,7 +152,7 @@ class BookingController extends Controller
                 $request->get('limit'),
                 $request->get('offset'),
                 $bookableType,
-                $id
+                $uuid
             )
         );
     }
@@ -279,8 +279,8 @@ class BookingController extends Controller
      *                      "start_time": "Start booking time. Example: 2018-05-12 09:00:00",
      *                      "end_time": "End booking time. Example: 2018-05-12 17:59:59",
      *                      "note": "Optional",
-     *                      "bookable_id": "Trainer or playground id",
-     *                      "playground_id": "Required if {type} = trainer"
+     *                      "bookable_uuid": "Trainer or playground uuid",
+     *                      "playground_uuid": "Required if {type} = trainer"
      *                  }
      *              )
      *          )
@@ -328,12 +328,12 @@ class BookingController extends Controller
      */
     public function create(string $bookableType, BookingCreateFormRequest $request)
     {
-        $bookableId = (int) $request->post('bookable_id');
+        $bookableUuid = (int) $request->post('bookable_uuid');
         $result = $this->bookingService->getBookingPrice(
             Carbon::parse($request->post('start_time')),
             Carbon::parse($request->post('end_time')),
             $bookableType,
-            $bookableId
+            $bookableUuid
         );
 
         if (!$result['success']) {
@@ -343,7 +343,7 @@ class BookingController extends Controller
         /** @var Booking $booking */
         $booking = Booking::create(array_merge($request->all(), [
             'bookable_type' => $bookableType,
-            'creator_id' => Auth::user()->id,
+            'creator_uuid' => Auth::user()->uuid,
             'price' => $result['data']['price'],
             'currency' => $result['data']['currency'],
         ]));
@@ -357,15 +357,15 @@ class BookingController extends Controller
      * @return \Illuminate\Http\JsonResponse
      *
      * @OA\Post(
-     *      path="/api/booking/confirm/{booking_id}",
+     *      path="/api/booking/confirm/{booking_uuid}",
      *      tags={"Booking"},
      *      summary="Confirm booking",
      *      @OA\Parameter(
-     *          name="booking_id",
-     *          description="Booking id",
+     *          name="booking_uuid",
+     *          description="Booking uuid",
      *          in="path",
      *          required=true,
-     *          @OA\Schema(type="integer")
+     *          @OA\Schema(type="string")
      *      ),
      *      @OA\Response(
      *          response="200",
@@ -425,15 +425,15 @@ class BookingController extends Controller
      * @return \Illuminate\Http\JsonResponse
      *
      * @OA\Post(
-     *      path="/api/booking/decline/{booking_id}",
+     *      path="/api/booking/decline/{booking_uuid}",
      *      tags={"Booking"},
      *      summary="Decline booking",
      *      @OA\Parameter(
-     *          name="booking_id",
-     *          description="Booking id",
+     *          name="booking_uuid",
+     *          description="Booking uuid",
      *          in="path",
      *          required=true,
-     *          @OA\Schema(type="integer")
+     *          @OA\Schema(type="string")
      *      ),
      *      @OA\RequestBody(
      *          @OA\MediaType(
