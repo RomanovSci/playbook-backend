@@ -189,7 +189,7 @@ class TrainerController extends Controller
      *      ),
      *      @OA\Response(
      *          response="400",
-     *          description="Invalid trainer id"
+     *          description="Invalid trainer uuid"
      *      )
      * )
      */
