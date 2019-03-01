@@ -58,7 +58,7 @@ class BookingController extends Controller
      *          name="uuid",
      *          description="trainer or playground uuid",
      *          in="path",
-     *          required=false,
+     *          required=true,
      *          @OA\Schema(type="string")
      *      ),
      *      @OA\Parameter(

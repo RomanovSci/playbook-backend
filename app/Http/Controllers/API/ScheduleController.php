@@ -53,7 +53,7 @@ class ScheduleController extends Controller
      *          @OA\Schema(type="string")
      *      ),
      *      @OA\Parameter(
-     *          name="id",
+     *          name="uuid",
      *          description="trainer or playground uuid",
      *          in="path",
      *          required=false,
@@ -320,7 +320,7 @@ class ScheduleController extends Controller
      *      ),
      *      @OA\Response(
      *          response="400",
-     *          description="Invalid schedule id"
+     *          description="Invalid schedule uuid"
      *      ),
      *      security={{"Bearer":{}}}
      * )
@@ -377,7 +377,7 @@ class ScheduleController extends Controller
      *      ),
      *      @OA\Response(
      *          response="400",
-     *          description="Invalid schedule id"
+     *          description="Invalid schedule uuid"
      *      ),
      *      security={{"Bearer":{}}}
      * )
