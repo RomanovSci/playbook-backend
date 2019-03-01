@@ -14,7 +14,7 @@ class CreateSchedulesPlaygroundsTable extends Migration
     public function up()
     {
         Schema::create('schedules_playgrounds', function (Blueprint $table) {
-            $table->uuid('uuid')->unique();
+            $table->uuid('uuid')->primary();
             $table->uuid('schedule_uuid');
             $table->uuid('playground_uuid');
             $table->timestamps();

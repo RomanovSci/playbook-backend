@@ -14,7 +14,7 @@ class CreatePlaygroundsTable extends Migration
     public function up()
     {
         Schema::create('playgrounds', function (Blueprint $table) {
-            $table->uuid('uuid')->unique();
+            $table->uuid('uuid')->primary();
             $table->uuid('organization_uuid')->nullable()->default(null);
             $table->uuid('creator_uuid');
             $table->string('name');

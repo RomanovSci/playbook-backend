@@ -14,7 +14,7 @@ class CreateTrainersInfoTable extends Migration
     public function up()
     {
         Schema::create('trainers_info', function (Blueprint $table) {
-            $table->uuid('uuid')->unique();
+            $table->uuid('uuid')->primary();
             $table->uuid('user_uuid');
             $table->text('about')->nullable();
             $table->integer('min_price', false, true);

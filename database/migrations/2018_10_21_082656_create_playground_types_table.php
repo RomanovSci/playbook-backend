@@ -14,7 +14,7 @@ class CreatePlaygroundTypesTable extends Migration
     public function up()
     {
         Schema::create('playground_types', function (Blueprint $table) {
-            $table->uuid('uuid')->unique();
+            $table->uuid('uuid')->primary();
             $table->string('type')->unique();
             $table->timestamps();
             $table->softDeletes();

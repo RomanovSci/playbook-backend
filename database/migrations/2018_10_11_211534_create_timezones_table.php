@@ -17,7 +17,7 @@ class CreateTimezonesTable extends Migration
     public function up()
     {
         Schema::create('timezones', function (Blueprint $table) {
-            $table->uuid('uuid')->unique();
+            $table->uuid('uuid')->primary();
             $table->string('value');
             $table->string('abbreviation');
             $table->float('offset');

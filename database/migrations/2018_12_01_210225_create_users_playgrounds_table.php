@@ -14,7 +14,7 @@ class CreateUsersPlaygroundsTable extends Migration
     public function up()
     {
         Schema::create('users_playgrounds', function (Blueprint $table) {
-            $table->uuid('uuid')->unique();
+            $table->uuid('uuid')->primary();
             $table->uuid('user_uuid');
             $table->uuid('playground_uuid');
             $table->timestamps();
