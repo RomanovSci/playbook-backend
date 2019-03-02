@@ -22,7 +22,7 @@ class CreatePlaygroundsTable extends Migration
             $table->string('address');
             $table->time('opening_time');
             $table->time('closing_time');
-            $table->uuid('type_uuid');
+            $table->uuid('type_uuid')->nullable();
             $table->smallInteger('status')->default(0);
             $table->timestamps();
             $table->softDeletes();
