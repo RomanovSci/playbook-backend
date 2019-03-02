@@ -49,6 +49,7 @@ Route::middleware(['auth:api'])->group(function () {
     Route::prefix('playground')->group(function () {
         Route::get('/', 'API\PlaygroundController@get')->name('playground.get');
         Route::get('/search', 'API\PlaygroundController@search')->name('playground.search');
+        Route::get('/types', 'API\PlaygroundController@getTypes')->name('playground.getTypes');
     });
 
     /** Organization */

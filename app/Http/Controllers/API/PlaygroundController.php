@@ -11,6 +11,7 @@ use App\Models\Organization;
 use App\Models\Playground;
 use App\Models\User;
 use App\Repositories\PlaygroundRepository;
+use App\Repositories\PlaygroundTypesRepository;
 use Illuminate\Support\Facades\Auth;
 
 /**
@@ -203,5 +204,43 @@ class PlaygroundController extends Controller
         ]));
 
         return $this->success($playground->toArray());
+    }
+
+    /**
+     * @return string
+     *
+     * @OA\Get(
+     *      path="/api/playground/types",
+     *      tags={"Playground"},
+     *      summary="Get all playground types",
+     *      @OA\Response(
+     *          response="200",
+     *          description="Success",
+     *          @OA\MediaType(
+     *              mediaType="application/json",
+     *              @OA\Schema(
+     *                  type="object",
+     *                  @OA\Property(
+     *                      property="success",
+     *                      type="boolean"
+     *                  ),
+     *                  @OA\Property(
+     *                      property="message",
+     *                      type="string",
+     *                  ),
+     *                  @OA\Property(
+     *                      type="array",
+     *                      property="data",
+     *                      @OA\Items(ref="#/components/schemas/PlaygroundType")
+     *                  )
+     *              )
+     *         )
+     *      ),
+     *      security={{"Bearer":{}}}
+     * )
+     */
+    public function getTypes()
+    {
+        return $this->success(PlaygroundTypesRepository::all());
     }
 }
