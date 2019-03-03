@@ -19,7 +19,7 @@ class BookingCreateFormRequest extends BaseFormRequest
             'start_time' => 'required|date_format:Y-m-d H:i:s',
             'end_time' => 'required|date_format:Y-m-d H:i:s|after:start_time',
             'bookable_uuid' => 'required|bookable_exists',
-            'playground_uuid' => 'numeric|exists:playgrounds,uuid',
+            'playground_uuid' => 'uuid|exists:playgrounds,uuid',
         ];
     }
 }
