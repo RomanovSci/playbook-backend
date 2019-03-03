@@ -9,7 +9,6 @@ use App\Http\Requests\User\RegisterFormRequest;
 use App\Http\Requests\User\ResendVerificationCodeFormRequest;
 use App\Http\Requests\User\ResetPasswordFormRequest;
 use App\Http\Requests\User\VerifyPhoneFormRequest;
-use App\Models\Country;
 use App\Models\User;
 use App\Repositories\UserRepository;
 use App\Services\UserService;
@@ -17,9 +16,6 @@ use Carbon\Carbon;
 use Illuminate\Http\JsonResponse;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
-use Illuminate\Support\Facades\DB;
-use Illuminate\Support\Facades\Hash;
-use Laravel\Passport\PersonalAccessTokenResult;
 
 /**
  * Class UserController
@@ -76,7 +72,8 @@ class UserController extends Controller
      *                      "success": true,
      *                      "message": "string",
      *                      "data": {
-     *                          "access_token": "Bearer token"
+     *                          "access_token": "Bearer token",
+     *                          "verification_code": "Phone verification code. Empty for prod env"
      *                      }
      *                  }
      *              )
@@ -98,31 +95,8 @@ class UserController extends Controller
      */
     public function register(RegisterFormRequest $request)
     {
-        /** @var Country $country */
-        $fields = $request->all();
-        $fields['verification_code'] = rand(100000, 999999);
-        $fields['password'] = bcrypt($fields['password'] ?? $fields['verification_code']);
-
-        DB::beginTransaction();
-        try {
-            /**
-             * @var User $user
-             * @var PersonalAccessTokenResult $token
-             */
-            $user = User::create($fields);
-            $user->assignRole($fields['is_trainer'] ? User::ROLE_TRAINER : User::ROLE_USER);
-            $token = $user->createToken('MyApp');
-
-            DB::commit();
-        } catch (\Throwable $e) {
-            DB::rollBack();
-            throw $e;
-        }
-
-        return $this->success([
-            'access_token' => $token->accessToken,
-            'verification_code' => $fields['verification_code'], //TODO: Remove
-        ]);
+        $registerResult = $this->userService->registerUser($request->all());
+        return $this->success($registerResult['data']);
     }
 
     /**
@@ -187,20 +161,8 @@ class UserController extends Controller
      */
     public function login(LoginFormRequest $request)
     {
-        /** @var User $user */
-        $phone = $request->get('phone');
-        $password = $request->get('password');
-        $user = User::where('phone', $phone)->first();
-
-        if (!$user || !Hash::check($password, $user->password)) {
-            throw new UnauthorizedHttpException();
-        }
-        $token = $user->createToken('MyApp');
-
-        return $this->success(array_merge([
-            'access_token' => $token->accessToken,
-            'roles' => $user->getRoleNames(),
-        ], $user->toArray()));
+        $loginResult = $this->userService->loginUser($request->all());
+        return $this->success($loginResult['data']);
     }
 
     /**
@@ -322,7 +284,7 @@ class UserController extends Controller
      *              mediaType="application/json",
      *              @OA\Schema(
      *                  example={
-     *                      "phone": "Requested phone number. Example: 0501234567"
+     *                      "phone": "Phone number. Example: 0501234567"
      *                  }
      *              )
      *         )
@@ -347,20 +309,20 @@ class UserController extends Controller
      *              mediaType="application/json",
      *              @OA\Schema(
      *                  example={
-     *                      "code": {
-     *                          "The code must be 6 digits."
+     *                      "phone": {
+     *                          "The phone must be a number."
      *                      }
      *                  },
      *              )
      *          )
-     *      ),
-     *      security={{"Bearer":{}}}
+     *      )
      * )
      */
     public function resendVerificationCode(ResendVerificationCodeFormRequest $request)
     {
         /** @var User $user */
         $user = UserRepository::getByPhone($request->get('phone'));
+
         return $this->success([
             'verification_code' => $user->verification_code,
         ]);
@@ -369,12 +331,56 @@ class UserController extends Controller
     /**
      * @param ResetPasswordFormRequest $request
      * @return JsonResponse
+     *
+     * @OA\Post(
+     *      path="/api/reset_password",
+     *      tags={"User"},
+     *      summary="Reset password request",
+     *      @OA\RequestBody(
+     *          @OA\MediaType(
+     *              mediaType="application/json",
+     *              @OA\Schema(
+     *                  example={
+     *                      "phone": "Phone number. Example: 0501234567"
+     *                  }
+     *              )
+     *         )
+     *      ),
+     *      @OA\Response(
+     *          response="200",
+     *          description="Ok",
+     *          @OA\MediaType(
+     *              mediaType="application/json",
+     *              @OA\Schema(
+     *                  example={
+     *                      "success": "true",
+     *                      "message": "Success"
+     *                  }
+     *              )
+     *         )
+     *      ),
+     *      @OA\Response(
+     *          response="400",
+     *          description="Invalid parameters",
+     *          @OA\MediaType(
+     *              mediaType="application/json",
+     *              @OA\Schema(
+     *                  example={
+     *                      "phone": {
+     *                          "The phone must be a number."
+     *                      }
+     *                  },
+     *              )
+     *          )
+     *      )
+     * )
      */
     public function resetPassword(ResetPasswordFormRequest $request)
     {
-        $resetResult = $this->userService->resetPassword(
+        $resetResult = $this->userService->resetUserPassword(
             UserRepository::getByPhone($request->get('phone'))
         );
+
         return $resetResult['success']
             ? $this->success($resetResult['data'] ?? [])
             : $this->error(200, [], $resetResult['message']);
