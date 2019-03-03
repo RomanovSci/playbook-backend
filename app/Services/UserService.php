@@ -25,8 +25,24 @@ class UserService
      */
     public function loginUser(array $data): array
     {
-        /** @var User $user */
+        /**
+         * @var User $user
+         * @var PasswordReset $passwordReset
+         */
         $user = User::where('phone', $data['phone'])->first();
+        $passwordReset = PasswordResetRepository::getActualByUser($user);
+
+        /**
+         * Set new password if password
+         * request exists and login user
+         */
+        if ($passwordReset && $passwordReset->reset_code === $data['password']) {
+            $user->password = bcrypt($passwordReset->reset_code);
+            $user->update(['password']);
+
+            $passwordReset->used_at = Carbon::now();
+            $passwordReset->update(['used_at']);
+        }
 
         if (!$user || !Hash::check($data['password'], $user->password)) {
             throw new UnauthorizedHttpException();
@@ -51,7 +67,7 @@ class UserService
     public function registerUser(array $data): array
     {
         $data['verification_code'] = rand(100000, 999999);
-        $data['password'] = bcrypt($fields['password'] ?? $data['verification_code']);
+        $data['password'] = bcrypt($data['password'] ?? $data['verification_code']);
 
         DB::beginTransaction();
         try {

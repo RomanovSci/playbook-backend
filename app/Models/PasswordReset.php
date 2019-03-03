@@ -8,6 +8,9 @@ namespace App\Models;
  *
  * @property string user_uuid
  * @property string reset_code
+ *
+ * @property string expired_at
+ * @property string used_at
  */
 class PasswordReset extends BaseModel
 {
