@@ -22,6 +22,7 @@ class PasswordResetRepository
     {
         return PasswordReset::where('user_uuid', $user->uuid)
             ->where('expired_at', '>', Carbon::now()->toDateTimeString())
+            ->where('used_at', null)
             ->orderBy('created_at', 'desc')
             ->first();
     }
