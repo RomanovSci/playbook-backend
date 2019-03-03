@@ -328,7 +328,7 @@ class BookingController extends Controller
      */
     public function create(string $bookableType, BookingCreateFormRequest $request)
     {
-        $bookableUuid = (int) $request->post('bookable_uuid');
+        $bookableUuid = $request->post('bookable_uuid');
         $result = $this->bookingService->getBookingPrice(
             Carbon::parse($request->post('start_time')),
             Carbon::parse($request->post('end_time')),
