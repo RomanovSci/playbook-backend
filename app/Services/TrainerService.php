@@ -38,7 +38,7 @@ class TrainerService
         try {
             DB::beginTransaction();
             $info = TrainerInfo::create(array_merge($data, [
-                'user_id' => $user->uuid,
+                'user_uuid' => $user->uuid,
             ]));
 
             foreach ($data['playgrounds'] as $playgroundUuid) {
