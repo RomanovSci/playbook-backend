@@ -2,6 +2,8 @@
 
 namespace App\Providers;
 
+use App\Events\User\ResetPasswordEvent;
+use App\Listeners\User\SendResetPasswordNotification;
 use Illuminate\Foundation\Support\Providers\EventServiceProvider as ServiceProvider;
 
 /**
@@ -16,7 +18,9 @@ class EventServiceProvider extends ServiceProvider
      * @var array
      */
     protected $listen = [
-        //
+        ResetPasswordEvent::class => [
+            SendResetPasswordNotification::class,
+        ],
     ];
 
     /**
@@ -27,7 +31,5 @@ class EventServiceProvider extends ServiceProvider
     public function boot()
     {
         parent::boot();
-
-        //
     }
 }

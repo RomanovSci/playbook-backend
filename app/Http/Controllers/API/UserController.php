@@ -7,11 +7,12 @@ use App\Http\Controllers\Controller;
 use App\Http\Requests\User\LoginFormRequest;
 use App\Http\Requests\User\RegisterFormRequest;
 use App\Http\Requests\User\ResendVerificationCodeFormRequest;
+use App\Http\Requests\User\ResetPasswordFormRequest;
 use App\Http\Requests\User\VerifyPhoneFormRequest;
 use App\Models\Country;
 use App\Models\User;
 use App\Repositories\UserRepository;
-use App\Services\SmsDeliveryService\SmsDeliveryServiceInterface;
+use App\Services\UserService;
 use Carbon\Carbon;
 use Illuminate\Http\JsonResponse;
 use Illuminate\Http\Request;
@@ -27,18 +28,18 @@ use Laravel\Passport\PersonalAccessTokenResult;
 class UserController extends Controller
 {
     /**
-     * @var SmsDeliveryServiceInterface
+     * @var UserService
      */
-    protected $smsDeliveryService;
+    protected $userService;
 
     /**
      * UserController constructor.
      *
-     * @param SmsDeliveryServiceInterface $smsDeliveryService
+     * @param UserService $userService
      */
-    public function __construct(SmsDeliveryServiceInterface $smsDeliveryService)
+    public function __construct(UserService $userService)
     {
-        $this->smsDeliveryService = $smsDeliveryService;
+        $this->userService = $userService;
     }
 
     /**
@@ -363,5 +364,19 @@ class UserController extends Controller
         return $this->success([
             'verification_code' => $user->verification_code,
         ]);
+    }
+
+    /**
+     * @param ResetPasswordFormRequest $request
+     * @return JsonResponse
+     */
+    public function resetPassword(ResetPasswordFormRequest $request)
+    {
+        $resetResult = $this->userService->resetPassword(
+            UserRepository::getByPhone($request->get('phone'))
+        );
+        return $resetResult['success']
+            ? $this->success()
+            : $this->error(200, [], $resetResult['message']);
     }
 }
