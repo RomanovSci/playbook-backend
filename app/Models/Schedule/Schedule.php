@@ -112,7 +112,7 @@ class Schedule extends BaseModel
      */
     public function schedulable()
     {
-        return $this->morphTo();
+        return $this->morphTo(null, null, 'schedulable_uuid');
     }
 
     /**

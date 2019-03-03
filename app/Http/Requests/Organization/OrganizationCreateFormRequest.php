@@ -17,7 +17,7 @@ class OrganizationCreateFormRequest extends BaseFormRequest
     {
         return [
             'name' => 'required',
-            'city_uuid' => 'required|numeric|exists:cities,uuid',
+            'city_uuid' => 'required|uuid|exists:cities,uuid',
         ];
     }
 }

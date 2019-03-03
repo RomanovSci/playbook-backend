@@ -138,7 +138,7 @@ class Booking extends BaseModel
      */
     public function bookable()
     {
-        return $this->morphTo();
+        return $this->morphTo(null, null, 'bookable_uuid');
     }
 
     /**
