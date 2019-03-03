@@ -9,13 +9,13 @@ use Illuminate\Database\Eloquent\Relations\MorphTo;
  * Class Booking
  * @package App\Models
  *
- * @property integer bookable_id
+ * @property string bookable_uuid
  * @property integer bookable_type
- * @property integer creator_id
+ * @property string creator_uuid
  * @property string start_time
  * @property string end_time
  * @property integer status
- * @property integer playground_id
+ * @property string playground_uid
  * @property string note
  * @property integer price
  * @property string currency

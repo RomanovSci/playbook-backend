@@ -16,7 +16,7 @@ namespace App\Models;
  *              required={
  *                  "owner_uuid",
  *                  "name",
- *                  "city_id"
+ *                  "city_uuid"
  *              },
  *              @OA\Property(
  *                  property="owner_uuid",

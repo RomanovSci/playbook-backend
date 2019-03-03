@@ -14,7 +14,7 @@ use App\Models\User;
  * @property string end_time
  * @property integer price_per_hour
  * @property string currency
- * @property integer schedulable_id
+ * @property string schedulable_uuid
  * @property string schedulable_type
  *
  * @property Playground|User $schedulable

@@ -13,9 +13,9 @@ use App\Models\Schedule\Schedule;
  * @property string address
  * @property \DateTime opening_time
  * @property \DateTime closing_time
- * @property integer type_id
- * @property integer organization_id
- * @property integer creator_id
+ * @property string type_uuid
+ * @property string organization_uuid
+ * @property string creator_uuid
  * @property Organization organization
  * @property User creator
  *
