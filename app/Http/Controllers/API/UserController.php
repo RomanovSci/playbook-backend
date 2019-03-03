@@ -376,7 +376,7 @@ class UserController extends Controller
             UserRepository::getByPhone($request->get('phone'))
         );
         return $resetResult['success']
-            ? $this->success()
+            ? $this->success($resetResult['data'] ?? [])
             : $this->error(200, [], $resetResult['message']);
     }
 }

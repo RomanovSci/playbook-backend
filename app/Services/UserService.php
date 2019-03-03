@@ -1,6 +1,7 @@
 <?php
 
 namespace App\Services;
+use App\Events\User\ResetPasswordEvent;
 use App\Models\PasswordReset;
 use App\Models\User;
 use App\Repositories\PasswordResetRepository;
@@ -31,7 +32,15 @@ class UserService
                 ]);
             }
 
-            return ['success' => $passwordReset instanceof PasswordReset];
+            if (app()->environment() === 'production') {
+                event(new ResetPasswordEvent($passwordReset));
+                return ['success' => true];
+            }
+
+            return [
+                'success' => true,
+                'data' => $passwordReset
+            ];
         } catch (\Exception $e) {
             return [
                 'success' => false,
