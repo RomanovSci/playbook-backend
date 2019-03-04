@@ -1,6 +1,7 @@
 <?php
 
 namespace App\Services;
+use App\Events\User\RegisterUserEvent;
 use App\Events\User\ResetPasswordEvent;
 use App\Exceptions\Http\UnauthorizedHttpException;
 use App\Models\PasswordReset;
@@ -80,6 +81,7 @@ class UserService
             $token = $user->createToken('MyApp');
 
             DB::commit();
+            event(new RegisterUserEvent($user));
 
             return [
                 'success' => true,
@@ -114,15 +116,13 @@ class UserService
                     'expired_at' => Carbon::now()->addHours(3)
                 ]);
             }
-
-            if (app()->environment() === 'production') {
-                event(new ResetPasswordEvent($passwordReset));
-                return ['success' => true];
-            }
+            event(new ResetPasswordEvent($passwordReset));
 
             return [
                 'success' => true,
-                'data' => $passwordReset
+                'data' => (app()->environment() === 'production')
+                    ? null
+                    : $passwordReset
             ];
         } catch (\Exception $e) {
             return [

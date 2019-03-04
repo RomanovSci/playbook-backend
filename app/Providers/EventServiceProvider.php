@@ -2,8 +2,9 @@
 
 namespace App\Providers;
 
+use App\Events\User\RegisterUserEvent;
 use App\Events\User\ResetPasswordEvent;
-use App\Listeners\User\SendResetPasswordNotification;
+use App\Listeners\User\ResetPasswordListener;
 use Illuminate\Foundation\Support\Providers\EventServiceProvider as ServiceProvider;
 
 /**
@@ -18,9 +19,8 @@ class EventServiceProvider extends ServiceProvider
      * @var array
      */
     protected $listen = [
-        ResetPasswordEvent::class => [
-            SendResetPasswordNotification::class,
-        ],
+        ResetPasswordEvent::class => [ResetPasswordListener::class],
+        RegisterUserEvent::class => [],
     ];
 
     /**

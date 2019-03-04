@@ -11,6 +11,9 @@ use Mobizon\MobizonApi;
  */
 class SmsDeliveryServiceMobizon implements SmsDeliveryServiceInterface
 {
+    /**
+     * @var MobizonApi
+     */
     protected $mobizonApi;
 
     /**

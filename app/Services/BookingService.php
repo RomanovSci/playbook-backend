@@ -79,13 +79,13 @@ class BookingService
                 ) * $currencySubunit;
         }
 
-        $result['success'] = true;
-        $result['data'] = [
-            'currency' => $appropriateSchedule->currency,
-            'price' => $price,
+        return [
+            'success' => true,
+            'data' => [
+                'currency' => $appropriateSchedule->currency,
+                'price' => $price,
+            ]
         ];
-
-        return $result;
     }
 
     /**

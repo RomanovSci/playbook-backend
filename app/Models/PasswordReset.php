@@ -11,6 +11,8 @@ namespace App\Models;
  *
  * @property string expired_at
  * @property string used_at
+ *
+ * @property User user
  */
 class PasswordReset extends BaseModel
 {
@@ -27,4 +29,13 @@ class PasswordReset extends BaseModel
         'reset_code',
         'expired_at',
     ];
+
+
+    /**
+     * @return \Illuminate\Database\Eloquent\Relations\BelongsTo
+     */
+    public function user()
+    {
+        return $this->belongsTo(User::class);
+    }
 }

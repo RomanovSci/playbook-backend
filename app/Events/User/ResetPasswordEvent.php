@@ -1,6 +1,7 @@
 <?php
 
 namespace App\Events\User;
+
 use App\Models\PasswordReset;
 use Illuminate\Queue\SerializesModels;
 
