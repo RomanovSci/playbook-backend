@@ -39,10 +39,6 @@ class AppServiceProvider extends ServiceProvider
          * Bookable exists validation
          */
         Validator::extend('bookable_exists', function ($attribute, $value) {
-            if (!is_numeric($value)) {
-                return false;
-            }
-
             return User::where('uuid', $value)->exists() || Playground::where('uuid', $value)->exists();
         }, 'Bookable does not exists ');
     }
