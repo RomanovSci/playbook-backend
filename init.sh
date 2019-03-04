@@ -11,6 +11,8 @@ if [ ! -f ./docker/.env ]; then
     cp ./docker/env-example ./docker/.env
 fi
 
+cp ./docker/laravel-horizon/supervisord.d/laravel-horizon.conf.example ./docker/laravel-horizon/supervisord.d/laravel-horizon.conf
+
 cd docker
 
 docker-compose build nginx postgres redis laravel-horizon
