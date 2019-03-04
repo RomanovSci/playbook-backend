@@ -44,7 +44,7 @@ class BookingService
         );
 
         if (!$findScheduleResult['success']) {
-            return $findScheduleResult['message'];
+            return $findScheduleResult;
         }
 
         $appropriateSchedule = $findScheduleResult['schedule'];
@@ -57,7 +57,7 @@ class BookingService
         );
 
         if (!$scheduleAvailabilityCheckResult['success']) {
-            return $scheduleAvailabilityCheckResult['message'];
+            return $scheduleAvailabilityCheckResult;
         }
 
         $price = 0;
