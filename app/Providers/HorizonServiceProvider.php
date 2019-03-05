@@ -28,7 +28,8 @@ class HorizonServiceProvider extends HorizonApplicationServiceProvider
             Log::info($request->ip());
 
             return app()->environment('local') || in_array($request->ip(), [
-                '172.22.0.1'
+                '172.22.0.1',
+                '185.38.209.242'
             ]);
         });
     }
