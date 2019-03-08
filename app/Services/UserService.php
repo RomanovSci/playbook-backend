@@ -26,11 +26,14 @@ class UserService
      */
     public function loginUser(array $data): array
     {
-        /**
-         * @var User $user
-         * @var PasswordReset $passwordReset
-         */
+        /** @var User $user */
         $user = User::where('phone', $data['phone'])->first();
+
+        if (!$user) {
+            throw new UnauthorizedHttpException();
+        }
+
+        /** @var PasswordReset $passwordReset */
         $passwordReset = PasswordResetRepository::getActualByUser($user);
 
         /**
@@ -45,7 +48,7 @@ class UserService
             $passwordReset->update(['used_at']);
         }
 
-        if (!$user || !Hash::check($data['password'], $user->password)) {
+        if (!Hash::check($data['password'], $user->password)) {
             throw new UnauthorizedHttpException();
         }
 
