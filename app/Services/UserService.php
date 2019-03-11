@@ -1,9 +1,9 @@
 <?php
 
 namespace App\Services;
-use App\Events\User\RegisterUserEvent;
-use App\Events\User\ResetPasswordEvent;
+
 use App\Exceptions\Http\UnauthorizedHttpException;
+use App\Jobs\SendSms;
 use App\Models\PasswordReset;
 use App\Models\User;
 use App\Repositories\PasswordResetRepository;
@@ -82,9 +82,9 @@ class UserService
             $user = User::create($data);
             $user->assignRole($data['is_trainer'] ? User::ROLE_TRAINER : User::ROLE_USER);
             $token = $user->createToken('MyApp');
+            SendSms::dispatch($user->phone, $user->verification_code)->onConnection('redis');
 
             DB::commit();
-            event(new RegisterUserEvent($user));
 
             return [
                 'success' => true,
@@ -111,6 +111,7 @@ class UserService
     public function resetUserPassword(User $user): array
     {
         try {
+            /** @var PasswordReset $passwordReset */
             $passwordReset = PasswordResetRepository::getActualByUser($user);
 
             if (!$passwordReset) {
@@ -120,7 +121,7 @@ class UserService
                     'expired_at' => Carbon::now()->addHours(3)
                 ]);
             }
-            event(new ResetPasswordEvent($passwordReset));
+            SendSms::dispatch($user->phone, $passwordReset->reset_code)->onConnection('redis');
 
             return [
                 'success' => true,

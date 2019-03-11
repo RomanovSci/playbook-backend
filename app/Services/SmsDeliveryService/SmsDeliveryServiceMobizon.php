@@ -35,9 +35,9 @@ class SmsDeliveryServiceMobizon implements SmsDeliveryServiceInterface
      * @inheritdoc
      * @param string $phone
      * @param string $text
-     * @return bool
+     * @return array
      */
-    public function send(string $phone, string $text): bool
+    public function send(string $phone, string $text): array
     {
         try {
             $success = $this->mobizonApi->call('message', 'sendSMSMessage', [
@@ -46,16 +46,22 @@ class SmsDeliveryServiceMobizon implements SmsDeliveryServiceInterface
             ]);
         } catch (\Exception $e) {
             Log::error($e->getMessage());
-            return false;
+            return [
+                'success' => false,
+                'data' => null,
+            ];
         }
 
         if ($success) {
-            $data = $this->mobizonApi->getData();
-            Log::info(json_encode($data));
-
-            return true;
+            return [
+                'success' => true,
+                'data' => $this->mobizonApi->getData()
+            ];
         }
 
-        return false;
+        return [
+            'success' => false,
+            'data' => null,
+        ];
     }
 }
