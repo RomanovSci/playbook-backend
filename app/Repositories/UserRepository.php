@@ -50,4 +50,15 @@ class UserRepository
     {
         return User::where('phone', $phone)->firstOrFail();
     }
+
+    /**
+     * Get user by uuid
+     *
+     * @param string $uuid
+     * @return mixed
+     */
+    public static function getByUuid(string $uuid)
+    {
+        return User::where('uuid', $uuid)->firstOrFail();
+    }
 }

@@ -7,9 +7,11 @@ use App\Http\Controllers\Controller;
 use App\Http\Requests\Booking\BookingCreateFormRequest;
 use App\Http\Requests\Booking\BookingDeclineFormRequest;
 use App\Http\Requests\Common\TimeIntervalFormRequest;
+use App\Jobs\SendSms;
 use App\Models\Booking;
 use App\Models\User;
 use App\Repositories\BookingRepository;
+use App\Repositories\UserRepository;
 use App\Services\BookingService;
 use Carbon\Carbon;
 use Illuminate\Http\Request;
@@ -347,6 +349,13 @@ class BookingController extends Controller
             'price' => $result['data']['price'],
             'currency' => $result['data']['currency'],
         ]));
+
+        if ($bookableType === User::class && $bookableUuid !== Auth::user()->uuid) {
+            SendSms::dispatch(
+                UserRepository::getByUuid($bookableUuid)->phone,
+                __('sms.send_create_booking_notification')
+            )->onConnection('redis');
+        }
 
         return $this->success($booking->toArray());
     }
