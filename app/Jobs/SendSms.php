@@ -49,7 +49,7 @@ class SendSms implements ShouldQueue
      */
     public function handle(SmsDeliveryServiceInterface $smsDeliveryService)
     {
-        if (app()->environment() !== 'production') {
+        if (app()->environment() === 'production') {
             $result = $smsDeliveryService->send($this->phone, $this->text);
             SmsDelivery::create([
                 'phone' => $this->phone,
