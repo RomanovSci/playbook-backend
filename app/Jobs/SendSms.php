@@ -55,7 +55,7 @@ class SendSms implements ShouldQueue
                 'phone' => $this->phone,
                 'text' => $this->text,
                 'success' => $result['success'],
-                'data' => $result['data'],
+                'data' => $result['data'] ? json_encode((array) $result['data']) : null,
             ]);
         }
     }
