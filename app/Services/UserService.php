@@ -120,7 +120,10 @@ class UserService
                     'expired_at' => Carbon::now()->addHours(3)
                 ]);
             }
-            SendSms::dispatch($user->phone, $passwordReset->reset_code)->onConnection('redis');
+            SendSms::dispatch(
+                $user->phone,
+                __('sms.send_reset_code', ['code' => $passwordReset->reset_code])
+            )->onConnection('redis');
 
             return [
                 'success' => true,
