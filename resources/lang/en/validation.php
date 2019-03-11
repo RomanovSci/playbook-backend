@@ -137,5 +137,18 @@ return [
     | of "email". This simply helps us make messages a little cleaner.
     |
     */
-    'attributes' => [],
+    'attributes' => [
+        'start_time'     => 'start time',
+        'end_time'       => 'end time',
+        'opening_time'   => 'opening time',
+        'closing_time'   => 'closing time',
+        'price_per_hour' => 'price per hour',
+        'min_price'      => 'min price',
+        'max_price'      => 'max price',
+        'first_name'     => 'first name',
+        'last_name'      => 'last name',
+        'c_password'     => 'copy password',
+        'is_trainer'     => 'is trainer',
+
+    ],
 ];

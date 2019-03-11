@@ -154,5 +154,32 @@ return [
     |   ],
     |
     */
-    'attributes' => [],
+    'attributes' => [
+        'start_time'    => 'время начала',
+        'end_time'      => 'время конца',
+        'note'          => 'премичание',
+
+        'name'          => 'имя',
+        'description'   => 'описание',
+        'address'       => 'адрес',
+        'opening_time'  => 'время открытия',
+        'closing_time'  => 'время закрытия',
+
+        'price_per_hour' => 'цена за час',
+        'currency'       => 'валюта',
+        'dates'          => 'даты',
+        'playgrounds'    => 'площадки',
+
+        'about'     => 'об',
+        'min_price' => 'минимальная цена',
+        'max_price' => 'максимальная цена',
+
+        'first_name'    => 'имя',
+        'last_name'     => 'фамилия',
+        'phone'         => 'мобильный номер',
+        'password'      => 'пароль',
+        'c_password'    => 'повторить пароль',
+        'is_trainer'    => 'тренер',
+        'code'          => 'код',
+    ],
 ];
