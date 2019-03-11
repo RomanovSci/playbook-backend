@@ -88,12 +88,13 @@ class UserService
 
             return [
                 'success' => true,
-                'data' => [
+                'data' => array_merge([
                     'access_token' => $token->accessToken,
+                    'roles' => $user->getRoleNames(),
                     'verification_code' => (app()->environment() === 'production')
                         ? null
                         : $data['verification_code'],
-                ],
+                ], $user->toArray()),
             ];
         } catch (\Throwable $e) {
             DB::rollBack();
