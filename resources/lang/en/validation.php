@@ -120,6 +120,13 @@ return [
     | convention "attribute.rule" to name the lines. This makes it quick to
     | specify a specific custom language line for a given attribute rule.
     |
+    | Example:
+    |   'custom' => [
+    |       'email' => [
+    |           'required' => 'Нам необходимо знать Ваш электронный адрес!',
+    |       ],
+    |   ]
+    |
     */
     'custom' => [
         'attribute-name' => [
