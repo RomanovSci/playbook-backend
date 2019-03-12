@@ -3,6 +3,7 @@
 namespace App\Services;
 
 use App\Models\File;
+use App\Objects\Service\ExecResult;
 use Illuminate\Database\Eloquent\Model;
 use Illuminate\Http\UploadedFile;
 use Illuminate\Support\Facades\Storage;
@@ -19,13 +20,13 @@ class FileService
      * @param string $path
      * @param UploadedFile $uploadedFile
      * @param Model $relatedModel
-     * @return File
+     * @return ExecResult
      */
-    public function upload(
+    public static function upload(
         string $path,
         UploadedFile  $uploadedFile,
         Model $relatedModel
-    ): File {
+    ): ExecResult {
         $uploadedFile->store($path);
 
         $file = new File();
@@ -37,6 +38,8 @@ class FileService
         $file->mime_type = $uploadedFile->getMimeType();
         $file->save();
 
-        return $file;
+        return ExecResult::instance()->setData([
+            'file' => $file,
+        ]);
     }
 }

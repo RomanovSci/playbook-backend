@@ -23,18 +23,6 @@ use Illuminate\Support\Facades\Auth;
  */
 class ScheduleController extends Controller
 {
-    protected $scheduleService;
-
-    /**
-     * ScheduleController constructor.
-     *
-     * @param ScheduleService $scheduleService
-     */
-    public function __construct(ScheduleService $scheduleService)
-    {
-        $this->scheduleService = $scheduleService;
-    }
-
     /**
      * @param TimeIntervalFormRequest $request
      * @param string $schedulableType
@@ -171,7 +159,6 @@ class ScheduleController extends Controller
      * @param string $schedulableType
      * @return JsonResponse
      *
-     * @throws \App\Exceptions\Internal\IncorrectDateRange
      * @throws \Throwable
      *
      * @OA\Post(
@@ -231,19 +218,17 @@ class ScheduleController extends Controller
     public function create(ScheduleCreateFormRequest $request, string $schedulableType)
     {
         /** @var User $schedulable */
-        $isForTrainer = $schedulableType === User::class;
         $schedulable = Auth::user();
-        $requestData = $request->all();
 
         /**
          * Restrict create schedule
          * for admin and organization-admin
          */
-        if ($isForTrainer && !$schedulable->hasRole(['trainer'])) {
+        if ($schedulableType === User::class && !$schedulable->hasRole(['trainer'])) {
             throw new ForbiddenHttpException(__('errors.only_trainer_can_create_schedule'));
         }
 
-        if (!$isForTrainer) {
+        if ($schedulableType === Playground::class) {
             $schedulable = Playground::find($request->post('playgrounds')[0]);
 
             /**
@@ -256,8 +241,8 @@ class ScheduleController extends Controller
             }
         }
 
-        $creationResult = $this->scheduleService->create($schedulable, $requestData);
-        return $this->success($creationResult);
+        $createResult = ScheduleService::create($schedulable, $request->all());
+        return $this->success($createResult->getData('schedules'));
     }
 
     /**
@@ -332,7 +317,7 @@ class ScheduleController extends Controller
         }
 
         return $this->success(
-            $this->scheduleService->edit($schedule, $request->all())
+            ScheduleService::edit($schedule, $request->all())->getData('schedule')
         );
     }
 

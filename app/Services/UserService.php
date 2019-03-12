@@ -6,6 +6,7 @@ use App\Exceptions\Http\UnauthorizedHttpException;
 use App\Jobs\SendSms;
 use App\Models\PasswordReset;
 use App\Models\User;
+use App\Objects\Service\ExecResult;
 use App\Repositories\PasswordResetRepository;
 use Carbon\Carbon;
 use Illuminate\Support\Facades\DB;
@@ -22,9 +23,9 @@ class UserService
      * Login user
      *
      * @param array $data
-     * @return array
+     * @return ExecResult
      */
-    public function loginUser(array $data): array
+    public static function login(array $data): ExecResult
     {
         /** @var User $user */
         $user = User::where('phone', $data['phone'])->first();
@@ -52,23 +53,22 @@ class UserService
             throw new UnauthorizedHttpException();
         }
 
-        return [
-            'success' => true,
-            'data' => array_merge([
+        return ExecResult::instance()
+            ->setSuccess()
+            ->setData(array_merge([
                 'access_token' => $user->createToken('MyApp')->accessToken,
                 'roles' => $user->getRoleNames(),
-            ], $user->toArray())
-        ];
+            ], $user->toArray()));
     }
 
     /**
      * Register new user
      *
      * @param array $data
-     * @return array
+     * @return ExecResult
      * @throws \Throwable
      */
-    public function registerUser(array $data): array
+    public static function register(array $data): ExecResult
     {
         $data['verification_code'] = rand(100000, 999999);
         $data['password'] = bcrypt($data['password'] ?? $data['verification_code']);
@@ -85,16 +85,15 @@ class UserService
 
             DB::commit();
 
-            return [
-                'success' => true,
-                'data' => array_merge([
+            return ExecResult::instance()
+                ->setSuccess()
+                ->setData(array_merge([
                     'access_token' => $token->accessToken,
                     'roles' => $user->getRoleNames(),
                     'verification_code' => (app()->environment() === 'production')
                         ? null
                         : $data['verification_code'],
-                ], $user->toArray()),
-            ];
+                ], $user->toArray()));
         } catch (\Throwable $e) {
             DB::rollBack();
             throw $e;
@@ -105,9 +104,9 @@ class UserService
      * Reset user password
      *
      * @param User $user
-     * @return array
+     * @return ExecResult
      */
-    public function resetUserPassword(User $user): array
+    public static function resetPassword(User $user): ExecResult
     {
         try {
             /** @var PasswordReset $passwordReset */
@@ -125,17 +124,15 @@ class UserService
                 __('sms.user.reset', ['code' => $passwordReset->reset_code])
             )->onConnection('redis');
 
-            return [
-                'success' => true,
-                'data' => (app()->environment() === 'production')
-                    ? null
-                    : $passwordReset
-            ];
+            return ExecResult::instance()
+                ->setSuccess()
+                ->setData(
+                    app()->environment() === 'production'
+                        ? []
+                        : ['passwordReset' => $passwordReset]
+                );
         } catch (\Exception $e) {
-            return [
-                'success' => false,
-                'message' => $e->getMessage(),
-            ];
+            return ExecResult::instance()->setMessage($e->getMessage());
         }
     }
 }

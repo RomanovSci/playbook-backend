@@ -10,7 +10,6 @@ use App\Http\Requests\TrainerInfo\TrainerInfoEditFormRequest;
 use App\Models\TrainerInfo;
 use App\Models\User;
 use App\Repositories\UserRepository;
-use App\Services\FileService;
 use App\Services\TrainerService;
 use Illuminate\Http\JsonResponse;
 use Illuminate\Support\Facades\Auth;
@@ -21,21 +20,6 @@ use Illuminate\Support\Facades\Auth;
  */
 class TrainerController extends Controller
 {
-    protected $trainerService;
-    protected $fileService;
-
-    /**
-     * TrainerController constructor.
-     *
-     * @param TrainerService $trainerService
-     * @param FileService $fileService
-     */
-    public function __construct(TrainerService $trainerService, FileService $fileService)
-    {
-        $this->trainerService = $trainerService;
-        $this->fileService = $fileService;
-    }
-
     /**
      * @param GetFormRequest $request
      * @return JsonResponse
@@ -280,11 +264,11 @@ class TrainerController extends Controller
             return $this->error(200, [], __('errors.trainer_info_exists'));
         }
 
-        $info = $this->trainerService->createInfo($user, $request->all());
+        $createResult = TrainerService::createInfo($user, $request->all());
 
-        return $this->success(array_merge($info->toArray(), [
+        return $this->success(array_merge($createResult->getData('info')->toArray(), [
             'playgrounds' => $user->playgrounds,
-            'images' => $info->images,
+            'images' => $createResult->getData('info')->images,
         ]));
     }
 
@@ -375,10 +359,10 @@ class TrainerController extends Controller
             throw new ForbiddenHttpException(__('errors.user_cant_edit_info'));
         }
 
-        $info = $this->trainerService->editInfo($user, $info, $request->all());
-        return $this->success(array_merge($info->toArray(), [
+        $editResult = TrainerService::editInfo($user, $info, $request->all());
+        return $this->success(array_merge($editResult->getData('info')->toArray(), [
             'playgrounds' => $user->playgrounds,
-            'images' => $info->images,
+            'images' => $editResult->getData('info')->images,
         ]));
     }
 }

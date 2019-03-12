@@ -6,6 +6,7 @@ use App\Exceptions\Internal\IncorrectDateRange;
 use App\Helpers\DateTimeHelper;
 use App\Models\Schedule\Schedule;
 use App\Models\SchedulePlayground;
+use App\Objects\Service\ExecResult;
 use App\Repositories\ScheduleRepository;
 use Carbon\Carbon;
 use Illuminate\Database\Eloquent\Model;
@@ -23,12 +24,11 @@ class ScheduleService
      *
      * @param Model $schedulable
      * @param array $data
-     * @return array
+     * @return ExecResult
      *
-     * @throws IncorrectDateRange
      * @throws \Throwable
      */
-    public function create(Model $schedulable, array $data): array
+    public static function create(Model $schedulable, array $data): ExecResult
     {
         $schedules = [];
         $data['price_per_hour'] = money($data['price_per_hour'], $data['currency'])->getAmount();
@@ -42,7 +42,7 @@ class ScheduleService
                 /**
                  * Check if time periods is overlaps
                  */
-                if ($this->periodsIsOverlaps($schedulable, $startTime, $endTime)) {
+                if (self::periodsIsOverlaps($schedulable, $startTime, $endTime)) {
                     throw new IncorrectDateRange(__('errors.schedule_already_exists'));
                 }
 
@@ -72,15 +72,12 @@ class ScheduleService
         } catch (\Throwable $e) {
             DB::rollBack();
             Log::error($e->getMessage());
-
-            if ($e instanceof IncorrectDateRange) {
-                throw $e;
-            }
-
             throw $e;
         }
 
-        return $schedules;
+        return ExecResult::instance()
+            ->setSuccess()
+            ->setData(['schedules' => $schedules]);
     }
 
     /**
@@ -88,21 +85,24 @@ class ScheduleService
      *
      * @param Schedule $schedule
      * @param array $data
-     * @return Schedule
+     * @return ExecResult
      *
      * @throws IncorrectDateRange
      */
-    public function edit(Schedule $schedule, array $data): Schedule
+    public static function edit(Schedule $schedule, array $data): ExecResult
     {
         $newStartTime = Carbon::parse($data['start_time']);
         $newEndTime = Carbon::parse($data['end_time']);
 
-        if ($this->periodsIsOverlaps($schedule->schedulable, $newStartTime, $newEndTime, [$schedule])) {
+        if (self::periodsIsOverlaps($schedule->schedulable, $newStartTime, $newEndTime, [$schedule])) {
             throw new IncorrectDateRange();
         }
 
         $schedule->fill($data)->update();
-        return $schedule;
+
+        return ExecResult::instance()
+            ->setSuccess()
+            ->setData(['schedule' => $schedule]);
     }
 
     /**
@@ -116,7 +116,7 @@ class ScheduleService
      *
      * @throws IncorrectDateRange
      */
-    protected function periodsIsOverlaps(
+    public static function periodsIsOverlaps(
         Model $schedulable,
         Carbon $startTime,
         Carbon $endTime,

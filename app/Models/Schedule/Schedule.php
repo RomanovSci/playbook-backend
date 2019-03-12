@@ -5,13 +5,14 @@ namespace App\Models\Schedule;
 use App\Models\BaseModel;
 use App\Models\Playground;
 use App\Models\User;
+use Carbon\Carbon;
 
 /**
  * Class PlaygroundSchedule
  * @package App\Models
  *
- * @property string start_time
- * @property string end_time
+ * @property Carbon start_time
+ * @property Carbon end_time
  * @property integer price_per_hour
  * @property string currency
  * @property string schedulable_uuid

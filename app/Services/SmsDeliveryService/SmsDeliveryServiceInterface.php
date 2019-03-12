@@ -2,6 +2,8 @@
 
 namespace App\Services\SmsDeliveryService;
 
+use App\Objects\Service\ExecResult;
+
 /**
  * Interface SmsDeliveryServiceInterface
  * @package App\Services\SmsDeliveryService
@@ -22,5 +24,5 @@ interface SmsDeliveryServiceInterface
      * @param string $text
      * @return array
      */
-    public function send(string $phone, string $text): array;
+    public function send(string $phone, string $text): ExecResult;
 }

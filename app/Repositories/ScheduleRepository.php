@@ -116,6 +116,7 @@ class ScheduleRepository
         );
         $mergedSchedules = new Collection();
 
+        /** @var Schedule $schedule */
         foreach ($schedules as $schedule) {
             $mergedSchedule = new MergedSchedule();
             $mergedSchedule->start_time = $schedule->start_time;
@@ -132,7 +133,7 @@ class ScheduleRepository
             /** @var MergedSchedule $lastMerged */
             $lastMerged = $mergedSchedules->last();
 
-            if ($schedule->start_time === $lastMerged->end_time) {
+            if ($schedule->start_time->eq($lastMerged->end_time)) {
                 $lastMerged->end_time = $schedule->end_time;
                 $lastMerged->setSchedule(clone $schedule);
                 continue;

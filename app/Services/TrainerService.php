@@ -5,6 +5,7 @@ namespace App\Services;
 use App\Models\TrainerInfo;
 use App\Models\User;
 use App\Models\UserPlayground;
+use App\Objects\Service\ExecResult;
 use Illuminate\Support\Facades\DB;
 
 /**
@@ -13,27 +14,15 @@ use Illuminate\Support\Facades\DB;
  */
 class TrainerService
 {
-    protected $fileService;
-
-    /**
-     * TrainerService constructor.
-     *
-     * @param FileService $fileService
-     */
-    public function __construct(FileService $fileService)
-    {
-        $this->fileService = $fileService;
-    }
-
     /**
      * Create trainer info
      *
      * @param User $user
      * @param array $data
-     * @return TrainerInfo
+     * @return ExecResult
      * @throws \Throwable
      */
-    public function createInfo(User $user, array $data): TrainerInfo
+    public static function createInfo(User $user, array $data): ExecResult
     {
         try {
             DB::beginTransaction();
@@ -49,7 +38,7 @@ class TrainerService
             }
 
             if (isset($data['image'])) {
-                $this->fileService->upload('trainer/' . $user->uuid, $data['image'], $info);
+                FileService::upload('trainer/' . $user->uuid, $data['image'], $info);
             }
         } catch (\Throwable $e) {
             DB::rollBack();
@@ -57,7 +46,11 @@ class TrainerService
         }
 
         DB::commit();
-        return $info;
+        return ExecResult::instance()
+            ->setSuccess()
+            ->setData([
+                'info' => $info
+            ]);
     }
 
     /**
@@ -66,10 +59,10 @@ class TrainerService
      * @param User $user
      * @param TrainerInfo $info
      * @param array $data
-     * @return TrainerInfo
+     * @return ExecResult
      * @throws \Throwable
      */
-    public function editInfo(User $user, TrainerInfo $info, array $data): TrainerInfo
+    public static function editInfo(User $user, TrainerInfo $info, array $data): ExecResult
     {
         try {
             DB::beginTransaction();
@@ -85,7 +78,7 @@ class TrainerService
 
             if (isset($data['image'])) {
                 $info->images()->delete();
-                $this->fileService->upload('trainer/' . $user->uuid, $data['image'], $info);
+                FileService::upload('trainer/' . $user->uuid, $data['image'], $info);
             }
         } catch (\Throwable $e) {
             DB::rollBack();
@@ -93,6 +86,10 @@ class TrainerService
         }
 
         DB::commit();
-        return $info;
+        return ExecResult::instance()
+            ->setSuccess()
+            ->setData([
+                'info' => $info
+            ]);
     }
 }

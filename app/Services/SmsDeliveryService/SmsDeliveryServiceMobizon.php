@@ -2,6 +2,7 @@
 
 namespace App\Services\SmsDeliveryService;
 
+use App\Objects\Service\ExecResult;
 use Illuminate\Support\Facades\Log;
 use Mobizon\MobizonApi;
 
@@ -37,7 +38,7 @@ class SmsDeliveryServiceMobizon implements SmsDeliveryServiceInterface
      * @param string $text
      * @return array
      */
-    public function send(string $phone, string $text): array
+    public function send(string $phone, string $text): ExecResult
     {
         try {
             $success = $this->mobizonApi->call('message', 'sendSMSMessage', [
@@ -46,22 +47,17 @@ class SmsDeliveryServiceMobizon implements SmsDeliveryServiceInterface
             ]);
         } catch (\Exception $e) {
             Log::error($e->getMessage());
-            return [
-                'success' => false,
-                'data' => null,
-            ];
+            return ExecResult::instance();
         }
 
         if ($success) {
-            return [
-                'success' => true,
-                'data' => $this->mobizonApi->getData()
-            ];
+            return ExecResult::instance()
+                ->setSuccess()
+                ->setData(
+                    (array) $this->mobizonApi->getData()
+                );
         }
 
-        return [
-            'success' => false,
-            'data' => null,
-        ];
+        return ExecResult::instance();
     }
 }

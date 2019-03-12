@@ -12,6 +12,6 @@ class ResendVerificationCodeFormRequest extends BaseFormRequest
 {
     public function rules()
     {
-        return ['phone' => 'required|numeric|digits_between:min:9,12|exists:users,phone'];
+        return ['phone' => 'required|numeric|digits_between:9,12|exists:users,phone'];
     }
 }

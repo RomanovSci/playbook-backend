@@ -54,8 +54,8 @@ class SendSms implements ShouldQueue
             SmsDelivery::create([
                 'phone' => $this->phone,
                 'text' => $this->text,
-                'success' => $result['success'],
-                'data' => $result['data'] ? json_encode((array) $result['data']) : null,
+                'success' => $result->getSuccess(),
+                'data' => json_encode($result->getData()),
             ]);
         }
     }

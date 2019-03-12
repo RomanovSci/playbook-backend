@@ -2,7 +2,6 @@
 
 namespace App\Http\Controllers\API;
 
-use App\Exceptions\Http\UnauthorizedHttpException;
 use App\Http\Controllers\Controller;
 use App\Http\Requests\User\LoginFormRequest;
 use App\Http\Requests\User\RegisterFormRequest;
@@ -23,21 +22,6 @@ use Illuminate\Support\Facades\Auth;
  */
 class UserController extends Controller
 {
-    /**
-     * @var UserService
-     */
-    protected $userService;
-
-    /**
-     * UserController constructor.
-     *
-     * @param UserService $userService
-     */
-    public function __construct(UserService $userService)
-    {
-        $this->userService = $userService;
-    }
-
     /**
      * @param RegisterFormRequest $request
      * @return JsonResponse
@@ -95,8 +79,7 @@ class UserController extends Controller
      */
     public function register(RegisterFormRequest $request)
     {
-        $registerResult = $this->userService->registerUser($request->all());
-        return $this->success($registerResult['data']);
+        return $this->success(UserService::register($request->all())->getData());
     }
 
     /**
@@ -161,8 +144,7 @@ class UserController extends Controller
      */
     public function login(LoginFormRequest $request)
     {
-        $loginResult = $this->userService->loginUser($request->all());
-        return $this->success($loginResult['data']);
+        return $this->success(UserService::login($request->all())->getData());
     }
 
     /**
@@ -377,12 +359,12 @@ class UserController extends Controller
      */
     public function resetPassword(ResetPasswordFormRequest $request)
     {
-        $resetResult = $this->userService->resetUserPassword(
+        $resetResult = UserService::resetPassword(
             UserRepository::getByPhone($request->get('phone'))
         );
 
-        return $resetResult['success']
-            ? $this->success($resetResult['data'] ?? [])
-            : $this->error(200, [], $resetResult['message']);
+        return $resetResult->getSuccess()
+            ? $this->success($resetResult->getData('passwordReset'))
+            : $this->error(200, [], $resetResult->getMessage());
     }
 }

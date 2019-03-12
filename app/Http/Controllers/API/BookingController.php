@@ -14,7 +14,6 @@ use App\Repositories\BookingRepository;
 use App\Repositories\UserRepository;
 use App\Services\BookingService;
 use Carbon\Carbon;
-use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\Gate;
 
@@ -24,21 +23,6 @@ use Illuminate\Support\Facades\Gate;
  */
 class BookingController extends Controller
 {
-    /**
-     * @var BookingService
-     */
-    protected $bookingService;
-
-    /**
-     * BookingController constructor.
-     *
-     * @param BookingService $bookingService
-     */
-    public function __construct(BookingService $bookingService)
-    {
-        $this->bookingService = $bookingService;
-    }
-
     /**
      * @param TimeIntervalFormRequest $request
      * @param string $bookableType
@@ -331,23 +315,23 @@ class BookingController extends Controller
     public function create(string $bookableType, BookingCreateFormRequest $request)
     {
         $bookableUuid = $request->post('bookable_uuid');
-        $result = $this->bookingService->getBookingPrice(
+        $result = BookingService::getBookingPrice(
             Carbon::parse($request->post('start_time')),
             Carbon::parse($request->post('end_time')),
             $bookableType,
             $bookableUuid
         );
 
-        if (!$result['success']) {
-            throw new ForbiddenHttpException($result['message']);
+        if (!$result->getSuccess()) {
+            throw new ForbiddenHttpException($result->getMessage());
         }
 
         /** @var Booking $booking */
         $booking = Booking::create(array_merge($request->all(), [
             'bookable_type' => $bookableType,
             'creator_uuid' => Auth::user()->uuid,
-            'price' => $result['data']['price'],
-            'currency' => $result['data']['currency'],
+            'price' => $result->getData('price'),
+            'currency' => $result->getData('currency'),
         ]));
 
         if ($bookableType === User::class && $bookableUuid !== Auth::user()->uuid) {
@@ -418,19 +402,19 @@ class BookingController extends Controller
      */
     public function confirm(Booking $booking)
     {
-        $canConfirm = $this->bookingService->canConfirm($booking);
+        $canConfirmResult = BookingService::canConfirm($booking);
 
-        if (!$canConfirm['success'] || Auth::user()->cant('confirmBooking', $booking)) {
-            throw new ForbiddenHttpException($canConfirm['message'] ?: __('errors.cant_confirm_booking'));
+        if (!$canConfirmResult->getSuccess() || Auth::user()->cant('confirmBooking', $booking)) {
+            throw new ForbiddenHttpException($canConfirmResult->getMessage() ?: __('errors.cant_confirm_booking'));
         }
 
-        $changeStatusResult = $this->bookingService->changeBookingStatus(
+        $changeStatusResult = BookingService::changeBookingStatus(
             $booking,
             Booking::STATUS_CONFIRMED
         );
 
-        if (!$changeStatusResult['success']) {
-            $this->error(200, $booking->toArray(), $changeStatusResult['message']);
+        if (!$changeStatusResult->getSuccess()) {
+            $this->error(200, $booking->toArray(), $changeStatusResult->getMessage());
         }
 
         return $this->success($booking->toArray());
@@ -509,14 +493,14 @@ class BookingController extends Controller
             throw new ForbiddenHttpException(__('errors.cant_decline_booking'));
         }
 
-        $changeStatusResult = $this->bookingService->changeBookingStatus(
+        $changeStatusResult = BookingService::changeBookingStatus(
             $booking,
             Booking::STATUS_DECLINED,
             $request->post('note')
         );
 
-        if (!$changeStatusResult['success']) {
-            $this->error(200, $booking->toArray(), $changeStatusResult['message']);
+        if (!$changeStatusResult->getSuccess()) {
+            $this->error(200, $booking->toArray(), $changeStatusResult->getMessage());
         }
 
         return $this->success($booking->toArray());

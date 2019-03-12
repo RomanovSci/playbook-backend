@@ -10,6 +10,7 @@ use App\Models\Playground;
 use App\Models\Schedule\MergedSchedule;
 use App\Models\Schedule\Schedule;
 use App\Models\User;
+use App\Objects\Service\ExecResult;
 use App\Repositories\BookingRepository;
 use App\Repositories\ScheduleRepository;
 use Carbon\Carbon;
@@ -28,16 +29,16 @@ class BookingService
      * @param Carbon $endTime
      * @param string $bookableType
      * @param string $bookableUuid
-     * @return array
+     * @return ExecResult
      *
      * @throws \App\Exceptions\Internal\IncorrectDateRange
      */
-    public function getBookingPrice(
+    public static function getBookingPrice(
         Carbon $startTime,
         Carbon $endTime,
         string $bookableType,
         string $bookableUuid
-    ): array {
+    ): ExecResult {
         $findScheduleResult = BookingService::findAppropriateSchedule(
             $startTime,
             $endTime,
@@ -45,11 +46,12 @@ class BookingService
             $bookableUuid
         );
 
-        if (!$findScheduleResult['success']) {
+        if (!$findScheduleResult->getSuccess()) {
             return $findScheduleResult;
         }
 
-        $appropriateSchedule = $findScheduleResult['schedule'];
+        /** @var MergedSchedule $appropriateSchedule */
+        $appropriateSchedule = $findScheduleResult->getData('schedule');
         $scheduleAvailabilityCheckResult = BookingService::checkScheduleTimeAvailability(
             $startTime,
             $endTime,
@@ -58,7 +60,7 @@ class BookingService
             $appropriateSchedule
         );
 
-        if (!$scheduleAvailabilityCheckResult['success']) {
+        if (!$scheduleAvailabilityCheckResult->getSuccess()) {
             return $scheduleAvailabilityCheckResult;
         }
 
@@ -81,13 +83,12 @@ class BookingService
                 ) * $currencySubunit;
         }
 
-        return [
-            'success' => true,
-            'data' => [
+        return ExecResult::instance()
+            ->setSuccess()
+            ->setData([
                 'currency' => $appropriateSchedule->currency,
                 'price' => $price,
-            ]
-        ];
+            ]);
     }
 
     /**
@@ -97,22 +98,16 @@ class BookingService
      * @param Carbon $endTime
      * @param string $bookableType
      * @param string $bookableUuid
-     * @return array
+     * @return ExecResult
      */
     public static function findAppropriateSchedule(
         Carbon $startTime,
         Carbon $endTime,
         string $bookableType,
         string $bookableUuid
-    ): array {
-        $result = [
-            'success' => false,
-            'message' => '',
-        ];
-
+    ): ExecResult {
         if (!in_array($bookableType, [User::class, Playground::class])) {
-            $result['message'] = __('errors.incorrect_bookable_type');
-            return $result;
+            return ExecResult::instance()->setMessage(__('errors.incorrect_bookable_type'));
         }
 
         /**
@@ -135,14 +130,14 @@ class BookingService
         }
 
         if (!$appropriateSchedule) {
-            $result['message'] = __('errors.schedule_time_unavailable');
-            return $result;
+            return ExecResult::instance()->setMessage(__('errors.schedule_time_unavailable'));
         }
 
-        $result['success'] = true;
-        $result['schedule'] = $appropriateSchedule;
-
-        return $result;
+        return ExecResult::instance()
+            ->setSuccess()
+            ->setData([
+                'schedule' => $appropriateSchedule
+            ]);
     }
 
     /**
@@ -153,7 +148,7 @@ class BookingService
      * @param string $bookableType
      * @param string $bookableUuid
      * @param Schedule $schedule
-     * @return array
+     * @return ExecResult
      * @throws \App\Exceptions\Internal\IncorrectDateRange
      */
     public static function checkScheduleTimeAvailability(
@@ -162,9 +157,7 @@ class BookingService
         string $bookableType,
         string $bookableUuid,
         Schedule $schedule
-    ): array {
-        $result = ['success' => false, 'message' => ''];
-
+    ): ExecResult {
         $confirmedBookings = BookingRepository::getBetween(
             Carbon::parse($schedule->start_time),
             Carbon::parse($schedule->end_time),
@@ -181,36 +174,31 @@ class BookingService
                 $endTime
             )) {
                 /** Can't get price for reserved period */
-                $result['message'] = __('errors.time_already_reserved');
-                return $result;
+                return ExecResult::instance()->setMessage(__('errors.time_already_reserved'));
             }
         }
 
-        $result['success'] = true;
-        return $result;
+        return ExecResult::instance()->setSuccess();
     }
 
     /**
      * Determinate if booking can be confirmed
      *
      * @param Booking $booking
-     * @return array
+     * @return ExecResult
      */
-    public function canConfirm(Booking $booking): array
+    public static function canConfirm(Booking $booking): ExecResult
     {
-        $result = ['success' => false, 'message' => '',];
         $confirmedBookingsCount = BookingRepository::getConfirmedInDatesRange(
             Carbon::parse($booking->start_time),
             Carbon::parse($booking->end_time)
         )->count();
 
         if ($confirmedBookingsCount === 0) {
-            $result['success'] = true;
-        } else {
-            $result['message'] = __('errors.booking_time_busy');
+            return ExecResult::instance()->setSuccess();
         }
 
-        return $result;
+        return ExecResult::instance()->setMessage(__('errors.booking_time_busy'));
     }
 
     /**
@@ -219,18 +207,15 @@ class BookingService
      * @param Booking $booking
      * @param int $status
      * @param string|null $note
-     * @return array
+     * @return ExecResult
      */
-    public function changeBookingStatus(
+    public static function changeBookingStatus(
         Booking $booking,
         int $status,
         string $note = null
-    ): array {
+    ): ExecResult {
         if ($booking->status === $status) {
-            return [
-                'success' => false,
-                'message' => __('errors.status_already_set'),
-            ];
+            return ExecResult::instance()->setMessage(__('errors.status_already_set'));
         }
 
         $booking->status = $status;
@@ -268,9 +253,6 @@ class BookingService
             }
         }
 
-        return [
-            'success' => $result,
-            'message' => null,
-        ];
+        return ExecResult::instance()->setSuccess();
     }
 }
