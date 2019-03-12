@@ -15,6 +15,6 @@ class BookingDeclineFormRequest extends BaseFormRequest
      */
     public function rules()
     {
-        return ['note' => 'required'];
+        return ['note' => 'required|string||max:255'];
     }
 }

@@ -21,7 +21,8 @@ use Illuminate\Database\Eloquent\Relations\MorphTo;
  * @property string currency
  *
  * @property Schedule schedule
- * @property Playground|User $bookable
+ * @property Playground|User bookable
+ * @property User creator
  *
  * @OA\Schema(
  *      allOf={

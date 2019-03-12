@@ -353,7 +353,7 @@ class BookingController extends Controller
         if ($bookableType === User::class && $bookableUuid !== Auth::user()->uuid) {
             SendSms::dispatch(
                 UserRepository::getByUuid($bookableUuid)->phone,
-                __('sms.send_create_booking_notification')
+                __('sms.booking.create')
             )->onConnection('redis');
         }
 
@@ -362,7 +362,6 @@ class BookingController extends Controller
 
     /**
      * @param Booking $booking
-     * @param Request $request
      * @return \Illuminate\Http\JsonResponse
      *
      * @OA\Post(
@@ -417,7 +416,7 @@ class BookingController extends Controller
      *      security={{"Bearer":{}}}
      * )
      */
-    public function confirm(Booking $booking, Request $request)
+    public function confirm(Booking $booking)
     {
         $canConfirm = $this->bookingService->canConfirm($booking);
 
@@ -425,7 +424,16 @@ class BookingController extends Controller
             throw new ForbiddenHttpException($canConfirm['message'] ?: __('errors.cant_confirm_booking'));
         }
 
-        return $this->changeStatus($booking, $request, Booking::STATUS_CONFIRMED);
+        $changeStatusResult = $this->bookingService->changeBookingStatus(
+            $booking,
+            Booking::STATUS_CONFIRMED
+        );
+
+        if (!$changeStatusResult['success']) {
+            $this->error(200, $booking->toArray(), $changeStatusResult['message']);
+        }
+
+        return $this->success($booking->toArray());
     }
 
     /**
@@ -501,26 +509,15 @@ class BookingController extends Controller
             throw new ForbiddenHttpException(__('errors.cant_decline_booking'));
         }
 
-        return $this->changeStatus($booking, $request, Booking::STATUS_DECLINED);
-    }
+        $changeStatusResult = $this->bookingService->changeBookingStatus(
+            $booking,
+            Booking::STATUS_DECLINED,
+            $request->post('note')
+        );
 
-    /**
-     * Change booking status
-     *
-     * @param Booking $booking
-     * @param Request $request
-     * @param int $status
-     * @return \Illuminate\Http\JsonResponse
-     */
-    protected function changeStatus(Booking $booking, Request $request, int $status)
-    {
-        if ($booking->status === $status) {
-            return $this->error(200, $booking->toArray(), __('errors.status_already_set'));
+        if (!$changeStatusResult['success']) {
+            $this->error(200, $booking->toArray(), $changeStatusResult['message']);
         }
-
-        $booking->status = $status;
-        $booking->note = $request->post('note');
-        $booking->update(['status', 'note']);
 
         return $this->success($booking->toArray());
     }

@@ -1,6 +1,12 @@
 <?php
 
 return [
-    'send_reset_code' => 'New password for sign in: :code',
-    'send_create_booking_notification' => 'You have new booking request.',
+    /** User */
+    'user.reset' => 'New password for sign in: :code',
+
+    /** Booking */
+    'booking.create'             => 'You have new booking request.',
+    'booking.decline_by_trainer' => 'Booking was declined by trainer',
+    'booking.decline_by_user'    => 'Booking was declined by user',
+    'booking.confirm'            => 'Booking was confirmed',
 ];

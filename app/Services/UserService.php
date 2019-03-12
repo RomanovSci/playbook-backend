@@ -122,7 +122,7 @@ class UserService
             }
             SendSms::dispatch(
                 $user->phone,
-                __('sms.send_reset_code', ['code' => $passwordReset->reset_code])
+                __('sms.user.reset', ['code' => $passwordReset->reset_code])
             )->onConnection('redis');
 
             return [
