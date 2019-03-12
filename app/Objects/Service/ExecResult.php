@@ -8,6 +8,9 @@ namespace App\Objects\Service;
  */
 final class ExecResult
 {
+    /**
+     * @var ExecResult
+     */
     private static $inst = null;
 
     /**

@@ -4,6 +4,7 @@ namespace App\Services;
 
 use App\Exceptions\Internal\IncorrectDateRange;
 use App\Helpers\DateTimeHelper;
+use App\Helpers\ScheduleHelper;
 use App\Models\Schedule\Schedule;
 use App\Models\SchedulePlayground;
 use App\Objects\Service\ExecResult;
@@ -42,7 +43,7 @@ class ScheduleService
                 /**
                  * Check if time periods is overlaps
                  */
-                if (self::periodsIsOverlaps($schedulable, $startTime, $endTime)) {
+                if (ScheduleHelper::periodsIsOverlaps($schedulable, $startTime, $endTime)) {
                     throw new IncorrectDateRange(__('errors.schedule_already_exists'));
                 }
 
@@ -94,7 +95,7 @@ class ScheduleService
         $newStartTime = Carbon::parse($data['start_time']);
         $newEndTime = Carbon::parse($data['end_time']);
 
-        if (self::periodsIsOverlaps($schedule->schedulable, $newStartTime, $newEndTime, [$schedule])) {
+        if (ScheduleHelper::periodsIsOverlaps($schedule->schedulable, $newStartTime, $newEndTime, [$schedule])) {
             throw new IncorrectDateRange();
         }
 
@@ -103,56 +104,5 @@ class ScheduleService
         return ExecResult::instance()
             ->setSuccess()
             ->setData(['schedule' => $schedule]);
-    }
-
-    /**
-     * Check periods overlaps
-     *
-     * @param Model $schedulable
-     * @param Carbon $startTime
-     * @param Carbon $endTime
-     * @param array $excludedSchedules
-     * @return bool
-     *
-     * @throws IncorrectDateRange
-     */
-    public static function periodsIsOverlaps(
-        Model $schedulable,
-        Carbon $startTime,
-        Carbon $endTime,
-        $excludedSchedules = []
-    ): bool {
-        $existedSchedules = ScheduleRepository::getBySchedulable(
-            get_class($schedulable),
-            $schedulable->uuid
-        );
-
-        /**
-         * Exclude schedules that contains
-         * in $excludedSchedules array
-         */
-        $existedSchedules = $existedSchedules->filter(
-            function ($existedSchedule) use ($excludedSchedules) {
-                foreach ($excludedSchedules as $excludedSchedule) {
-                    if ($excludedSchedule->uuid === $existedSchedule->uuid) {
-                        return false;
-                    }
-                }
-
-                return true;
-            }
-        );
-
-        /** Check schedules overlaps */
-        foreach ($existedSchedules as $existedSchedule) {
-            $scheduleStartTime = Carbon::parse($existedSchedule->start_time);
-            $scheduleEndTime = Carbon::parse($existedSchedule->end_time);
-
-            if (DateTimeHelper::timePeriodsIsOverlaps($startTime, $endTime, $scheduleStartTime, $scheduleEndTime)) {
-                return true;
-            }
-        }
-
-        return false;
     }
 }
