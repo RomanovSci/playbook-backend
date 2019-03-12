@@ -3,6 +3,7 @@
 namespace App\Http\Controllers\API;
 
 use App\Exceptions\Http\ForbiddenHttpException;
+use App\Helpers\BookingHelper;
 use App\Http\Controllers\Controller;
 use App\Http\Requests\Booking\BookingCreateFormRequest;
 use App\Http\Requests\Booking\BookingDeclineFormRequest;
@@ -315,23 +316,23 @@ class BookingController extends Controller
     public function create(string $bookableType, BookingCreateFormRequest $request)
     {
         $bookableUuid = $request->post('bookable_uuid');
-        $result = BookingService::getBookingPrice(
+        $getPriceResult = BookingHelper::getBookingPrice(
             Carbon::parse($request->post('start_time')),
             Carbon::parse($request->post('end_time')),
             $bookableType,
             $bookableUuid
         );
 
-        if (!$result->getSuccess()) {
-            throw new ForbiddenHttpException($result->getMessage());
+        if (!$getPriceResult->getSuccess()) {
+            throw new ForbiddenHttpException($getPriceResult->getMessage());
         }
 
         /** @var Booking $booking */
         $booking = Booking::create(array_merge($request->all(), [
             'bookable_type' => $bookableType,
             'creator_uuid' => Auth::user()->uuid,
-            'price' => $result->getData('price'),
-            'currency' => $result->getData('currency'),
+            'price' => $getPriceResult->getData('price'),
+            'currency' => $getPriceResult->getData('currency'),
         ]));
 
         if ($bookableType === User::class && $bookableUuid !== Auth::user()->uuid) {
@@ -402,10 +403,12 @@ class BookingController extends Controller
      */
     public function confirm(Booking $booking)
     {
-        $canConfirmResult = BookingService::canConfirm($booking);
+        $checkAvailabilityResult = BookingHelper::timeIsAvailable($booking);
 
-        if (!$canConfirmResult->getSuccess() || Auth::user()->cant('confirmBooking', $booking)) {
-            throw new ForbiddenHttpException($canConfirmResult->getMessage() ?: __('errors.cant_confirm_booking'));
+        if (!$checkAvailabilityResult->getSuccess() || Auth::user()->cant('confirmBooking', $booking)) {
+            throw new ForbiddenHttpException(
+                $checkAvailabilityResult->getMessage() ?: __('errors.cant_confirm_booking')
+            );
         }
 
         $changeStatusResult = BookingService::changeBookingStatus(

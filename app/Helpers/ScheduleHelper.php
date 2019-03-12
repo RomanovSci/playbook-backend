@@ -3,7 +3,13 @@
 namespace App\Helpers;
 
 use App\Exceptions\Internal\IncorrectDateRange;
+use App\Models\Booking;
+use App\Models\Playground;
+use App\Models\Schedule\MergedSchedule;
 use App\Models\Schedule\Schedule;
+use App\Models\User;
+use App\Objects\Service\ExecResult;
+use App\Repositories\BookingRepository;
 use App\Repositories\ScheduleRepository;
 use Carbon\Carbon;
 use Illuminate\Database\Eloquent\Model;
@@ -78,5 +84,96 @@ class ScheduleHelper
         }
 
         return false;
+    }
+
+    /**
+     * Check if confirmed bookings in requested range
+     * ($startTime - $endTime) doesn't overlaps with schedule period.
+     *
+     * @param Carbon $startTime
+     * @param Carbon $endTime
+     * @param string $schedulableType
+     * @param string $schedulableUuid
+     * @param Schedule $schedule
+     * @return ExecResult
+     * @throws \App\Exceptions\Internal\IncorrectDateRange
+     */
+    public static function scheduleTimeIsAvailable(
+        Carbon $startTime,
+        Carbon $endTime,
+        string $schedulableType,
+        string $schedulableUuid,
+        Schedule $schedule
+    ): ExecResult {
+        $confirmedBookings = BookingRepository::getBetween(
+            Carbon::parse($schedule->start_time),
+            Carbon::parse($schedule->end_time),
+            $schedulableType,
+            $schedulableUuid,
+            Booking::STATUS_CONFIRMED
+        );
+
+        foreach ($confirmedBookings as $confirmedBooking) {
+            if (DateTimeHelper::timePeriodsIsOverlaps(
+                Carbon::parse($confirmedBooking->start_time),
+                Carbon::parse($confirmedBooking->end_time),
+                $startTime,
+                $endTime
+            )) {
+                /** Can't get price for reserved period */
+                return ExecResult::instance()->setMessage(__('errors.time_already_reserved'));
+            }
+        }
+
+        return ExecResult::instance()->setSuccess();
+    }
+
+    /**
+     * Get appropriate schedule for dates range
+     *
+     * @param Carbon $startTime
+     * @param Carbon $endTime
+     * @param string $bookableType
+     * @param string $bookableUuid
+     * @return ExecResult
+     */
+    public static function getAppropriateSchedule(
+        Carbon $startTime,
+        Carbon $endTime,
+        string $bookableType,
+        string $bookableUuid
+    ): ExecResult {
+        if (!in_array($bookableType, [User::class, Playground::class])) {
+            return ExecResult::instance()->setMessage(__('errors.incorrect_bookable_type'));
+        }
+
+        /**
+         * Find the appropriate schedule for required dates
+         * @var MergedSchedule $schedule
+         */
+        $schedule = null;
+        $mergedSchedules = ScheduleRepository::getMergedSchedules(
+            $bookableType,
+            $bookableUuid,
+            $startTime,
+            $endTime
+        );
+
+        foreach ($mergedSchedules as $mergedSchedule) {
+            if (Carbon::parse($mergedSchedule->start_time)->lessThanOrEqualTo($startTime) &&
+                Carbon::parse($mergedSchedule->end_time)->greaterThanOrEqualTo($endTime)) {
+                $schedule = $mergedSchedule;
+            }
+        }
+
+        if (!$schedule) {
+            return ExecResult::instance()->setMessage(__('errors.schedule_time_unavailable'));
+        }
+
+        return ExecResult::instance()
+            ->setSuccess()
+            ->setData([
+                'schedule' => $schedule
+            ]);
     }
 }
