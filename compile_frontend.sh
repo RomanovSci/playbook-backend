@@ -8,5 +8,12 @@ rm yarn.lock
 yarn install
 yarn run build
 
-cp -R ./build ../../public
-cp ../../public/build/index.html ../../resources/views/generated/index.blade.php
+git checkout .
+
+mv ./build ../../public/build
+
+cd ../../public/build
+
+mv ./icon ../icon
+mv ./script ../script
+mv ./index.html ../../resources/views/generated/index.blade.php
