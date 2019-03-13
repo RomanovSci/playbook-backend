@@ -36,7 +36,7 @@ class BookingHelper
     }
 
     /**
-     * Get booking price
+     * Get booking price for period ($startTime - $endTime)
      *
      * @param Carbon $startTime
      * @param Carbon $endTime
