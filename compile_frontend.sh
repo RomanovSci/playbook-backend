@@ -1,5 +1,6 @@
 #!/bin/sh
 
+rm -rf public/build
 cd resources/frontend
 rm -rf node_modules
 rm yarn.lock
