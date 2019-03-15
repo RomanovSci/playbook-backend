@@ -50,6 +50,7 @@ Route::middleware(['auth:api'])->group(function () {
     Route::prefix('booking')->group(function () {
         Route::get('/all', 'API\BookingController@getUserBookings')->name('booking.getUserBookings');
         Route::post('/{bookable_type}/create', 'API\BookingController@create')->name('booking.create');
+        Route::post('/decline/{booking}', 'API\BookingController@decline')->name('booking.decline');
     });
 
     /** Playground */
