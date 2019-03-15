@@ -19,7 +19,7 @@ Route::post('/resend_verification_code', 'API\UserController@resendVerificationC
 Route::post('/reset_password', 'API\UserController@resetPassword')->name('user.resetPassword');
 Route::get('/trainer/list', 'API\TrainerController@getTrainers')->name('trainer.getTrainers');
 Route::get('/trainer/info/{user}', 'API\TrainerController@getTrainerInfo')->name('trainer.getTrainerInfo');
-Route::get('/schedule/{schedulable_type}/{id?}', 'API\ScheduleController@get')->name('schedule.get');
+Route::get('/schedule/{schedulable_type}/{uuid?}', 'API\ScheduleController@get')->name('schedule.get');
 
 /**
  * Authenticated user
@@ -71,7 +71,7 @@ Route::middleware(['role:'
     Route::prefix('booking')->group(function () {
         Route::post('/confirm/{booking}', 'API\BookingController@confirm')->name('booking.confirm');
         Route::post('/decline/{booking}', 'API\BookingController@decline')->name('booking.decline');
-        Route::get('/{bookable_type}/{id}', 'API\BookingController@get')->name("booking.get");
+        Route::get('/{bookable_type}/{uuid}', 'API\BookingController@get')->name("booking.get");
     });
 
     /** Playground */

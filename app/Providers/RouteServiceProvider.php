@@ -29,9 +29,15 @@ class RouteServiceProvider extends ServiceProvider
     public function boot()
     {
         /** Patterns */
-        Route::pattern('user', '[0-9a-f]{8}-[0-9a-f]{4}-[0-9a-f]{4}-[0-9a-f]{4}-[0-9a-f]{12}');
-        Route::pattern('bookable_type', 'trainer|playground');
-        Route::pattern('schedulable_type', 'trainer|playground');
+        Route::patterns([
+            'uuid' => '[0-9a-f]{8}-[0-9a-f]{4}-[0-9a-f]{4}-[0-9a-f]{4}-[0-9a-f]{12}',
+            'user' => '[0-9a-f]{8}-[0-9a-f]{4}-[0-9a-f]{4}-[0-9a-f]{4}-[0-9a-f]{12}',
+            'booking' => '[0-9a-f]{8}-[0-9a-f]{4}-[0-9a-f]{4}-[0-9a-f]{4}-[0-9a-f]{12}',
+            'schedule' => '[0-9a-f]{8}-[0-9a-f]{4}-[0-9a-f]{4}-[0-9a-f]{4}-[0-9a-f]{12}',
+            'info' => '[0-9a-f]{8}-[0-9a-f]{4}-[0-9a-f]{4}-[0-9a-f]{4}-[0-9a-f]{12}',
+            'bookable_type' => 'trainer|playground',
+            'schedulable_type' => 'trainer|playground',
+        ]);
 
         parent::boot();
 
