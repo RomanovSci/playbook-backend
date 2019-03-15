@@ -3,6 +3,7 @@
 use Illuminate\Support\Facades\View;
 use Illuminate\Support\Facades\Route;
 use Symfony\Component\HttpKernel\Exception\NotFoundHttpException;
+use Illuminate\Http\Request;
 
 /*
 |--------------------------------------------------------------------------
@@ -14,8 +15,8 @@ use Symfony\Component\HttpKernel\Exception\NotFoundHttpException;
 | contains the "web" middleware group. Now create something great!
 |
 */
-Route::get('/{any?}', function () {
-    if (View::exists('generated.index')) {
+Route::get('/{any?}', function (Request $request) {
+    if (View::exists('generated.index') && !$request->is('api/*')) {
         return view('generated.index');
     }
 

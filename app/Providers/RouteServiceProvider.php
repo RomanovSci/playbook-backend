@@ -29,7 +29,7 @@ class RouteServiceProvider extends ServiceProvider
     public function boot()
     {
         /** Patterns */
-        Route::pattern('uuid', '[0-9a-f]{8}-[0-9a-f]{4}-[0-9a-f]{4}-[0-9a-f]{4}-[0-9a-f]{12}');
+        Route::pattern('user', '[0-9a-f]{8}-[0-9a-f]{4}-[0-9a-f]{4}-[0-9a-f]{4}-[0-9a-f]{12}');
         Route::pattern('bookable_type', 'trainer|playground');
         Route::pattern('schedulable_type', 'trainer|playground');
 

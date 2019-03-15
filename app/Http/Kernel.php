@@ -6,7 +6,6 @@ use App\Http\Middleware\Authenticate;
 use App\Http\Middleware\CheckForMaintenanceMode;
 use App\Http\Middleware\EncryptCookies;
 use App\Http\Middleware\PermissionMiddleware;
-use App\Http\Middleware\RedirectIfAuthenticated;
 use App\Http\Middleware\RoleOrPermissionMiddleware;
 use App\Http\Middleware\TrimStrings;
 use App\Http\Middleware\TrustProxies;
@@ -65,7 +64,7 @@ class Kernel extends HttpKernel
             SubstituteBindings::class,
         ],
         'api' => [
-            'throttle:60,1',
+            'throttle:200,1',
             'bindings',
             HandleCors::class,
         ],
@@ -84,7 +83,6 @@ class Kernel extends HttpKernel
         'bindings' => SubstituteBindings::class,
         'cache.headers' => SetCacheHeaders::class,
         'can' => Authorize::class,
-        'guest' => RedirectIfAuthenticated::class,
         'signed' => ValidateSignature::class,
         'throttle' => ThrottleRequests::class,
         'verified' => EnsureEmailIsVerified::class,
