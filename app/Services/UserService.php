@@ -85,7 +85,10 @@ class UserService
             ]));
             $user->assignRole($data['is_trainer'] ? User::ROLE_TRAINER : User::ROLE_USER);
             $token = $user->createToken('MyApp');
-            SendSms::dispatch($user->phone, $data['verification_code'])->onConnection('redis');
+
+            if (!isset($data['c_password'])) {
+                SendSms::dispatch($user->phone, $data['verification_code'])->onConnection('redis');
+            }
 
             DB::commit();
 

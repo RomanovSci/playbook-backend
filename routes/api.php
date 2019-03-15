@@ -13,13 +13,19 @@ use App\Models\User;
 | is assigned the "api" middleware group. Enjoy building your API!
 |
 */
-Route::post('/register', 'API\UserController@register')->name('user.register');
-Route::post('/login', 'API\UserController@login')->name('user.login');
 Route::post('/resend_verification_code', 'API\UserController@resendVerificationCode')->name('user.resendVerificationCode');
 Route::post('/reset_password', 'API\UserController@resetPassword')->name('user.resetPassword');
 Route::get('/trainer/list', 'API\TrainerController@getTrainers')->name('trainer.getTrainers');
 Route::get('/trainer/info/{user}', 'API\TrainerController@getTrainerInfo')->name('trainer.getTrainerInfo');
 Route::get('/schedule/{schedulable_type}/{uuid?}', 'API\ScheduleController@get')->name('schedule.get');
+
+/**
+ * Only guest routes
+ */
+Route::middleware(['guest:api'])->group(function () {
+    Route::post('/register', 'API\UserController@register')->name('user.register');
+    Route::post('/login', 'API\UserController@login')->name('user.login');
+});
 
 /**
  * Authenticated user
