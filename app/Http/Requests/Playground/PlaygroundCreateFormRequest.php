@@ -16,9 +16,9 @@ class PlaygroundCreateFormRequest extends BaseFormRequest
     public function rules()
     {
         return [
-            'name' => 'required',
-            'description' => 'required',
-            'address' => 'required',
+            'name' => 'required|max:255',
+            'description' => 'required|max:255',
+            'address' => 'required|max:255',
             'opening_time' => 'required|date_format:H:i:s',
             'closing_time' => 'required|date_format:H:i:s',
             'type_uuid' => 'uuid|exists:playground_types,uuid',

@@ -16,7 +16,7 @@ class OrganizationCreateFormRequest extends BaseFormRequest
     public function rules()
     {
         return [
-            'name' => 'required',
+            'name' => 'required|max:255',
             'city_uuid' => 'required|uuid|exists:cities,uuid',
         ];
     }

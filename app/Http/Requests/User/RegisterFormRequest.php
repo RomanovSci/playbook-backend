@@ -16,8 +16,9 @@ class RegisterFormRequest extends BaseFormRequest
     public function rules()
     {
         return [
-            'first_name' => 'required',
-            'last_name' => 'required',
+            'first_name' => 'required|max:255',
+            'last_name' => 'required|max:255',
+            'middle_name' => 'max:255',
             'phone' => 'required|numeric|digits_between:9,12|unique:users,phone',
             'password' => 'min:3',
             'c_password' => 'required_with:password|same:password',

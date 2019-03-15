@@ -38,6 +38,7 @@ class UserController extends Controller
      *                  example={
      *                      "first_name": "User first name.",
      *                      "last_name": "User last name.",
+     *                      "middle_name": "User middle name",
      *                      "phone": "User phone without '+' symbol",
      *                      "password": "User password.",
      *                      "c_password": "User password confirm.",
