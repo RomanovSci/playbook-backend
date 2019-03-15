@@ -8,6 +8,7 @@ use App\Models\PasswordReset;
 use App\Models\User;
 use App\Objects\Service\ExecResult;
 use App\Repositories\PasswordResetRepository;
+use App\Repositories\TimezoneRepository;
 use Carbon\Carbon;
 use Illuminate\Support\Facades\DB;
 use Illuminate\Support\Facades\Hash;
@@ -79,7 +80,9 @@ class UserService
              * @var User $user
              * @var PersonalAccessTokenResult $token
              */
-            $user = User::create($data);
+            $user = User::create(array_merge($data, [
+                'timezone_uuid' => TimezoneRepository::getFirstByName('Europe/Ulyanovsk')->uuid // TODO: Remove
+            ]));
             $user->assignRole($data['is_trainer'] ? User::ROLE_TRAINER : User::ROLE_USER);
             $token = $user->createToken('MyApp');
 
