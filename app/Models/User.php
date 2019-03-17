@@ -14,23 +14,24 @@ use Spatie\Permission\Traits\HasRoles;
  * Class User
  * @package App\Models
  *
- * @property string uuid
- * @property string timezone_uuid
- * @property string city_uuid
- * @property string language_uuid
- * @property string first_name
- * @property string last_name
- * @property string middle_name
- * @property integer phone
- * @property string password
- * @property integer verification_code
- * @property string phone_verified_at
- * @property string created_at
- * @property string updated_at
- * @property string deleted_at
+ * @property string     uuid
+ * @property string     timezone_uuid
+ * @property string     city_uuid
+ * @property string     language_uuid
+ * @property string     first_name
+ * @property string     last_name
+ * @property string     middle_name
+ * @property integer    phone
+ * @property string     password
+ * @property integer    verification_code
+ * @property string     phone_verified_at
+ * @property string     created_at
+ * @property string     updated_at
+ * @property string     deleted_at
  *
- * @property Playground[] $playgrounds
- * @property TrainerInfo $trainerInfo
+ * @property Playground[]   playgrounds
+ * @property TrainerInfo    trainerInfo
+ * @property Timezone       timezone
  *
  * @OA\Schema(
  *      allOf={
@@ -210,5 +211,21 @@ class User extends Authenticatable
     public function playgrounds()
     {
         return $this->belongsToMany(Playground::class, 'users_playgrounds');
+    }
+
+    /**
+     * @return \Illuminate\Database\Eloquent\Relations\BelongsTo
+     */
+    public function timezone()
+    {
+        return $this->belongsTo(Timezone::class);
+    }
+
+    /**
+     * @return string
+     */
+    public function getFullName()
+    {
+        return $this->first_name . ' ' . $this->last_name;
     }
 }

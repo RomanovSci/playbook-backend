@@ -3,6 +3,7 @@
 namespace App\Models;
 
 use App\Models\Schedule\Schedule;
+use Carbon\Carbon;
 use Illuminate\Database\Eloquent\Relations\MorphTo;
 
 /**
@@ -12,8 +13,8 @@ use Illuminate\Database\Eloquent\Relations\MorphTo;
  * @property string bookable_uuid
  * @property integer bookable_type
  * @property string creator_uuid
- * @property string start_time
- * @property string end_time
+ * @property Carbon start_time
+ * @property Carbon end_time
  * @property integer status
  * @property string playground_uid
  * @property string note

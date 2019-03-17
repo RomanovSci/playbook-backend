@@ -39,6 +39,8 @@ class BookingService
             return ExecResult::instance()->setMessage(__('errors.status_already_set'));
         }
 
+        /** @var User $user */
+        $user = Auth::user();
         $booking->status = $status;
         $booking->note = $note;
         $result = $booking->update(['status', 'note']);
@@ -49,11 +51,26 @@ class BookingService
              * booking was successful declined
              */
             if ($status === Booking::STATUS_DECLINED && $booking->bookable_type === User::class) {
-                $declineByUser = $booking->bookable_uuid !== Auth::user()->uuid;
+                $declineByUser = $booking->bookable_uuid !== $user->uuid;
                 $phone = $declineByUser ? $booking->bookable->phone : $booking->creator->phone;
                 $text = $declineByUser
-                    ? __('sms.booking.decline_by_user')
-                    : __('sms.booking.decline_by_trainer');
+                    ? __('sms.booking.decline_by_user', [
+                        'player_name' => $user->getFullName(),
+                        'date' => $booking->start_time
+                            ->addHours($booking->bookable->timezone->offset)
+                            ->format('d-m-Y'),
+                        'start_time' => $booking->start_time
+                            ->addHours($booking->bookable->timezone->offset)
+                            ->format('H:i'),
+                        'note' => $booking->note,
+                    ])
+                    : __('sms.booking.decline_by_trainer', [
+                        'trainer_name' => $booking->bookable->getFullName(),
+                        'date' => $booking->start_time
+                            ->addHours($user->timezone->offset)
+                            ->format('d-m-Y'),
+                        'note' => $booking->note,
+                    ]);
 
                 SendSms::dispatch($phone, $text)->onConnection('redis');
             }
@@ -69,7 +86,15 @@ class BookingService
             ) {
                 SendSms::dispatch(
                     $booking->creator->phone,
-                    __('sms.booking.confirm')
+                    __('sms.booking.confirm', [
+                        'trainer_name' => $booking->bookable->getFullName(),
+                        'date' => $booking->start_time
+                            ->addHours($booking->creator->timezone->offset)
+                            ->format('d-m-Y'),
+                        'start_time' => $booking->start_time
+                            ->addHours($booking->creator->timezone->offset)
+                            ->format('H:i'),
+                    ])
                 )->onConnection('redis');
             }
         }

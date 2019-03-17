@@ -336,9 +336,15 @@ class BookingController extends Controller
         ]));
 
         if ($bookableType === User::class && $bookableUuid !== Auth::user()->uuid) {
+            $timezoneOffset = Auth::user()->timezone->offset;
             SendSms::dispatch(
                 UserRepository::getByUuid($bookableUuid)->phone,
-                __('sms.booking.create')
+                __('sms.booking.create', [
+                    'player_name' => Auth::user()->getFullName(),
+                    'date' => $booking->start_time->addHours($timezoneOffset)->format('d-m-Y'),
+                    'start_time' => $booking->start_time->addHours($timezoneOffset)->format('H:i'),
+                    'end_time' => $booking->end_time->addHours($timezoneOffset)->format('H:i'),
+                ])
             )->onConnection('redis');
         }
 
