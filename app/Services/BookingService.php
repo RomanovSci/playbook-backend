@@ -82,7 +82,7 @@ class BookingService
             if (
                 $status === Booking::STATUS_CONFIRMED &&
                 $booking->bookable_type === User::class &&
-                $booking->bookable_uuid !== Auth::user()->uuid
+                $booking->bookable_uuid !== $booking->creator_uuid
             ) {
                 SendSms::dispatch(
                     $booking->creator->phone,
