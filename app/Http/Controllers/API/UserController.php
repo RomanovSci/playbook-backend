@@ -59,8 +59,13 @@ class UserController extends Controller
      *                      "data": {
      *                          "access_token": "Bearer token",
      *                          "verification_code": "Phone verification code. Empty for prod env",
+     *                          "roles": {
+     *                              "user",
+     *                              "trainer",
+     *                              "organization-admin",
+     *                              "admin"
+     *                          },
      *                          "uuid": "User uuid",
-     *                          "roles": ["trainer"],
      *                          "phone": "911",
      *                          "first_name": "Play",
      *                          "last_name": "Book",
