@@ -368,9 +368,7 @@ class BookingController extends Controller
      *      ),
      *      @OA\Response(
      *          response="200",
-     *          description="
-     *              Success
-     *              Status already set",
+     *          description="Success",
      *          @OA\MediaType(
      *              mediaType="application/json",
      *              @OA\Schema(
@@ -423,7 +421,7 @@ class BookingController extends Controller
         );
 
         if (!$changeStatusResult->getSuccess()) {
-            $this->error(200, $booking->toArray(), $changeStatusResult->getMessage());
+            $this->error(400, $booking->toArray(), $changeStatusResult->getMessage());
         }
 
         return $this->success($booking->toArray());
@@ -457,9 +455,7 @@ class BookingController extends Controller
      *      ),
      *      @OA\Response(
      *          response="200",
-     *          description="
-     *              Success
-     *              Status already set",
+     *          description="Success",
      *          @OA\MediaType(
      *              mediaType="application/json",
      *              @OA\Schema(
@@ -509,7 +505,7 @@ class BookingController extends Controller
         );
 
         if (!$changeStatusResult->getSuccess()) {
-            $this->error(200, $booking->toArray(), $changeStatusResult->getMessage());
+            $this->error(400, $booking->toArray(), $changeStatusResult->getMessage());
         }
 
         return $this->success($booking->toArray());

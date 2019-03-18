@@ -58,7 +58,15 @@ class UserController extends Controller
      *                      "message": "string",
      *                      "data": {
      *                          "access_token": "Bearer token",
-     *                          "verification_code": "Phone verification code. Empty for prod env"
+     *                          "verification_code": "Phone verification code. Empty for prod env",
+     *                          "uuid": "User uuid",
+     *                          "roles": ["trainer"],
+     *                          "phone": "911",
+     *                          "first_name": "Play",
+     *                          "last_name": "Book",
+     *                          "timezone_uuid": "Timezone uuid",
+     *                          "updated_at": "2000-00-00 00:00:00",
+     *                          "created_at": "2000-00-00 00:00:00"
      *                      }
      *                  }
      *              )
@@ -119,11 +127,17 @@ class UserController extends Controller
      *                              "organization-admin",
      *                              "admin"
      *                          },
-     *                          "id": 1,
+     *                          "uuid": "User uuid",
      *                          "first_name": "Play",
      *                          "last_name": "Book",
+     *                          "middle_name": "Middle",
+     *                          "timezone_uuid": "Timezone uuid",
+     *                          "language_code": "UA",
+     *                          "city_uuid": "City uuid",
      *                          "phone": 911,
-     *                          "phone_verified_at": "2001-01-01 00:00:00"
+     *                          "phone_verified_at": "2000-00-00 00:00:00",
+     *                          "updated_at": "2000-00-00 00:00:00",
+     *                          "created_at": "2000-00-00 00:00:00"
      *                      }
      *                  }
      *              )
@@ -170,14 +184,14 @@ class UserController extends Controller
      *         )
      *      ),
      *      @OA\Response(
-     *          response="400",
-     *          description="Invalid parameters",
+     *          response="401",
+     *          description="Unauthorized",
      *          @OA\MediaType(
      *              mediaType="application/json",
      *              @OA\Schema(
      *                  example={
      *                      "success": false,
-     *                      "message": "Unauthenticated"
+     *                      "message": "Unauthorized"
      *                  },
      *              )
      *          )
@@ -216,8 +230,8 @@ class UserController extends Controller
      *              mediaType="application/json",
      *              @OA\Schema(
      *                  example={
-     *                      "success": "true | false",
-     *                      "message": "Success | Incorrect verification code"
+     *                      "success": "true",
+     *                      "message": "Success"
      *                  }
      *              )
      *         )
@@ -245,7 +259,7 @@ class UserController extends Controller
         $user = Auth::user();
 
         if ($user->verification_code !== $request->post('code')) {
-            return $this->error(200, [], __('errors.incorrect_verification_code'));
+            return $this->error(400, [], __('errors.incorrect_verification_code'));
         }
 
         $user->phone_verified_at = Carbon::now();
@@ -366,6 +380,6 @@ class UserController extends Controller
 
         return $resetResult->getSuccess()
             ? $this->success($resetResult->getData('passwordReset'))
-            : $this->error(200, [], $resetResult->getMessage());
+            : $this->error(400, [], $resetResult->getMessage());
     }
 }

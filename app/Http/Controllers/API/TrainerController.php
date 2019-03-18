@@ -261,7 +261,7 @@ class TrainerController extends Controller
         $user = Auth::user();
 
         if ($user->trainerInfo) {
-            return $this->error(200, [], __('errors.trainer_info_exists'));
+            return $this->error(400, [], __('errors.trainer_info_exists'));
         }
 
         $createResult = TrainerService::createInfo($user, $request->all());

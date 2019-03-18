@@ -21,48 +21,6 @@ use Laravel\Passport\PersonalAccessTokenResult;
 class UserService
 {
     /**
-     * Login user
-     *
-     * @param array $data
-     * @return ExecResult
-     */
-    public static function login(array $data): ExecResult
-    {
-        /** @var User $user */
-        $user = User::where('phone', $data['phone'])->first();
-
-        if (!$user) {
-            throw new UnauthorizedHttpException();
-        }
-
-        /** @var PasswordReset $passwordReset */
-        $passwordReset = PasswordResetRepository::getActualByUser($user);
-
-        /**
-         * Set new password if password
-         * request exists and login user
-         */
-        if ($passwordReset && $passwordReset->reset_code === $data['password']) {
-            $user->password = bcrypt($passwordReset->reset_code);
-            $user->update(['password']);
-
-            $passwordReset->used_at = Carbon::now();
-            $passwordReset->update(['used_at']);
-        }
-
-        if (!Hash::check($data['password'], $user->password)) {
-            throw new UnauthorizedHttpException();
-        }
-
-        return ExecResult::instance()
-            ->setSuccess()
-            ->setData(array_merge([
-                'access_token' => $user->createToken('MyApp')->accessToken,
-                'roles' => $user->getRoleNames(),
-            ], $user->toArray()));
-    }
-
-    /**
      * Register new user
      *
      * @param array $data
@@ -105,6 +63,48 @@ class UserService
             DB::rollBack();
             throw $e;
         }
+    }
+
+    /**
+     * Login user
+     *
+     * @param array $data
+     * @return ExecResult
+     */
+    public static function login(array $data): ExecResult
+    {
+        /** @var User $user */
+        $user = User::where('phone', $data['phone'])->first();
+
+        if (!$user) {
+            throw new UnauthorizedHttpException();
+        }
+
+        /** @var PasswordReset $passwordReset */
+        $passwordReset = PasswordResetRepository::getActualByUser($user);
+
+        /**
+         * Set new password if password
+         * request exists and login user
+         */
+        if ($passwordReset && $passwordReset->reset_code === $data['password']) {
+            $user->password = bcrypt($passwordReset->reset_code);
+            $user->update(['password']);
+
+            $passwordReset->used_at = Carbon::now();
+            $passwordReset->update(['used_at']);
+        }
+
+        if (!Hash::check($data['password'], $user->password)) {
+            throw new UnauthorizedHttpException();
+        }
+
+        return ExecResult::instance()
+            ->setSuccess()
+            ->setData(array_merge([
+                'access_token' => $user->createToken('MyApp')->accessToken,
+                'roles' => $user->getRoleNames(),
+            ], $user->toArray()));
     }
 
     /**
