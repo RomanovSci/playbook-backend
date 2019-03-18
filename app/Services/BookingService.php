@@ -58,10 +58,7 @@ class BookingService
                         'player_name' => $user->getFullName(),
                         'date' => $booking->start_time
                             ->addHours($booking->bookable->timezone->offset)
-                            ->format('d-m-Y'),
-                        'start_time' => $booking->start_time
-                            ->addHours($booking->bookable->timezone->offset)
-                            ->format('H:i'),
+                            ->format('d-m-Y H:i'),
                         'note' => $booking->note,
                     ])
                     : __('sms.booking.decline_by_trainer', [
