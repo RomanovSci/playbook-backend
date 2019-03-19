@@ -148,6 +148,19 @@ class BookingController extends Controller
      *          )
      *      ),
      *      @OA\Response(
+     *          response="401",
+     *          description="Unauthorized",
+     *          @OA\MediaType(
+     *              mediaType="application/json",
+     *              @OA\Schema(
+     *                  example={
+     *                      "success": false,
+     *                      "message": "Unauthorized"
+     *                  },
+     *              )
+     *          )
+     *      ),
+     *      @OA\Response(
      *          response="403",
      *          description="Forbidden",
      *          @OA\MediaType(
@@ -160,6 +173,7 @@ class BookingController extends Controller
      *              )
      *          )
      *      ),
+     *      security={{"Bearer":{}}}
      * )
      */
     public function get(TimeIntervalFormRequest $request, string $bookableType, string $uuid)
