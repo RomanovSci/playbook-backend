@@ -13,6 +13,7 @@
         "laravel/passport": "^7.0",
         "laravel/tinker": "^1.0",
         "mobizon/mobizon-php": "^2.0",
+        "nexmo/client": "^1.6",
         "spatie/laravel-permission": "^2.23",
         "webpatser/laravel-uuid": "^3.0"
     },
