@@ -49,7 +49,7 @@ class UserController extends Controller
      *     ),
      *      @OA\Response(
      *          response="200",
-     *          description="Ok",
+     *          description="Success",
      *          @OA\MediaType(
      *              mediaType="application/json",
      *              @OA\Schema(
@@ -117,7 +117,7 @@ class UserController extends Controller
      *     ),
      *      @OA\Response(
      *          response="200",
-     *          description="Ok",
+     *          description="Success",
      *          @OA\MediaType(
      *              mediaType="application/json",
      *              @OA\Schema(
@@ -179,7 +179,7 @@ class UserController extends Controller
      *      summary="Logout user",
      *      @OA\Response(
      *          response="200",
-     *          description="Ok",
+     *          description="Success",
      *          @OA\MediaType(
      *              mediaType="application/json",
      *              @OA\Schema(
@@ -232,7 +232,7 @@ class UserController extends Controller
      *      ),
      *      @OA\Response(
      *          response="200",
-     *          description="Ok",
+     *          description="Success",
      *          @OA\MediaType(
      *              mediaType="application/json",
      *              @OA\Schema(
@@ -295,7 +295,7 @@ class UserController extends Controller
      *      ),
      *      @OA\Response(
      *          response="200",
-     *          description="Ok",
+     *          description="Success",
      *          @OA\MediaType(
      *              mediaType="application/json",
      *              @OA\Schema(
@@ -352,7 +352,7 @@ class UserController extends Controller
      *      ),
      *      @OA\Response(
      *          response="200",
-     *          description="Ok",
+     *          description="Success",
      *          @OA\MediaType(
      *              mediaType="application/json",
      *              @OA\Schema(
