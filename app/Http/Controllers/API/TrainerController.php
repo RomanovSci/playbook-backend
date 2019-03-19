@@ -98,8 +98,21 @@ class TrainerController extends Controller
      *         )
      *      ),
      *      @OA\Response(
-     *          response="422",
-     *          description="Invalid parameters"
+     *          response="400",
+     *          description="Bad request",
+     *          @OA\MediaType(
+     *              mediaType="application/json",
+     *              @OA\Schema(
+     *                  example={
+     *                      "limit": {
+     *                          "The limit field is required."
+     *                      },
+     *                      "offset": {
+     *                          "The limit field is required."
+     *                      },
+     *                  },
+     *              )
+     *          )
      *      )
      * )
      */
@@ -173,7 +186,7 @@ class TrainerController extends Controller
      *      ),
      *      @OA\Response(
      *          response="400",
-     *          description="Invalid trainer uuid"
+     *          description="Bad request"
      *      )
      * )
      */
@@ -249,8 +262,40 @@ class TrainerController extends Controller
      *         )
      *      ),
      *      @OA\Response(
-     *          response="422",
-     *          description="Invalid parameters"
+     *          response="400",
+     *          description="Bad request",
+     *          @OA\MediaType(
+     *              mediaType="application/json",
+     *              @OA\Schema(
+     *                  example={
+     *                      "playgrounds": {
+     *                          "The playgrounds field is required."
+     *                      },
+     *                      "min_price": {
+     *                          "The min price field is required."
+     *                      },
+     *                      "max_price": {
+     *                          "The max price field is required."
+     *                      },
+     *                      "currency": {
+     *                          "The currency field is required."
+     *                      }
+     *                  },
+     *              )
+     *          )
+     *      ),
+     *      @OA\Response(
+     *          response="401",
+     *          description="Unauthorized",
+     *          @OA\MediaType(
+     *              mediaType="application/json",
+     *              @OA\Schema(
+     *                  example={
+     *                      "success": false,
+     *                      "message": "Unauthorized"
+     *                  },
+     *              )
+     *          )
      *      ),
      *      security={{"Bearer":{}}}
      * )
@@ -261,7 +306,7 @@ class TrainerController extends Controller
         $user = Auth::user();
 
         if ($user->trainerInfo) {
-            return $this->error(400, [], __('errors.trainer_info_exists'));
+            return $this->error(__('errors.trainer_info_exists'));
         }
 
         $createResult = TrainerService::createInfo($user, $request->all());
@@ -344,8 +389,53 @@ class TrainerController extends Controller
      *         )
      *      ),
      *      @OA\Response(
-     *          response="422",
-     *          description="Invalid parameters"
+     *          response="400",
+     *          description="Bad request",
+     *          @OA\MediaType(
+     *              mediaType="application/json",
+     *              @OA\Schema(
+     *                  example={
+     *                      "playgrounds": {
+     *                          "The playgrounds field is required."
+     *                      },
+     *                      "min_price": {
+     *                          "The min price field is required."
+     *                      },
+     *                      "max_price": {
+     *                          "The max price field is required."
+     *                      },
+     *                      "currency": {
+     *                          "The currency field is required."
+     *                      }
+     *                  },
+     *              )
+     *          )
+     *      ),
+     *      @OA\Response(
+     *          response="401",
+     *          description="Unauthorized",
+     *          @OA\MediaType(
+     *              mediaType="application/json",
+     *              @OA\Schema(
+     *                  example={
+     *                      "success": false,
+     *                      "message": "Unauthorized"
+     *                  },
+     *              )
+     *          )
+     *      ),
+     *      @OA\Response(
+     *          response="403",
+     *          description="Forbidden",
+     *          @OA\MediaType(
+     *              mediaType="application/json",
+     *              @OA\Schema(
+     *                  example={
+     *                      "success": false,
+     *                      "message": "Forbidden"
+     *                  },
+     *              )
+     *          )
      *      ),
      *      security={{"Bearer":{}}}
      * )

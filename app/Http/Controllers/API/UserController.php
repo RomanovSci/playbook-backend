@@ -79,7 +79,7 @@ class UserController extends Controller
      *      ),
      *      @OA\Response(
      *          response="400",
-     *          description="Invalid parameters",
+     *          description="Bad request",
      *          @OA\MediaType(
      *              mediaType="application/json",
      *              @OA\Schema(
@@ -150,12 +150,14 @@ class UserController extends Controller
      *      ),
      *      @OA\Response(
      *          response="400",
-     *          description="Invalid parameters",
+     *          description="Bad request",
      *          @OA\MediaType(
      *              mediaType="application/json",
      *              @OA\Schema(
      *                  example={
-     *                      "phone": "The phone must be a number."
+     *                      "phone": {
+     *                          "The phone must be a number."
+     *                      }
      *                  },
      *              )
      *          )
@@ -243,7 +245,7 @@ class UserController extends Controller
      *      ),
      *      @OA\Response(
      *          response="400",
-     *          description="Invalid parameters",
+     *          description="Bad request",
      *          @OA\MediaType(
      *              mediaType="application/json",
      *              @OA\Schema(
@@ -264,7 +266,7 @@ class UserController extends Controller
         $user = Auth::user();
 
         if ($user->verification_code !== $request->post('code')) {
-            return $this->error(400, [], __('errors.incorrect_verification_code'));
+            return $this->error(__('errors.incorrect_verification_code'));
         }
 
         $user->phone_verified_at = Carbon::now();
@@ -306,7 +308,7 @@ class UserController extends Controller
      *      ),
      *      @OA\Response(
      *          response="400",
-     *          description="Invalid parameters",
+     *          description="Bad request",
      *          @OA\MediaType(
      *              mediaType="application/json",
      *              @OA\Schema(
@@ -363,7 +365,7 @@ class UserController extends Controller
      *      ),
      *      @OA\Response(
      *          response="400",
-     *          description="Invalid parameters",
+     *          description="Bad request",
      *          @OA\MediaType(
      *              mediaType="application/json",
      *              @OA\Schema(
@@ -385,6 +387,6 @@ class UserController extends Controller
 
         return $resetResult->getSuccess()
             ? $this->success($resetResult->getData('passwordReset'))
-            : $this->error(400, [], $resetResult->getMessage());
+            : $this->error($resetResult->getMessage());
     }
 }

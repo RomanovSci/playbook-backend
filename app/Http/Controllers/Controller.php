@@ -42,12 +42,12 @@ class Controller extends BaseController
     /**
      * Error response
      *
-     * @param int $code
-     * @param array $data
      * @param null $message
+     * @param array $data
+     * @param int $code
      * @return JsonResponse
      */
-    protected function error(int $code, $data = [], $message = null): JsonResponse
+    protected function error($message = null, $data = [], int $code = 400): JsonResponse
     {
         $response = [
             'success' => false,

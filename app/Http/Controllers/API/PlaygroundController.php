@@ -65,6 +65,36 @@ class PlaygroundController extends Controller
      *              )
      *         )
      *      ),
+     *      @OA\Response(
+     *          response="400",
+     *          description="Bad request",
+     *          @OA\MediaType(
+     *              mediaType="application/json",
+     *              @OA\Schema(
+     *                  example={
+     *                      "limit": {
+     *                          "The limit field is required."
+     *                      },
+     *                      "offset": {
+     *                          "The offset field is required."
+     *                      }
+     *                  },
+     *              )
+     *          )
+     *      ),
+     *      @OA\Response(
+     *          response="401",
+     *          description="Unauthorized",
+     *          @OA\MediaType(
+     *              mediaType="application/json",
+     *              @OA\Schema(
+     *                  example={
+     *                      "success": false,
+     *                      "message": "Unauthorized"
+     *                  },
+     *              )
+     *          )
+     *      ),
      *      security={{"Bearer":{}}}
      * )
      */
@@ -116,8 +146,31 @@ class PlaygroundController extends Controller
      *         )
      *      ),
      *      @OA\Response(
-     *          response="422",
-     *          description="Invalid parameters"
+     *          response="400",
+     *          description="Bad request",
+     *          @OA\MediaType(
+     *              mediaType="application/json",
+     *              @OA\Schema(
+     *                  example={
+     *                      "query": {
+     *                          "The query field is required."
+     *                      }
+     *                  },
+     *              )
+     *          )
+     *      ),
+     *      @OA\Response(
+     *          response="401",
+     *          description="Unauthorized",
+     *          @OA\MediaType(
+     *              mediaType="application/json",
+     *              @OA\Schema(
+     *                  example={
+     *                      "success": false,
+     *                      "message": "Unauthorized"
+     *                  },
+     *              )
+     *          )
      *      ),
      *      security={{"Bearer":{}}}
      * )
@@ -176,8 +229,56 @@ class PlaygroundController extends Controller
      *         )
      *      ),
      *      @OA\Response(
-     *          response="422",
-     *          description="Invalid parameters"
+     *          response="400",
+     *          description="Bad request",
+     *          @OA\MediaType(
+     *              mediaType="application/json",
+     *              @OA\Schema(
+     *                  example={
+     *                      "name": {
+     *                          "The name field is required."
+     *                      },
+     *                      "description": {
+     *                          "The description field is required."
+     *                      },
+     *                      "address": {
+     *                          "The address field is required."
+     *                      },
+     *                      "opening_time": {
+     *                          "The opening time field is required."
+     *                      },
+     *                      "closing_time": {
+     *                          "The closing time field is required."
+     *                      },
+     *                  },
+     *              )
+     *          )
+     *      ),
+     *      @OA\Response(
+     *          response="401",
+     *          description="Unauthorized",
+     *          @OA\MediaType(
+     *              mediaType="application/json",
+     *              @OA\Schema(
+     *                  example={
+     *                      "success": false,
+     *                      "message": "Unauthorized"
+     *                  },
+     *              )
+     *          )
+     *      ),
+     *      @OA\Response(
+     *          response="403",
+     *          description="Forbidden",
+     *          @OA\MediaType(
+     *              mediaType="application/json",
+     *              @OA\Schema(
+     *                  example={
+     *                      "success": false,
+     *                      "message": "Forbidden"
+     *                  },
+     *              )
+     *          )
      *      ),
      *      security={{"Bearer":{}}}
      * )
@@ -235,6 +336,19 @@ class PlaygroundController extends Controller
      *                  )
      *              )
      *         )
+     *      ),
+     *      @OA\Response(
+     *          response="401",
+     *          description="Unauthorized",
+     *          @OA\MediaType(
+     *              mediaType="application/json",
+     *              @OA\Schema(
+     *                  example={
+     *                      "success": false,
+     *                      "message": "Unauthorized"
+     *                  },
+     *              )
+     *          )
      *      ),
      *      security={{"Bearer":{}}}
      * )

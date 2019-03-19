@@ -61,6 +61,36 @@ class OrganizationController extends Controller
      *              )
      *          )
      *      ),
+     *      @OA\Response(
+     *          response="400",
+     *          description="Bad request",
+     *          @OA\MediaType(
+     *              mediaType="application/json",
+     *              @OA\Schema(
+     *                  example={
+     *                      "limit": {
+     *                          "The limit field is required."
+     *                      },
+     *                      "offset": {
+     *                          "The offset field is required."
+     *                      }
+     *                  },
+     *              )
+     *          )
+     *      ),
+     *      @OA\Response(
+     *          response="401",
+     *          description="Unauthorized",
+     *          @OA\MediaType(
+     *              mediaType="application/json",
+     *              @OA\Schema(
+     *                  example={
+     *                      "success": false,
+     *                      "message": "Unauthorized"
+     *                  },
+     *              )
+     *          )
+     *      ),
      *      security={{"Bearer":{}}}
      * )
      */
@@ -116,8 +146,34 @@ class OrganizationController extends Controller
      *          )
      *      ),
      *      @OA\Response(
-     *          response="422",
-     *          description="Invalid parameters"
+     *          response="400",
+     *          description="Bad request",
+     *          @OA\MediaType(
+     *              mediaType="application/json",
+     *              @OA\Schema(
+     *                  example={
+     *                      "name": {
+     *                          "The name field is required."
+     *                      },
+     *                      "city_uuid": {
+     *                          "The city_uuid field is required."
+     *                      }
+     *                  },
+     *              )
+     *          )
+     *      ),
+     *      @OA\Response(
+     *          response="401",
+     *          description="Unauthorized",
+     *          @OA\MediaType(
+     *              mediaType="application/json",
+     *              @OA\Schema(
+     *                  example={
+     *                      "success": false,
+     *                      "message": "Unauthorized"
+     *                  },
+     *              )
+     *          )
      *      ),
      *      security={{"Bearer":{}}}
      * )

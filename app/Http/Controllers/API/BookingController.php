@@ -123,7 +123,43 @@ class BookingController extends Controller
      *                  ),
      *              )
      *         )
-     *      )
+     *      ),
+     *      @OA\Response(
+     *          response="400",
+     *          description="Bad request",
+     *          @OA\MediaType(
+     *              mediaType="application/json",
+     *              @OA\Schema(
+     *                  example={
+     *                      "start_time": {
+     *                          "The start time field is required."
+     *                      },
+     *                      "end_time": {
+     *                          "The end time field is required."
+     *                      },
+     *                      "limit": {
+     *                          "The limit field is required."
+     *                      },
+     *                      "offset": {
+     *                          "The offset field is required."
+     *                      }
+     *                  },
+     *              )
+     *          )
+     *      ),
+     *      @OA\Response(
+     *          response="403",
+     *          description="Forbidden",
+     *          @OA\MediaType(
+     *              mediaType="application/json",
+     *              @OA\Schema(
+     *                  example={
+     *                      "success": false,
+     *                      "message": "Forbidden"
+     *                  },
+     *              )
+     *          )
+     *      ),
      * )
      */
     public function get(TimeIntervalFormRequest $request, string $bookableType, string $uuid)
@@ -221,6 +257,42 @@ class BookingController extends Controller
      *              )
      *         )
      *      ),
+     *      @OA\Response(
+     *          response="400",
+     *          description="Bad request",
+     *          @OA\MediaType(
+     *              mediaType="application/json",
+     *              @OA\Schema(
+     *                  example={
+     *                      "start_time": {
+     *                          "The start time field is required."
+     *                      },
+     *                      "end_time": {
+     *                          "The end time field is required."
+     *                      },
+     *                      "limit": {
+     *                          "The limit field is required."
+     *                      },
+     *                      "offset": {
+     *                          "The offset field is required."
+     *                      }
+     *                  },
+     *              )
+     *          )
+     *      ),
+     *      @OA\Response(
+     *          response="401",
+     *          description="Unauthorized",
+     *          @OA\MediaType(
+     *              mediaType="application/json",
+     *              @OA\Schema(
+     *                  example={
+     *                      "success": false,
+     *                      "message": "Unauthorized"
+     *                  },
+     *              )
+     *          )
+     *      ),
      *      security={{"Bearer":{}}}
      * )
      */
@@ -303,6 +375,19 @@ class BookingController extends Controller
      *                  )
      *              )
      *         )
+     *      ),
+     *      @OA\Response(
+     *          response="401",
+     *          description="Unauthorized",
+     *          @OA\MediaType(
+     *              mediaType="application/json",
+     *              @OA\Schema(
+     *                  example={
+     *                      "success": false,
+     *                      "message": "Unauthorized"
+     *                  },
+     *              )
+     *          )
      *      ),
      *      @OA\Response(
      *          response="403",
@@ -399,8 +484,30 @@ class BookingController extends Controller
      *         )
      *      ),
      *      @OA\Response(
+     *          response="401",
+     *          description="Unauthorized",
+     *          @OA\MediaType(
+     *              mediaType="application/json",
+     *              @OA\Schema(
+     *                  example={
+     *                      "success": false,
+     *                      "message": "Unauthorized"
+     *                  },
+     *              )
+     *          )
+     *      ),
+     *      @OA\Response(
      *          response="403",
-     *          description="Can't manage booking"
+     *          description="Forbidden",
+     *          @OA\MediaType(
+     *              mediaType="application/json",
+     *              @OA\Schema(
+     *                  example={
+     *                      "success": false,
+     *                      "message": "Forbidden"
+     *                  },
+     *              )
+     *          )
      *      ),
      *      security={{"Bearer":{}}}
      * )
@@ -421,7 +528,7 @@ class BookingController extends Controller
         );
 
         if (!$changeStatusResult->getSuccess()) {
-            $this->error(400, $booking->toArray(), $changeStatusResult->getMessage());
+            $this->error($changeStatusResult->getMessage(), $booking->toArray());
         }
 
         return $this->success($booking->toArray());
@@ -486,8 +593,44 @@ class BookingController extends Controller
      *         )
      *      ),
      *      @OA\Response(
+     *          response="400",
+     *          description="Bad request",
+     *          @OA\MediaType(
+     *              mediaType="application/json",
+     *              @OA\Schema(
+     *                  example={
+     *                      "note": {
+     *                          "The note field is required."
+     *                      },
+     *                  },
+     *              )
+     *          )
+     *      ),
+     *      @OA\Response(
+     *          response="401",
+     *          description="Unauthorized",
+     *          @OA\MediaType(
+     *              mediaType="application/json",
+     *              @OA\Schema(
+     *                  example={
+     *                      "success": false,
+     *                      "message": "Unauthorized"
+     *                  },
+     *              )
+     *          )
+     *      ),
+     *      @OA\Response(
      *          response="403",
-     *          description="Can't manage booking"
+     *          description="Forbidden",
+     *          @OA\MediaType(
+     *              mediaType="application/json",
+     *              @OA\Schema(
+     *                  example={
+     *                      "success": false,
+     *                      "message": "Forbidden"
+     *                  },
+     *              )
+     *          )
      *      ),
      *      security={{"Bearer":{}}}
      * )
@@ -505,7 +648,7 @@ class BookingController extends Controller
         );
 
         if (!$changeStatusResult->getSuccess()) {
-            $this->error(400, $booking->toArray(), $changeStatusResult->getMessage());
+            $this->error($changeStatusResult->getMessage(), $booking->toArray());
         }
 
         return $this->success($booking->toArray());

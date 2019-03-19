@@ -126,7 +126,30 @@ class ScheduleController extends Controller
      *                  ),
      *              )
      *         )
-     *      )
+     *      ),
+     *      @OA\Response(
+     *          response="400",
+     *          description="Bad request",
+     *          @OA\MediaType(
+     *              mediaType="application/json",
+     *              @OA\Schema(
+     *                  example={
+     *                      "start_time": {
+     *                          "The start time field is required."
+     *                      },
+     *                      "end_time": {
+     *                          "The end time field is required."
+     *                      },
+     *                      "limit": {
+     *                          "The limit field is required."
+     *                      },
+     *                      "offset": {
+     *                          "The offset field is required."
+     *                      }
+     *                  },
+     *              )
+     *          )
+     *      ),
      * )
      */
     public function get(TimeIntervalFormRequest $request, string $schedulableType, string $uuid = null)
@@ -209,8 +232,53 @@ class ScheduleController extends Controller
      *          )
      *      ),
      *      @OA\Response(
-     *          response="422",
-     *          description="Invalid parameters"
+     *          response="400",
+     *          description="Bad request",
+     *          @OA\MediaType(
+     *              mediaType="application/json",
+     *              @OA\Schema(
+     *                  example={
+     *                      "dates": {
+     *                          "The dates field is required."
+     *                      },
+     *                      "price_per_hour": {
+     *                          "The price per hour field is required."
+     *                      },
+     *                      "currency": {
+     *                          "The currency field is required."
+     *                      },
+     *                      "playgrounds": {
+     *                          "The playgrounds field is required."
+     *                      }
+     *                  },
+     *              )
+     *          )
+     *      ),
+     *      @OA\Response(
+     *          response="401",
+     *          description="Unauthorized",
+     *          @OA\MediaType(
+     *              mediaType="application/json",
+     *              @OA\Schema(
+     *                  example={
+     *                      "success": false,
+     *                      "message": "Unauthorized"
+     *                  },
+     *              )
+     *          )
+     *      ),
+     *      @OA\Response(
+     *          response="403",
+     *          description="Forbidden",
+     *          @OA\MediaType(
+     *              mediaType="application/json",
+     *              @OA\Schema(
+     *                  example={
+     *                      "success": false,
+     *                      "message": "Forbidden"
+     *                  },
+     *              )
+     *          )
      *      ),
      *      security={{"Bearer":{}}}
      * )
@@ -300,12 +368,53 @@ class ScheduleController extends Controller
      *          )
      *      ),
      *      @OA\Response(
-     *          response="403",
-     *          description="Forbidden"
+     *          response="400",
+     *          description="Bad request",
+     *          @OA\MediaType(
+     *              mediaType="application/json",
+     *              @OA\Schema(
+     *                  example={
+     *                      "start_time": {
+     *                          "The start time field is required."
+     *                      },
+     *                      "end_time": {
+     *                          "The end time field is required."
+     *                      },
+     *                      "price_per_hour": {
+     *                          "The price per hout field is required."
+     *                      },
+     *                      "currency": {
+     *                          "The currency field is required."
+     *                      }
+     *                  },
+     *              )
+     *          )
      *      ),
      *      @OA\Response(
-     *          response="400",
-     *          description="Invalid schedule uuid"
+     *          response="401",
+     *          description="Unauthorized",
+     *          @OA\MediaType(
+     *              mediaType="application/json",
+     *              @OA\Schema(
+     *                  example={
+     *                      "success": false,
+     *                      "message": "Unauthorized"
+     *                  },
+     *              )
+     *          )
+     *      ),
+     *      @OA\Response(
+     *          response="403",
+     *          description="Forbidden",
+     *          @OA\MediaType(
+     *              mediaType="application/json",
+     *              @OA\Schema(
+     *                  example={
+     *                      "success": false,
+     *                      "message": "Forbidden"
+     *                  },
+     *              )
+     *          )
      *      ),
      *      security={{"Bearer":{}}}
      * )
@@ -357,12 +466,34 @@ class ScheduleController extends Controller
      *          )
      *      ),
      *      @OA\Response(
-     *          response="403",
-     *          description="Forbidden"
+     *          response="400",
+     *          description="Bad request"
      *      ),
      *      @OA\Response(
-     *          response="400",
-     *          description="Invalid schedule uuid"
+     *          response="401",
+     *          description="Unauthorized",
+     *          @OA\MediaType(
+     *              mediaType="application/json",
+     *              @OA\Schema(
+     *                  example={
+     *                      "success": false,
+     *                      "message": "Unauthorized"
+     *                  },
+     *              )
+     *          )
+     *      ),
+     *      @OA\Response(
+     *          response="403",
+     *          description="Forbidden",
+     *          @OA\MediaType(
+     *              mediaType="application/json",
+     *              @OA\Schema(
+     *                  example={
+     *                      "success": false,
+     *                      "message": "Forbidden"
+     *                  },
+     *              )
+     *          )
      *      ),
      *      security={{"Bearer":{}}}
      * )
