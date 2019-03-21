@@ -405,9 +405,16 @@ class BookingController extends Controller
      *      ),
      *      @OA\Response(
      *          response="403",
-     *          description="
-     *              Schedules for this time interval doesn't exists
-     *              This time already reserved"
+     *          description="Forbidden",
+     *          @OA\MediaType(
+     *              mediaType="application/json",
+     *              @OA\Schema(
+     *                  example={
+     *                      "success": false,
+     *                      "message": "Forbidden"
+     *                  },
+     *              )
+     *          )
      *      ),
      *      security={{"Bearer":{}}}
      * )

@@ -84,11 +84,41 @@ class UserController extends Controller
      *              mediaType="application/json",
      *              @OA\Schema(
      *                  example={
-     *                      "phone": "The phone must be a number."
+     *                      "first_name": {
+     *                          "The first name field is required."
+     *                      },
+     *                      "last_name": {
+     *                          "The last name field is required."
+     *                      },
+     *                      "phone": {
+     *                          "The phone field is required."
+     *                      },
+     *                      "is_trainer": {
+     *                          "The trainer field is required."
+     *                      },
+     *                      "password": {
+     *                          "The password field is required."
+     *                      },
+     *                      "c_password": {
+     *                          "The c_password field is required."
+     *                      },
      *                  },
      *              )
      *          )
-     *      )
+     *      ),
+     *      @OA\Response(
+     *          response="403",
+     *          description="Forbidden",
+     *          @OA\MediaType(
+     *              mediaType="application/json",
+     *              @OA\Schema(
+     *                  example={
+     *                      "success": false,
+     *                      "message": "Forbidden"
+     *                  },
+     *              )
+     *          )
+     *      ),
      * )
      */
     public function register(RegisterFormRequest $request)
@@ -156,12 +186,28 @@ class UserController extends Controller
      *              @OA\Schema(
      *                  example={
      *                      "phone": {
-     *                          "The phone must be a number."
+     *                          "The phone field is required."
+     *                      },
+     *                      "password": {
+     *                          "The password field is required."
      *                      }
      *                  },
      *              )
      *          )
-     *      )
+     *      ),
+     *      @OA\Response(
+     *          response="403",
+     *          description="Forbidden",
+     *          @OA\MediaType(
+     *              mediaType="application/json",
+     *              @OA\Schema(
+     *                  example={
+     *                      "success": false,
+     *                      "message": "Forbidden"
+     *                  },
+     *              )
+     *          )
+     *      ),
      * )
      */
     public function login(LoginFormRequest $request)
@@ -185,7 +231,8 @@ class UserController extends Controller
      *              @OA\Schema(
      *                  example={
      *                      "success": true,
-     *                      "message": "string"
+     *                      "message": "string",
+     *                      "data": {}
      *                  }
      *              )
      *         )
@@ -238,7 +285,8 @@ class UserController extends Controller
      *              @OA\Schema(
      *                  example={
      *                      "success": "true",
-     *                      "message": "Success"
+     *                      "message": "Success",
+     *                      "data": {}
      *                  }
      *              )
      *         )
@@ -251,8 +299,21 @@ class UserController extends Controller
      *              @OA\Schema(
      *                  example={
      *                      "code": {
-     *                          "The code must be 6 digits."
+     *                          "The code field is required."
      *                      }
+     *                  },
+     *              )
+     *          )
+     *      ),
+     *      @OA\Response(
+     *          response="401",
+     *          description="Unauthorized",
+     *          @OA\MediaType(
+     *              mediaType="application/json",
+     *              @OA\Schema(
+     *                  example={
+     *                      "success": false,
+     *                      "message": "Unauthorized"
      *                  },
      *              )
      *          )
@@ -301,7 +362,8 @@ class UserController extends Controller
      *              @OA\Schema(
      *                  example={
      *                      "success": "true",
-     *                      "message": "Success"
+     *                      "message": "Success",
+     *                      "data": {}
      *                  }
      *              )
      *         )
@@ -314,7 +376,7 @@ class UserController extends Controller
      *              @OA\Schema(
      *                  example={
      *                      "phone": {
-     *                          "The phone must be a number."
+     *                          "The phone field is required."
      *                      }
      *                  },
      *              )
@@ -358,7 +420,8 @@ class UserController extends Controller
      *              @OA\Schema(
      *                  example={
      *                      "success": "true",
-     *                      "message": "Success"
+     *                      "message": "Success",
+     *                      "data": {}
      *                  }
      *              )
      *         )
@@ -371,7 +434,7 @@ class UserController extends Controller
      *              @OA\Schema(
      *                  example={
      *                      "phone": {
-     *                          "The phone must be a number."
+     *                          "The phone field is required."
      *                      }
      *                  },
      *              )
