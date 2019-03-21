@@ -61,12 +61,18 @@ class File extends BaseModel
     protected $table = 'files';
 
     /**
-     * @var array
+     * File constructor.
+     *
+     * @param array $attributes
      */
-    protected $hidden = [
-        'entity_uuid',
-        'entity_type',
-        'name',
-        'mime_type'
-    ];
+    public function __construct(array $attributes = [])
+    {
+        parent::__construct($attributes);
+        $this->hidden = array_merge($this->hidden, [
+            'entity_uuid',
+            'entity_type',
+            'name',
+            'mime_type',
+        ]);
+    }
 }

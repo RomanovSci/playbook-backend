@@ -56,6 +56,7 @@ abstract class BaseModel extends Model
      */
     protected $hidden = [
         'deleted_at',
+        'pivot',
     ];
 
     /**

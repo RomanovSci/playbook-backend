@@ -23,7 +23,6 @@ use App\Models\Schedule\Schedule;
  *      allOf={
  *          @OA\Schema(
  *              required={
- *                  "type_uuid",
  *                  "name",
  *                  "description",
  *                  "address",
@@ -31,18 +30,6 @@ use App\Models\Schedule\Schedule;
  *                  "closing_time",
  *
  *              },
- *              @OA\Property(
- *                  property="type_uuid",
- *                  type="string",
- *              ),
- *              @OA\Property(
- *                  property="organization_uuid",
- *                  type="string",
- *              ),
- *              @OA\Property(
- *                  property="creator_uuid",
- *                  type="string",
- *              ),
  *              @OA\Property(
  *                  property="name",
  *                  type="string",
@@ -66,6 +53,26 @@ use App\Models\Schedule\Schedule;
  *              @OA\Property(
  *                  property="status",
  *                  type="integer",
+ *              ),
+ *              @OA\Property(
+ *                  property="schedules",
+ *                  type="array",
+ *                  @OA\Items(ref="#/components/schemas/Schedule")
+ *              ),
+ *              @OA\Property(
+ *                  property="type",
+ *                  type="object",
+ *                  ref="#/components/schemas/PlaygroundType"
+ *              ),
+ *              @OA\Property(
+ *                  property="organization",
+ *                  type="object",
+ *                  ref="#/components/schemas/Organization"
+ *              ),
+ *              @OA\Property(
+ *                  property="creator",
+ *                  type="object",
+ *                  ref="#/components/schemas/User"
  *              ),
  *          ),
  *          @OA\Schema(ref="#/components/schemas/BaseModel"),
@@ -102,6 +109,21 @@ class Playground extends BaseModel
         'schedules',
         'creator',
     ];
+
+    /**
+     * Playground constructor.
+     *
+     * @param array $attributes
+     */
+    public function __construct(array $attributes = [])
+    {
+        parent::__construct($attributes);
+        $this->hidden = array_merge($this->hidden, [
+            'organization_uuid',
+            'type_uuid',
+            'creator_uuid',
+        ]);
+    }
 
     /**
      * Get type

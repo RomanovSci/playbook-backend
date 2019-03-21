@@ -96,17 +96,23 @@ class Schedule extends BaseModel
     /**
      * @var array
      */
-    protected $hidden = [
-        'schedulable_uuid',
-        'schedulable_type',
-    ];
-
-    /**
-     * @var array
-     */
     protected $with = [
         'playgrounds',
     ];
+
+    /**
+     * Schedule constructor.
+     *
+     * @param array $attributes
+     */
+    public function __construct(array $attributes = [])
+    {
+        parent::__construct($attributes);
+        $this->hidden = array_merge($this->hidden, [
+            'schedulable_uuid',
+            'schedulable_type',
+        ]);
+    }
 
     /**
      * @return \Illuminate\Database\Eloquent\Relations\MorphTo

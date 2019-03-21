@@ -142,6 +142,7 @@ class User extends Authenticatable
         'verification_code',
         'roles',
         'deleted_at',
+        'pivot',
     ];
 
     /**
