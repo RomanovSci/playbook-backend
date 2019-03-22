@@ -106,7 +106,6 @@ class Playground extends BaseModel
     protected $with = [
         'organization',
         'type',
-        'schedules',
         'creator',
     ];
 
