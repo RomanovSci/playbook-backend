@@ -30,7 +30,6 @@ class PasswordReset extends BaseModel
         'expired_at',
     ];
 
-
     /**
      * @return \Illuminate\Database\Eloquent\Relations\BelongsTo
      */
