@@ -55,11 +55,6 @@ use App\Models\Schedule\Schedule;
  *                  type="integer",
  *              ),
  *              @OA\Property(
- *                  property="schedules",
- *                  type="array",
- *                  @OA\Items(ref="#/components/schemas/Schedule")
- *              ),
- *              @OA\Property(
  *                  property="type",
  *                  type="object",
  *                  ref="#/components/schemas/PlaygroundType"
