@@ -72,11 +72,15 @@ class PlaygroundController extends Controller
      *              mediaType="application/json",
      *              @OA\Schema(
      *                  example={
-     *                      "limit": {
-     *                          "The limit field is required."
-     *                      },
-     *                      "offset": {
-     *                          "The offset field is required."
+     *                      "success": false,
+     *                      "message": "Validation error",
+     *                      "data": {
+     *                          "limit": {
+     *                              "The limit field is required."
+     *                          },
+     *                          "offset": {
+     *                              "The offset field is required."
+     *                          }
      *                      }
      *                  },
      *              )
@@ -152,8 +156,12 @@ class PlaygroundController extends Controller
      *              mediaType="application/json",
      *              @OA\Schema(
      *                  example={
-     *                      "query": {
-     *                          "The query field is required."
+     *                      "success": false,
+     *                      "message": "Validation error",
+     *                      "data": {
+     *                          "query": {
+     *                              "The query field is required."
+     *                          }
      *                      }
      *                  },
      *              )
@@ -235,21 +243,25 @@ class PlaygroundController extends Controller
      *              mediaType="application/json",
      *              @OA\Schema(
      *                  example={
-     *                      "name": {
-     *                          "The name field is required."
-     *                      },
-     *                      "description": {
-     *                          "The description field is required."
-     *                      },
-     *                      "address": {
-     *                          "The address field is required."
-     *                      },
-     *                      "opening_time": {
-     *                          "The opening time field is required."
-     *                      },
-     *                      "closing_time": {
-     *                          "The closing time field is required."
-     *                      },
+     *                      "success": false,
+     *                      "message": "Validation error",
+     *                      "data": {
+     *                          "name": {
+     *                              "The name field is required."
+     *                          },
+     *                          "description": {
+     *                              "The description field is required."
+     *                          },
+     *                          "address": {
+     *                              "The address field is required."
+     *                          },
+     *                          "opening_time": {
+     *                              "The opening time field is required."
+     *                          },
+     *                          "closing_time": {
+     *                              "The closing time field is required."
+     *                          },
+     *                      }
      *                  },
      *              )
      *          )

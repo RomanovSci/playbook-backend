@@ -65,11 +65,15 @@ class CountryController extends Controller
      *              mediaType="application/json",
      *              @OA\Schema(
      *                  example={
-     *                      "limit": {
-     *                          "The limit field is required."
-     *                      },
-     *                      "offset": {
-     *                          "The offset field is required."
+     *                      "success": false,
+     *                      "message": "Validation error",
+     *                      "data": {
+     *                          "limit": {
+     *                              "The limit field is required."
+     *                          },
+     *                          "offset": {
+     *                              "The offset field is required."
+     *                          }
      *                      }
      *                  },
      *              )
@@ -145,8 +149,12 @@ class CountryController extends Controller
      *              mediaType="application/json",
      *              @OA\Schema(
      *                  example={
-     *                      "query": {
-     *                          "The query field is required."
+     *                      "success": false,
+     *                      "message": "Validation error",
+     *                      "data": {
+     *                          "query": {
+     *                              "The query field is required."
+     *                          }
      *                      }
      *                  },
      *              )

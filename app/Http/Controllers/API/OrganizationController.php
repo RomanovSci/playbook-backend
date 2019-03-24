@@ -68,11 +68,15 @@ class OrganizationController extends Controller
      *              mediaType="application/json",
      *              @OA\Schema(
      *                  example={
-     *                      "limit": {
-     *                          "The limit field is required."
-     *                      },
-     *                      "offset": {
-     *                          "The offset field is required."
+     *                      "success": false,
+     *                      "message": "Validation error",
+     *                      "data": {
+     *                          "limit": {
+     *                              "The limit field is required."
+     *                          },
+     *                          "offset": {
+     *                              "The offset field is required."
+     *                          }
      *                      }
      *                  },
      *              )
@@ -152,11 +156,15 @@ class OrganizationController extends Controller
      *              mediaType="application/json",
      *              @OA\Schema(
      *                  example={
-     *                      "name": {
-     *                          "The name field is required."
-     *                      },
-     *                      "city_uuid": {
-     *                          "The city_uuid field is required."
+     *                      "success": false,
+     *                      "message": "Validation error",
+     *                      "data" : {
+     *                          "name": {
+     *                              "The name field is required."
+     *                          },
+     *                          "city_uuid": {
+     *                              "The city_uuid field is required."
+     *                          }
      *                      }
      *                  },
      *              )

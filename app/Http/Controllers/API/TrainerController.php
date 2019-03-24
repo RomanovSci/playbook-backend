@@ -104,12 +104,16 @@ class TrainerController extends Controller
      *              mediaType="application/json",
      *              @OA\Schema(
      *                  example={
-     *                      "limit": {
-     *                          "The limit field is required."
-     *                      },
-     *                      "offset": {
-     *                          "The limit field is required."
-     *                      },
+     *                      "success": false,
+     *                      "message": "Validation error",
+     *                      "data": {
+     *                          "limit": {
+     *                              "The limit field is required."
+     *                          },
+     *                          "offset": {
+     *                              "The limit field is required."
+     *                          },
+     *                      }
      *                  },
      *              )
      *          )
@@ -268,17 +272,21 @@ class TrainerController extends Controller
      *              mediaType="application/json",
      *              @OA\Schema(
      *                  example={
-     *                      "playgrounds": {
-     *                          "The playgrounds field is required."
-     *                      },
-     *                      "min_price": {
-     *                          "The min price field is required."
-     *                      },
-     *                      "max_price": {
-     *                          "The max price field is required."
-     *                      },
-     *                      "currency": {
-     *                          "The currency field is required."
+     *                      "success": false,
+     *                      "message": "Validation error",
+     *                      "data": {
+     *                          "playgrounds": {
+     *                              "The playgrounds field is required."
+     *                          },
+     *                          "min_price": {
+     *                              "The min price field is required."
+     *                          },
+     *                          "max_price": {
+     *                              "The max price field is required."
+     *                          },
+     *                          "currency": {
+     *                              "The currency field is required."
+     *                          }
      *                      }
      *                  },
      *              )
@@ -395,17 +403,21 @@ class TrainerController extends Controller
      *              mediaType="application/json",
      *              @OA\Schema(
      *                  example={
-     *                      "playgrounds": {
-     *                          "The playgrounds field is required."
-     *                      },
-     *                      "min_price": {
-     *                          "The min price field is required."
-     *                      },
-     *                      "max_price": {
-     *                          "The max price field is required."
-     *                      },
-     *                      "currency": {
-     *                          "The currency field is required."
+     *                      "success": false,
+     *                      "message": "Validation error",
+     *                      "data": {
+     *                          "playgrounds": {
+     *                              "The playgrounds field is required."
+     *                          },
+     *                          "min_price": {
+     *                              "The min price field is required."
+     *                          },
+     *                          "max_price": {
+     *                              "The max price field is required."
+     *                          },
+     *                          "currency": {
+     *                              "The currency field is required."
+     *                          }
      *                      }
      *                  },
      *              )

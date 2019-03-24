@@ -84,24 +84,28 @@ class UserController extends Controller
      *              mediaType="application/json",
      *              @OA\Schema(
      *                  example={
-     *                      "first_name": {
-     *                          "The first name field is required."
-     *                      },
-     *                      "last_name": {
-     *                          "The last name field is required."
-     *                      },
-     *                      "phone": {
-     *                          "The phone field is required."
-     *                      },
-     *                      "is_trainer": {
-     *                          "The trainer field is required."
-     *                      },
-     *                      "password": {
-     *                          "The password field is required."
-     *                      },
-     *                      "c_password": {
-     *                          "The c_password field is required."
-     *                      },
+     *                      "success": false,
+     *                      "message": "Validation error",
+     *                      "data": {
+     *                          "first_name": {
+     *                              "The first name field is required."
+     *                          },
+     *                          "last_name": {
+     *                              "The last name field is required."
+     *                          },
+     *                          "phone": {
+     *                              "The phone field is required."
+     *                          },
+     *                          "is_trainer": {
+     *                              "The trainer field is required."
+     *                          },
+     *                          "password": {
+     *                              "The password field is required."
+     *                          },
+     *                          "c_password": {
+     *                              "The c_password field is required."
+     *                          }
+     *                      }
      *                  },
      *              )
      *          )
@@ -185,11 +189,15 @@ class UserController extends Controller
      *              mediaType="application/json",
      *              @OA\Schema(
      *                  example={
-     *                      "phone": {
-     *                          "The phone field is required."
-     *                      },
-     *                      "password": {
-     *                          "The password field is required."
+     *                      "success": false,
+     *                      "message": "Validation error",
+     *                      "data": {
+     *                          "phone": {
+     *                              "The phone field is required."
+     *                          },
+     *                          "password": {
+     *                              "The password field is required."
+     *                          }
      *                      }
      *                  },
      *              )
@@ -298,8 +306,12 @@ class UserController extends Controller
      *              mediaType="application/json",
      *              @OA\Schema(
      *                  example={
-     *                      "code": {
-     *                          "The code field is required."
+     *                      "success": false,
+     *                      "message": "Validation error",
+     *                      "data": {
+     *                          "code": {
+     *                              "The code field is required."
+     *                          }
      *                      }
      *                  },
      *              )
@@ -375,8 +387,12 @@ class UserController extends Controller
      *              mediaType="application/json",
      *              @OA\Schema(
      *                  example={
-     *                      "phone": {
-     *                          "The phone field is required."
+     *                      "success": false,
+     *                      "message": "Validation error",
+     *                      "data": {
+     *                          "phone": {
+     *                              "The phone field is required."
+     *                          }
      *                      }
      *                  },
      *              )
@@ -442,8 +458,12 @@ class UserController extends Controller
      *              mediaType="application/json",
      *              @OA\Schema(
      *                  example={
-     *                      "phone": {
-     *                          "The phone field is required."
+     *                      "success": false,
+     *                      "message": "Validation error",
+     *                      "data": {
+     *                          "phone": {
+     *                              "The phone field is required."
+     *                          }
      *                      }
      *                  },
      *              )

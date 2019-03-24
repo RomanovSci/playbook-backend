@@ -131,17 +131,21 @@ class BookingController extends Controller
      *              mediaType="application/json",
      *              @OA\Schema(
      *                  example={
-     *                      "start_time": {
-     *                          "The start time field is required."
-     *                      },
-     *                      "end_time": {
-     *                          "The end time field is required."
-     *                      },
-     *                      "limit": {
-     *                          "The limit field is required."
-     *                      },
-     *                      "offset": {
-     *                          "The offset field is required."
+     *                      "success": false,
+     *                      "message": "Validation error",
+     *                      "data": {
+     *                          "start_time": {
+     *                              "The start time field is required."
+     *                          },
+     *                          "end_time": {
+     *                              "The end time field is required."
+     *                          },
+     *                          "limit": {
+     *                              "The limit field is required."
+     *                          },
+     *                          "offset": {
+     *                              "The offset field is required."
+     *                          }
      *                      }
      *                  },
      *              )
@@ -278,17 +282,21 @@ class BookingController extends Controller
      *              mediaType="application/json",
      *              @OA\Schema(
      *                  example={
-     *                      "start_time": {
-     *                          "The start time field is required."
-     *                      },
-     *                      "end_time": {
-     *                          "The end time field is required."
-     *                      },
-     *                      "limit": {
-     *                          "The limit field is required."
-     *                      },
-     *                      "offset": {
-     *                          "The offset field is required."
+     *                      "success": false,
+     *                      "message": "Validation error",
+     *                      "data": {
+     *                          "start_time": {
+     *                              "The start time field is required."
+     *                          },
+     *                          "end_time": {
+     *                              "The end time field is required."
+     *                          },
+     *                          "limit": {
+     *                              "The limit field is required."
+     *                          },
+     *                          "offset": {
+     *                              "The offset field is required."
+     *                          }
      *                      }
      *                  },
      *              )
@@ -389,6 +397,33 @@ class BookingController extends Controller
      *                  )
      *              )
      *         )
+     *      ),
+     *      @OA\Response(
+     *          response="400",
+     *          description="Bad request",
+     *          @OA\MediaType(
+     *              mediaType="application/json",
+     *              @OA\Schema(
+     *                  example={
+     *                      "success": false,
+     *                      "message": "Validation error",
+     *                      "data": {
+     *                          "start_time": {
+     *                              "The start time field is required."
+     *                          },
+     *                          "end_time": {
+     *                              "The end time field is required."
+     *                          },
+     *                          "bookable_uuid": {
+     *                              "The bookable_uuid field is required."
+     *                          },
+     *                          "playground_uuid": {
+     *                              "The playground_uuid field is required."
+     *                          }
+     *                      }
+     *                  },
+     *              )
+     *          )
      *      ),
      *      @OA\Response(
      *          response="401",
@@ -620,9 +655,13 @@ class BookingController extends Controller
      *              mediaType="application/json",
      *              @OA\Schema(
      *                  example={
-     *                      "note": {
-     *                          "The note field is required."
-     *                      },
+     *                      "success": false,
+     *                      "message": "Validation error",
+     *                      "data": {
+     *                          "note": {
+     *                              "The note field is required."
+     *                          },
+     *                      }
      *                  },
      *              )
      *          )

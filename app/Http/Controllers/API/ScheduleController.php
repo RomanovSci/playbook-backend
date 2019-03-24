@@ -134,17 +134,21 @@ class ScheduleController extends Controller
      *              mediaType="application/json",
      *              @OA\Schema(
      *                  example={
-     *                      "start_time": {
-     *                          "The start time field is required."
-     *                      },
-     *                      "end_time": {
-     *                          "The end time field is required."
-     *                      },
-     *                      "limit": {
-     *                          "The limit field is required."
-     *                      },
-     *                      "offset": {
-     *                          "The offset field is required."
+     *                      "success": false,
+     *                      "message": "Validation error",
+     *                      "data": {
+     *                          "start_time": {
+     *                              "The start time field is required."
+     *                          },
+     *                          "end_time": {
+     *                              "The end time field is required."
+     *                          },
+     *                          "limit": {
+     *                              "The limit field is required."
+     *                          },
+     *                          "offset": {
+     *                              "The offset field is required."
+     *                          }
      *                      }
      *                  },
      *              )
@@ -238,17 +242,21 @@ class ScheduleController extends Controller
      *              mediaType="application/json",
      *              @OA\Schema(
      *                  example={
-     *                      "dates": {
-     *                          "The dates field is required."
-     *                      },
-     *                      "price_per_hour": {
-     *                          "The price per hour field is required."
-     *                      },
-     *                      "currency": {
-     *                          "The currency field is required."
-     *                      },
-     *                      "playgrounds": {
-     *                          "The playgrounds field is required."
+     *                      "success": false,
+     *                      "message": "Validation error",
+     *                      "data": {
+     *                          "dates": {
+     *                              "The dates field is required."
+     *                          },
+     *                          "price_per_hour": {
+     *                              "The price per hour field is required."
+     *                          },
+     *                          "currency": {
+     *                              "The currency field is required."
+     *                          },
+     *                          "playgrounds": {
+     *                              "The playgrounds field is required."
+     *                          }
      *                      }
      *                  },
      *              )
@@ -374,17 +382,21 @@ class ScheduleController extends Controller
      *              mediaType="application/json",
      *              @OA\Schema(
      *                  example={
-     *                      "start_time": {
-     *                          "The start time field is required."
-     *                      },
-     *                      "end_time": {
-     *                          "The end time field is required."
-     *                      },
-     *                      "price_per_hour": {
-     *                          "The price per hout field is required."
-     *                      },
-     *                      "currency": {
-     *                          "The currency field is required."
+     *                      "success": false,
+     *                      "message": "Validation error",
+     *                      "data": {
+     *                          "start_time": {
+     *                              "The start time field is required."
+     *                          },
+     *                          "end_time": {
+     *                              "The end time field is required."
+     *                          },
+     *                          "price_per_hour": {
+     *                              "The price per hout field is required."
+     *                          },
+     *                          "currency": {
+     *                              "The currency field is required."
+     *                          }
      *                      }
      *                  },
      *              )
