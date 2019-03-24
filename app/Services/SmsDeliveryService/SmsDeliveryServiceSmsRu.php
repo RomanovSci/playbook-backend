@@ -28,7 +28,7 @@ class SmsDeliveryServiceSmsRu implements SmsDeliveryServiceInterface
     /**
      * @var int
      */
-    private $attempts = 5;    //количество попыток достучаться до сервера если он не доступен
+    private $attempts = 5;
 
     /**
      * SmsDeliveryServiceSmsRu constructor.
@@ -49,14 +49,32 @@ class SmsDeliveryServiceSmsRu implements SmsDeliveryServiceInterface
     public function send(string $phone, string $text): ExecResult
     {
         /**
-         * $data->to = string - Номер телефона получателя (либо несколько номеров, через запятую — до 100 штук за один запрос). Если вы указываете несколько номеров и один из них указан неверно, то на остальные номера сообщения также не отправляются, и возвращается код ошибки.
+         * From service doc:
+         *
+         * $data->to = string - Номер телефона получателя (либо несколько номеров,
+         * через запятую — до 100 штук за один запрос). Если вы указываете несколько номеров и один из них
+         * указан неверно, то на остальные номера сообщения также не отправляются, и возвращается код ошибки.
+         *
          * $data->msg = string - Текст сообщения в кодировке UTF-8
-         * $data->multi = array('номер получателя' => 'текст сообщения') - Если вы хотите в одном запросе отправить разные сообщения на несколько номеров, то воспользуйтесь этим параметром (до 100 сообщений за 1 запрос). В этом случае, параметры to и text использовать не нужно
-         * $data->from = string - Имя отправителя (должно быть согласовано с администрацией). Если не заполнено, в качестве отправителя будет указан ваш номер.
-         * $data->time = Если вам нужна отложенная отправка, то укажите время отправки. Указывается в формате UNIX TIME (пример: 1280307978). Должно быть не больше 7 дней с момента подачи запроса. Если время меньше текущего времени, сообщение отправляется моментально.
+         *
+         * $data->multi = array('номер получателя' => 'текст сообщения') - Если вы хотите в одном запросе отправить
+         * разные сообщения на несколько номеров, то воспользуйтесь этим параметром (до 100 сообщений за 1 запрос).
+         * В этом случае, параметры to и text использовать не нужно
+         *
+         * $data->from = string - Имя отправителя (должно быть согласовано с администрацией). Если не заполнено,
+         * в качестве отправителя будет указан ваш номер.
+         *
+         * $data->time = Если вам нужна отложенная отправка, то укажите время отправки. Указывается в формате
+         * UNIX TIME (пример: 1280307978). Должно быть не больше 7 дней с момента подачи запроса.
+         * Если время меньше текущего времени, сообщение отправляется моментально.
+         *
          * $data->translit = 1 - Переводит все русские символы в латинские. (по умолчанию 0)
-         * $data->test = 1 - Имитирует отправку сообщения для тестирования ваших программ на правильность обработки ответов сервера. При этом само сообщение не отправляется и баланс не расходуется. (по умолчанию 0)
-         * $data->partner_id = int - Если вы участвуете в партнерской программе, укажите этот параметр в запросе и получайте проценты от стоимости отправленных сообщений.
+         *
+         * $data->test = 1 - Имитирует отправку сообщения для тестирования ваших программ на правильность
+         * обработки ответов сервера. При этом само сообщение не отправляется и баланс не расходуется. (по умолчанию 0)
+         *
+         * $data->partner_id = int - Если вы участвуете в партнерской программе,
+         * укажите этот параметр в запросе и получайте проценты от стоимости отправленных сообщений.
          */
         $data = new \stdClass();
         $data->to = $phone;
@@ -91,22 +109,34 @@ class SmsDeliveryServiceSmsRu implements SmsDeliveryServiceInterface
     }
 
     /**
-     * Возвращает стоимость сообщения на указанный номер и количество сообщений, необходимых для его отправки.
+     * Return cost for number
+     *
      * @param $data
-     *   $post->to = string - Номер телефона получателя (либо несколько номеров, через запятую — до 100 штук за один запрос) Если вы указываете несколько номеров и один из них указан неверно, то возвращается код ошибки.
-     *   $post->text = string - Текст сообщения в кодировке UTF-8. Если текст не введен, то возвращается стоимость 1 сообщения. Если текст введен, то возвращается стоимость, рассчитанная по длине сообщения.
-     *   $post->translit = int - Переводит все русские символы в латинские
      * @return mixed|\stdClass
      */
     public function getCost($data)
     {
+        /**
+         * From doc:
+         *
+         * $data->to = string - Номер телефона получателя (либо несколько номеров, через
+         * запятую — до 100 штук за один запрос) Если вы указываете несколько номеров и один из них указан неверно,
+         * то возвращается код ошибки.
+         *
+         * $data->text = string - Текст сообщения в кодировке UTF-8. Если текст не введен, то возвращается
+         * стоимость 1 сообщения. Если текст введен, то возвращается стоимость, рассчитанная по длине сообщения.
+         *
+         * $data->translit = int - Переводит все русские символы в латинские
+         */
         $url = $this->protocol . '://' . $this->domain . '/sms/cost';
         $request = $this->sendRequest($url, $data);
         return $this->checkReplyError($request, 'getCost');
     }
 
     /**
-     * Получение состояния баланса
+     * Get balance
+     *
+     * @return mixed|\stdClass
      */
     public function getBalance()
     {
@@ -116,7 +146,9 @@ class SmsDeliveryServiceSmsRu implements SmsDeliveryServiceInterface
     }
 
     /**
-     * Получение текущего состояния вашего дневного лимита.
+     * Get daily limit
+     *
+     * @return mixed|\stdClass
      */
     public function getLimit()
     {
@@ -126,7 +158,9 @@ class SmsDeliveryServiceSmsRu implements SmsDeliveryServiceInterface
     }
 
     /**
-     * Получение списка отправителей
+     * Get senders list
+     *
+     * @return mixed|\stdClass
      */
     public function getSenders()
     {
@@ -136,12 +170,13 @@ class SmsDeliveryServiceSmsRu implements SmsDeliveryServiceInterface
     }
 
     /**
-     * На номера, добавленные в стоплист, не доставляются сообщения (и за них не списываются деньги)
+     * Add number to stop list
+     *
      * @param string $phone Номер телефона.
      * @param string $text Примечание (доступно только вам).
      * @return mixed|\stdClass
      */
-    public function addStopList($phone, $text = "")
+    public function addToStopList($phone, $text = "")
     {
         $url = $this->protocol . '://' . $this->domain . '/stoplist/add';
 
@@ -154,11 +189,12 @@ class SmsDeliveryServiceSmsRu implements SmsDeliveryServiceInterface
     }
 
     /**
-     * Удаляет один номер из стоплиста
+     * Remove phone from stop list
+     *
      * @param string $phone Номер телефона.
      * @return mixed|\stdClass
      */
-    public function delStopList($phone)
+    public function removeFromStopLIst($phone)
     {
         $url = $this->protocol . '://' . $this->domain . '/stoplist/del';
         
@@ -170,7 +206,9 @@ class SmsDeliveryServiceSmsRu implements SmsDeliveryServiceInterface
     }
 
     /**
-     * Получить номера занесённые в стоплист
+     * Get numbers from stop list
+     *
+     * @return mixed|\stdClass
      */
     public function getStopList()
     {
@@ -180,33 +218,44 @@ class SmsDeliveryServiceSmsRu implements SmsDeliveryServiceInterface
     }
 
     /**
-     * Добавить URL Callback системы на вашей стороне, на которую будут возвращаться статусы отправленных вами сообщений
-     * @param $post
-     *    $post->url = string - Адрес обработчика (должен начинаться на http://)
+     * Add callback
+     *
+     * @param $data
      * @return mixed|\stdClass
      */
-    public function addCallback($post)
+    public function addCallback($data)
     {
+        /**
+         * From doc:
+         *
+         * $data->url = string - Адрес обработчика (должен начинаться на http://)
+         */
         $url = $this->protocol . '://' . $this->domain . '/callback/add';
-        $request = $this->sendRequest($url, $post);
+        $request = $this->sendRequest($url, $data);
         return $this->checkReplyError($request, 'addCallback');
     }
 
     /**
-     * Удалить обработчик, внесенный вами ранее
-     * @param $post
-     *   $post->url = string - Адрес обработчика (должен начинаться на http://)
+     * Remove callback
+     *
+     * @param $data
      * @return mixed|\stdClass
      */
-    public function delCallback($post)
+    public function removeCallback($data)
     {
+        /**
+         * From doc:
+         *
+         * $data->url = string - Адрес обработчика (должен начинаться на http://)
+         */
         $url = $this->protocol . '://' . $this->domain . '/callback/del';
-        $request = $this->sendRequest($url, $post);
+        $request = $this->sendRequest($url, $data);
         return $this->checkReplyError($request, 'delCallback');
     }
 
     /**
      * Get all callbacks
+     *
      * @return mixed|\stdClass
      */
     public function getCallback()

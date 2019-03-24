@@ -456,6 +456,8 @@ class BookingController extends Controller
      */
     public function create(string $bookableType, BookingCreateFormRequest $request)
     {
+        /** @var User $user */
+        $user = User::auth();
         $bookableUuid = $request->post('bookable_uuid');
         $getPriceResult = BookingHelper::getBookingPrice(
             Carbon::parse($request->post('start_time')),
@@ -471,17 +473,17 @@ class BookingController extends Controller
         /** @var Booking $booking */
         $booking = Booking::create(array_merge($request->all(), [
             'bookable_type' => $bookableType,
-            'creator_uuid' => Auth::user()->uuid,
+            'creator_uuid' => $user->uuid,
             'price' => $getPriceResult->getData('price'),
             'currency' => $getPriceResult->getData('currency'),
         ]));
 
         if ($bookableType === User::class && $bookableUuid !== Auth::user()->uuid) {
-            $timezoneOffset = Auth::user()->timezone->offset;
+            $timezoneOffset = $user->timezone->offset;
             SendSms::dispatch(
                 UserRepository::getByUuid($bookableUuid)->phone,
                 __('sms.booking.create', [
-                    'player_name' => Auth::user()->getFullName(),
+                    'player_name' => $user->getFullName(),
                     'date' => $booking->start_time->addHours($timezoneOffset)->format('d-m-Y'),
                     'start_time' => $booking->start_time->addHours($timezoneOffset)->format('H:i'),
                     'end_time' => $booking->end_time->addHours($timezoneOffset)->format('H:i'),
