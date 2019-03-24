@@ -36,12 +36,6 @@ use Spatie\Permission\Traits\HasRoles;
  * @OA\Schema(
  *      allOf={
  *          @OA\Schema(
- *              required={
- *                  "first_name",
- *                  "last_name",
- *                  "phone",
- *                  "password"
- *              },
  *              @OA\Property(
  *                  property="uuid",
  *                  type="string",

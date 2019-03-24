@@ -22,14 +22,6 @@ use App\Models\Schedule\Schedule;
  * @OA\Schema(
  *      allOf={
  *          @OA\Schema(
- *              required={
- *                  "name",
- *                  "description",
- *                  "address",
- *                  "opening_time",
- *                  "closing_time",
- *
- *              },
  *              @OA\Property(
  *                  property="name",
  *                  type="string",

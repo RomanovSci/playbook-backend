@@ -123,7 +123,7 @@ class UserService
                 $passwordReset = PasswordReset::create([
                     'user_uuid' => $user->uuid,
                     'reset_code' => rand(100000, 999999),
-                    'expired_at' => Carbon::now()->addHours(3)
+                    'expired_at' => Carbon::now()->addHours(3),
                 ]);
             }
             SendSms::dispatch(

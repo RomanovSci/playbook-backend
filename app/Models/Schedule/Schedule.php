@@ -23,12 +23,6 @@ use Carbon\Carbon;
  * @OA\Schema(
  *      allOf={
  *          @OA\Schema(
- *              required={
- *                  "price_per_hour",
- *                  "currency",
- *                  "schedulable_uuid",
- *                  "schedulable_type"
- *              },
  *              @OA\Property(
  *                  property="uuid",
  *                  type="string",

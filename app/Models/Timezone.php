@@ -16,14 +16,6 @@ namespace App\Models;
  * @OA\Schema(
  *      allOf={
  *          @OA\Schema(
- *              required={
- *                  "value",
- *                  "abbreviation",
- *                  "offset",
- *                  "is_dst",
- *                  "text",
- *                  "utc",
- *              },
  *              @OA\Property(
  *                  property="value",
  *                  type="string",

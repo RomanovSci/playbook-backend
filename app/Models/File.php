@@ -16,14 +16,6 @@ namespace App\Models;
  * @OA\Schema(
  *      allOf={
  *          @OA\Schema(
- *              required={
- *                  "entity_uuid",
- *                  "entity_type",
- *                  "path",
- *                  "name",
- *                  "origin_name",
- *                  "mime_type",
- *              },
  *              @OA\Property(
  *                  property="entity_uuid",
  *                  description="hidden",

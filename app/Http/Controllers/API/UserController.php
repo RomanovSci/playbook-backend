@@ -418,13 +418,22 @@ class UserController extends Controller
      *          @OA\MediaType(
      *              mediaType="application/json",
      *              @OA\Schema(
-     *                  example={
-     *                      "success": "true",
-     *                      "message": "Success",
-     *                      "data": {}
-     *                  }
+     *                  type="object",
+     *                  @OA\Property(
+     *                      property="success",
+     *                      type="boolean"
+     *                  ),
+     *                  @OA\Property(
+     *                      property="message",
+     *                      type="string",
+     *                  ),
+     *                  @OA\Property(
+     *                      type="object",
+     *                      property="data",
+     *                      ref="#/components/schemas/PasswordReset"
+     *                  )
      *              )
-     *         )
+     *          )
      *      ),
      *      @OA\Response(
      *          response="400",

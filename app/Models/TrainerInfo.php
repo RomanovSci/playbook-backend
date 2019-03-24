@@ -17,12 +17,6 @@ namespace App\Models;
  * @OA\Schema(
  *      allOf={
  *          @OA\Schema(
- *              required={
- *                  "user_uuid",
- *                  "min_price",
- *                  "max_price",
- *                  "currency"
- *              },
  *              @OA\Property(
  *                  property="user_uuid",
  *                  type="string",
