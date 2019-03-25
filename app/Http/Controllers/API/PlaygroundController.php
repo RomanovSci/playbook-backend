@@ -298,11 +298,11 @@ class PlaygroundController extends Controller
     public function create(PlaygroundCreateFormRequest $request)
     {
         /**
-         * @var Organization $organization
          * @var User $user
+         * @var Organization $organization
          */
-        $organization = Organization::find($request->post('organization_uuid'));
         $user = Auth::user();
+        $organization = Organization::find($request->post('organization_uuid'));
 
         if ($organization && $user->cant('createPlayground', $organization)) {
             throw new ForbiddenHttpException(__('errors.cant_create_playground'));
