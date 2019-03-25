@@ -8,11 +8,9 @@ use App\Http\Controllers\Controller;
 use App\Http\Requests\Booking\BookingCreateFormRequest;
 use App\Http\Requests\Booking\BookingDeclineFormRequest;
 use App\Http\Requests\Common\TimeIntervalFormRequest;
-use App\Jobs\SendSms;
 use App\Models\Booking;
 use App\Models\User;
 use App\Repositories\BookingRepository;
-use App\Repositories\UserRepository;
 use App\Services\BookingService;
 use Carbon\Carbon;
 use Illuminate\Support\Facades\Auth;
@@ -458,40 +456,13 @@ class BookingController extends Controller
     {
         /** @var User $user */
         $user = Auth::user();
-        $bookableUuid = $request->post('bookable_uuid');
-        $getPriceResult = BookingHelper::getBookingPrice(
-            Carbon::parse($request->post('start_time')),
-            Carbon::parse($request->post('end_time')),
-            $bookableType,
-            $bookableUuid
-        );
+        $result = BookingService::create($user, $bookableType, $request->all());
 
-        if (!$getPriceResult->getSuccess()) {
-            throw new ForbiddenHttpException($getPriceResult->getMessage());
+        if (!$result->getSuccess()) {
+            throw new ForbiddenHttpException($result->getMessage());
         }
 
-        /** @var Booking $booking */
-        $booking = Booking::create(array_merge($request->all(), [
-            'bookable_type' => $bookableType,
-            'creator_uuid' => $user->uuid,
-            'price' => $getPriceResult->getData('price'),
-            'currency' => $getPriceResult->getData('currency'),
-        ]));
-
-        if ($bookableType === User::class && $bookableUuid !== Auth::user()->uuid) {
-            $timezoneOffset = $user->timezone->offset;
-            SendSms::dispatch(
-                UserRepository::getByUuid($bookableUuid)->phone,
-                __('sms.booking.create', [
-                    'player_name' => $user->getFullName(),
-                    'date' => $booking->start_time->addHours($timezoneOffset)->format('d-m-Y'),
-                    'start_time' => $booking->start_time->addHours($timezoneOffset)->format('H:i'),
-                    'end_time' => $booking->end_time->addHours($timezoneOffset)->format('H:i'),
-                ])
-            )->onConnection('redis');
-        }
-
-        return $this->success($booking->toArray());
+        return $this->success($result->getData());
     }
 
     /**
