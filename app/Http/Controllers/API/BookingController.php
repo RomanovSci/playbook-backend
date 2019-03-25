@@ -457,7 +457,7 @@ class BookingController extends Controller
     public function create(string $bookableType, BookingCreateFormRequest $request)
     {
         /** @var User $user */
-        $user = User::auth();
+        $user = Auth::user();
         $bookableUuid = $request->post('bookable_uuid');
         $getPriceResult = BookingHelper::getBookingPrice(
             Carbon::parse($request->post('start_time')),
