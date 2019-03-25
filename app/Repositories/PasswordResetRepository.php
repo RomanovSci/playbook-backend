@@ -1,6 +1,7 @@
 <?php
 
 namespace App\Repositories;
+
 use App\Models\PasswordReset;
 use App\Models\User;
 use Carbon\Carbon;

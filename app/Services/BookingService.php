@@ -76,8 +76,7 @@ class BookingService
              * Send sms to user if booking
              * was successful confirmed
              */
-            if (
-                $status === Booking::STATUS_CONFIRMED &&
+            if ($status === Booking::STATUS_CONFIRMED &&
                 $booking->bookable_type === User::class &&
                 $booking->bookable_uuid !== $booking->creator_uuid
             ) {
