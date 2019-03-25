@@ -12,6 +12,7 @@ use App\Repositories\TimezoneRepository;
 use Carbon\Carbon;
 use Illuminate\Support\Facades\DB;
 use Illuminate\Support\Facades\Hash;
+use Illuminate\Support\Str;
 use Laravel\Passport\PersonalAccessTokenResult;
 
 /**
@@ -29,7 +30,7 @@ class UserService
      */
     public static function register(array $data): ExecResult
     {
-        $data['verification_code'] = rand(100000, 999999);
+        $data['verification_code'] = Str::random(6);
         $data['password'] = bcrypt($data['password'] ?? $data['verification_code']);
 
         DB::beginTransaction();
@@ -122,7 +123,7 @@ class UserService
             if (!$passwordReset) {
                 $passwordReset = PasswordReset::create([
                     'user_uuid' => $user->uuid,
-                    'reset_code' => rand(100000, 999999),
+                    'reset_code' => Str::random(6),
                     'expired_at' => Carbon::now()->addHours(3),
                 ]);
             }
