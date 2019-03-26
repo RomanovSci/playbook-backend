@@ -60,7 +60,7 @@ class ScheduleService
                     'schedulable_type' => get_class($schedulable)
                 ]));
 
-                if ($schedule instanceof User) {
+                if ($schedulable instanceof User) {
                     foreach ($data['playgrounds'] as $playgroundUuid) {
                         $playgrounds[] = SchedulePlayground::create([
                             'playground_uuid' => $playgroundUuid,
