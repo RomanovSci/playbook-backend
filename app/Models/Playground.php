@@ -94,6 +94,7 @@ class Playground extends BaseModel
         'organization',
         'type',
         'creator',
+        'schedules',
     ];
 
     /**
