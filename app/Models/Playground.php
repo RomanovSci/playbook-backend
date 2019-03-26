@@ -61,6 +61,11 @@ use App\Models\Schedule\Schedule;
  *                  type="object",
  *                  ref="#/components/schemas/User"
  *              ),
+ *              @OA\Property(
+ *                  property="schedules",
+ *                  type="array",
+ *                  @OA\Items(ref="#/components/schemas/Schedule")
+ *              ),
  *          ),
  *          @OA\Schema(ref="#/components/schemas/BaseModel"),
  *      }
