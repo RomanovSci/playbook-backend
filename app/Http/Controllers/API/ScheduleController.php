@@ -347,7 +347,8 @@ class ScheduleController extends Controller
      *                      "start_time": "2018-01-01 09:00:00",
      *                      "end_time": "2018-01-01 17:00:00",
      *                      "price_per_hour": "7000",
-     *                      "currency": "USD"
+     *                      "currency": "USD",
+     *                      "playgrounds": "Playgrounds uuids."
      *                  }
      *              )
      *          )

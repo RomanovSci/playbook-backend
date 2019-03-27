@@ -18,7 +18,8 @@ use Carbon\Carbon;
  * @property string schedulable_uuid
  * @property string schedulable_type
  *
- * @property Playground|User $schedulable
+ * @property Playground|User schedulable
+ * @property Playground[] playgrounds
  *
  * @OA\Schema(
  *      allOf={

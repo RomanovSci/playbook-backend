@@ -104,8 +104,18 @@ class ScheduleService
 
         $schedule->fill($data)->update();
 
+        if ($schedule->schedulable instanceof User) {
+            $schedule->playgrounds()->detach();
+            foreach ($data['playgrounds'] as $playgroundUuid) {
+                $playgrounds[] = SchedulePlayground::create([
+                    'playground_uuid' => $playgroundUuid,
+                    'schedule_uuid' => $schedule->uuid,
+                ]);
+            }
+        }
+
         return ExecResult::instance()
             ->setSuccess()
-            ->setData(['schedule' => $schedule]);
+            ->setData(['schedule' => $schedule->refresh()]);
     }
 }
