@@ -205,8 +205,8 @@ class PlaygroundController extends Controller
      *                      "name": "Playground name",
      *                      "description": "Playground description",
      *                      "address": "Playground address",
-     *                      "opening_time": "Playground opening time. Example: 09:00:00",
-     *                      "closing_time": "Playground closing time. Example: 23:20:00",
+     *                      "opening_time": "09:00:00",
+     *                      "closing_time": "23:20:00",
      *                      "type_uuid": "Playground type uuid",
      *                      "organization_uuid": "Organization uuid"
      *                  }

@@ -355,8 +355,8 @@ class BookingController extends Controller
      *              mediaType="application/json",
      *              @OA\Schema(
      *                  example={
-     *                      "start_time": "Start booking time. Example: 2018-05-12 09:00:00",
-     *                      "end_time": "End booking time. Example: 2018-05-12 17:59:59",
+     *                      "start_time": "2018-05-12 09:00:00",
+     *                      "end_time": "2018-05-12 17:00:00",
      *                      "note": "Optional",
      *                      "bookable_uuid": "Trainer or playground uuid",
      *                      "playground_uuid": "Required if {type} = trainer"

@@ -205,8 +205,8 @@ class ScheduleController extends Controller
      *              @OA\Schema(
      *                  example={
      *                      "dates": "[{start_time: 2018-05-12 17:00:00, end_time: 2018-05-12 19:00:00}]",
-     *                      "price_per_hour": "Price per hour in cents. Example: 7000. (70RUB)",
-     *                      "currency": "Currency: RUB, UAH, USD, etc. Default: RUB",
+     *                      "price_per_hour": "7000",
+     *                      "currency": "USD",
      *                      "playgrounds": "Playgrounds uuids. If type=playground, array should contains only 1 uuid"
      *                  }
      *              )
@@ -344,10 +344,10 @@ class ScheduleController extends Controller
      *              mediaType="application/json",
      *              @OA\Schema(
      *                  example={
-     *                      "start_time": "Period start time. Example: 2018-01-01 09:00:00",
-     *                      "end_time": "Period end time. Example: 2018-01-01 17:00:00",
-     *                      "price_per_hour": "Price per hour in cents. Example: 7000. (70RUB)",
-     *                      "currency": "Currency: RUB, UAH, USD, etc. Default: RUB"
+     *                      "start_time": "2018-01-01 09:00:00",
+     *                      "end_time": "2018-01-01 17:00:00",
+     *                      "price_per_hour": "7000",
+     *                      "currency": "USD"
      *                  }
      *              )
      *          )

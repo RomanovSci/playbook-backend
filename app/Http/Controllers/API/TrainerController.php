@@ -218,9 +218,9 @@ class TrainerController extends Controller
      *                  example={
      *                      "playgrounds": "Array of playgrounds uuids",
      *                      "about": "Short information about trainer",
-     *                      "min_price": "Min price in cents. Example: 7000. (70RUB)",
-     *                      "max_price": "Max price in cents.",
-     *                      "currency": "Currency: RUB, UAH, USD, etc. Default: RUB",
+     *                      "min_price": "7000",
+     *                      "max_price": "9000",
+     *                      "currency": "USD",
      *                      "image": "Trainer image"
      *                  }
      *              )
@@ -349,9 +349,9 @@ class TrainerController extends Controller
      *                  example={
      *                      "playgrounds": "Array of playgrounds uuids",
      *                      "about": "Short information about trainer",
-     *                      "min_price": "Min price in cents. Example: 7000. (70RUB)",
-     *                      "max_price": "Max price in cents.",
-     *                      "currency": "Currency: RUB, UAH, USD, etc. Default: RUB",
+     *                      "min_price": "7000",
+     *                      "max_price": "9000",
+     *                      "currency": "USD",
      *                      "image": "Trainer image"
      *                  }
      *              )

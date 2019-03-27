@@ -36,12 +36,12 @@ class UserController extends Controller
      *              mediaType="application/json",
      *              @OA\Schema(
      *                  example={
-     *                      "first_name": "User first name.",
-     *                      "last_name": "User last name.",
-     *                      "middle_name": "User middle name",
-     *                      "phone": "User phone without '+' symbol",
-     *                      "password": "User password.",
-     *                      "c_password": "User password confirm.",
+     *                      "first_name": "First",
+     *                      "last_name": "Last",
+     *                      "middle_name": "Middle",
+     *                      "phone": "380123456789",
+     *                      "password": "User password",
+     *                      "c_password": "User password confirm",
      *                      "is_trainer": "Boolean flag (0 or 1)"
      *                  }
      *              )
@@ -143,8 +143,8 @@ class UserController extends Controller
      *              mediaType="application/json",
      *              @OA\Schema(
      *                  example={
-     *                      "phone": "User phone without '+' symbol",
-     *                      "password": "User password.",
+     *                      "phone": "380123456789",
+     *                      "password": "User password",
      *                  }
      *              )
      *         )
@@ -280,7 +280,7 @@ class UserController extends Controller
      *              mediaType="application/json",
      *              @OA\Schema(
      *                  example={
-     *                      "code": "Verification code. Example: 001122"
+     *                      "code": "AbC123"
      *                  }
      *              )
      *         )
@@ -361,7 +361,7 @@ class UserController extends Controller
      *              mediaType="application/json",
      *              @OA\Schema(
      *                  example={
-     *                      "phone": "Phone number. Example: 0501234567"
+     *                      "phone": "380123456789"
      *                  }
      *              )
      *         )
@@ -423,7 +423,7 @@ class UserController extends Controller
      *              mediaType="application/json",
      *              @OA\Schema(
      *                  example={
-     *                      "phone": "Phone number. Example: 0501234567"
+     *                      "phone": "380123456789"
      *                  }
      *              )
      *         )
