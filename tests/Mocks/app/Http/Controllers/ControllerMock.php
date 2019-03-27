@@ -24,13 +24,13 @@ class ControllerMock extends Controller
 
     /**
      * @inheritdoc
-     * @param int $code
-     * @param array $data
      * @param null $message
+     * @param array $data
+     * @param int $code
      * @return JsonResponse
      */
-    public function error(int $code, $data = [], $message = null): JsonResponse
+    public function error($message = null, $data = [], int $code = 400): JsonResponse
     {
-        return parent::error($code, $data, $message);
+        return parent::error($message, $data, $code);
     }
 }
