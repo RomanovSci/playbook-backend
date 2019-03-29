@@ -22,27 +22,6 @@ use App\Models\Schedule\Schedule;
  * @OA\Schema(
  *      allOf={
  *          @OA\Schema(
- *              required={
- *                  "type_uuid",
- *                  "name",
- *                  "description",
- *                  "address",
- *                  "opening_time",
- *                  "closing_time",
- *
- *              },
- *              @OA\Property(
- *                  property="type_uuid",
- *                  type="string",
- *              ),
- *              @OA\Property(
- *                  property="organization_uuid",
- *                  type="string",
- *              ),
- *              @OA\Property(
- *                  property="creator_uuid",
- *                  type="string",
- *              ),
  *              @OA\Property(
  *                  property="name",
  *                  type="string",
@@ -66,6 +45,26 @@ use App\Models\Schedule\Schedule;
  *              @OA\Property(
  *                  property="status",
  *                  type="integer",
+ *              ),
+ *              @OA\Property(
+ *                  property="type",
+ *                  type="object",
+ *                  ref="#/components/schemas/PlaygroundType"
+ *              ),
+ *              @OA\Property(
+ *                  property="organization",
+ *                  type="object",
+ *                  ref="#/components/schemas/Organization"
+ *              ),
+ *              @OA\Property(
+ *                  property="creator",
+ *                  type="object",
+ *                  ref="#/components/schemas/User"
+ *              ),
+ *              @OA\Property(
+ *                  property="schedules",
+ *                  type="array",
+ *                  @OA\Items(ref="#/components/schemas/Schedule")
  *              ),
  *          ),
  *          @OA\Schema(ref="#/components/schemas/BaseModel"),
@@ -99,9 +98,24 @@ class Playground extends BaseModel
     protected $with = [
         'organization',
         'type',
-        'schedules',
         'creator',
+        'schedules',
     ];
+
+    /**
+     * Playground constructor.
+     *
+     * @param array $attributes
+     */
+    public function __construct(array $attributes = [])
+    {
+        parent::__construct($attributes);
+        $this->hidden = array_merge($this->hidden, [
+            'organization_uuid',
+            'type_uuid',
+            'creator_uuid',
+        ]);
+    }
 
     /**
      * Get type

@@ -36,12 +36,6 @@ use Spatie\Permission\Traits\HasRoles;
  * @OA\Schema(
  *      allOf={
  *          @OA\Schema(
- *              required={
- *                  "first_name",
- *                  "last_name",
- *                  "phone",
- *                  "password"
- *              },
  *              @OA\Property(
  *                  property="uuid",
  *                  type="string",
@@ -142,6 +136,7 @@ class User extends Authenticatable
         'verification_code',
         'roles',
         'deleted_at',
+        'pivot',
     ];
 
     /**

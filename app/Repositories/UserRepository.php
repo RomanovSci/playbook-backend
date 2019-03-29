@@ -19,7 +19,7 @@ class UserRepository
      * @param int $offset
      * @return Collection
      */
-    public static function getByRole(string $role ,int $limit, int $offset): Collection
+    public static function getByRole(string $role, int $limit, int $offset): Collection
     {
         return User::role($role)
             ->with('trainerInfo')

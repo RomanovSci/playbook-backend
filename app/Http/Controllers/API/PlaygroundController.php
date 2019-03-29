@@ -72,11 +72,15 @@ class PlaygroundController extends Controller
      *              mediaType="application/json",
      *              @OA\Schema(
      *                  example={
-     *                      "limit": {
-     *                          "The limit field is required."
-     *                      },
-     *                      "offset": {
-     *                          "The offset field is required."
+     *                      "success": false,
+     *                      "message": "Validation error",
+     *                      "data": {
+     *                          "limit": {
+     *                              "The limit field is required."
+     *                          },
+     *                          "offset": {
+     *                              "The offset field is required."
+     *                          }
      *                      }
      *                  },
      *              )
@@ -152,8 +156,12 @@ class PlaygroundController extends Controller
      *              mediaType="application/json",
      *              @OA\Schema(
      *                  example={
-     *                      "query": {
-     *                          "The query field is required."
+     *                      "success": false,
+     *                      "message": "Validation error",
+     *                      "data": {
+     *                          "query": {
+     *                              "The query field is required."
+     *                          }
      *                      }
      *                  },
      *              )
@@ -197,8 +205,8 @@ class PlaygroundController extends Controller
      *                      "name": "Playground name",
      *                      "description": "Playground description",
      *                      "address": "Playground address",
-     *                      "opening_time": "Playground opening time. Example: 09:00:00",
-     *                      "closing_time": "Playground closing time. Example: 23:20:00",
+     *                      "opening_time": "09:00:00",
+     *                      "closing_time": "23:20:00",
      *                      "type_uuid": "Playground type uuid",
      *                      "organization_uuid": "Organization uuid"
      *                  }
@@ -235,21 +243,25 @@ class PlaygroundController extends Controller
      *              mediaType="application/json",
      *              @OA\Schema(
      *                  example={
-     *                      "name": {
-     *                          "The name field is required."
-     *                      },
-     *                      "description": {
-     *                          "The description field is required."
-     *                      },
-     *                      "address": {
-     *                          "The address field is required."
-     *                      },
-     *                      "opening_time": {
-     *                          "The opening time field is required."
-     *                      },
-     *                      "closing_time": {
-     *                          "The closing time field is required."
-     *                      },
+     *                      "success": false,
+     *                      "message": "Validation error",
+     *                      "data": {
+     *                          "name": {
+     *                              "The name field is required."
+     *                          },
+     *                          "description": {
+     *                              "The description field is required."
+     *                          },
+     *                          "address": {
+     *                              "The address field is required."
+     *                          },
+     *                          "opening_time": {
+     *                              "The opening time field is required."
+     *                          },
+     *                          "closing_time": {
+     *                              "The closing time field is required."
+     *                          },
+     *                      }
      *                  },
      *              )
      *          )
@@ -286,11 +298,11 @@ class PlaygroundController extends Controller
     public function create(PlaygroundCreateFormRequest $request)
     {
         /**
-         * @var Organization $organization
          * @var User $user
+         * @var Organization $organization
          */
-        $organization = Organization::find($request->post('organization_uuid'));
         $user = Auth::user();
+        $organization = Organization::find($request->post('organization_uuid'));
 
         if ($organization && $user->cant('createPlayground', $organization)) {
             throw new ForbiddenHttpException(__('errors.cant_create_playground'));

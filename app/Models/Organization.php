@@ -13,11 +13,6 @@ namespace App\Models;
  * @OA\Schema(
  *      allOf={
  *          @OA\Schema(
- *              required={
- *                  "owner_uuid",
- *                  "name",
- *                  "city_uuid"
- *              },
  *              @OA\Property(
  *                  property="owner_uuid",
  *                  type="string",

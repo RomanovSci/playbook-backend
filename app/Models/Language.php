@@ -13,11 +13,6 @@ namespace App\Models;
  * @OA\Schema(
  *      allOf={
  *          @OA\Schema(
- *              required={
- *                  "code",
- *                  "name",
- *                  "native_name",
- *              },
  *              @OA\Property(
  *                  property="code",
  *                  type="string",

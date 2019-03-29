@@ -104,12 +104,16 @@ class TrainerController extends Controller
      *              mediaType="application/json",
      *              @OA\Schema(
      *                  example={
-     *                      "limit": {
-     *                          "The limit field is required."
-     *                      },
-     *                      "offset": {
-     *                          "The limit field is required."
-     *                      },
+     *                      "success": false,
+     *                      "message": "Validation error",
+     *                      "data": {
+     *                          "limit": {
+     *                              "The limit field is required."
+     *                          },
+     *                          "offset": {
+     *                              "The limit field is required."
+     *                          },
+     *                      }
      *                  },
      *              )
      *          )
@@ -182,7 +186,7 @@ class TrainerController extends Controller
      *                      }
      *                  )
      *              )
-     *         )
+     *          )
      *      ),
      *      @OA\Response(
      *          response="400",
@@ -214,9 +218,9 @@ class TrainerController extends Controller
      *                  example={
      *                      "playgrounds": "Array of playgrounds uuids",
      *                      "about": "Short information about trainer",
-     *                      "min_price": "Min price in cents. Example: 7000. (70RUB)",
-     *                      "max_price": "Max price in cents.",
-     *                      "currency": "Currency: RUB, UAH, USD, etc. Default: RUB",
+     *                      "min_price": "7000",
+     *                      "max_price": "9000",
+     *                      "currency": "USD",
      *                      "image": "Trainer image"
      *                  }
      *              )
@@ -268,17 +272,21 @@ class TrainerController extends Controller
      *              mediaType="application/json",
      *              @OA\Schema(
      *                  example={
-     *                      "playgrounds": {
-     *                          "The playgrounds field is required."
-     *                      },
-     *                      "min_price": {
-     *                          "The min price field is required."
-     *                      },
-     *                      "max_price": {
-     *                          "The max price field is required."
-     *                      },
-     *                      "currency": {
-     *                          "The currency field is required."
+     *                      "success": false,
+     *                      "message": "Validation error",
+     *                      "data": {
+     *                          "playgrounds": {
+     *                              "The playgrounds field is required."
+     *                          },
+     *                          "min_price": {
+     *                              "The min price field is required."
+     *                          },
+     *                          "max_price": {
+     *                              "The max price field is required."
+     *                          },
+     *                          "currency": {
+     *                              "The currency field is required."
+     *                          }
      *                      }
      *                  },
      *              )
@@ -341,9 +349,9 @@ class TrainerController extends Controller
      *                  example={
      *                      "playgrounds": "Array of playgrounds uuids",
      *                      "about": "Short information about trainer",
-     *                      "min_price": "Min price in cents. Example: 7000. (70RUB)",
-     *                      "max_price": "Max price in cents.",
-     *                      "currency": "Currency: RUB, UAH, USD, etc. Default: RUB",
+     *                      "min_price": "7000",
+     *                      "max_price": "9000",
+     *                      "currency": "USD",
      *                      "image": "Trainer image"
      *                  }
      *              )
@@ -395,17 +403,21 @@ class TrainerController extends Controller
      *              mediaType="application/json",
      *              @OA\Schema(
      *                  example={
-     *                      "playgrounds": {
-     *                          "The playgrounds field is required."
-     *                      },
-     *                      "min_price": {
-     *                          "The min price field is required."
-     *                      },
-     *                      "max_price": {
-     *                          "The max price field is required."
-     *                      },
-     *                      "currency": {
-     *                          "The currency field is required."
+     *                      "success": false,
+     *                      "message": "Validation error",
+     *                      "data": {
+     *                          "playgrounds": {
+     *                              "The playgrounds field is required."
+     *                          },
+     *                          "min_price": {
+     *                              "The min price field is required."
+     *                          },
+     *                          "max_price": {
+     *                              "The max price field is required."
+     *                          },
+     *                          "currency": {
+     *                              "The currency field is required."
+     *                          }
      *                      }
      *                  },
      *              )

@@ -22,6 +22,7 @@ class PlaygroundCreateFormRequest extends BaseFormRequest
             'opening_time' => 'required|date_format:H:i:s',
             'closing_time' => 'required|date_format:H:i:s',
             'type_uuid' => 'uuid|exists:playground_types,uuid',
+            'organization_uuid' => 'uuid|exists:organizations,uuid',
         ];
     }
 }

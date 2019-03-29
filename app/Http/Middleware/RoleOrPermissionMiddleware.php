@@ -31,8 +31,7 @@ class RoleOrPermissionMiddleware
             : explode('|', $roleOrPermission);
 
         try {
-            if (
-                !Auth::user()->hasAnyRole($rolesOrPermissions) ||
+            if (!Auth::user()->hasAnyRole($rolesOrPermissions) ||
                 !Auth::user()->hasAnyPermission($rolesOrPermissions)
             ) {
                 throw UnauthorizedException::forRolesOrPermissions($rolesOrPermissions);

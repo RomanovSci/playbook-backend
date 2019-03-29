@@ -28,10 +28,6 @@ use Illuminate\Database\Eloquent\Relations\MorphTo;
  * @OA\Schema(
  *      allOf={
  *          @OA\Schema(
- *              required={
- *                  "start_time",
- *                  "end_time"
- *              },
  *              @OA\Property(
  *                  property="creator_uuid",
  *                  type="string",

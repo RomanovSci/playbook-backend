@@ -7,6 +7,7 @@ use App\Helpers\DateTimeHelper;
 use App\Helpers\ScheduleHelper;
 use App\Models\Schedule\Schedule;
 use App\Models\SchedulePlayground;
+use App\Models\User;
 use App\Objects\Service\ExecResult;
 use App\Repositories\ScheduleRepository;
 use Carbon\Carbon;
@@ -59,11 +60,13 @@ class ScheduleService
                     'schedulable_type' => get_class($schedulable)
                 ]));
 
-                foreach ($data['playgrounds'] as $playgroundUuid) {
-                    $playgrounds[] = SchedulePlayground::create([
-                        'playground_uuid' => $playgroundUuid,
-                        'schedule_uuid' => $schedule->uuid,
-                    ]);
+                if ($schedulable instanceof User) {
+                    foreach ($data['playgrounds'] as $playgroundUuid) {
+                        $playgrounds[] = SchedulePlayground::create([
+                            'playground_uuid' => $playgroundUuid,
+                            'schedule_uuid' => $schedule->uuid,
+                        ]);
+                    }
                 }
 
                 $schedules[] = $schedule->fresh()->toArray();
@@ -101,8 +104,18 @@ class ScheduleService
 
         $schedule->fill($data)->update();
 
+        if ($schedule->schedulable instanceof User) {
+            $schedule->playgrounds()->detach();
+            foreach ($data['playgrounds'] as $playgroundUuid) {
+                $playgrounds[] = SchedulePlayground::create([
+                    'playground_uuid' => $playgroundUuid,
+                    'schedule_uuid' => $schedule->uuid,
+                ]);
+            }
+        }
+
         return ExecResult::instance()
             ->setSuccess()
-            ->setData(['schedule' => $schedule]);
+            ->setData(['schedule' => $schedule->refresh()]);
     }
 }

@@ -20,6 +20,10 @@ class PlaygroundPolicy
      */
     public function createSchedule(User $user, Playground $playground): bool
     {
-        return $user->uuid === $playground->organization->owner_uuid;
+        if ($playground->organization) {
+            return $user->uuid === $playground->organization->owner_uuid;
+        }
+
+        return $user->uuid === $playground->creator_uuid;
     }
 }

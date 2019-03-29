@@ -20,6 +20,8 @@ class ScheduleEditFormRequest extends BaseFormRequest
             'end_time' => 'required|date_format:Y-m-d H:i:s|after:start_time',
             'price_per_hour' => 'required|numeric',
             'currency' => 'required|string|uppercase|currency',
+            'playgrounds' => 'required|array',
+            'playgrounds.*' => 'required|uuid|exists:playgrounds,uuid'
         ];
     }
 }

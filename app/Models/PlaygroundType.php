@@ -9,7 +9,6 @@ namespace App\Models;
  * @property string type
  *
  * @OA\Schema(
- *      required={"type"},
  *      allOf={
  *          @OA\Schema(
  *              @OA\Property(

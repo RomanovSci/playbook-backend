@@ -28,7 +28,7 @@ class ControllerTest extends TestCase
          * @var ControllerMock $controller
          */
         $controller = $this->getMockBuilder(ControllerMock::class)->getMock();
-        $actualResult = $controller->error(404);
+        $actualResult = $controller->error();
         $this->assertInstanceOf(JsonResponse::class, $actualResult);
     }
 }

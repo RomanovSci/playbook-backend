@@ -2,17 +2,12 @@
 
 namespace App\Services;
 
-use App\Helpers\DateTimeHelper;
-use App\Helpers\ScheduleHelper;
+use App\Helpers\BookingHelper;
 use App\Jobs\SendSms;
 use App\Models\Booking;
-use App\Models\Playground;
-use App\Models\Schedule\MergedSchedule;
-use App\Models\Schedule\Schedule;
 use App\Models\User;
 use App\Objects\Service\ExecResult;
-use App\Repositories\BookingRepository;
-use App\Repositories\ScheduleRepository;
+use App\Repositories\UserRepository;
 use Carbon\Carbon;
 use Illuminate\Support\Facades\Auth;
 
@@ -22,6 +17,58 @@ use Illuminate\Support\Facades\Auth;
  */
 class BookingService
 {
+    /**
+     * Create booking
+     *
+     * @param User $creator
+     * @param string $bookableType
+     * @param array $data
+     * @return ExecResult
+     * @throws \App\Exceptions\Internal\IncorrectDateRange
+     */
+    public static function create(
+        User $creator,
+        string $bookableType,
+        array $data
+    ): ExecResult {
+        $bookableUuid = $data['bookable_uuid'];
+        $getPriceResult = BookingHelper::getBookingPrice(
+            Carbon::parse($data['start_time']),
+            Carbon::parse($data['end_time']),
+            $bookableType,
+            $bookableUuid
+        );
+
+        if (!$getPriceResult->getSuccess()) {
+            return $getPriceResult;
+        }
+
+        /** @var Booking $booking */
+        $booking = Booking::create(array_merge($data, [
+            'bookable_type' => $bookableType,
+            'creator_uuid' => $creator->uuid,
+            'price' => $getPriceResult->getData('price'),
+            'currency' => $getPriceResult->getData('currency'),
+        ]));
+
+        if ($bookableType === User::class && $bookableUuid !== $creator->uuid) {
+            $timezoneOffset = $creator->timezone->offset;
+            SendSms::dispatch(
+                UserRepository::getByUuid($bookableUuid)->phone,
+                __('sms.booking.create', [
+                    'player_name' => $creator->getFullName(),
+                    'date' => $booking->start_time->addHours($timezoneOffset)->format('d-m-Y'),
+                    'start_time' => $booking->start_time->addHours($timezoneOffset)->format('H:i'),
+                    'end_time' => $booking->end_time->addHours($timezoneOffset)->format('H:i'),
+                ])
+            )->onConnection('redis');
+        }
+
+        return ExecResult::instance()
+            ->setSuccess()
+            ->setData($booking->toArray());
+    }
+
     /**
      * Change booking status
      *
@@ -76,8 +123,7 @@ class BookingService
              * Send sms to user if booking
              * was successful confirmed
              */
-            if (
-                $status === Booking::STATUS_CONFIRMED &&
+            if ($status === Booking::STATUS_CONFIRMED &&
                 $booking->bookable_type === User::class &&
                 $booking->bookable_uuid !== $booking->creator_uuid
             ) {

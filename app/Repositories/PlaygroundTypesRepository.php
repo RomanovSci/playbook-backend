@@ -1,6 +1,7 @@
 <?php
 
 namespace App\Repositories;
+
 use App\Models\PlaygroundType;
 use Illuminate\Support\Collection;
 

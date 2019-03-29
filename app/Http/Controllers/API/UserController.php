@@ -36,12 +36,12 @@ class UserController extends Controller
      *              mediaType="application/json",
      *              @OA\Schema(
      *                  example={
-     *                      "first_name": "User first name.",
-     *                      "last_name": "User last name.",
-     *                      "middle_name": "User middle name",
-     *                      "phone": "User phone without '+' symbol",
-     *                      "password": "User password.",
-     *                      "c_password": "User password confirm.",
+     *                      "first_name": "First",
+     *                      "last_name": "Last",
+     *                      "middle_name": "Middle",
+     *                      "phone": "380123456789",
+     *                      "password": "User password",
+     *                      "c_password": "User password confirm",
      *                      "is_trainer": "Boolean flag (0 or 1)"
      *                  }
      *              )
@@ -84,11 +84,45 @@ class UserController extends Controller
      *              mediaType="application/json",
      *              @OA\Schema(
      *                  example={
-     *                      "phone": "The phone must be a number."
+     *                      "success": false,
+     *                      "message": "Validation error",
+     *                      "data": {
+     *                          "first_name": {
+     *                              "The first name field is required."
+     *                          },
+     *                          "last_name": {
+     *                              "The last name field is required."
+     *                          },
+     *                          "phone": {
+     *                              "The phone field is required."
+     *                          },
+     *                          "is_trainer": {
+     *                              "The trainer field is required."
+     *                          },
+     *                          "password": {
+     *                              "The password field is required."
+     *                          },
+     *                          "c_password": {
+     *                              "The c_password field is required."
+     *                          }
+     *                      }
      *                  },
      *              )
      *          )
-     *      )
+     *      ),
+     *      @OA\Response(
+     *          response="403",
+     *          description="Forbidden",
+     *          @OA\MediaType(
+     *              mediaType="application/json",
+     *              @OA\Schema(
+     *                  example={
+     *                      "success": false,
+     *                      "message": "Forbidden"
+     *                  },
+     *              )
+     *          )
+     *      ),
      * )
      */
     public function register(RegisterFormRequest $request)
@@ -109,8 +143,8 @@ class UserController extends Controller
      *              mediaType="application/json",
      *              @OA\Schema(
      *                  example={
-     *                      "phone": "User phone without '+' symbol",
-     *                      "password": "User password.",
+     *                      "phone": "380123456789",
+     *                      "password": "User password",
      *                  }
      *              )
      *         )
@@ -155,13 +189,33 @@ class UserController extends Controller
      *              mediaType="application/json",
      *              @OA\Schema(
      *                  example={
-     *                      "phone": {
-     *                          "The phone must be a number."
+     *                      "success": false,
+     *                      "message": "Validation error",
+     *                      "data": {
+     *                          "phone": {
+     *                              "The phone field is required."
+     *                          },
+     *                          "password": {
+     *                              "The password field is required."
+     *                          }
      *                      }
      *                  },
      *              )
      *          )
-     *      )
+     *      ),
+     *      @OA\Response(
+     *          response="403",
+     *          description="Forbidden",
+     *          @OA\MediaType(
+     *              mediaType="application/json",
+     *              @OA\Schema(
+     *                  example={
+     *                      "success": false,
+     *                      "message": "Forbidden"
+     *                  },
+     *              )
+     *          )
+     *      ),
      * )
      */
     public function login(LoginFormRequest $request)
@@ -185,7 +239,8 @@ class UserController extends Controller
      *              @OA\Schema(
      *                  example={
      *                      "success": true,
-     *                      "message": "string"
+     *                      "message": "string",
+     *                      "data": {}
      *                  }
      *              )
      *         )
@@ -225,7 +280,7 @@ class UserController extends Controller
      *              mediaType="application/json",
      *              @OA\Schema(
      *                  example={
-     *                      "code": "Verification code. Example: 001122"
+     *                      "code": "AbC123"
      *                  }
      *              )
      *         )
@@ -238,7 +293,8 @@ class UserController extends Controller
      *              @OA\Schema(
      *                  example={
      *                      "success": "true",
-     *                      "message": "Success"
+     *                      "message": "Success",
+     *                      "data": {}
      *                  }
      *              )
      *         )
@@ -250,9 +306,26 @@ class UserController extends Controller
      *              mediaType="application/json",
      *              @OA\Schema(
      *                  example={
-     *                      "code": {
-     *                          "The code must be 6 digits."
+     *                      "success": false,
+     *                      "message": "Validation error",
+     *                      "data": {
+     *                          "code": {
+     *                              "The code field is required."
+     *                          }
      *                      }
+     *                  },
+     *              )
+     *          )
+     *      ),
+     *      @OA\Response(
+     *          response="401",
+     *          description="Unauthorized",
+     *          @OA\MediaType(
+     *              mediaType="application/json",
+     *              @OA\Schema(
+     *                  example={
+     *                      "success": false,
+     *                      "message": "Unauthorized"
      *                  },
      *              )
      *          )
@@ -288,7 +361,7 @@ class UserController extends Controller
      *              mediaType="application/json",
      *              @OA\Schema(
      *                  example={
-     *                      "phone": "Phone number. Example: 0501234567"
+     *                      "phone": "380123456789"
      *                  }
      *              )
      *         )
@@ -301,7 +374,8 @@ class UserController extends Controller
      *              @OA\Schema(
      *                  example={
      *                      "success": "true",
-     *                      "message": "Success"
+     *                      "message": "Success",
+     *                      "data": {}
      *                  }
      *              )
      *         )
@@ -313,8 +387,12 @@ class UserController extends Controller
      *              mediaType="application/json",
      *              @OA\Schema(
      *                  example={
-     *                      "phone": {
-     *                          "The phone must be a number."
+     *                      "success": false,
+     *                      "message": "Validation error",
+     *                      "data": {
+     *                          "phone": {
+     *                              "The phone field is required."
+     *                          }
      *                      }
      *                  },
      *              )
@@ -345,7 +423,7 @@ class UserController extends Controller
      *              mediaType="application/json",
      *              @OA\Schema(
      *                  example={
-     *                      "phone": "Phone number. Example: 0501234567"
+     *                      "phone": "380123456789"
      *                  }
      *              )
      *         )
@@ -356,12 +434,22 @@ class UserController extends Controller
      *          @OA\MediaType(
      *              mediaType="application/json",
      *              @OA\Schema(
-     *                  example={
-     *                      "success": "true",
-     *                      "message": "Success"
-     *                  }
+     *                  type="object",
+     *                  @OA\Property(
+     *                      property="success",
+     *                      type="boolean"
+     *                  ),
+     *                  @OA\Property(
+     *                      property="message",
+     *                      type="string",
+     *                  ),
+     *                  @OA\Property(
+     *                      type="object",
+     *                      property="data",
+     *                      ref="#/components/schemas/PasswordReset"
+     *                  )
      *              )
-     *         )
+     *          )
      *      ),
      *      @OA\Response(
      *          response="400",
@@ -370,8 +458,12 @@ class UserController extends Controller
      *              mediaType="application/json",
      *              @OA\Schema(
      *                  example={
-     *                      "phone": {
-     *                          "The phone must be a number."
+     *                      "success": false,
+     *                      "message": "Validation error",
+     *                      "data": {
+     *                          "phone": {
+     *                              "The phone field is required."
+     *                          }
      *                      }
      *                  },
      *              )

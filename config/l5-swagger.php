@@ -102,13 +102,13 @@ return [
         | Examples of Security definitions
         |--------------------------------------------------------------------------
         */
-        /*
-        'api_key_security_example' => [ // Unique name of security
-            'type' => 'apiKey', // The type of the security scheme. Valid values are "basic", "apiKey" or "oauth2".
-            'description' => 'A short description for security scheme',
-            'name' => 'api_key', // The name of the header or query parameter to be used.
-            'in' => 'header', // The location of the API key. Valid values are "query" or "header".
+        'Bearer' => [                                           // Unique name of security
+            'type' => 'apiKey',                                 // The type of the security scheme. Valid values are "basic", "apiKey" or "oauth2".
+            'description' => 'Authorization by bearer token',
+            'name' => 'Authorization',                          // The name of the header or query parameter to be used.
+            'in' => 'header',                                   // The location of the API key. Valid values are "query" or "header".
         ],
+        /*
         'oauth2_security_example' => [ // Unique name of security
             'type' => 'oauth2', // The type of the security scheme. Valid values are "basic", "apiKey" or "oauth2".
             'description' => 'A short description for oauth2 security scheme.',
@@ -123,8 +123,8 @@ return [
         */
 
         /* Open API 3.0 support
-        'passport' => [ // Unique name of security
-            'type' => 'oauth2', // The type of the security scheme. Valid values are "basic", "apiKey" or "oauth2".
+        'Bearer' => [                                               // Unique name of security
+            'type' => 'oauth2',                                     // The type of the security scheme. Valid values are "basic", "apiKey" or "oauth2".
             'description' => 'Laravel passport oauth2 security.',
             'in' => 'header',
             'scheme' => 'https',

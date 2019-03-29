@@ -18,17 +18,12 @@ use Carbon\Carbon;
  * @property string schedulable_uuid
  * @property string schedulable_type
  *
- * @property Playground|User $schedulable
+ * @property Playground|User schedulable
+ * @property Playground[] playgrounds
  *
  * @OA\Schema(
  *      allOf={
  *          @OA\Schema(
- *              required={
- *                  "price_per_hour",
- *                  "currency",
- *                  "schedulable_uuid",
- *                  "schedulable_type"
- *              },
  *              @OA\Property(
  *                  property="uuid",
  *                  type="string",
@@ -96,17 +91,23 @@ class Schedule extends BaseModel
     /**
      * @var array
      */
-    protected $hidden = [
-        'schedulable_uuid',
-        'schedulable_type',
-    ];
-
-    /**
-     * @var array
-     */
     protected $with = [
         'playgrounds',
     ];
+
+    /**
+     * Schedule constructor.
+     *
+     * @param array $attributes
+     */
+    public function __construct(array $attributes = [])
+    {
+        parent::__construct($attributes);
+        $this->hidden = array_merge($this->hidden, [
+            'schedulable_uuid',
+            'schedulable_type',
+        ]);
+    }
 
     /**
      * @return \Illuminate\Database\Eloquent\Relations\MorphTo

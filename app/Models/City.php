@@ -13,11 +13,6 @@ namespace App\Models;
  * @OA\Schema(
  *      allOf={
  *          @OA\Schema(
- *              required={
- *                  "country_uuid",
- *                  "name",
- *                  "origin_name",
- *              },
  *              @OA\Property(
  *                  property="country_uuid",
  *                  type="string",

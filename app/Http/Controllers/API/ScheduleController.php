@@ -134,17 +134,21 @@ class ScheduleController extends Controller
      *              mediaType="application/json",
      *              @OA\Schema(
      *                  example={
-     *                      "start_time": {
-     *                          "The start time field is required."
-     *                      },
-     *                      "end_time": {
-     *                          "The end time field is required."
-     *                      },
-     *                      "limit": {
-     *                          "The limit field is required."
-     *                      },
-     *                      "offset": {
-     *                          "The offset field is required."
+     *                      "success": false,
+     *                      "message": "Validation error",
+     *                      "data": {
+     *                          "start_time": {
+     *                              "The start time field is required."
+     *                          },
+     *                          "end_time": {
+     *                              "The end time field is required."
+     *                          },
+     *                          "limit": {
+     *                              "The limit field is required."
+     *                          },
+     *                          "offset": {
+     *                              "The offset field is required."
+     *                          }
      *                      }
      *                  },
      *              )
@@ -200,10 +204,10 @@ class ScheduleController extends Controller
      *              mediaType="application/json",
      *              @OA\Schema(
      *                  example={
-     *                      "dates": "Array with date objects. Example: [{start_time: 2018-05-12 17:00:00, end_time: 2018-05-12 19:00:00}]",
-     *                      "price_per_hour": "Price per hour in cents. Example: 7000. (70RUB)",
-     *                      "currency": "Currency: RUB, UAH, USD, etc. Default: RUB",
-     *                      "playgrounds": "Array of playgrounds uuids. If type=playground, array should contains only 1 uuid"
+     *                      "dates": "[{start_time: 2018-05-12 17:00:00, end_time: 2018-05-12 19:00:00}]",
+     *                      "price_per_hour": "7000",
+     *                      "currency": "USD",
+     *                      "playgrounds": "Playgrounds uuids. If type=playground, array should contains only 1 uuid"
      *                  }
      *              )
      *          )
@@ -238,17 +242,21 @@ class ScheduleController extends Controller
      *              mediaType="application/json",
      *              @OA\Schema(
      *                  example={
-     *                      "dates": {
-     *                          "The dates field is required."
-     *                      },
-     *                      "price_per_hour": {
-     *                          "The price per hour field is required."
-     *                      },
-     *                      "currency": {
-     *                          "The currency field is required."
-     *                      },
-     *                      "playgrounds": {
-     *                          "The playgrounds field is required."
+     *                      "success": false,
+     *                      "message": "Validation error",
+     *                      "data": {
+     *                          "dates": {
+     *                              "The dates field is required."
+     *                          },
+     *                          "price_per_hour": {
+     *                              "The price per hour field is required."
+     *                          },
+     *                          "currency": {
+     *                              "The currency field is required."
+     *                          },
+     *                          "playgrounds": {
+     *                              "The playgrounds field is required."
+     *                          }
      *                      }
      *                  },
      *              )
@@ -336,10 +344,11 @@ class ScheduleController extends Controller
      *              mediaType="application/json",
      *              @OA\Schema(
      *                  example={
-     *                      "start_time": "Period start time. Example: 2018-01-01 09:00:00",
-     *                      "end_time": "Period end time. Example: 2018-01-01 17:00:00",
-     *                      "price_per_hour": "Price per hour in cents. Example: 7000. (70RUB)",
-     *                      "currency": "Currency: RUB, UAH, USD, etc. Default: RUB"
+     *                      "start_time": "2018-01-01 09:00:00",
+     *                      "end_time": "2018-01-01 17:00:00",
+     *                      "price_per_hour": "7000",
+     *                      "currency": "USD",
+     *                      "playgrounds": "Playgrounds uuids."
      *                  }
      *              )
      *          )
@@ -374,17 +383,21 @@ class ScheduleController extends Controller
      *              mediaType="application/json",
      *              @OA\Schema(
      *                  example={
-     *                      "start_time": {
-     *                          "The start time field is required."
-     *                      },
-     *                      "end_time": {
-     *                          "The end time field is required."
-     *                      },
-     *                      "price_per_hour": {
-     *                          "The price per hout field is required."
-     *                      },
-     *                      "currency": {
-     *                          "The currency field is required."
+     *                      "success": false,
+     *                      "message": "Validation error",
+     *                      "data": {
+     *                          "start_time": {
+     *                              "The start time field is required."
+     *                          },
+     *                          "end_time": {
+     *                              "The end time field is required."
+     *                          },
+     *                          "price_per_hour": {
+     *                              "The price per hout field is required."
+     *                          },
+     *                          "currency": {
+     *                              "The currency field is required."
+     *                          }
      *                      }
      *                  },
      *              )
