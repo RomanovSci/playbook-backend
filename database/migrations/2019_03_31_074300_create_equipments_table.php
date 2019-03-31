@@ -4,7 +4,7 @@ use Illuminate\Support\Facades\Schema;
 use Illuminate\Database\Schema\Blueprint;
 use Illuminate\Database\Migrations\Migration;
 
-class CreateSchedulesTable extends Migration
+class CreateEquipmentsTable extends Migration
 {
     /**
      * Run the migrations.
@@ -13,16 +13,16 @@ class CreateSchedulesTable extends Migration
      */
     public function up()
     {
-        Schema::create('schedules', function (Blueprint $table) {
+        Schema::create('equipments', function (Blueprint $table) {
             $table->uuid('uuid')->primary();
-            $table->uuid('schedulable_uuid');
-            $table->string('schedulable_type');
-            $table->timestamp('start_time')->nullable();
-            $table->timestamp('end_time')->nullable();
-            $table->unsignedInteger('price_per_hour');
+            $table->uuid('creator_uuid');
+            $table->string('name');
+            $table->unsignedInteger('price_per_hour')->default(0);
             $table->char('currency', 3)->default('RUB');
+            $table->unsignedInteger('count')->default(0);
             $table->timestamps();
             $table->softDeletes();
+            $table->foreign('creator_uuid')->references('uuid')->on('users');
         });
     }
 
@@ -33,6 +33,6 @@ class CreateSchedulesTable extends Migration
      */
     public function down()
     {
-        Schema::dropIfExists('schedules');
+        Schema::dropIfExists('equipments');
     }
 }

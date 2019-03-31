@@ -1,0 +1,68 @@
+<?php
+
+namespace App\Models;
+
+/**
+ * Class Equipment
+ * @package App\Models
+ *
+ * @property string creator_uuid
+ * @property string name
+ * @property integer price_per_hour
+ * @property string currency
+ * @property integer count
+ *
+ * @OA\Schema(
+ *      allOf={
+ *          @OA\Schema(
+ *              @OA\Property(
+ *                  property="creator_uuid",
+ *                  type="string",
+ *              ),
+ *              @OA\Property(
+ *                  property="name",
+ *                  type="string",
+ *              ),
+ *              @OA\Property(
+ *                  property="price_per_hour",
+ *                  type="integer",
+ *              ),
+ *              @OA\Property(
+ *                  property="currency",
+ *                  type="string",
+ *              ),
+ *              @OA\Property(
+ *                  property="count",
+ *                  type="integer",
+ *              ),
+ *          ),
+ *          @OA\Schema(ref="#/components/schemas/BaseModel"),
+ *      }
+ * )
+ */
+class Equipment extends BaseModel
+{
+    /**
+     * @var string
+     */
+    protected $table = 'equipments';
+
+    /**
+     * @var array
+     */
+    protected $fillable = [
+        'creator_uuid',
+        'name',
+        'price_per_hour',
+        'currency',
+        'count',
+    ];
+
+    /**
+     * @var array
+     */
+    protected $casts = [
+        'count' => 'integer',
+        'price_per_hour' => 'integer',
+    ];
+}

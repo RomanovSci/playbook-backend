@@ -13,7 +13,7 @@ class BookingCreateFormRequest extends BaseFormRequest
     /**
      * @return array
      */
-    public function rules()
+    public function rules(): array
     {
         return [
             'start_time' => 'required|date_format:Y-m-d H:i:s',

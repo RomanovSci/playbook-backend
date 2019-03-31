@@ -13,7 +13,7 @@ class VerifyPhoneFormRequest extends BaseFormRequest
     /**
      * @return array
      */
-    public function rules()
+    public function rules(): array
     {
         return ['code' => 'required'];
     }

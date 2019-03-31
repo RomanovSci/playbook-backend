@@ -13,14 +13,14 @@ class TrainerInfoCreateFormRequest extends BaseFormRequest
     /**
      * @return array
      */
-    public function rules()
+    public function rules(): array
     {
         return [
             'playgrounds' => 'required|array',
             'playgrounds.*' => 'required|exists:playgrounds,uuid',
             'min_price' => 'required|numeric|min:0',
             'max_price' => 'required|numeric|gte:min_price',
-            'currency' => 'required|string|uppercase|currency',
+            'currency' => 'required|currency',
             'image' => 'image|max:1024',
         ];
     }

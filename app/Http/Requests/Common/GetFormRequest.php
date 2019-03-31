@@ -13,7 +13,7 @@ class GetFormRequest extends BaseFormRequest
     /**
      * @return array
      */
-    public function rules()
+    public function rules(): array
     {
         return [
             'limit' => 'required|integer|max:100',

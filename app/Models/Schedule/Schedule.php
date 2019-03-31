@@ -86,6 +86,7 @@ class Schedule extends BaseModel
     protected $casts = [
         'start_time' => 'datetime:Y-m-d H:i:s P',
         'end_time' => 'datetime:Y-m-d H:i:s P',
+        'price_per_hour' => 'integer',
     ];
 
     /**

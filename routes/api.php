@@ -60,6 +60,11 @@ Route::middleware(['auth:api'])->group(function () {
         Route::get('/types', 'API\PlaygroundController@getTypes')->name('playground.getTypes');
     });
 
+    /** Equipment */
+    Route::prefix('equipment')->group(function () {
+        Route::get('/{bookable_type}/{uuid}', 'API\EquipmentController@get')->name('equipment.get');
+    });
+
     /** Organization */
     Route::prefix('organization')->group(function () {
         Route::get('/', 'API\OrganizationController@get')->name('organization.get');
@@ -83,6 +88,11 @@ Route::middleware(['role:'
     /** Playground */
     Route::prefix('playground')->group(function () {
         Route::post('/create', 'API\PlaygroundController@create')->name('playground.create');
+    });
+
+    /** Equipment */
+    Route::prefix('equipment')->group(function () {
+        Route::post('/create', 'API\EquipmentController@create')->name('equipment.create');
     });
 
     /** Schedule */
