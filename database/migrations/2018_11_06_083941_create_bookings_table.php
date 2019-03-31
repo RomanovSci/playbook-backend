@@ -24,6 +24,7 @@ class CreateBookingsTable extends Migration
             $table->integer('price');
             $table->char('currency', 3)->default('RUB');
             $table->smallInteger('status')->default(0);
+            $table->unsignedInteger('players_count')->default(1);
             $table->uuid('playground_uuid')->nullable();
             $table->timestamps();
             $table->softDeletes();

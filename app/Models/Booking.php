@@ -17,6 +17,7 @@ use Illuminate\Database\Eloquent\Relations\MorphTo;
  * @property Carbon end_time
  * @property integer status
  * @property string playground_uid
+ * @property integer players_count
  * @property string note
  * @property integer price
  * @property string currency
@@ -68,6 +69,10 @@ use Illuminate\Database\Eloquent\Relations\MorphTo;
  *                  property="playground_uuid",
  *                  type="string",
  *              ),
+ *              @OA\Property(
+ *                  property="players_count",
+ *                  type="integer",
+ *              ),
  *          ),
  *          @OA\Schema(ref="#/components/schemas/BaseModel"),
  *      }
@@ -98,6 +103,7 @@ class Booking extends BaseModel
         'currency',
         'status',
         'playground_uuid',
+        'players_count',
     ];
 
     /**

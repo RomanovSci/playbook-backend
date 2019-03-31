@@ -66,7 +66,10 @@ class BookingService
 
         return ExecResult::instance()
             ->setSuccess()
-            ->setData($booking->toArray());
+            ->setData($booking
+                ->refresh()
+                ->toArray()
+            );
     }
 
     /**

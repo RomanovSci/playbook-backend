@@ -15,6 +15,6 @@ class VerifyPhoneFormRequest extends BaseFormRequest
      */
     public function rules()
     {
-        return ['code' => 'required|digits:6'];
+        return ['code' => 'required'];
     }
 }

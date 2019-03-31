@@ -359,7 +359,8 @@ class BookingController extends Controller
      *                      "end_time": "2018-05-12 17:00:00",
      *                      "note": "Optional",
      *                      "bookable_uuid": "Trainer or playground uuid",
-     *                      "playground_uuid": "Required if {type} = trainer"
+     *                      "playground_uuid": "Required if {type} = trainer",
+     *                      "players_count": "1",
      *                  }
      *              )
      *          )
@@ -382,16 +383,7 @@ class BookingController extends Controller
      *                  @OA\Property(
      *                      type="object",
      *                      property="data",
-     *                      allOf={
-     *                          @OA\Schema(ref="#/components/schemas/Booking"),
-     *                          @OA\Schema(
-     *                              @OA\Property(
-     *                                  property="bookable",
-     *                                  type="object",
-     *                                  ref="#/components/schemas/User"
-     *                              ),
-     *                          )
-     *                      }
+     *                      ref="#/components/schemas/Booking"
      *                  )
      *              )
      *         )
@@ -612,6 +604,11 @@ class BookingController extends Controller
      *                          @OA\Schema(
      *                              @OA\Property(
      *                                  property="bookable",
+     *                                  type="object",
+     *                                  ref="#/components/schemas/User"
+     *                              ),
+     *                              @OA\Property(
+     *                                  property="creator",
      *                                  type="object",
      *                                  ref="#/components/schemas/User"
      *                              ),
