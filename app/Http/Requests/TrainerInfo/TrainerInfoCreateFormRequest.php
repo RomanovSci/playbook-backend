@@ -17,7 +17,7 @@ class TrainerInfoCreateFormRequest extends BaseFormRequest
     {
         return [
             'playgrounds' => 'required|array',
-            'playgrounds.*' => 'required|exists:playgrounds,uuid',
+            'playgrounds.*' => 'required|uuid|exists:playgrounds,uuid',
             'min_price' => 'required|numeric|min:0',
             'max_price' => 'required|numeric|gte:min_price',
             'currency' => 'required|currency',

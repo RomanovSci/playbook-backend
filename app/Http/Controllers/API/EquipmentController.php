@@ -108,7 +108,7 @@ class EquipmentController extends Controller
      *                      "name": "TENNIS RACKET",
      *                      "price_per_hour": "2000",
      *                      "currency": "USD",
-     *                      "count": "1",
+     *                      "availability": "1",
      *                  }
      *              )
      *          )
@@ -155,8 +155,8 @@ class EquipmentController extends Controller
      *                          "currency": {
      *                              "The currency field is required."
      *                          },
-     *                          "count": {
-     *                              "The count field is required."
+     *                          "availability": {
+     *                              "The availability field is required."
      *                          }
      *                      }
      *                  },

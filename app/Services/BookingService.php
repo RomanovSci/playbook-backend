@@ -5,6 +5,7 @@ namespace App\Services;
 use App\Helpers\BookingHelper;
 use App\Jobs\SendSms;
 use App\Models\Booking;
+use App\Models\EquipmentRent;
 use App\Models\User;
 use App\Objects\Service\ExecResult;
 use App\Repositories\UserRepository;
@@ -50,6 +51,17 @@ class BookingService
             'price' => $getPriceResult->getData('price'),
             'currency' => $getPriceResult->getData('currency'),
         ]));
+        $equipmentsRent = [];
+
+        if (isset($data['equipments'])) {
+            foreach ($data['equipments'] as $equipment) {
+                $equipmentsRent[] = EquipmentRent::create([
+                    'booking_uuid' => $booking->uuid,
+                    'equipment_uuid' => $equipment['uuid'],
+                    'count' => $equipment['count'],
+                ]);
+            }
+        }
 
         if ($bookableType === User::class && $bookableUuid !== $creator->uuid) {
             $timezoneOffset = $creator->timezone->offset;
@@ -66,10 +78,10 @@ class BookingService
 
         return ExecResult::instance()
             ->setSuccess()
-            ->setData($booking
-                ->refresh()
-                ->toArray()
-            );
+            ->setData(array_merge(
+                $booking->refresh()->toArray(),
+                ['equipments_rent' => $equipmentsRent]
+            ));
     }
 
     /**

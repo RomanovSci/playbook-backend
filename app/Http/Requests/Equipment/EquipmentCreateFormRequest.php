@@ -19,7 +19,7 @@ class EquipmentCreateFormRequest extends BaseFormRequest
             'name' => 'required|string|max:255',
             'price_per_hour' => 'required|numeric|min:0',
             'currency' => 'required|currency',
-            'count' => 'required|numeric|min:1',
+            'availability' => 'required|numeric|min:1',
         ];
     }
 }

@@ -10,7 +10,7 @@ namespace App\Models;
  * @property string name
  * @property integer price_per_hour
  * @property string currency
- * @property integer count
+ * @property integer availability
  *
  * @OA\Schema(
  *      allOf={
@@ -32,7 +32,7 @@ namespace App\Models;
  *                  type="string",
  *              ),
  *              @OA\Property(
- *                  property="count",
+ *                  property="availability",
  *                  type="integer",
  *              ),
  *          ),
@@ -55,14 +55,14 @@ class Equipment extends BaseModel
         'name',
         'price_per_hour',
         'currency',
-        'count',
+        'availability',
     ];
 
     /**
      * @var array
      */
     protected $casts = [
-        'count' => 'integer',
+        'availability' => 'integer',
         'price_per_hour' => 'integer',
     ];
 }

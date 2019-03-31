@@ -21,6 +21,9 @@ class BookingCreateFormRequest extends BaseFormRequest
             'bookable_uuid' => 'required|bookable_exists',
             'playground_uuid' => 'uuid|exists:playgrounds,uuid',
             'players_count' => 'integer|min:1',
+            'equipments' => 'array',
+            'equipments.*.uuid' => 'required|uuid|exists:equipments,uuid',
+            'equipments.*.count' => 'required|numeric|min:1',
         ];
     }
 }

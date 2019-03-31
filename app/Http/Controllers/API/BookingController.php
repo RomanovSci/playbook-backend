@@ -354,14 +354,50 @@ class BookingController extends Controller
      *          @OA\MediaType(
      *              mediaType="application/json",
      *              @OA\Schema(
-     *                  example={
-     *                      "start_time": "2018-05-12 09:00:00",
-     *                      "end_time": "2018-05-12 17:00:00",
-     *                      "note": "Optional",
-     *                      "bookable_uuid": "Trainer or playground uuid",
-     *                      "playground_uuid": "Required if {type} = trainer",
-     *                      "players_count": "1",
-     *                  }
+     *                  type="object",
+     *                  @OA\Property(
+     *                      property="start_time",
+     *                      type="string",
+     *                  ),
+     *                  @OA\Property(
+     *                      property="end_time",
+     *                      type="string"
+     *                  ),
+     *                  @OA\Property(
+     *                      property="note",
+     *                      type="string"
+     *                  ),
+     *                  @OA\Property(
+     *                      property="bookable_uuid",
+     *                      type="string",
+     *                  ),
+     *                  @OA\Property(
+     *                      property="playground_uuid",
+     *                      type="string",
+     *                  ),
+     *                  @OA\Property(
+     *                      property="players_count",
+     *                      type="string"
+     *                  ),
+     *                  @OA\Property(
+     *                      property="equipments",
+     *                      type="array",
+     *                      @OA\Items(
+     *                          allOf={
+     *                              @OA\Schema(
+     *                                  type="object",
+     *                                  @OA\Property(
+     *                                      property="equipment_uuid",
+     *                                      type="string",
+     *                                  ),
+     *                                  @OA\Property(
+     *                                      property="count",
+     *                                      type="integer"
+     *                                  ),
+     *                              )
+     *                          }
+     *                      )
+     *                  ),
      *              )
      *          )
      *      ),
@@ -381,8 +417,8 @@ class BookingController extends Controller
      *                      type="string",
      *                  ),
      *                  @OA\Property(
-     *                      type="object",
      *                      property="data",
+     *                      type="object",
      *                      ref="#/components/schemas/Booking"
      *                  )
      *              )
