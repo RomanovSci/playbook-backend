@@ -19,6 +19,11 @@ Route::get('/trainer/list', 'API\TrainerController@getTrainers')->name('trainer.
 Route::get('/trainer/info/{user}', 'API\TrainerController@getTrainerInfo')->name('trainer.getTrainerInfo');
 Route::get('/schedule/{schedulable_type}/{uuid?}', 'API\ScheduleController@get')->name('schedule.get');
 
+/** Equipment */
+Route::prefix('equipment')->group(function () {
+    Route::get('/{bookable_type}/{uuid}', 'API\EquipmentController@get')->name('equipment.get');
+});
+
 /**
  * Only guest routes
  */
@@ -58,11 +63,6 @@ Route::middleware(['auth:api'])->group(function () {
         Route::get('/', 'API\PlaygroundController@get')->name('playground.get');
         Route::get('/search', 'API\PlaygroundController@search')->name('playground.search');
         Route::get('/types', 'API\PlaygroundController@getTypes')->name('playground.getTypes');
-    });
-
-    /** Equipment */
-    Route::prefix('equipment')->group(function () {
-        Route::get('/{bookable_type}/{uuid}', 'API\EquipmentController@get')->name('equipment.get');
     });
 
     /** Organization */

@@ -74,8 +74,7 @@ class EquipmentController extends Controller
      *                  },
      *              )
      *          )
-     *      ),
-     *      security={{"Bearer":{}}}
+     *      )
      * )
      */
     public function get(string $bookableType, string $uuid)
