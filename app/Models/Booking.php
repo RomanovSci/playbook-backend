@@ -165,4 +165,12 @@ class Booking extends BaseModel
     {
         return $this->belongsTo(Playground::class);
     }
+
+    /**
+     * @return \Illuminate\Database\Eloquent\Relations\HasMany
+     */
+    public function equipmentRent()
+    {
+        return $this->hasMany(EquipmentRent::class);
+    }
 }

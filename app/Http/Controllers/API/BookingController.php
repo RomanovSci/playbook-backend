@@ -116,6 +116,50 @@ class BookingController extends Controller
      *                                      ref="#/components/schemas/User"
      *                                  ),
      *                              ),
+     *                              @OA\Schema(
+     *                                  @OA\Property(
+     *                                      property="equipments_rent",
+     *                                      type="array",
+     *                                      @OA\Items(
+     *                                          allOf={
+     *                                              @OA\Schema(
+     *                                                  @OA\Property(
+     *                                                      property="count",
+     *                                                      type="integer",
+     *                                                  ),
+     *                                                  @OA\Property(
+     *                                                      property="equipment",
+     *                                                      type="object",
+     *                                                      allOf={
+     *                                                          @OA\Schema(
+     *                                                              @OA\Property(
+     *                                                                  property="uuid",
+     *                                                                  type="string"
+     *                                                              ),
+     *                                                              @OA\Property(
+     *                                                                  property="name",
+     *                                                                  type="string"
+     *                                                              ),
+     *                                                              @OA\Property(
+     *                                                                  property="price_per_hour",
+     *                                                                  type="integer"
+     *                                                              ),
+     *                                                              @OA\Property(
+     *                                                                  property="currency",
+     *                                                                  type="string"
+     *                                                              ),
+     *                                                              @OA\Property(
+     *                                                                  property="availability",
+     *                                                                  type="integer"
+     *                                                              ),
+     *                                                          )
+     *                                                      }
+     *                                                  ),
+     *                                              )
+     *                                          }
+     *                                      )
+     *                                  ),
+     *                              )
      *                          }
      *                      ),
      *                  ),
@@ -266,7 +310,7 @@ class BookingController extends Controller
      *                                      type="object",
      *                                      ref="#/components/schemas/Playground"
      *                                  ),
-     *                              )
+     *                              ),
      *                          }
      *                      ),
      *                  ),
@@ -377,7 +421,7 @@ class BookingController extends Controller
      *                  ),
      *                  @OA\Property(
      *                      property="players_count",
-     *                      type="string"
+     *                      type="integer"
      *                  ),
      *                  @OA\Property(
      *                      property="equipments",
@@ -387,7 +431,7 @@ class BookingController extends Controller
      *                              @OA\Schema(
      *                                  type="object",
      *                                  @OA\Property(
-     *                                      property="equipment_uuid",
+     *                                      property="uuid",
      *                                      type="string",
      *                                  ),
      *                                  @OA\Property(
@@ -419,7 +463,53 @@ class BookingController extends Controller
      *                  @OA\Property(
      *                      property="data",
      *                      type="object",
-     *                      ref="#/components/schemas/Booking"
+     *                      allOf={
+     *                          @OA\Schema(ref="#/components/schemas/Booking"),
+     *                          @OA\Schema(
+     *                              @OA\Property(
+     *                                  property="equipments_rent",
+     *                                  type="array",
+     *                                  @OA\Items(
+     *                                      allOf={
+     *                                          @OA\Schema(
+     *                                              @OA\Property(
+     *                                                  property="count",
+     *                                                  type="integer",
+     *                                              ),
+     *                                              @OA\Property(
+     *                                                  property="equipment",
+     *                                                  type="object",
+     *                                                  allOf={
+     *                                                      @OA\Schema(
+     *                                                          @OA\Property(
+     *                                                              property="uuid",
+     *                                                              type="string"
+     *                                                          ),
+     *                                                          @OA\Property(
+     *                                                              property="name",
+     *                                                              type="string"
+     *                                                          ),
+     *                                                          @OA\Property(
+     *                                                              property="price_per_hour",
+     *                                                              type="integer"
+     *                                                          ),
+     *                                                          @OA\Property(
+     *                                                              property="currency",
+     *                                                              type="string"
+     *                                                          ),
+     *                                                          @OA\Property(
+     *                                                              property="availability",
+     *                                                              type="integer"
+     *                                                          ),
+     *                                                      )
+     *                                                  }
+     *                                              ),
+     *                                          )
+     *                                      }
+     *                                  )
+     *                              ),
+     *                          ),
+     *                      }
      *                  )
      *              )
      *         )

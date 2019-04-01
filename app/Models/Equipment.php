@@ -65,4 +65,19 @@ class Equipment extends BaseModel
         'availability' => 'integer',
         'price_per_hour' => 'integer',
     ];
+
+    /**
+     * Equipment constructor.
+     *
+     * @param array $attributes
+     */
+    public function __construct(array $attributes = [])
+    {
+        parent::__construct($attributes);
+        $this->hidden = array_merge($this->hidden, [
+            'creator_uuid',
+            'created_at',
+            'updated_at',
+        ]);
+    }
 }

@@ -55,11 +55,17 @@ class BookingService
 
         if (isset($data['equipments'])) {
             foreach ($data['equipments'] as $equipment) {
-                $equipmentsRent[] = EquipmentRent::create([
+                /** @var EquipmentRent $equipmentRent */
+                $equipmentRent = EquipmentRent::create([
                     'booking_uuid' => $booking->uuid,
                     'equipment_uuid' => $equipment['uuid'],
                     'count' => $equipment['count'],
                 ]);
+
+                $equipmentsRent[] = [
+                    'count' => $equipmentRent->count,
+                    'equipment' => $equipmentRent->equipment,
+                ];
             }
         }
 
