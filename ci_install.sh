@@ -9,7 +9,8 @@ set -xe
 apt-get update -yqq
 apt-get install git -yqq
 
-pecl install xdebug pcntl
+pecl install xdebug
+docker-php-ext-install pcntl
 docker-php-ext-enable xdebug
 
 # Install phpunit, the tool that we will use for testing
