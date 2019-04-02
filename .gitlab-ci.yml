@@ -1,7 +1,7 @@
 image: php:7.1
 
 before_script:
-- bash ci_install.sh > /dev/null
+- bash gitlab-ci-preinstall.sh > /dev/null
 
 test:unit:
   script:

@@ -14,7 +14,7 @@ docker-php-ext-install pcntl
 docker-php-ext-enable xdebug
 
 # Install phpunit, the tool that we will use for testing
-curl --location --output /usr/local/bin/phpunit https://phar.phpunit.de/phpunit.phar
+curl --location --output /usr/local/bin/phpunit https://phar.phpunit.de/phpunit-7.phar
 chmod +x /usr/local/bin/phpunit
 
 curl --location --output /usr/local/bin/composer https://getcomposer.org/download/1.7.3/composer.phar
