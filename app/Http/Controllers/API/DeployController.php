@@ -20,15 +20,26 @@ class DeployController extends Controller
         $xGitLabToken = $request->header('X-Gitlab-Token');
 
         if ($xGitLabToken === env('X_GITLAB_TOKEN')) {
-            return $this->success([
-                '1' => $xGitLabToken,
-                '2' => env('X_GITLAB_TOKEN'),
-            ]);
+            //TODO: Run deploy script
+            return $this->success();
         }
 
-        return $this->error([
-            '1' => $xGitLabToken,
-            '2' => env('X_GITLAB_TOKEN'),
-        ]);
+        return $this->error("Incorrect token");
+    }
+
+    /**
+     * @param Request $request
+     * @return \Illuminate\Http\JsonResponse
+     */
+    public function back(Request $request)
+    {
+        $xGitLabToken = $request->header('X-Gitlab-Token');
+
+        if ($xGitLabToken === env('X_GITLAB_TOKEN')) {
+            //TODO: Run deploy script
+            return $this->success();
+        }
+
+        return $this->error("Incorrect token");
     }
 }
