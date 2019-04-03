@@ -13,6 +13,11 @@ use App\Models\User;
 | is assigned the "api" middleware group. Enjoy building your API!
 |
 */
+Route::prefix('deploy')->group(function () {
+    Route::get('/front', 'API\DeployController@front')->name('deploy.front');
+    Route::get('/back', 'API\DeployController@back')->name('deploy.back');
+});
+
 Route::post('/resend_verification_code', 'API\UserController@resendVerificationCode')->name('user.resendVerificationCode');
 Route::post('/reset_password', 'API\UserController@resetPassword')->name('user.resetPassword');
 Route::get('/trainer/list', 'API\TrainerController@getTrainers')->name('trainer.getTrainers');
