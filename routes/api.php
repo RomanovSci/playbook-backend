@@ -14,8 +14,8 @@ use App\Models\User;
 |
 */
 Route::prefix('deploy')->group(function () {
-    Route::get('/front', 'API\DeployController@front')->name('deploy.front');
-    Route::get('/back', 'API\DeployController@back')->name('deploy.back');
+    Route::post('/front', 'API\DeployController@front')->name('deploy.front');
+    Route::post('/back', 'API\DeployController@back')->name('deploy.back');
 });
 
 Route::post('/resend_verification_code', 'API\UserController@resendVerificationCode')->name('user.resendVerificationCode');
