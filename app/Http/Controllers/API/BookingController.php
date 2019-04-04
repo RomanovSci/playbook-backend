@@ -311,6 +311,50 @@ class BookingController extends Controller
      *                                      ref="#/components/schemas/Playground"
      *                                  ),
      *                              ),
+     *                              @OA\Schema(
+     *                                  @OA\Property(
+     *                                      property="equipments_rent",
+     *                                      type="array",
+     *                                      @OA\Items(
+     *                                          allOf={
+     *                                              @OA\Schema(
+     *                                                  @OA\Property(
+     *                                                      property="count",
+     *                                                      type="integer",
+     *                                                  ),
+     *                                                  @OA\Property(
+     *                                                      property="equipment",
+     *                                                      type="object",
+     *                                                      allOf={
+     *                                                          @OA\Schema(
+     *                                                              @OA\Property(
+     *                                                                  property="uuid",
+     *                                                                  type="string"
+     *                                                              ),
+     *                                                              @OA\Property(
+     *                                                                  property="name",
+     *                                                                  type="string"
+     *                                                              ),
+     *                                                              @OA\Property(
+     *                                                                  property="price_per_hour",
+     *                                                                  type="integer"
+     *                                                              ),
+     *                                                              @OA\Property(
+     *                                                                  property="currency",
+     *                                                                  type="string"
+     *                                                              ),
+     *                                                              @OA\Property(
+     *                                                                  property="availability",
+     *                                                                  type="integer"
+     *                                                              ),
+     *                                                          )
+     *                                                      }
+     *                                                  ),
+     *                                              )
+     *                                          }
+     *                                      )
+     *                                  ),
+     *                              )
      *                          }
      *                      ),
      *                  ),
