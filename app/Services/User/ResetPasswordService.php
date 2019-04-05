@@ -5,7 +5,7 @@ namespace App\Services\User;
 use App\Jobs\SendSms;
 use App\Models\PasswordReset;
 use App\Models\User;
-use App\Objects\Service\ExecResult;
+use App\Services\ExecResult;
 use App\Repositories\PasswordResetRepository;
 use Carbon\Carbon;
 use Illuminate\Support\Str;

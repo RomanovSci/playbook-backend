@@ -3,7 +3,7 @@
 namespace App\Services\File;
 
 use App\Models\File;
-use App\Objects\Service\ExecResult;
+use App\Services\ExecResult;
 use Illuminate\Database\Eloquent\Model;
 use Illuminate\Http\UploadedFile;
 use Illuminate\Support\Facades\Storage;

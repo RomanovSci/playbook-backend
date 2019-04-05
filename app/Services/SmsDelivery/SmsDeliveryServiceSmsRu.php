@@ -2,7 +2,7 @@
 
 namespace App\Services\SmsDelivery;
 
-use App\Objects\Service\ExecResult;
+use App\Services\ExecResult;
 
 /**
  * Class SmsDeliveryServiceSmsRu

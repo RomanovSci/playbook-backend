@@ -7,7 +7,7 @@ use App\Helpers\ScheduleHelper;
 use App\Models\Schedule\Schedule;
 use App\Models\SchedulePlayground;
 use App\Models\User;
-use App\Objects\Service\ExecResult;
+use App\Services\ExecResult;
 use Carbon\Carbon;
 
 /**

@@ -5,7 +5,7 @@ namespace App\Services\Booking;
 use App\Jobs\SendSms;
 use App\Models\Booking;
 use App\Models\User;
-use App\Objects\Service\ExecResult;
+use App\Services\ExecResult;
 use Illuminate\Support\Facades\Auth;
 
 /**

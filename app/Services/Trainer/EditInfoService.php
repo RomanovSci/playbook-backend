@@ -5,7 +5,7 @@ namespace App\Services\Trainer;
 use App\Models\TrainerInfo;
 use App\Models\User;
 use App\Models\UserPlayground;
-use App\Objects\Service\ExecResult;
+use App\Services\ExecResult;
 use App\Services\File\UploadFileService;
 use Illuminate\Support\Facades\DB;
 

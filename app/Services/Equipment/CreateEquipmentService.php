@@ -4,7 +4,7 @@ namespace App\Services\Equipment;
 
 use App\Models\Equipment;
 use App\Models\User;
-use App\Objects\Service\ExecResult;
+use App\Services\ExecResult;
 
 /**
  * Class CreateEquipmentService

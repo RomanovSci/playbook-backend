@@ -1,6 +1,6 @@
 <?php
 
-namespace App\Objects\Service;
+namespace App\Services;
 
 /**
  * Class ExecResult

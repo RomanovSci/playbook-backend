@@ -2,7 +2,7 @@
 
 namespace App\Services\SmsDelivery;
 
-use App\Objects\Service\ExecResult;
+use App\Services\ExecResult;
 use Illuminate\Support\Facades\Log;
 use Mobizon\MobizonApi;
 

@@ -8,7 +8,7 @@ use App\Jobs\SendSms;
 use App\Models\Booking;
 use App\Models\EquipmentRent;
 use App\Models\User;
-use App\Objects\Service\ExecResult;
+use App\Services\ExecResult;
 use App\Repositories\UserRepository;
 use Carbon\Carbon;
 
