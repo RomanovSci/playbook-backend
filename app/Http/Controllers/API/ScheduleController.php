@@ -6,8 +6,8 @@ use App\Exceptions\Http\ForbiddenHttpException;
 use App\Exceptions\Internal\IncorrectDateRange;
 use App\Http\Controllers\Controller;
 use App\Http\Requests\Common\TimeIntervalFormRequest;
-use App\Http\Requests\Schedule\ScheduleCreateFormRequest;
-use App\Http\Requests\Schedule\ScheduleEditFormRequest;
+use App\Http\Requests\Schedule\CreateScheduleFormRequest;
+use App\Http\Requests\Schedule\EditScheduleFormRequest;
 use App\Models\Playground;
 use App\Models\Schedule\Schedule;
 use App\Models\User;
@@ -184,7 +184,7 @@ class ScheduleController extends Controller
     }
 
     /**
-     * @param ScheduleCreateFormRequest $request
+     * @param CreateScheduleFormRequest $request
      * @param string $schedulableType
      * @param CreateScheduleService $createScheduleService
      * @return JsonResponse
@@ -295,7 +295,7 @@ class ScheduleController extends Controller
      * )
      */
     public function create(
-        ScheduleCreateFormRequest $request,
+        CreateScheduleFormRequest $request,
         string $schedulableType,
         CreateScheduleService $createScheduleService
     ) {
@@ -329,7 +329,7 @@ class ScheduleController extends Controller
 
     /**
      * @param Schedule $schedule
-     * @param ScheduleEditFormRequest $request
+     * @param EditScheduleFormRequest $request
      * @param EditScheduleService $editScheduleService
      * @return JsonResponse
      *
@@ -439,7 +439,7 @@ class ScheduleController extends Controller
      *      security={{"Bearer":{}}}
      * )
      */
-    public function edit(Schedule $schedule, ScheduleEditFormRequest $request, EditScheduleService $editScheduleService)
+    public function edit(Schedule $schedule, EditScheduleFormRequest $request, EditScheduleService $editScheduleService)
     {
         if (Auth::user()->cant('manageSchedule', $schedule)) {
             throw new ForbiddenHttpException(__('errors.cant_manage_schedule'));

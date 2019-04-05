@@ -3,7 +3,7 @@
 namespace App\Http\Controllers\API;
 
 use App\Http\Controllers\Controller;
-use App\Http\Requests\Equipment\EquipmentCreateFormRequest;
+use App\Http\Requests\Equipment\CreateEquipmentFormRequest;
 use App\Models\Playground;
 use App\Models\User;
 use App\Repositories\EquipmentRepository;
@@ -93,7 +93,7 @@ class EquipmentController extends Controller
     }
 
     /**
-     * @param EquipmentCreateFormRequest $request
+     * @param CreateEquipmentFormRequest $request
      * @param CreateEquipmentService $createEquipmentService
      * @return JsonResponse
      *
@@ -193,7 +193,7 @@ class EquipmentController extends Controller
      *      security={{"Bearer":{}}}
      * )
      */
-    public function create(EquipmentCreateFormRequest $request, CreateEquipmentService $createEquipmentService)
+    public function create(CreateEquipmentFormRequest $request, CreateEquipmentService $createEquipmentService)
     {
         /** @var User $user */
         $user = Auth::user();

@@ -6,8 +6,8 @@ use App\Exceptions\Http\ForbiddenHttpException;
 use App\Exceptions\Internal\IncorrectDateRange;
 use App\Helpers\BookingHelper;
 use App\Http\Controllers\Controller;
-use App\Http\Requests\Booking\BookingCreateFormRequest;
-use App\Http\Requests\Booking\BookingDeclineFormRequest;
+use App\Http\Requests\Booking\CreateBookingFormRequest;
+use App\Http\Requests\Booking\DeclineBookingFormRequest;
 use App\Http\Requests\Common\TimeIntervalFormRequest;
 use App\Models\Booking;
 use App\Models\User;
@@ -425,7 +425,7 @@ class BookingController extends Controller
 
     /**
      * @param string $bookableType
-     * @param BookingCreateFormRequest $request
+     * @param CreateBookingFormRequest $request
      * @param CreateBookingService $createBookingService
      * @return JsonResponse
      * @throws IncorrectDateRange
@@ -619,7 +619,7 @@ class BookingController extends Controller
      */
     public function create(
         string $bookableType,
-        BookingCreateFormRequest $request,
+        CreateBookingFormRequest $request,
         CreateBookingService $createBookingService
     ) {
         /** @var User $user */
@@ -734,7 +734,7 @@ class BookingController extends Controller
 
     /**
      * @param Booking $booking
-     * @param BookingDeclineFormRequest $request
+     * @param DeclineBookingFormRequest $request
      * @param ChangeBookingStatusService $changeBookingStatusService
      * @return JsonResponse
      *
@@ -845,7 +845,7 @@ class BookingController extends Controller
      */
     public function decline(
         Booking $booking,
-        BookingDeclineFormRequest $request,
+        DeclineBookingFormRequest $request,
         ChangeBookingStatusService $changeBookingStatusService
     ) {
         if (Auth::user()->cant('declineBooking', $booking)) {

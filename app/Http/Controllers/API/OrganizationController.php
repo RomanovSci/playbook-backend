@@ -4,7 +4,7 @@ namespace App\Http\Controllers\API;
 
 use App\Http\Controllers\Controller;
 use App\Http\Requests\Common\GetFormRequest;
-use App\Http\Requests\Organization\OrganizationCreateFormRequest;
+use App\Http\Requests\Organization\CreateOrganizationFormRequest;
 use App\Models\Organization;
 use App\Repositories\OrganizationRepository;
 use Illuminate\Http\JsonResponse;
@@ -108,7 +108,7 @@ class OrganizationController extends Controller
     }
 
     /**
-     * @param OrganizationCreateFormRequest $request
+     * @param CreateOrganizationFormRequest $request
      * @return JsonResponse
      *
      * @OA\Post(
@@ -186,7 +186,7 @@ class OrganizationController extends Controller
      *      security={{"Bearer":{}}}
      * )
      */
-    public function create(OrganizationCreateFormRequest $request)
+    public function create(CreateOrganizationFormRequest $request)
     {
         /** @var Organization $organization */
         $organization = Organization::create(array_merge(

@@ -8,7 +8,7 @@ use App\Http\Requests\BaseFormRequest;
  * Class BookingDeclineFormRequest
  * @package App\Http\Requests\Booking
  */
-class BookingDeclineFormRequest extends BaseFormRequest
+class DeclineBookingFormRequest extends BaseFormRequest
 {
     /**
      * @return array

@@ -5,8 +5,8 @@ namespace App\Http\Controllers\API;
 use App\Exceptions\Http\ForbiddenHttpException;
 use App\Http\Controllers\Controller;
 use App\Http\Requests\Common\GetFormRequest;
-use App\Http\Requests\TrainerInfo\TrainerInfoCreateFormRequest;
-use App\Http\Requests\TrainerInfo\TrainerInfoEditFormRequest;
+use App\Http\Requests\TrainerInfo\CreateTrainerInfoFormRequest;
+use App\Http\Requests\TrainerInfo\EditTrainerInfoFormRequest;
 use App\Models\TrainerInfo;
 use App\Models\User;
 use App\Repositories\UserRepository;
@@ -204,7 +204,7 @@ class TrainerController extends Controller
     }
 
     /**
-     * @param TrainerInfoCreateFormRequest $request
+     * @param CreateTrainerInfoFormRequest $request
      * @param CreateInfoService $createInfoService
      * @return JsonResponse
      * @throws \Throwable
@@ -310,7 +310,7 @@ class TrainerController extends Controller
      *      security={{"Bearer":{}}}
      * )
      */
-    public function createInfo(TrainerInfoCreateFormRequest $request, CreateInfoService $createInfoService)
+    public function createInfo(CreateTrainerInfoFormRequest $request, CreateInfoService $createInfoService)
     {
         /** @var User $user */
         $user = Auth::user();
@@ -328,7 +328,7 @@ class TrainerController extends Controller
     }
 
     /**
-     * @param TrainerInfoEditFormRequest $request
+     * @param EditTrainerInfoFormRequest $request
      * @param TrainerInfo $info
      * @param EditInfoService $editInfoService
      * @return JsonResponse
@@ -455,7 +455,7 @@ class TrainerController extends Controller
      *      security={{"Bearer":{}}}
      * )
      */
-    public function editInfo(TrainerInfoEditFormRequest $request, TrainerInfo $info, EditInfoService $editInfoService)
+    public function editInfo(EditTrainerInfoFormRequest $request, TrainerInfo $info, EditInfoService $editInfoService)
     {
         /** @var User $user */
         $user = Auth::user();

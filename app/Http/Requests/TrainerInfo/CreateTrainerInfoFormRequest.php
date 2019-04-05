@@ -8,7 +8,7 @@ use App\Http\Requests\BaseFormRequest;
  * Class TrainerInfoCreateFormRequest
  * @package App\Http\Requests\TrainerInfo
  */
-class TrainerInfoCreateFormRequest extends BaseFormRequest
+class CreateTrainerInfoFormRequest extends BaseFormRequest
 {
     /**
      * @return array

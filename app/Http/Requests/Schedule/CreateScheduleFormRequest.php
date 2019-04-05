@@ -5,10 +5,10 @@ namespace App\Http\Requests\Schedule;
 use App\Http\Requests\BaseFormRequest;
 
 /**
- * Class ScheduleEditFormRequest
+ * Class ScheduleCreateFormRequest
  * @package App\Http\Requests
  */
-class ScheduleEditFormRequest extends BaseFormRequest
+class CreateScheduleFormRequest extends BaseFormRequest
 {
     /**
      * @return array
@@ -16,8 +16,9 @@ class ScheduleEditFormRequest extends BaseFormRequest
     public function rules(): array
     {
         return [
-            'start_time' => 'required|date_format:Y-m-d H:i:s',
-            'end_time' => 'required|date_format:Y-m-d H:i:s|after:start_time',
+            'dates' => 'required|array',
+            'dates.*.start_time' => 'required|date_format:Y-m-d H:i:s',
+            'dates.*.end_time' => 'required|date_format:Y-m-d H:i:s|after:dates.*.start_time',
             'price_per_hour' => 'required|numeric|min:0',
             'currency' => 'required|currency',
             'playgrounds' => 'required|array',

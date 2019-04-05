@@ -6,7 +6,7 @@ use App\Exceptions\Http\ForbiddenHttpException;
 use App\Http\Controllers\Controller;
 use App\Http\Requests\Common\GetFormRequest;
 use App\Http\Requests\Common\SearchFormRequest;
-use App\Http\Requests\Playground\PlaygroundCreateFormRequest;
+use App\Http\Requests\Playground\CreatePlaygroundFormRequest;
 use App\Models\Organization;
 use App\Models\Playground;
 use App\Models\User;
@@ -191,7 +191,7 @@ class PlaygroundController extends Controller
     }
 
     /**
-     * @param PlaygroundCreateFormRequest $request
+     * @param CreatePlaygroundFormRequest $request
      * @return string
      *
      * @OA\Post(
@@ -296,7 +296,7 @@ class PlaygroundController extends Controller
      *      security={{"Bearer":{}}}
      * )
      */
-    public function create(PlaygroundCreateFormRequest $request)
+    public function create(CreatePlaygroundFormRequest $request)
     {
         /**
          * @var User $user
