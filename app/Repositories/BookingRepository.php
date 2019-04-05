@@ -69,7 +69,10 @@ class BookingRepository
         return Booking::where('creator_uuid', $user->uuid)
             ->where('start_time', '>=', $startTime->toDayDateTimeString())
             ->where('end_time', '<=', $endTime->toDayDateTimeString())
-            ->with('playground')
+            ->with([
+                'playground',
+                'equipmentRent.equipment'
+            ])
             ->limit($limit)
             ->offset($offset)
             ->get();
