@@ -3,7 +3,7 @@
 namespace App\Jobs;
 
 use App\Models\SmsDelivery;
-use App\Services\SmsDeliveryService\SmsDeliveryServiceInterface;
+use App\Services\SmsDelivery\SmsDeliveryServiceInterface;
 use Illuminate\Bus\Queueable;
 use Illuminate\Queue\SerializesModels;
 use Illuminate\Queue\InteractsWithQueue;

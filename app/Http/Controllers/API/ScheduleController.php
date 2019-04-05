@@ -3,6 +3,7 @@
 namespace App\Http\Controllers\API;
 
 use App\Exceptions\Http\ForbiddenHttpException;
+use App\Exceptions\Internal\IncorrectDateRange;
 use App\Http\Controllers\Controller;
 use App\Http\Requests\Common\TimeIntervalFormRequest;
 use App\Http\Requests\Schedule\ScheduleCreateFormRequest;
@@ -12,7 +13,8 @@ use App\Models\Schedule\Schedule;
 use App\Models\User;
 use App\Repositories\BookingRepository;
 use App\Repositories\ScheduleRepository;
-use App\Services\ScheduleService;
+use App\Services\Schedule\CreateScheduleService;
+use App\Services\Schedule\EditScheduleService;
 use Carbon\Carbon;
 use Illuminate\Http\JsonResponse;
 use Illuminate\Support\Facades\Auth;
@@ -184,6 +186,7 @@ class ScheduleController extends Controller
     /**
      * @param ScheduleCreateFormRequest $request
      * @param string $schedulableType
+     * @param CreateScheduleService $createScheduleService
      * @return JsonResponse
      *
      * @throws \Throwable
@@ -291,8 +294,11 @@ class ScheduleController extends Controller
      *      security={{"Bearer":{}}}
      * )
      */
-    public function create(ScheduleCreateFormRequest $request, string $schedulableType)
-    {
+    public function create(
+        ScheduleCreateFormRequest $request,
+        string $schedulableType,
+        CreateScheduleService $createScheduleService
+    ) {
         /** @var User $schedulable */
         $schedulable = Auth::user();
 
@@ -317,16 +323,17 @@ class ScheduleController extends Controller
             }
         }
 
-        $createResult = ScheduleService::create($schedulable, $request->all());
+        $createResult = $createScheduleService->run($schedulable, $request->all());
         return $this->success($createResult->getData('schedules'));
     }
 
     /**
      * @param Schedule $schedule
      * @param ScheduleEditFormRequest $request
+     * @param EditScheduleService $editScheduleService
      * @return JsonResponse
      *
-     * @throws \App\Exceptions\Internal\IncorrectDateRange
+     * @throws IncorrectDateRange
      *
      * @OA\Post(
      *      path="/api/schedule/edit/{schedule_uuid}",
@@ -432,14 +439,14 @@ class ScheduleController extends Controller
      *      security={{"Bearer":{}}}
      * )
      */
-    public function edit(Schedule $schedule, ScheduleEditFormRequest $request)
+    public function edit(Schedule $schedule, ScheduleEditFormRequest $request, EditScheduleService $editScheduleService)
     {
         if (Auth::user()->cant('manageSchedule', $schedule)) {
             throw new ForbiddenHttpException(__('errors.cant_manage_schedule'));
         }
 
         return $this->success(
-            ScheduleService::edit($schedule, $request->all())->getData('schedule')
+            $editScheduleService->run($schedule, $request->all())->getData('schedule')
         );
     }
 

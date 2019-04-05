@@ -2,8 +2,8 @@
 
 namespace App\Providers;
 
-use App\Services\SmsDeliveryService\SmsDeliveryServiceInterface;
-use App\Services\SmsDeliveryService\SmsDeliveryServiceMobizon;
+use App\Services\SmsDelivery\SmsDeliveryServiceInterface;
+use App\Services\SmsDelivery\SmsDeliveryServiceMobizon;
 use Illuminate\Support\ServiceProvider;
 
 /**

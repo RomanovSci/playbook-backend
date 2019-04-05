@@ -7,7 +7,8 @@ use App\Http\Requests\Equipment\EquipmentCreateFormRequest;
 use App\Models\Playground;
 use App\Models\User;
 use App\Repositories\EquipmentRepository;
-use App\Services\EquipmentService;
+use App\Services\Equipment\CreateEquipmentService;
+use Illuminate\Http\JsonResponse;
 use Illuminate\Support\Facades\Auth;
 
 /**
@@ -19,7 +20,7 @@ class EquipmentController extends Controller
     /**
      * @param string $bookableType
      * @param string $uuid
-     * @return \Illuminate\Http\JsonResponse
+     * @return JsonResponse
      *
      * @OA\Get(
      *      path="/api/equipment/{bookable_type}/{bookable_uuid}",
@@ -93,7 +94,8 @@ class EquipmentController extends Controller
 
     /**
      * @param EquipmentCreateFormRequest $request
-     * @return \Illuminate\Http\JsonResponse
+     * @param CreateEquipmentService $createEquipmentService
+     * @return JsonResponse
      *
      * @OA\Post(
      *      path="/api/equipment/create",
@@ -191,11 +193,11 @@ class EquipmentController extends Controller
      *      security={{"Bearer":{}}}
      * )
      */
-    public function create(EquipmentCreateFormRequest $request)
+    public function create(EquipmentCreateFormRequest $request, CreateEquipmentService $createEquipmentService)
     {
         /** @var User $user */
         $user = Auth::user();
-        $result = EquipmentService::create($user, $request->all());
+        $result = $createEquipmentService->run($user, $request->all());
 
         if (!$result->getSuccess()) {
             return $this->error($result->getMessage());

@@ -10,7 +10,9 @@ use App\Http\Requests\User\ResetPasswordFormRequest;
 use App\Http\Requests\User\VerifyPhoneFormRequest;
 use App\Models\User;
 use App\Repositories\UserRepository;
-use App\Services\UserService;
+use App\Services\User\LoginService;
+use App\Services\User\RegisterService;
+use App\Services\User\ResetPasswordService;
 use Carbon\Carbon;
 use Illuminate\Http\JsonResponse;
 use Illuminate\Http\Request;
@@ -24,6 +26,7 @@ class UserController extends Controller
 {
     /**
      * @param RegisterFormRequest $request
+     * @param RegisterService $registerService
      * @return JsonResponse
      * @throws \Throwable
      *
@@ -125,13 +128,14 @@ class UserController extends Controller
      *      ),
      * )
      */
-    public function register(RegisterFormRequest $request)
+    public function register(RegisterFormRequest $request, RegisterService $registerService)
     {
-        return $this->success(UserService::register($request->all())->getData());
+        return $this->success($registerService->run($request->all())->getData());
     }
 
     /**
      * @param LoginFormRequest $request
+     * @param LoginService $loginService
      * @return JsonResponse
      *
      * @OA\Post(
@@ -218,9 +222,9 @@ class UserController extends Controller
      *      ),
      * )
      */
-    public function login(LoginFormRequest $request)
+    public function login(LoginFormRequest $request, LoginService $loginService)
     {
-        return $this->success(UserService::login($request->all())->getData());
+        return $this->success($loginService->run($request->all())->getData());
     }
 
     /**
@@ -412,6 +416,7 @@ class UserController extends Controller
 
     /**
      * @param ResetPasswordFormRequest $request
+     * @param ResetPasswordService $resetPasswordService
      * @return JsonResponse
      *
      * @OA\Post(
@@ -471,9 +476,9 @@ class UserController extends Controller
      *      )
      * )
      */
-    public function resetPassword(ResetPasswordFormRequest $request)
+    public function resetPassword(ResetPasswordFormRequest $request, ResetPasswordService $resetPasswordService)
     {
-        $resetResult = UserService::resetPassword(
+        $resetResult = $resetPasswordService->run(
             UserRepository::getByPhone($request->get('phone'))
         );
 

@@ -1,6 +1,6 @@
 <?php
 
-namespace App\Services\SmsDeliveryService;
+namespace App\Services\SmsDelivery;
 
 use App\Objects\Service\ExecResult;
 

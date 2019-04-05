@@ -1,21 +1,24 @@
 <?php
 
-namespace App\Services\SmsDeliveryService;
+namespace App\Services\SmsDelivery;
 
 use App\Objects\Service\ExecResult;
 use Illuminate\Support\Facades\Log;
-use Mobizon\MobizonApi;
+use Nexmo\Client;
+use Nexmo\Client\Credentials\Basic;
 
 /**
- * Class SmsDeliveryServiceMobizon
+ * Class SmsDeliveryServiceNexmo
  * @package App\Services\SmsDeliveryService
  */
-class SmsDeliveryServiceMobizon implements SmsDeliveryServiceInterface
+class SmsDeliveryServiceNexmo implements SmsDeliveryServiceInterface
 {
+    const STATUS_SUCCESS = '0';
+
     /**
-     * @var MobizonApi
+     * @var Client
      */
-    protected $mobizonApi;
+    protected $apiClient;
 
     /**
      * SmsDeliveryServiceMobizon constructor.
@@ -23,10 +26,12 @@ class SmsDeliveryServiceMobizon implements SmsDeliveryServiceInterface
     public function __construct()
     {
         try {
-            $this->mobizonApi = new MobizonApi([
-                'apiKey' => env('SMS_DELIVERY_MOBIZON_KEY'),
-                'apiServer' => env('SMS_DELIVERY_MOBIZON_DOMAIN')
-            ]);
+            $this->apiClient = new Client(
+                new Basic(
+                    env('SMS_DELIVERY_NEXMO_API_KEY'),
+                    env('SMS_DELIVERY_NEXMO_API_SECRET')
+                )
+            );
         } catch (\Throwable $e) {
             Log::error($e->getMessage());
         }
@@ -37,24 +42,26 @@ class SmsDeliveryServiceMobizon implements SmsDeliveryServiceInterface
      * @param string $phone
      * @param string $text
      * @return array
+     * @throws \Exception
      */
     public function send(string $phone, string $text): ExecResult
     {
         try {
-            $success = $this->mobizonApi->call('message', 'sendSMSMessage', [
-                'recipient' => $phone,
+            $message = $this->apiClient->message()->send([
+                'to' => $phone,
+                'from' => 'PlayBook',
                 'text' => $text,
             ]);
         } catch (\Exception $e) {
             Log::error($e->getMessage());
-            return ExecResult::instance();
+            return ExecResult::instance()->setMessage($e->getMessage());
         }
 
-        if ($success) {
+        if ($message->getStatus() === self::STATUS_SUCCESS) {
             return ExecResult::instance()
                 ->setSuccess()
                 ->setData(
-                    (array) $this->mobizonApi->getData()
+                    $message->getResponseData()['messages'][0]
                 );
         }
 

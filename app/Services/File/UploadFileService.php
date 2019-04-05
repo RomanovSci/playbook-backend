@@ -1,6 +1,6 @@
 <?php
 
-namespace App\Services;
+namespace App\Services\File;
 
 use App\Models\File;
 use App\Objects\Service\ExecResult;
@@ -9,10 +9,10 @@ use Illuminate\Http\UploadedFile;
 use Illuminate\Support\Facades\Storage;
 
 /**
- * Class FileService
- * @package App\Services
+ * Class UploadFileService
+ * @package App\Services\File
  */
-class FileService
+class UploadFileService
 {
     /**
      * Upload file
@@ -22,11 +22,8 @@ class FileService
      * @param Model $relatedModel
      * @return ExecResult
      */
-    public static function upload(
-        string $path,
-        UploadedFile  $uploadedFile,
-        Model $relatedModel
-    ): ExecResult {
+    public function run(string $path, UploadedFile  $uploadedFile, Model $relatedModel): ExecResult
+    {
         $uploadedFile->store($path);
 
         $file = new File();

@@ -12,6 +12,7 @@ use App\Models\Playground;
 use App\Models\User;
 use App\Repositories\PlaygroundRepository;
 use App\Repositories\PlaygroundTypesRepository;
+use Illuminate\Http\JsonResponse;
 use Illuminate\Support\Facades\Auth;
 
 /**
@@ -22,7 +23,7 @@ class PlaygroundController extends Controller
 {
     /**
      * @param GetFormRequest $request
-     * @return \Illuminate\Http\JsonResponse
+     * @return JsonResponse
      *
      * @OA\Get(
      *      path="/api/playground",
@@ -113,7 +114,7 @@ class PlaygroundController extends Controller
 
     /**
      * @param SearchFormRequest $request
-     * @return \Illuminate\Http\JsonResponse
+     * @return JsonResponse
      *
      * @OA\Get(
      *      path="/api/playground/search",
