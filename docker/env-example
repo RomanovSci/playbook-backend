@@ -617,3 +617,6 @@ MAILU_ADMIN=true
 MAILU_WEBMAIL=rainloop
 # Dav server implementation (value: radicale, none)
 MAILU_WEBDAV=radicale
+
+### LARAVEL HORIZON #########################################################################
+LARAVEL_HORIZON_INSTALL_PGSQL=true
