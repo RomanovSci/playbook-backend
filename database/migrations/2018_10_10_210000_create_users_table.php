@@ -20,6 +20,7 @@ class CreateUsersTable extends Migration
             $table->string('middle_name')->nullable();
             $table->string('password');
             $table->string('phone')->unique();
+            $table->unsignedSmallInteger('status')->default(1);
             $table->char('verification_code', 6)->nullable();
             $table->uuid('timezone_uuid')->nullable();
             $table->char('language_code', 2)->nullable();

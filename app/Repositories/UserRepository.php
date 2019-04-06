@@ -22,8 +22,8 @@ class UserRepository
     public static function getByRole(string $role, int $limit, int $offset): Collection
     {
         return User::role($role)
-            ->with('trainerInfo')
-            ->with('playgrounds')
+            ->with(['trainerInfo', 'playgrounds'])
+            ->active()
             ->limit($limit)
             ->offset($offset)
             ->get();
@@ -37,7 +37,7 @@ class UserRepository
      */
     public static function getCountByRole(string $role): int
     {
-        return User::role($role)->count();
+        return User::role($role)->active()->count();
     }
 
     /**

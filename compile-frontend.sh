@@ -18,7 +18,7 @@ cd ../../docker && docker exec $2 bash -c '
     rm -rf node_modules
     rm yarn.lock
     yarn install
-    yarn run build
+    export REACT_APP_API_URL=http://localhost:8001 && yarn run build
     git checkout .
     mv ./build ../../public/build
     cd ../../public/build

@@ -27,6 +27,8 @@ class RegisterService
     {
         $data['verification_code'] = Str::random(6);
         $data['password'] = bcrypt($data['password'] ?? $data['verification_code']);
+        $data['timezone_uuid'] = TimezoneRepository::getFirstByName('Europe/Ulyanovsk')->uuid; // TODO: Remove
+        $data['status'] = $data['is_trainer'] ? User::STATUS_INACTIVE : User::STATUS_ACTIVE;
 
         DB::beginTransaction();
         try {
@@ -34,9 +36,7 @@ class RegisterService
              * @var User $user
              * @var PersonalAccessTokenResult $token
              */
-            $user = User::create(array_merge($data, [
-                'timezone_uuid' => TimezoneRepository::getFirstByName('Europe/Ulyanovsk')->uuid // TODO: Remove
-            ]));
+            $user = User::create($data);
             $user->assignRole($data['is_trainer'] ? User::ROLE_TRAINER : User::ROLE_USER);
             $token = $user->createToken('MyApp');
 
