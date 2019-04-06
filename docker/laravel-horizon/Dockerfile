@@ -32,11 +32,8 @@ RUN if [ ${INSTALL_BCMATH} = true ]; then \
   ;fi
 
 # Install PostgreSQL drivers:
-ARG LARAVEL_HORIZON_INSTALL_PGSQL=false
-RUN if [ ${LARAVEL_HORIZON_INSTALL_PGSQL} = true ]; then \
-  apk --update add postgresql-dev \
-  && docker-php-ext-install pdo_pgsql \
-  ;fi
+RUN apk --update add postgresql-dev \
+  && docker-php-ext-install pdo_pgsql
 
 ###########################################################################
 # PHP Memcached:
