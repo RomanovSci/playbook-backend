@@ -8,6 +8,7 @@ use App\Http\Requests\User\RegisterFormRequest;
 use App\Http\Requests\User\ResendVerificationCodeFormRequest;
 use App\Http\Requests\User\ResetPasswordFormRequest;
 use App\Http\Requests\User\VerifyPhoneFormRequest;
+use App\Jobs\SendSms;
 use App\Models\User;
 use App\Repositories\UserRepository;
 use App\Services\User\LoginService;
@@ -408,10 +409,13 @@ class UserController extends Controller
     {
         /** @var User $user */
         $user = UserRepository::getByPhone($request->get('phone'));
+        SendSms::dispatch($user->phone, $user->verification_code)->onConnection('redis');
 
-        return $this->success([
-            'verification_code' => $user->verification_code,
-        ]);
+        return $this->success(
+            app()->environment() === 'production'
+                ? []
+                : ['verification_code' => $user->verification_code]
+        );
     }
 
     /**
