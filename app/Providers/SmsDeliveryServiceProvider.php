@@ -2,8 +2,8 @@
 
 namespace App\Providers;
 
-use App\Services\SmsDelivery\SmsDeliveryServiceInterface;
-use App\Services\SmsDelivery\SmsDeliveryServiceMobizon;
+use App\Services\SmsDelivery\Providers\Mobizon;
+use App\Services\SmsDelivery\SmsDeliveryInterface;
 use Illuminate\Support\ServiceProvider;
 
 /**
@@ -29,9 +29,6 @@ class SmsDeliveryServiceProvider extends ServiceProvider
      */
     public function register()
     {
-        $this->app->bind(
-            SmsDeliveryServiceInterface::class,
-            SmsDeliveryServiceMobizon::class
-        );
+        $this->app->bind(SmsDeliveryInterface::class, Mobizon::class);
     }
 }

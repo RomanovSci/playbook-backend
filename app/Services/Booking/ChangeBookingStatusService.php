@@ -2,10 +2,10 @@
 
 namespace App\Services\Booking;
 
-use App\Jobs\SendSms;
 use App\Models\Booking;
 use App\Models\User;
 use App\Services\ExecResult;
+use App\Services\SmsDelivery\SmsDeliveryService;
 use Illuminate\Support\Facades\Auth;
 
 /**
@@ -14,6 +14,20 @@ use Illuminate\Support\Facades\Auth;
  */
 class ChangeBookingStatusService
 {
+    /**
+     * @var SmsDeliveryService
+     */
+    protected $smsDeliveryService;
+
+    /**
+     * ChangeBookingStatusService constructor.
+     * @param SmsDeliveryService $smsDeliveryService
+     */
+    public function __construct(SmsDeliveryService $smsDeliveryService)
+    {
+        $this->smsDeliveryService = $smsDeliveryService;
+    }
+
     /**
      * Change booking status
      *
@@ -58,7 +72,7 @@ class ChangeBookingStatusService
                         'note' => $booking->note,
                     ]);
 
-                SendSms::dispatch($phone, $text)->onConnection('redis');
+                $this->smsDeliveryService->send($phone, $text);
             }
 
             /**
@@ -69,7 +83,7 @@ class ChangeBookingStatusService
                 $booking->bookable_type === User::class &&
                 $booking->bookable_uuid !== $booking->creator_uuid
             ) {
-                SendSms::dispatch(
+                $this->smsDeliveryService->send(
                     $booking->creator->phone,
                     __('sms.booking.confirm', [
                         'trainer_name' => $booking->bookable->getFullName(),
@@ -80,7 +94,7 @@ class ChangeBookingStatusService
                             ->addHours($booking->creator->timezone->offset)
                             ->format('H:i'),
                     ])
-                )->onConnection('redis');
+                );
             }
         }
 

@@ -6,6 +6,7 @@ use App\Jobs\SendSms;
 use App\Models\User;
 use App\Services\ExecResult;
 use App\Repositories\TimezoneRepository;
+use App\Services\SmsDelivery\SmsDeliveryService;
 use Illuminate\Support\Facades\DB;
 use Illuminate\Support\Str;
 use Laravel\Passport\PersonalAccessTokenResult;
@@ -16,6 +17,20 @@ use Laravel\Passport\PersonalAccessTokenResult;
  */
 class RegisterService
 {
+    /**
+     * @var SmsDeliveryService
+     */
+    protected $smsDeliveryService;
+
+    /**
+     * RegisterUserService constructor.
+     * @param SmsDeliveryService $smsDeliveryService
+     */
+    public function __construct(SmsDeliveryService $smsDeliveryService)
+    {
+        $this->smsDeliveryService = $smsDeliveryService;
+    }
+
     /**
      * Register new user
      *
@@ -41,7 +56,7 @@ class RegisterService
             $token = $user->createToken('MyApp');
 
             if (!isset($data['c_password'])) {
-                SendSms::dispatch($user->phone, $data['verification_code'])->onConnection('redis');
+                $this->smsDeliveryService->send($user->phone, $data['verification_code']);
             }
 
             DB::commit();

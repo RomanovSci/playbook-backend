@@ -5,24 +5,17 @@ namespace App\Services\SmsDelivery;
 use App\Services\ExecResult;
 
 /**
- * Interface SmsDeliveryServiceInterface
+ * Interface SmsDeliveryInterface
  * @package App\Services\SmsDeliveryService
  */
-interface SmsDeliveryServiceInterface
+interface SmsDeliveryInterface
 {
     /**
      * Send sms message
-     * Return format:
-     *  [
-     *      'success' => true|false,
-     *      'data' => [
-     *          ...
-     *      ]
-     *  ]
      *
      * @param string $phone
      * @param string $text
-     * @return array
+     * @return ExecResult
      */
     public function send(string $phone, string $text): ExecResult;
 }

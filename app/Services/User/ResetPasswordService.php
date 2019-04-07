@@ -2,11 +2,11 @@
 
 namespace App\Services\User;
 
-use App\Jobs\SendSms;
 use App\Models\PasswordReset;
 use App\Models\User;
 use App\Services\ExecResult;
 use App\Repositories\PasswordResetRepository;
+use App\Services\SmsDelivery\SmsDeliveryService;
 use Carbon\Carbon;
 use Illuminate\Support\Str;
 
@@ -16,6 +16,20 @@ use Illuminate\Support\Str;
  */
 class ResetPasswordService
 {
+    /**
+     * @var SmsDeliveryService
+     */
+    protected $smsDeliveryService;
+
+    /**
+     * ResetPasswordService constructor.
+     * @param SmsDeliveryService $smsDeliveryService
+     */
+    public function __construct(SmsDeliveryService $smsDeliveryService)
+    {
+        $this->smsDeliveryService = $smsDeliveryService;
+    }
+
     /**
      * Reset user password
      *
@@ -35,10 +49,9 @@ class ResetPasswordService
                     'expired_at' => Carbon::now()->addHours(3),
                 ]);
             }
-            SendSms::dispatch(
-                $user->phone,
-                __('sms.user.reset', ['code' => $passwordReset->reset_code])
-            )->onConnection('redis');
+            $this->smsDeliveryService->send($user->phone, __('sms.user.reset', [
+                'code' => $passwordReset->reset_code
+            ]));
 
             return ExecResult::instance()
                 ->setSuccess()

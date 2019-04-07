@@ -1,16 +1,17 @@
 <?php
 
-namespace App\Services\SmsDelivery;
+namespace App\Services\SmsDelivery\Providers;
 
 use App\Services\ExecResult;
+use App\Services\SmsDelivery\SmsDeliveryInterface;
 use Illuminate\Support\Facades\Log;
 use Mobizon\MobizonApi;
 
 /**
- * Class SmsDeliveryServiceMobizon
+ * Class Mobizon
  * @package App\Services\SmsDeliveryService
  */
-class SmsDeliveryServiceMobizon implements SmsDeliveryServiceInterface
+class Mobizon implements SmsDeliveryInterface
 {
     /**
      * @var MobizonApi
@@ -18,7 +19,9 @@ class SmsDeliveryServiceMobizon implements SmsDeliveryServiceInterface
     protected $mobizonApi;
 
     /**
-     * SmsDeliveryServiceMobizon constructor.
+     * Mobizon constructor.
+     *
+     * @return void
      */
     public function __construct()
     {

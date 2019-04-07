@@ -1,17 +1,18 @@
 <?php
 
-namespace App\Services\SmsDelivery;
+namespace App\Services\SmsDelivery\Providers;
 
 use App\Services\ExecResult;
+use App\Services\SmsDelivery\SmsDeliveryInterface;
 use Illuminate\Support\Facades\Log;
 use Nexmo\Client;
 use Nexmo\Client\Credentials\Basic;
 
 /**
- * Class SmsDeliveryServiceNexmo
+ * Class Nexmo
  * @package App\Services\SmsDeliveryService
  */
-class SmsDeliveryServiceNexmo implements SmsDeliveryServiceInterface
+class Nexmo implements SmsDeliveryInterface
 {
     const STATUS_SUCCESS = '0';
 
@@ -21,7 +22,9 @@ class SmsDeliveryServiceNexmo implements SmsDeliveryServiceInterface
     protected $apiClient;
 
     /**
-     * SmsDeliveryServiceMobizon constructor.
+     * Nexmo constructor.
+     *
+     * @return void
      */
     public function __construct()
     {

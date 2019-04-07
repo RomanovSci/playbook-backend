@@ -56,7 +56,7 @@ class AuthServiceProvider extends ServiceProvider
 
     /**
      * @inheritdoc
-     * @return voidphp artisan vendor:publish --tag=passport-migrations
+     * @return void
      */
     public function register()
     {

@@ -1,14 +1,15 @@
 <?php
 
-namespace App\Services\SmsDelivery;
+namespace App\Services\SmsDelivery\Providers;
 
 use App\Services\ExecResult;
+use App\Services\SmsDelivery\SmsDeliveryInterface;
 
 /**
- * Class SmsDeliveryServiceSmsRu
+ * Class SmsRu
  * @package App\Services\SmsDeliveryService
  */
-class SmsDeliveryServiceSmsRu implements SmsDeliveryServiceInterface
+class SmsRu implements SmsDeliveryInterface
 {
     /**
      * @var string
@@ -31,7 +32,7 @@ class SmsDeliveryServiceSmsRu implements SmsDeliveryServiceInterface
     private $attempts = 5;
 
     /**
-     * SmsDeliveryServiceSmsRu constructor.
+     * SmsRu constructor.
      *
      * @return void
      */
@@ -197,7 +198,7 @@ class SmsDeliveryServiceSmsRu implements SmsDeliveryServiceInterface
     public function removeFromStopLIst($phone)
     {
         $url = $this->protocol . '://' . $this->domain . '/stoplist/del';
-        
+
         $post = new \stdClass();
         $post->stoplist_phone = $phone;
 

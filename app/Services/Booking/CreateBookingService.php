@@ -4,12 +4,12 @@ namespace App\Services\Booking;
 
 use App\Exceptions\Internal\IncorrectDateRange;
 use App\Helpers\BookingHelper;
-use App\Jobs\SendSms;
 use App\Models\Booking;
 use App\Models\EquipmentRent;
 use App\Models\User;
 use App\Services\ExecResult;
 use App\Repositories\UserRepository;
+use App\Services\SmsDelivery\SmsDeliveryService;
 use Carbon\Carbon;
 
 /**
@@ -18,6 +18,20 @@ use Carbon\Carbon;
  */
 class CreateBookingService
 {
+    /**
+     * @var SmsDeliveryService
+     */
+    protected $smsDeliveryService;
+
+    /**
+     * ChangeBookingStatusService constructor.
+     * @param SmsDeliveryService $smsDeliveryService
+     */
+    public function __construct(SmsDeliveryService $smsDeliveryService)
+    {
+        $this->smsDeliveryService = $smsDeliveryService;
+    }
+
     /**
      * Create booking
      *
@@ -68,7 +82,7 @@ class CreateBookingService
 
         if ($bookableType === User::class && $bookableUuid !== $creator->uuid) {
             $timezoneOffset = $creator->timezone->offset;
-            SendSms::dispatch(
+            $this->smsDeliveryService->send(
                 UserRepository::getByUuid($bookableUuid)->phone,
                 __('sms.booking.create', [
                     'player_name' => $creator->getFullName(),
@@ -76,7 +90,7 @@ class CreateBookingService
                     'start_time' => $booking->start_time->addHours($timezoneOffset)->format('H:i'),
                     'end_time' => $booking->end_time->addHours($timezoneOffset)->format('H:i'),
                 ])
-            )->onConnection('redis');
+            );
         }
 
         return ExecResult::instance()

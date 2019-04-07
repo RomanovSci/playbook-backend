@@ -11,6 +11,7 @@ use App\Http\Requests\User\VerifyPhoneFormRequest;
 use App\Jobs\SendSms;
 use App\Models\User;
 use App\Repositories\UserRepository;
+use App\Services\SmsDelivery\SmsDeliveryService;
 use App\Services\User\LoginService;
 use App\Services\User\RegisterService;
 use App\Services\User\ResetPasswordService;
@@ -355,6 +356,7 @@ class UserController extends Controller
 
     /**
      * @param ResendVerificationCodeFormRequest $request
+     * @param SmsDeliveryService $smsDeliveryService
      * @return JsonResponse
      *
      * @OA\Post(
@@ -405,11 +407,13 @@ class UserController extends Controller
      *      )
      * )
      */
-    public function resendVerificationCode(ResendVerificationCodeFormRequest $request)
-    {
+    public function resendVerificationCode(
+        ResendVerificationCodeFormRequest $request,
+        SmsDeliveryService $smsDeliveryService
+    ) {
         /** @var User $user */
         $user = UserRepository::getByPhone($request->get('phone'));
-        SendSms::dispatch($user->phone, $user->verification_code)->onConnection('redis');
+        $smsDeliveryService->send($user->phone, $user->verification_code);
 
         return $this->success(
             app()->environment() === 'production'
