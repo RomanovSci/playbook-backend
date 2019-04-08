@@ -11,6 +11,17 @@ use App\Http\Requests\BaseFormRequest;
 class CreateTrainerInfoFormRequest extends BaseFormRequest
 {
     /**
+     * @inheritDoc
+     */
+    protected function prepareForValidation()
+    {
+        $this->replace(array_merge(
+            $this->all(),
+            ['min_price' => (string) (int) $this->input('min_price')]
+        ));
+    }
+
+    /**
      * @return array
      */
     public function rules(): array
@@ -19,7 +30,7 @@ class CreateTrainerInfoFormRequest extends BaseFormRequest
             'playgrounds' => 'required|array',
             'playgrounds.*' => 'required|uuid|exists:playgrounds,uuid',
             'min_price' => 'required|integer|min:0',
-            'max_price' => 'required|integer',
+            'max_price' => 'required|integer|gte:min_price',
             'currency' => 'required|currency',
             'image' => 'image|max:1024',
         ];
