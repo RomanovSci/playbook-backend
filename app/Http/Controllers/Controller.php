@@ -14,7 +14,7 @@ use Illuminate\Foundation\Auth\Access\AuthorizesRequests;
  *
  * @OA\Info(
  *     title="Playbook API documentation",
- *     version="0.1"
+ *     version="0.0.1"
  * )
  */
 class Controller extends BaseController

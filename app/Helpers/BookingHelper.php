@@ -4,7 +4,7 @@ namespace App\Helpers;
 
 use App\Models\Booking;
 use App\Models\Schedule\MergedSchedule;
-use App\Objects\Service\ExecResult;
+use App\Services\ExecResult;
 use App\Repositories\BookingRepository;
 use Carbon\Carbon;
 

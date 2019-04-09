@@ -6,12 +6,13 @@ use App\Exceptions\Http\ForbiddenHttpException;
 use App\Http\Controllers\Controller;
 use App\Http\Requests\Common\GetFormRequest;
 use App\Http\Requests\Common\SearchFormRequest;
-use App\Http\Requests\Playground\PlaygroundCreateFormRequest;
+use App\Http\Requests\Playground\CreatePlaygroundFormRequest;
 use App\Models\Organization;
 use App\Models\Playground;
 use App\Models\User;
 use App\Repositories\PlaygroundRepository;
 use App\Repositories\PlaygroundTypesRepository;
+use Illuminate\Http\JsonResponse;
 use Illuminate\Support\Facades\Auth;
 
 /**
@@ -22,7 +23,7 @@ class PlaygroundController extends Controller
 {
     /**
      * @param GetFormRequest $request
-     * @return \Illuminate\Http\JsonResponse
+     * @return JsonResponse
      *
      * @OA\Get(
      *      path="/api/playground",
@@ -113,7 +114,7 @@ class PlaygroundController extends Controller
 
     /**
      * @param SearchFormRequest $request
-     * @return \Illuminate\Http\JsonResponse
+     * @return JsonResponse
      *
      * @OA\Get(
      *      path="/api/playground/search",
@@ -190,7 +191,7 @@ class PlaygroundController extends Controller
     }
 
     /**
-     * @param PlaygroundCreateFormRequest $request
+     * @param CreatePlaygroundFormRequest $request
      * @return string
      *
      * @OA\Post(
@@ -295,7 +296,7 @@ class PlaygroundController extends Controller
      *      security={{"Bearer":{}}}
      * )
      */
-    public function create(PlaygroundCreateFormRequest $request)
+    public function create(CreatePlaygroundFormRequest $request)
     {
         /**
          * @var User $user

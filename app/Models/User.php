@@ -2,6 +2,7 @@
 
 namespace App\Models;
 
+use App\Interfaces\BaseStatusInterface;
 use App\Models\Schedule\Schedule;
 use Illuminate\Database\Eloquent\SoftDeletes;
 use Illuminate\Notifications\Notifiable;
@@ -73,6 +74,10 @@ use Spatie\Permission\Traits\HasRoles;
  *                  description="hidden",
  *              ),
  *              @OA\Property(
+ *                  property="status",
+ *                  type="string",
+ *              ),
+ *              @OA\Property(
  *                  property="phone_verified_at",
  *                  type="string",
  *              ),
@@ -85,7 +90,7 @@ use Spatie\Permission\Traits\HasRoles;
  *      }
  * )
  */
-class User extends Authenticatable
+class User extends Authenticatable implements BaseStatusInterface
 {
     use Notifiable, HasApiTokens, HasRoles, SoftDeletes;
 
@@ -123,6 +128,7 @@ class User extends Authenticatable
         'phone',
         'password',
         'verification_code',
+        'status',
     ];
 
     /**
@@ -157,6 +163,17 @@ class User extends Authenticatable
     public function getRouteKeyName()
     {
         return 'uuid';
+    }
+
+    /**
+     * Scope a query to only include active users.
+     *
+     * @param \Illuminate\Database\Eloquent\Builder  $query
+     * @return \Illuminate\Database\Eloquent\Builder
+     */
+    public function scopeActive($query)
+    {
+        return $query->where('status', self::STATUS_ACTIVE);
     }
 
     /**

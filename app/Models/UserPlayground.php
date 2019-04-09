@@ -18,6 +18,11 @@ class UserPlayground extends Model
     /**
      * @var string
      */
+    protected $table = 'users_playgrounds';
+
+    /**
+     * @var string
+     */
     protected $primaryKey = 'uuid';
 
     /**
@@ -32,11 +37,6 @@ class UserPlayground extends Model
         'user_uuid',
         'playground_uuid',
     ];
-
-    /**
-     * @var string
-     */
-    protected $table = 'users_playgrounds';
 
     /**
      * @inheritdoc

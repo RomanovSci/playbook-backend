@@ -54,6 +54,14 @@ class TrainerInfo extends BaseModel
     /**
      * @var array
      */
+    protected $casts = [
+        'min_price' => 'integer',
+        'max_price' => 'integer',
+    ];
+
+    /**
+     * @var array
+     */
     protected $fillable = [
         'user_uuid',
         'about',

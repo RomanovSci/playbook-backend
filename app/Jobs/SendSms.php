@@ -3,7 +3,7 @@
 namespace App\Jobs;
 
 use App\Models\SmsDelivery;
-use App\Services\SmsDeliveryService\SmsDeliveryServiceInterface;
+use App\Services\SmsDelivery\SmsDeliveryInterface;
 use Illuminate\Bus\Queueable;
 use Illuminate\Queue\SerializesModels;
 use Illuminate\Queue\InteractsWithQueue;
@@ -44,10 +44,10 @@ class SendSms implements ShouldQueue
     /**
      * Execute the job.
      *
-     * @param SmsDeliveryServiceInterface $smsDeliveryService
+     * @param SmsDeliveryInterface $smsDeliveryService
      * @return void
      */
-    public function handle(SmsDeliveryServiceInterface $smsDeliveryService)
+    public function handle(SmsDeliveryInterface $smsDeliveryService)
     {
         $data = [
             'phone' => $this->phone,

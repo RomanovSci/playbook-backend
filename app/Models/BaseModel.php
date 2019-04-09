@@ -2,6 +2,7 @@
 
 namespace App\Models;
 
+use App\Interfaces\StatusInterface;
 use Illuminate\Database\Eloquent\Model;
 use Illuminate\Database\Eloquent\SoftDeletes;
 use Ramsey\Uuid\Uuid;
@@ -37,9 +38,6 @@ use Ramsey\Uuid\Uuid;
 abstract class BaseModel extends Model
 {
     use SoftDeletes;
-
-    const STATUS_INACTIVE = 0;
-    const STATUS_ACTIVE = 1;
 
     /**
      * @var string

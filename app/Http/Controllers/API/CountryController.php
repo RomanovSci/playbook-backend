@@ -6,6 +6,7 @@ use App\Http\Controllers\Controller;
 use App\Http\Requests\Common\GetFormRequest;
 use App\Http\Requests\Common\SearchFormRequest;
 use App\Repositories\CountryRepository;
+use Illuminate\Http\JsonResponse;
 
 /**
  * Class CountryController
@@ -15,7 +16,7 @@ class CountryController extends Controller
 {
     /**
      * @param GetFormRequest $request
-     * @return \Illuminate\Http\JsonResponse
+     * @return JsonResponse
      *
      * @OA\Get(
      *      path="/api/country",
@@ -106,7 +107,7 @@ class CountryController extends Controller
 
     /**
      * @param SearchFormRequest $request
-     * @return \Illuminate\Http\JsonResponse
+     * @return JsonResponse
      *
      * @OA\Get(
      *      path="/api/country/search",

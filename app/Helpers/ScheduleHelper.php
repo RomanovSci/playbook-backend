@@ -8,7 +8,7 @@ use App\Models\Playground;
 use App\Models\Schedule\MergedSchedule;
 use App\Models\Schedule\Schedule;
 use App\Models\User;
-use App\Objects\Service\ExecResult;
+use App\Services\ExecResult;
 use App\Repositories\BookingRepository;
 use App\Repositories\ScheduleRepository;
 use Carbon\Carbon;

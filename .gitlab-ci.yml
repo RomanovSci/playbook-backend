@@ -1,0 +1,9 @@
+image: php:7.1
+
+before_script:
+  - bash gitlab-ci-preinstall.sh > /dev/null
+
+test:unit:
+  script:
+    - phpunit --coverage-text --colors=never --configuration phpunit.xml ./tests/Unit
+

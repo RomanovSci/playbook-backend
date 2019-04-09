@@ -13,7 +13,7 @@ class ForbiddenHttpException extends HttpException
     public function __construct(
         string $message = null,
         \Exception $previous = null,
-        array $headers = array(),
+        array $headers = [],
         ?int $code = 0
     ) {
         parent::__construct(403, $message ?? 'Forbidden', $previous, $headers, $code);

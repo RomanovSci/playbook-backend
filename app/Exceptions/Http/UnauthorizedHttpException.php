@@ -14,7 +14,7 @@ class UnauthorizedHttpException extends BaseUnauthorizedHttpException
         string $message = null,
         \Exception $previous = null,
         ?int $code = 0,
-        array $headers = array()
+        array $headers = []
     ) {
         parent::__construct('Bearer', $message ?? 'Unauthorized', $previous, $code, $headers);
     }

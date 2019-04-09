@@ -13,7 +13,7 @@ class LoginFormRequest extends BaseFormRequest
     /**
      * @return array
      */
-    public function rules()
+    public function rules(): array
     {
         return [
             'phone' => 'required|numeric',

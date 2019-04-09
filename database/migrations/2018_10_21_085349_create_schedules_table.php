@@ -19,7 +19,7 @@ class CreateSchedulesTable extends Migration
             $table->string('schedulable_type');
             $table->timestamp('start_time')->nullable();
             $table->timestamp('end_time')->nullable();
-            $table->integer('price_per_hour');
+            $table->unsignedInteger('price_per_hour');
             $table->char('currency', 3)->default('RUB');
             $table->timestamps();
             $table->softDeletes();

@@ -16,15 +16,15 @@ class SchedulePlayground extends BaseModel
     use SoftDeletes;
 
     /**
+     * @var string
+     */
+    protected $table = 'schedules_playgrounds';
+
+    /**
      * @var array
      */
     protected $fillable = [
         'schedule_uuid',
         'playground_uuid'
     ];
-
-    /**
-     * @var string
-     */
-    protected $table = 'schedules_playgrounds';
 }

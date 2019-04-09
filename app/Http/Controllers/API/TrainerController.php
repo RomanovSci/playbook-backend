@@ -5,12 +5,13 @@ namespace App\Http\Controllers\API;
 use App\Exceptions\Http\ForbiddenHttpException;
 use App\Http\Controllers\Controller;
 use App\Http\Requests\Common\GetFormRequest;
-use App\Http\Requests\TrainerInfo\TrainerInfoCreateFormRequest;
-use App\Http\Requests\TrainerInfo\TrainerInfoEditFormRequest;
+use App\Http\Requests\TrainerInfo\CreateTrainerInfoFormRequest;
+use App\Http\Requests\TrainerInfo\EditTrainerInfoFormRequest;
 use App\Models\TrainerInfo;
 use App\Models\User;
 use App\Repositories\UserRepository;
-use App\Services\TrainerService;
+use App\Services\Trainer\CreateInfoService;
+use App\Services\Trainer\EditInfoService;
 use Illuminate\Http\JsonResponse;
 use Illuminate\Support\Facades\Auth;
 
@@ -203,8 +204,9 @@ class TrainerController extends Controller
     }
 
     /**
-     * @param TrainerInfoCreateFormRequest $request
-     * @return \Illuminate\Http\JsonResponse
+     * @param CreateTrainerInfoFormRequest $request
+     * @param CreateInfoService $createInfoService
+     * @return JsonResponse
      * @throws \Throwable
      *
      * @OA\Post(
@@ -308,7 +310,7 @@ class TrainerController extends Controller
      *      security={{"Bearer":{}}}
      * )
      */
-    public function createInfo(TrainerInfoCreateFormRequest $request)
+    public function createInfo(CreateTrainerInfoFormRequest $request, CreateInfoService $createInfoService)
     {
         /** @var User $user */
         $user = Auth::user();
@@ -317,7 +319,7 @@ class TrainerController extends Controller
             return $this->error(__('errors.trainer_info_exists'));
         }
 
-        $createResult = TrainerService::createInfo($user, $request->all());
+        $createResult = $createInfoService->run($user, $request->all());
 
         return $this->success(array_merge($createResult->getData('info')->toArray(), [
             'playgrounds' => $user->playgrounds,
@@ -326,8 +328,9 @@ class TrainerController extends Controller
     }
 
     /**
-     * @param TrainerInfoEditFormRequest $request
+     * @param EditTrainerInfoFormRequest $request
      * @param TrainerInfo $info
+     * @param EditInfoService $editInfoService
      * @return JsonResponse
      * @throws \Throwable
      *
@@ -452,7 +455,7 @@ class TrainerController extends Controller
      *      security={{"Bearer":{}}}
      * )
      */
-    public function editInfo(TrainerInfoEditFormRequest $request, TrainerInfo $info)
+    public function editInfo(EditTrainerInfoFormRequest $request, TrainerInfo $info, EditInfoService $editInfoService)
     {
         /** @var User $user */
         $user = Auth::user();
@@ -461,7 +464,7 @@ class TrainerController extends Controller
             throw new ForbiddenHttpException(__('errors.user_cant_edit_info'));
         }
 
-        $editResult = TrainerService::editInfo($user, $info, $request->all());
+        $editResult = $editInfoService->run($user, $info, $request->all());
         return $this->success(array_merge($editResult->getData('info')->toArray(), [
             'playgrounds' => $user->playgrounds,
             'images' => $editResult->getData('info')->images,

@@ -6,6 +6,7 @@ use App\Http\Controllers\Controller;
 use App\Http\Requests\Common\GetFormRequest;
 use App\Http\Requests\Common\SearchFormRequest;
 use App\Repositories\CityRepository;
+use Illuminate\Http\JsonResponse;
 
 /**
  * Class CityController
@@ -15,7 +16,7 @@ class CityController extends Controller
 {
     /**
      * @param GetFormRequest $request
-     * @return \Illuminate\Http\JsonResponse
+     * @return JsonResponse
      *
      * @OA\Get(
      *      path="/api/city",
@@ -106,7 +107,7 @@ class CityController extends Controller
 
     /**
      * @param SearchFormRequest $request
-     * @return \Illuminate\Http\JsonResponse
+     * @return JsonResponse
      *
      * @OA\Get(
      *      path="/api/city/search",

@@ -13,7 +13,7 @@ class SearchFormRequest extends BaseFormRequest
     /**
      * @return array
      */
-    public function rules()
+    public function rules(): array
     {
         return ['query' => 'required'];
     }

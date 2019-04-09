@@ -4,3 +4,4 @@ command=php /var/www/artisan horizon
 autostart=true
 autorestart=true
 redirect_stderr=true
+startsecs = 0

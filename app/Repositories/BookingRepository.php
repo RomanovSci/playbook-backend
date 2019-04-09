@@ -33,15 +33,20 @@ class BookingRepository
         string $bookableType,
         string $bookableUuid
     ): Collection {
-        return Booking::where('bookable_type', $bookableType)
+        $bookings = Booking::where('bookable_type', $bookableType)
             ->where('bookable_uuid', $bookableUuid)
             ->where('start_time', '>=', $startTime->toDayDateTimeString())
             ->where('end_time', '<=', $endTime->toDayDateTimeString())
-            ->with('playground')
-            ->with('creator')
+            ->with([
+                'playground',
+                'creator',
+                'equipmentRent.equipment'
+            ])
             ->limit($limit)
             ->offset($offset)
             ->get();
+
+        return $bookings;
     }
 
     /**
@@ -64,7 +69,10 @@ class BookingRepository
         return Booking::where('creator_uuid', $user->uuid)
             ->where('start_time', '>=', $startTime->toDayDateTimeString())
             ->where('end_time', '<=', $endTime->toDayDateTimeString())
-            ->with('playground')
+            ->with([
+                'playground',
+                'equipmentRent.equipment'
+            ])
             ->limit($limit)
             ->offset($offset)
             ->get();

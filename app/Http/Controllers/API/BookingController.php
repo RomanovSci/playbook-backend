@@ -3,16 +3,19 @@
 namespace App\Http\Controllers\API;
 
 use App\Exceptions\Http\ForbiddenHttpException;
+use App\Exceptions\Internal\IncorrectDateRange;
 use App\Helpers\BookingHelper;
 use App\Http\Controllers\Controller;
-use App\Http\Requests\Booking\BookingCreateFormRequest;
-use App\Http\Requests\Booking\BookingDeclineFormRequest;
+use App\Http\Requests\Booking\CreateBookingFormRequest;
+use App\Http\Requests\Booking\DeclineBookingFormRequest;
 use App\Http\Requests\Common\TimeIntervalFormRequest;
 use App\Models\Booking;
 use App\Models\User;
 use App\Repositories\BookingRepository;
-use App\Services\BookingService;
+use App\Services\Booking\ChangeBookingStatusService;
+use App\Services\Booking\CreateBookingService;
 use Carbon\Carbon;
+use Illuminate\Http\JsonResponse;
 use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\Gate;
 
@@ -26,7 +29,7 @@ class BookingController extends Controller
      * @param TimeIntervalFormRequest $request
      * @param string $bookableType
      * @param string $uuid
-     * @return \Illuminate\Http\JsonResponse
+     * @return JsonResponse
      *
      * @OA\Get(
      *      path="/api/booking/{type}/{uuid}",
@@ -116,6 +119,50 @@ class BookingController extends Controller
      *                                      ref="#/components/schemas/User"
      *                                  ),
      *                              ),
+     *                              @OA\Schema(
+     *                                  @OA\Property(
+     *                                      property="equipments_rent",
+     *                                      type="array",
+     *                                      @OA\Items(
+     *                                          allOf={
+     *                                              @OA\Schema(
+     *                                                  @OA\Property(
+     *                                                      property="count",
+     *                                                      type="integer",
+     *                                                  ),
+     *                                                  @OA\Property(
+     *                                                      property="equipment",
+     *                                                      type="object",
+     *                                                      allOf={
+     *                                                          @OA\Schema(
+     *                                                              @OA\Property(
+     *                                                                  property="uuid",
+     *                                                                  type="string"
+     *                                                              ),
+     *                                                              @OA\Property(
+     *                                                                  property="name",
+     *                                                                  type="string"
+     *                                                              ),
+     *                                                              @OA\Property(
+     *                                                                  property="price_per_hour",
+     *                                                                  type="integer"
+     *                                                              ),
+     *                                                              @OA\Property(
+     *                                                                  property="currency",
+     *                                                                  type="string"
+     *                                                              ),
+     *                                                              @OA\Property(
+     *                                                                  property="availability",
+     *                                                                  type="integer"
+     *                                                              ),
+     *                                                          )
+     *                                                      }
+     *                                                  ),
+     *                                              )
+     *                                          }
+     *                                      )
+     *                                  ),
+     *                              )
      *                          }
      *                      ),
      *                  ),
@@ -198,7 +245,7 @@ class BookingController extends Controller
 
     /**
      * @param TimeIntervalFormRequest $request
-     * @return \Illuminate\Http\JsonResponse
+     * @return JsonResponse
      *
      * @OA\Get(
      *      path="/api/booking/all",
@@ -265,6 +312,50 @@ class BookingController extends Controller
      *                                      property="playground",
      *                                      type="object",
      *                                      ref="#/components/schemas/Playground"
+     *                                  ),
+     *                              ),
+     *                              @OA\Schema(
+     *                                  @OA\Property(
+     *                                      property="equipments_rent",
+     *                                      type="array",
+     *                                      @OA\Items(
+     *                                          allOf={
+     *                                              @OA\Schema(
+     *                                                  @OA\Property(
+     *                                                      property="count",
+     *                                                      type="integer",
+     *                                                  ),
+     *                                                  @OA\Property(
+     *                                                      property="equipment",
+     *                                                      type="object",
+     *                                                      allOf={
+     *                                                          @OA\Schema(
+     *                                                              @OA\Property(
+     *                                                                  property="uuid",
+     *                                                                  type="string"
+     *                                                              ),
+     *                                                              @OA\Property(
+     *                                                                  property="name",
+     *                                                                  type="string"
+     *                                                              ),
+     *                                                              @OA\Property(
+     *                                                                  property="price_per_hour",
+     *                                                                  type="integer"
+     *                                                              ),
+     *                                                              @OA\Property(
+     *                                                                  property="currency",
+     *                                                                  type="string"
+     *                                                              ),
+     *                                                              @OA\Property(
+     *                                                                  property="availability",
+     *                                                                  type="integer"
+     *                                                              ),
+     *                                                          )
+     *                                                      }
+     *                                                  ),
+     *                                              )
+     *                                          }
+     *                                      )
      *                                  ),
      *                              )
      *                          }
@@ -334,10 +425,10 @@ class BookingController extends Controller
 
     /**
      * @param string $bookableType
-     * @param BookingCreateFormRequest $request
-     * @return \Illuminate\Http\JsonResponse
-     *
-     * @throws \App\Exceptions\Internal\IncorrectDateRange
+     * @param CreateBookingFormRequest $request
+     * @param CreateBookingService $createBookingService
+     * @return JsonResponse
+     * @throws IncorrectDateRange
      *
      * @OA\Post(
      *      path="/api/booking/{type}/create",
@@ -354,13 +445,50 @@ class BookingController extends Controller
      *          @OA\MediaType(
      *              mediaType="application/json",
      *              @OA\Schema(
-     *                  example={
-     *                      "start_time": "2018-05-12 09:00:00",
-     *                      "end_time": "2018-05-12 17:00:00",
-     *                      "note": "Optional",
-     *                      "bookable_uuid": "Trainer or playground uuid",
-     *                      "playground_uuid": "Required if {type} = trainer"
-     *                  }
+     *                  type="object",
+     *                  @OA\Property(
+     *                      property="start_time",
+     *                      type="string",
+     *                  ),
+     *                  @OA\Property(
+     *                      property="end_time",
+     *                      type="string"
+     *                  ),
+     *                  @OA\Property(
+     *                      property="note",
+     *                      type="string"
+     *                  ),
+     *                  @OA\Property(
+     *                      property="bookable_uuid",
+     *                      type="string",
+     *                  ),
+     *                  @OA\Property(
+     *                      property="playground_uuid",
+     *                      type="string",
+     *                  ),
+     *                  @OA\Property(
+     *                      property="players_count",
+     *                      type="integer"
+     *                  ),
+     *                  @OA\Property(
+     *                      property="equipments",
+     *                      type="array",
+     *                      @OA\Items(
+     *                          allOf={
+     *                              @OA\Schema(
+     *                                  type="object",
+     *                                  @OA\Property(
+     *                                      property="uuid",
+     *                                      type="string",
+     *                                  ),
+     *                                  @OA\Property(
+     *                                      property="count",
+     *                                      type="integer"
+     *                                  ),
+     *                              )
+     *                          }
+     *                      )
+     *                  ),
      *              )
      *          )
      *      ),
@@ -380,17 +508,54 @@ class BookingController extends Controller
      *                      type="string",
      *                  ),
      *                  @OA\Property(
-     *                      type="object",
      *                      property="data",
+     *                      type="object",
      *                      allOf={
      *                          @OA\Schema(ref="#/components/schemas/Booking"),
      *                          @OA\Schema(
      *                              @OA\Property(
-     *                                  property="bookable",
-     *                                  type="object",
-     *                                  ref="#/components/schemas/User"
+     *                                  property="equipments_rent",
+     *                                  type="array",
+     *                                  @OA\Items(
+     *                                      allOf={
+     *                                          @OA\Schema(
+     *                                              @OA\Property(
+     *                                                  property="count",
+     *                                                  type="integer",
+     *                                              ),
+     *                                              @OA\Property(
+     *                                                  property="equipment",
+     *                                                  type="object",
+     *                                                  allOf={
+     *                                                      @OA\Schema(
+     *                                                          @OA\Property(
+     *                                                              property="uuid",
+     *                                                              type="string"
+     *                                                          ),
+     *                                                          @OA\Property(
+     *                                                              property="name",
+     *                                                              type="string"
+     *                                                          ),
+     *                                                          @OA\Property(
+     *                                                              property="price_per_hour",
+     *                                                              type="integer"
+     *                                                          ),
+     *                                                          @OA\Property(
+     *                                                              property="currency",
+     *                                                              type="string"
+     *                                                          ),
+     *                                                          @OA\Property(
+     *                                                              property="availability",
+     *                                                              type="integer"
+     *                                                          ),
+     *                                                      )
+     *                                                  }
+     *                                              ),
+     *                                          )
+     *                                      }
+     *                                  )
      *                              ),
-     *                          )
+     *                          ),
      *                      }
      *                  )
      *              )
@@ -452,11 +617,14 @@ class BookingController extends Controller
      *      security={{"Bearer":{}}}
      * )
      */
-    public function create(string $bookableType, BookingCreateFormRequest $request)
-    {
+    public function create(
+        string $bookableType,
+        CreateBookingFormRequest $request,
+        CreateBookingService $createBookingService
+    ) {
         /** @var User $user */
         $user = Auth::user();
-        $result = BookingService::create($user, $bookableType, $request->all());
+        $result = $createBookingService->run($user, $bookableType, $request->all());
 
         if (!$result->getSuccess()) {
             throw new ForbiddenHttpException($result->getMessage());
@@ -467,7 +635,8 @@ class BookingController extends Controller
 
     /**
      * @param Booking $booking
-     * @return \Illuminate\Http\JsonResponse
+     * @param ChangeBookingStatusService $changeBookingStatusService
+     * @return JsonResponse
      *
      * @OA\Post(
      *      path="/api/booking/confirm/{booking_uuid}",
@@ -541,7 +710,7 @@ class BookingController extends Controller
      *      security={{"Bearer":{}}}
      * )
      */
-    public function confirm(Booking $booking)
+    public function confirm(Booking $booking, ChangeBookingStatusService $changeBookingStatusService)
     {
         $checkAvailabilityResult = BookingHelper::timeIsAvailable($booking);
 
@@ -551,7 +720,7 @@ class BookingController extends Controller
             );
         }
 
-        $changeStatusResult = BookingService::changeBookingStatus(
+        $changeStatusResult = $changeBookingStatusService->run(
             $booking,
             Booking::STATUS_CONFIRMED
         );
@@ -565,8 +734,9 @@ class BookingController extends Controller
 
     /**
      * @param Booking $booking
-     * @param BookingDeclineFormRequest $request
-     * @return \Illuminate\Http\JsonResponse
+     * @param DeclineBookingFormRequest $request
+     * @param ChangeBookingStatusService $changeBookingStatusService
+     * @return JsonResponse
      *
      * @OA\Post(
      *      path="/api/booking/decline/{booking_uuid}",
@@ -612,6 +782,11 @@ class BookingController extends Controller
      *                          @OA\Schema(
      *                              @OA\Property(
      *                                  property="bookable",
+     *                                  type="object",
+     *                                  ref="#/components/schemas/User"
+     *                              ),
+     *                              @OA\Property(
+     *                                  property="creator",
      *                                  type="object",
      *                                  ref="#/components/schemas/User"
      *                              ),
@@ -668,13 +843,16 @@ class BookingController extends Controller
      *      security={{"Bearer":{}}}
      * )
      */
-    public function decline(Booking $booking, BookingDeclineFormRequest $request)
-    {
+    public function decline(
+        Booking $booking,
+        DeclineBookingFormRequest $request,
+        ChangeBookingStatusService $changeBookingStatusService
+    ) {
         if (Auth::user()->cant('declineBooking', $booking)) {
             throw new ForbiddenHttpException(__('errors.cant_decline_booking'));
         }
 
-        $changeStatusResult = BookingService::changeBookingStatus(
+        $changeStatusResult = $changeBookingStatusService->run(
             $booking,
             Booking::STATUS_DECLINED,
             $request->post('note')

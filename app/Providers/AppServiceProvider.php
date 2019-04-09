@@ -33,14 +33,14 @@ class AppServiceProvider extends ServiceProvider
          */
         Validator::extend('currency', function ($attribute, $value) {
             return in_array($value, array_keys(config('money')));
-        }, 'Attribute :attribute is invalid currency');
+        }, 'Attribute :attribute is invalid currency.');
 
         /**
          * Bookable exists validation
          */
         Validator::extend('bookable_exists', function ($attribute, $value) {
             return User::where('uuid', $value)->exists() || Playground::where('uuid', $value)->exists();
-        }, 'Bookable does not exists ');
+        }, 'Bookable does not exists.');
     }
 
     /**
