@@ -13,11 +13,20 @@ use App\Models\User;
 | is assigned the "api" middleware group. Enjoy building your API!
 |
 */
+/** User */
 Route::post('/resend_verification_code', 'API\UserController@resendVerificationCode')->name('user.resendVerificationCode');
 Route::post('/reset_password', 'API\UserController@resetPassword')->name('user.resetPassword');
-Route::get('/trainer/list', 'API\TrainerController@getTrainers')->name('trainer.getTrainers');
-Route::get('/trainer/info/{user}', 'API\TrainerController@getTrainerInfo')->name('trainer.getTrainerInfo');
-Route::get('/schedule/{schedulable_type}/{uuid?}', 'API\ScheduleController@get')->name('schedule.get');
+
+/** Schedule */
+Route::prefix('schedule')->group(function () {
+    Route::get('/{schedulable_type}/{uuid?}', 'API\ScheduleController@get')->name('schedule.get');
+});
+
+/** Trainer */
+Route::prefix('trainer')->group(function () {
+    Route::get('/list', 'API\TrainerController@getTrainers')->name('trainer.getTrainers');
+    Route::get('/info/{user}', 'API\TrainerController@getTrainerInfo')->name('trainer.getTrainerInfo');
+});
 
 /** Equipment */
 Route::prefix('equipment')->group(function () {
