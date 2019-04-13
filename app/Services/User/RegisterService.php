@@ -2,7 +2,6 @@
 
 namespace App\Services\User;
 
-use App\Jobs\SendSms;
 use App\Models\User;
 use App\Services\ExecResult;
 use App\Repositories\TimezoneRepository;

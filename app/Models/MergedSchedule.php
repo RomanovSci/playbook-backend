@@ -1,6 +1,6 @@
 <?php
 
-namespace App\Models\Schedule;
+namespace App\Models;
 
 /**
  * Class MergedSchedule

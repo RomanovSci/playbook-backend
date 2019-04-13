@@ -3,7 +3,7 @@
 namespace App\Policies;
 
 use App\Models\Playground;
-use App\Models\Schedule\Schedule;
+use App\Models\Schedule;
 use App\Models\User;
 
 /**

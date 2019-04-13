@@ -5,7 +5,7 @@ namespace App\Providers;
 use App\Models\Booking;
 use App\Models\Organization;
 use App\Models\Playground;
-use App\Models\Schedule\Schedule;
+use App\Models\Schedule;
 use App\Models\TrainerInfo;
 use App\Policies\BookingPolicy;
 use App\Policies\OrganizationPolicy;

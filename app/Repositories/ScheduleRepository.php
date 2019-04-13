@@ -2,8 +2,8 @@
 
 namespace  App\Repositories;
 
-use App\Models\Schedule\MergedSchedule;
-use App\Models\Schedule\Schedule;
+use App\Models\MergedSchedule;
+use App\Models\Schedule;
 use Carbon\Carbon;
 use Illuminate\Database\Eloquent\Collection;
 

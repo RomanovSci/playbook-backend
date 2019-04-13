@@ -2,7 +2,6 @@
 
 namespace App\Models;
 
-use App\Models\Schedule\Schedule;
 use Carbon\Carbon;
 use Illuminate\Database\Eloquent\Relations\MorphTo;
 

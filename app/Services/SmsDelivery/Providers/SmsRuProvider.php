@@ -9,7 +9,7 @@ use App\Services\SmsDelivery\SmsDeliveryInterface;
  * Class SmsRu
  * @package App\Services\SmsDeliveryService
  */
-class SmsRu implements SmsDeliveryInterface
+class SmsRuProvider implements SmsDeliveryInterface
 {
     /**
      * @var string

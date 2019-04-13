@@ -2,7 +2,7 @@
 
 namespace App\Services\SmsDelivery;
 
-use App\Jobs\SendSms;
+use App\Jobs\SendSmsJob;
 use App\Services\ExecResult;
 
 /**
@@ -19,7 +19,7 @@ class SmsDeliveryService implements SmsDeliveryInterface
      */
     public function send(string $phone, string $text): ExecResult
     {
-        SendSms::dispatch($phone, $text)->onConnection('redis');
+        SendSmsJob::dispatch($phone, $text)->onConnection('redis');
         return ExecResult::instance()->setSuccess();
     }
 }

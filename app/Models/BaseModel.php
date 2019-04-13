@@ -2,7 +2,6 @@
 
 namespace App\Models;
 
-use App\Interfaces\StatusInterface;
 use Illuminate\Database\Eloquent\Model;
 use Illuminate\Database\Eloquent\SoftDeletes;
 use Ramsey\Uuid\Uuid;

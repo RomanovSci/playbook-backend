@@ -4,7 +4,7 @@ namespace App\Services\Schedule;
 
 use App\Exceptions\Internal\IncorrectDateRange;
 use App\Helpers\ScheduleHelper;
-use App\Models\Schedule\Schedule;
+use App\Models\Schedule;
 use App\Models\SchedulePlayground;
 use App\Models\User;
 use App\Services\ExecResult;

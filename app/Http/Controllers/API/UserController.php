@@ -8,7 +8,6 @@ use App\Http\Requests\User\RegisterFormRequest;
 use App\Http\Requests\User\ResendVerificationCodeFormRequest;
 use App\Http\Requests\User\ResetPasswordFormRequest;
 use App\Http\Requests\User\VerifyPhoneFormRequest;
-use App\Jobs\SendSms;
 use App\Models\User;
 use App\Repositories\UserRepository;
 use App\Services\SmsDelivery\SmsDeliveryService;
