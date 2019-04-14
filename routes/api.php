@@ -94,14 +94,19 @@ Route::middleware(['role:'
         Route::get('/{bookable_type}/{uuid}', 'API\BookingController@get')->name("booking.get");
     });
 
+    /** Equipment */
+    Route::prefix('equipment')->group(function () {
+        Route::post('/create', 'API\EquipmentController@create')->name('equipment.create');
+    });
+
     /** Playground */
     Route::prefix('playground')->group(function () {
         Route::post('/create', 'API\PlaygroundController@create')->name('playground.create');
     });
 
-    /** Equipment */
-    Route::prefix('equipment')->group(function () {
-        Route::post('/create', 'API\EquipmentController@create')->name('equipment.create');
+    /** Tournament */
+    Route::prefix('tournament')->group(function () {
+        Route::post('/create', 'API\TournamentController@create')->name('tournament.create');
     });
 
     /** Schedule */

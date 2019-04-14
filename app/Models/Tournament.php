@@ -50,6 +50,17 @@ class Tournament extends BaseModel
     ];
 
     /**
+     * @var array
+     */
+    protected $fillable = [
+        'name',
+        'description',
+        'tournament_type_uuid',
+        'creator_uuid',
+        'challonge_id'
+    ];
+
+    /**
      * @var string
      */
     protected $table = 'tournaments';

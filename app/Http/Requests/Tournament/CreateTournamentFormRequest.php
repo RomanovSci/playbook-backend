@@ -16,7 +16,8 @@ class CreateTournamentFormRequest extends BaseFormRequest
     public function rules(): array
     {
         return [
-            'name' => 'required|max:255',
+            'name' => 'required|string|max:255',
+            'description' => 'string|max:255',
             'tournament_type_uuid' => 'required|uuid|exists:tournaments_types,uuid',
         ];
     }

@@ -42,23 +42,16 @@ class ChallongeAPI
      */
     public $result = false;
 
-    /*
-      Class Constructor
-      $api_key - String
-    */
-    public function __construct($api_key = '')
-    {
-        $this->api_key = $api_key;
-    }
-
     /**
      * @param string $path
      * @param array $params
      * @param string $method
-     * @return \SimpleXMLElement|bool
+     * @return array
      */
     public function makeCall($path = '', $params = [], $method = 'get')
     {
+        $this->api_key = env('CHALLONGE_API_KEY', '');
+
         // Clear the public vars
         $this->errors = [];
         $this->status_code = 0;
@@ -68,7 +61,7 @@ class ChallongeAPI
         $params['api_key'] = $this->api_key;
 
         // Build the URL that'll be hit. If the request is GET, params will be appended later
-        $call_url = "https://api.challonge.com/v1/" . $path . '.xml';
+        $call_url = "https://api.challonge.com/v1/" . $path . '.json';
 
         $curl_handle = curl_init();
         // Common settings
@@ -91,14 +84,12 @@ class ChallongeAPI
                 curl_setopt($curl_handle, CURLOPT_POST, 1);
                 curl_setopt($curl_handle, CURLOPT_POSTFIELDS, $fields);
                 break;
-
             case 'put':
                 $fields = http_build_query($params, '', '&');
                 $curlheaders[] = 'Content-Length: ' . strlen($fields);
                 curl_setopt($curl_handle, CURLOPT_CUSTOMREQUEST, "PUT");
                 curl_setopt($curl_handle, CURLOPT_POSTFIELDS, $fields);
                 break;
-
             case 'delete':
                 $params["_method"] = "delete";
                 $fields = http_build_query($params, '', '&');
@@ -107,7 +98,6 @@ class ChallongeAPI
                 curl_setopt($curl_handle, CURLOPT_POSTFIELDS, $fields);
                 // curl_setopt($curl_handle, CURLOPT_CUSTOMREQUEST, "DELETE");
                 break;
-
             case "get":
             default:
                 $call_url .= "?" . http_build_query($params, "", "&");
@@ -118,49 +108,41 @@ class ChallongeAPI
 
         $curl_result = curl_exec($curl_handle);
         $info = curl_getinfo($curl_handle);
-        $this->status_code = (int)$info['http_code'];
-        $return = false;
+        $this->status_code = (int) $info['http_code'];
 
         if ($curl_result === false) {
             // CURL Failed
             $this->errors[] = curl_error($curl_handle);
         } else {
             switch ($this->status_code) {
-
                 case 401: // Bad API Key
                 case 422: // Validation errors
                 case 404: // Not found/Not in scope of account
-                    $return = $this->result = new \SimpleXMLElement($curl_result);
-                    foreach ($return->error as $error) {
-                        $this->errors[] = $error;
-                    }
-                    $return = false;
+                    $this->errors = json_decode($curl_result)->errors;
                     break;
                 case 500: // Oh snap!
-                    $return = $this->result = false;
                     $this->errors[] = "Server returned HTTP 500";
                     break;
                 case 200:
-                    $return = $this->result = new \SimpleXMLElement($curl_result);
-                    // Check if the result set is nil/empty
-                    if (sizeof($return) == 0) {
-                        $this->errors[] = "Result set empty";
-                        $return = false;
-                    }
+                    $this->result = json_decode($curl_result);
                     break;
                 default:
                     $this->errors[] = "Server returned unexpected HTTP Code ($this->status_code)";
-                    $return = false;
             }
         }
 
         curl_close($curl_handle);
-        return $return;
+
+        return [
+            'status_code' => $this->status_code,
+            'errors' => $this->errors,
+            'data' => $this->result ?? null,
+        ];
     }
 
     /**
      * @param array $params
-     * @return bool|\SimpleXMLElement
+     * @return array
      */
     public function getTournaments($params = [])
     {
@@ -170,7 +152,7 @@ class ChallongeAPI
     /**
      * @param $tournament_id
      * @param array $params
-     * @return bool|\SimpleXMLElement
+     * @return array
      */
     public function getTournament($tournament_id, $params = [])
     {
@@ -179,22 +161,17 @@ class ChallongeAPI
 
     /**
      * @param array $params
-     * @return bool|\SimpleXMLElement
+     * @return array
      */
-    public function createTournament($params = [])
+    public function createTournament(array $params)
     {
-        if (sizeof($params) == 0) {
-            $this->errors = ['$params empty'];
-            return false;
-        }
-
         return $this->makeCall("tournaments", $params, "post");
     }
 
     /**
      * @param $tournament_id
      * @param array $params
-     * @return bool|\SimpleXMLElement
+     * @return array
      */
     public function updateTournament($tournament_id, $params = [])
     {
@@ -203,7 +180,7 @@ class ChallongeAPI
 
     /**
      * @param $tournament_id
-     * @return bool|\SimpleXMLElement
+     * @return array
      */
     public function deleteTournament($tournament_id)
     {
@@ -213,7 +190,7 @@ class ChallongeAPI
     /**
      * @param $tournament_id
      * @param array $params
-     * @return bool|\SimpleXMLElement
+     * @return array
      */
     public function publishTournament($tournament_id, $params = [])
     {
@@ -223,7 +200,7 @@ class ChallongeAPI
     /**
      * @param $tournament_id
      * @param array $params
-     * @return bool|\SimpleXMLElement
+     * @return array
      */
     public function startTournament($tournament_id, $params = [])
     {
@@ -233,7 +210,7 @@ class ChallongeAPI
     /**
      * @param $tournament_id
      * @param array $params
-     * @return bool|\SimpleXMLElement
+     * @return array
      */
     public function resetTournament($tournament_id, $params = [])
     {
@@ -242,7 +219,7 @@ class ChallongeAPI
 
     /**
      * @param $tournament_id
-     * @return bool|\SimpleXMLElement
+     * @return array
      */
     public function getParticipants($tournament_id)
     {
@@ -253,7 +230,7 @@ class ChallongeAPI
      * @param $tournament_id
      * @param $participant_id
      * @param array $params
-     * @return bool|\SimpleXMLElement
+     * @return array
      */
     public function getParticipant($tournament_id, $participant_id, $params = [])
     {
@@ -263,15 +240,10 @@ class ChallongeAPI
     /**
      * @param $tournament_id
      * @param array $params
-     * @return bool|\SimpleXMLElement
+     * @return array
      */
-    public function createParticipant($tournament_id, $params = [])
+    public function createParticipant($tournament_id, array $params)
     {
-        if (sizeof($params) == 0) {
-            $this->errors = ['$params empty'];
-            return false;
-        }
-
         return $this->makeCall("tournaments/$tournament_id/participants", $params, "post");
     }
 
@@ -279,7 +251,7 @@ class ChallongeAPI
      * @param $tournament_id
      * @param $participant_id
      * @param array $params
-     * @return bool|\SimpleXMLElement
+     * @return array
      */
     public function updateParticipant($tournament_id, $participant_id, $params = [])
     {
@@ -289,7 +261,7 @@ class ChallongeAPI
     /**
      * @param $tournament_id
      * @param $participant_id
-     * @return bool|\SimpleXMLElement
+     * @return array
      */
     public function deleteParticipant($tournament_id, $participant_id)
     {
@@ -298,7 +270,7 @@ class ChallongeAPI
 
     /**
      * @param $tournament_id
-     * @return bool|\SimpleXMLElement
+     * @return array
      */
     public function randomizeParticipants($tournament_id)
     {
@@ -308,7 +280,7 @@ class ChallongeAPI
     /**
      * @param $tournament_id
      * @param array $params
-     * @return bool|\SimpleXMLElement
+     * @return array
      */
     public function getMatches($tournament_id, $params = [])
     {
@@ -318,7 +290,7 @@ class ChallongeAPI
     /**
      * @param $tournament_id
      * @param $match_id
-     * @return bool|\SimpleXMLElement
+     * @return array
      */
     public function getMatch($tournament_id, $match_id)
     {
@@ -329,15 +301,10 @@ class ChallongeAPI
      * @param $tournament_id
      * @param $match_id
      * @param array $params
-     * @return bool|\SimpleXMLElement
+     * @return array
      */
-    public function updateMatch($tournament_id, $match_id, $params = [])
+    public function updateMatch($tournament_id, $match_id, array $params)
     {
-        if (sizeof($params) == 0) {
-            $this->errors = ['$params empty'];
-            return false;
-        }
-
         return $this->makeCall("tournaments/$tournament_id/matches/$match_id", $params, "put");
     }
 }
