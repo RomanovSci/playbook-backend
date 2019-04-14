@@ -4,6 +4,7 @@ namespace App\Http\Controllers\API;
 
 use App\Http\Controllers\Controller;
 use App\Http\Requests\Tournament\CreateTournamentFormRequest;
+use App\Repositories\TournamentTypeRepository;
 use App\Services\Tournament\CreateTournamentService;
 use Illuminate\Http\JsonResponse;
 
@@ -13,6 +14,70 @@ use Illuminate\Http\JsonResponse;
  */
 class TournamentController extends Controller
 {
+    /**
+     * @return JsonResponse
+     *
+     * @OA\Get(
+     *      path="/api/tournament/types",
+     *      tags={"Tournament"},
+     *      summary="Get tournament types",
+     *      @OA\Response(
+     *          response="200",
+     *          description="Success",
+     *          @OA\MediaType(
+     *              mediaType="application/json",
+     *              @OA\Schema(
+     *                  type="object",
+     *                  @OA\Property(
+     *                      property="success",
+     *                      type="boolean"
+     *                  ),
+     *                  @OA\Property(
+     *                      property="message",
+     *                      type="string",
+     *                  ),
+     *                  @OA\Property(
+     *                      type="array",
+     *                      property="data",
+     *                      @OA\Items(ref="#/components/schemas/TournamentType")
+     *                  )
+     *              )
+     *         )
+     *      ),
+     *      @OA\Response(
+     *          response="401",
+     *          description="Unauthorized",
+     *          @OA\MediaType(
+     *              mediaType="application/json",
+     *              @OA\Schema(
+     *                  example={
+     *                      "success": false,
+     *                      "message": "Unauthorized"
+     *                  },
+     *              )
+     *          )
+     *      ),
+     *      @OA\Response(
+     *          response="403",
+     *          description="Forbidden",
+     *          @OA\MediaType(
+     *              mediaType="application/json",
+     *              @OA\Schema(
+     *                  example={
+     *                      "success": false,
+     *                      "message": "Forbidden"
+     *                  },
+     *              )
+     *          )
+     *      ),
+     *      security={{"Bearer":{}}}
+     * )
+     */
+    public function types()
+    {
+        return $this->success(TournamentTypeRepository::all());
+    }
+
     /**
      * @param CreateTournamentFormRequest $request
      * @param CreateTournamentService $createTournamentService

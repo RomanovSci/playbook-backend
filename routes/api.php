@@ -106,6 +106,7 @@ Route::middleware(['role:'
 
     /** Tournament */
     Route::prefix('tournament')->group(function () {
+        Route::get('/types', 'API\TournamentController@types')->name('tournament.types');
         Route::post('/create', 'API\TournamentController@create')->name('tournament.create');
     });
 
