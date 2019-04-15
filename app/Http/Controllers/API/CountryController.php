@@ -114,6 +114,20 @@ class CountryController extends Controller
      *      tags={"Country"},
      *      summary="Search countries",
      *      @OA\Parameter(
+     *          name="limit",
+     *          description="Limit",
+     *          in="query",
+     *          required=true,
+     *          @OA\Schema(type="integer")
+     *      ),
+     *      @OA\Parameter(
+     *          name="offset",
+     *          description="Offset",
+     *          in="query",
+     *          required=true,
+     *          @OA\Schema(type="integer")
+     *      ),
+     *      @OA\Parameter(
      *          name="query",
      *          description="Search string",
      *          in="query",
@@ -179,7 +193,7 @@ class CountryController extends Controller
      */
     public function search(SearchFormRequest $request)
     {
-        $cities = CountryRepository::search($request->get('query'));
+        $cities = CountryRepository::search($request->all());
         return $this->success($cities);
     }
 }

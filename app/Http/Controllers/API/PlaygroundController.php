@@ -121,6 +121,20 @@ class PlaygroundController extends Controller
      *      tags={"Playground"},
      *      summary="Search by playground name",
      *      @OA\Parameter(
+     *          name="limit",
+     *          description="Limit",
+     *          in="query",
+     *          required=true,
+     *          @OA\Schema(type="integer")
+     *      ),
+     *      @OA\Parameter(
+     *          name="offset",
+     *          description="Offset",
+     *          in="query",
+     *          required=true,
+     *          @OA\Schema(type="integer")
+     *      ),
+     *      @OA\Parameter(
      *          name="query",
      *          description="Search string",
      *          in="query",
@@ -186,7 +200,7 @@ class PlaygroundController extends Controller
      */
     public function search(SearchFormRequest $request)
     {
-        $playgrounds = PlaygroundRepository::search($request->get('query'));
+        $playgrounds = PlaygroundRepository::search($request->all());
         return $this->success($playgrounds);
     }
 

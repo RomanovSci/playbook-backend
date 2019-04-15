@@ -18,20 +18,31 @@ class PlaygroundRepository
      */
     public static function get(int $limit, int $offset): Collection
     {
-        return Playground::limit($limit)->offset($offset)->get();
+        return self::query($limit, $offset)->get();
     }
 
     /**
      * Search playgrounds
      *
-     * @param string $query
+     * @param array $data
      * @return Collection
      */
-    public static function search(string $query): Collection
+    public static function search(array $data): Collection
     {
-        return Playground::where('name', 'ilike', "%$query%")
-            ->orWhere('description', 'ilike', "%$query%")
-            ->orWhere('address', 'ilike', "%$query%")
+        return self::query($data['limit'], $data['offset'])
+            ->where('name', 'ilike', '%' . $data['query'] . '%')
+            ->orWhere('description', 'ilike', '%' . $data['query'] . '%')
+            ->orWhere('address', 'ilike', '%' . $data['query'] . '%')
             ->get();
+    }
+
+    /**
+     * @param int $limit
+     * @param int $offset
+     * @return mixed
+     */
+    protected static function query(int $limit, int $offset)
+    {
+        return Playground::limit($limit)->offset($offset);
     }
 }
