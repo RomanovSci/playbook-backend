@@ -400,16 +400,17 @@ class BookingController extends Controller
      *              mediaType="application/json",
      *              @OA\Schema(
      *                  type="object",
+     *                  required={
+     *                      "start_time",
+     *                      "end_time",
+     *                      "bookable_uuid",
+     *                  },
      *                  @OA\Property(
      *                      property="start_time",
      *                      type="string",
      *                  ),
      *                  @OA\Property(
      *                      property="end_time",
-     *                      type="string"
-     *                  ),
-     *                  @OA\Property(
-     *                      property="note",
      *                      type="string"
      *                  ),
      *                  @OA\Property(
@@ -431,6 +432,10 @@ class BookingController extends Controller
      *                          allOf={
      *                              @OA\Schema(
      *                                  type="object",
+     *                                  required={
+     *                                      "uuid",
+     *                                      "count",
+     *                                  },
      *                                  @OA\Property(
      *                                      property="uuid",
      *                                      type="string",
@@ -707,9 +712,17 @@ class BookingController extends Controller
      *          @OA\MediaType(
      *              mediaType="application/json",
      *              @OA\Schema(
+     *                  type="object",
+     *                  required={
+     *                      "note",
+     *                  },
      *                  example={
-     *                      "note": "Booking note",
-     *                  }
+     *                      "note": "Decline reason",
+     *                  },
+     *                  @OA\Property(
+     *                      property="note",
+     *                      type="string",
+     *                  ),
      *              )
      *          )
      *      ),
