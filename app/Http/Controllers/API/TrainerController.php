@@ -32,14 +32,14 @@ class TrainerController extends Controller
      *      @OA\Parameter(
      *          name="limit",
      *          description="Limit",
-     *          in="path",
+     *          in="query",
      *          required=true,
      *          @OA\Schema(type="integer"),
      *      ),
      *      @OA\Parameter(
      *          name="offset",
      *          description="Offset",
-     *          in="path",
+     *          in="query",
      *          required=true,
      *          @OA\Schema(type="integer"),
      *      ),
