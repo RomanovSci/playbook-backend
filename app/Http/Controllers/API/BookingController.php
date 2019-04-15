@@ -254,14 +254,14 @@ class BookingController extends Controller
      *      @OA\Parameter(
      *          name="limit",
      *          description="Records limit. Max: 100",
-     *          in="path",
+     *          in="query",
      *          required=true,
      *          @OA\Schema(type="integer")
      *      ),
      *      @OA\Parameter(
      *          name="offset",
      *          description="Offset",
-     *          in="path",
+     *          in="query",
      *          required=true,
      *          @OA\Schema(type="integer")
      *      ),
