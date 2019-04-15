@@ -133,30 +133,7 @@ class BookingController extends Controller
      *                                                  @OA\Property(
      *                                                      property="equipment",
      *                                                      type="object",
-     *                                                      allOf={
-     *                                                          @OA\Schema(
-     *                                                              @OA\Property(
-     *                                                                  property="uuid",
-     *                                                                  type="string"
-     *                                                              ),
-     *                                                              @OA\Property(
-     *                                                                  property="name",
-     *                                                                  type="string"
-     *                                                              ),
-     *                                                              @OA\Property(
-     *                                                                  property="price_per_hour",
-     *                                                                  type="integer"
-     *                                                              ),
-     *                                                              @OA\Property(
-     *                                                                  property="currency",
-     *                                                                  type="string"
-     *                                                              ),
-     *                                                              @OA\Property(
-     *                                                                  property="availability",
-     *                                                                  type="integer"
-     *                                                              ),
-     *                                                          )
-     *                                                      }
+     *                                                      ref="#/components/schemas/Equipment"
      *                                                  ),
      *                                              )
      *                                          }
@@ -328,30 +305,7 @@ class BookingController extends Controller
      *                                                  @OA\Property(
      *                                                      property="equipment",
      *                                                      type="object",
-     *                                                      allOf={
-     *                                                          @OA\Schema(
-     *                                                              @OA\Property(
-     *                                                                  property="uuid",
-     *                                                                  type="string"
-     *                                                              ),
-     *                                                              @OA\Property(
-     *                                                                  property="name",
-     *                                                                  type="string"
-     *                                                              ),
-     *                                                              @OA\Property(
-     *                                                                  property="price_per_hour",
-     *                                                                  type="integer"
-     *                                                              ),
-     *                                                              @OA\Property(
-     *                                                                  property="currency",
-     *                                                                  type="string"
-     *                                                              ),
-     *                                                              @OA\Property(
-     *                                                                  property="availability",
-     *                                                                  type="integer"
-     *                                                              ),
-     *                                                          )
-     *                                                      }
+     *                                                      ref="#/components/schemas/Equipment"
      *                                                  ),
      *                                              )
      *                                          }
