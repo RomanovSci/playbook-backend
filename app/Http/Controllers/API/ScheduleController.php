@@ -206,12 +206,61 @@ class ScheduleController extends Controller
      *          @OA\MediaType(
      *              mediaType="application/json",
      *              @OA\Schema(
+     *                  type="object",
+     *                  required={
+     *                      "dates",
+     *                      "price_per_hour",
+     *                      "currency",
+     *                      "playgrounds",
+     *                  },
      *                  example={
-     *                      "dates": "[{start_time: 2018-05-12 17:00:00, end_time: 2018-05-12 19:00:00}]",
+     *                      "dates": {{
+     *                          "start_time": "2019-01-01 00:00:00",
+     *                          "end_time": "2019-01-01 01:00:00",
+     *                      }},
      *                      "price_per_hour": "7000",
      *                      "currency": "USD",
-     *                      "playgrounds": "Playgrounds uuids. If type=playground, array should contains only 1 uuid"
-     *                  }
+     *                      "playgrounds": {
+     *                          "0000000-1111-2222-3333-444444444444",
+     *                          "Playgrounds uuids. If type=playground, array should contains only 1 uuid"
+     *                      }
+     *                  },
+     *                  @OA\Property(
+     *                      property="dates",
+     *                      type="array",
+     *                      @OA\Items(
+     *                          allOf={
+     *                              @OA\Schema(
+     *                                  type="object",
+     *                                  required={
+     *                                      "start_time",
+     *                                      "end_time",
+     *                                  },
+     *                                  @OA\Property(
+     *                                      property="start_time",
+     *                                      type="string",
+     *                                  ),
+     *                                  @OA\Property(
+     *                                      property="end_time",
+     *                                      type="string"
+     *                                  ),
+     *                              )
+     *                          }
+     *                      )
+     *                  ),
+     *                  @OA\Property(
+     *                      property="price_per_hour",
+     *                      type="integer",
+     *                  ),
+     *                  @OA\Property(
+     *                      property="currency",
+     *                      type="string"
+     *                  ),
+     *                  @OA\Property(
+     *                      property="playgrounds",
+     *                      type="array",
+     *                      @OA\Items()
+     *                  ),
      *              )
      *          )
      *      ),
@@ -350,13 +399,42 @@ class ScheduleController extends Controller
      *          @OA\MediaType(
      *              mediaType="application/json",
      *              @OA\Schema(
+     *                  type="object",
+     *                  required={
+     *                      "start_time",
+     *                      "end_time",
+     *                      "price_per_hour",
+     *                      "currency",
+     *                      "playgrounds",
+     *                  },
      *                  example={
-     *                      "start_time": "2018-01-01 09:00:00",
-     *                      "end_time": "2018-01-01 17:00:00",
+     *                      "start_time": "2019-01-01 00:00:00",
+     *                      "end_time": "2019-01-01 01:00:00",
      *                      "price_per_hour": "7000",
      *                      "currency": "USD",
-     *                      "playgrounds": "Playgrounds uuids."
-     *                  }
+     *                      "playgrounds": {"0000000-1111-2222-3333-444444444444"}
+     *                  },
+     *                  @OA\Property(
+     *                      property="start_time",
+     *                      type="string",
+     *                  ),
+     *                  @OA\Property(
+     *                      property="end_time",
+     *                      type="string",
+     *                  ),
+     *                  @OA\Property(
+     *                      property="price_per_hour",
+     *                      type="integer",
+     *                  ),
+     *                  @OA\Property(
+     *                      property="currency",
+     *                      type="string",
+     *                  ),
+     *                  @OA\Property(
+     *                      property="playgrounds",
+     *                      type="array",
+     *                      @OA\Items()
+     *                  ),
      *              )
      *          )
      *      ),

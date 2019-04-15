@@ -405,6 +405,17 @@ class BookingController extends Controller
      *                      "end_time",
      *                      "bookable_uuid",
      *                  },
+     *                  example={
+     *                      "start_time": "2019-01-01 00:00:00",
+     *                      "end_time": "2019-01-01 01:00:00",
+     *                      "bookable_uuid": "0000000-1111-2222-3333-444444444444",
+     *                      "playground_uuid": "0000000-1111-2222-3333-444444444444",
+     *                      "players_count": "1",
+     *                      "equipments": {{
+     *                          "uuid": "0000000-1111-2222-3333-444444444444",
+     *                          "count": "1",
+     *                      }}
+     *                  },
      *                  @OA\Property(
      *                      property="start_time",
      *                      type="string",

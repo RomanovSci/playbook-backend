@@ -119,10 +119,23 @@ class OrganizationController extends Controller
      *          @OA\MediaType(
      *              mediaType="application/json",
      *              @OA\Schema(
+     *                  type="object",
+     *                  required={
+     *                      "name",
+     *                      "city_uuid",
+     *                  },
      *                  example={
      *                      "name": "Organization name",
-     *                      "city_uuid": "City uuid",
-     *                  }
+     *                      "city_uuid": "0000000-1111-2222-3333-444444444444",
+     *                  },
+     *                  @OA\Property(
+     *                      property="name",
+     *                      type="string"
+     *                  ),
+     *                  @OA\Property(
+     *                      property="city_uuid",
+     *                      type="string"
+     *                  ),
      *              )
      *          )
      *      ),
