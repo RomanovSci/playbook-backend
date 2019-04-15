@@ -3,6 +3,8 @@
 namespace App\Models;
 
 use Carbon\Carbon;
+use Illuminate\Database\Eloquent\Relations\BelongsTo;
+use Illuminate\Database\Eloquent\Relations\HasMany;
 use Illuminate\Database\Eloquent\Relations\MorphTo;
 
 /**
@@ -148,7 +150,7 @@ class Booking extends BaseModel
     /**
      * Creator entity
      *
-     * @return \Illuminate\Database\Eloquent\Relations\BelongsTo
+     * @return BelongsTo
      */
     public function creator()
     {
@@ -158,7 +160,7 @@ class Booking extends BaseModel
     /**
      * Playground entity
      *
-     * @return \Illuminate\Database\Eloquent\Relations\BelongsTo
+     * @return BelongsTo
      */
     public function playground()
     {
@@ -166,9 +168,9 @@ class Booking extends BaseModel
     }
 
     /**
-     * @return \Illuminate\Database\Eloquent\Relations\HasMany
+     * @return HasMany
      */
-    public function equipmentRent()
+    public function equipmentsRent()
     {
         return $this->hasMany(EquipmentRent::class);
     }

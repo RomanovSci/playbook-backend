@@ -40,7 +40,7 @@ class BookingRepository
             ->with([
                 'playground',
                 'creator',
-                'equipmentRent.equipment'
+                'equipmentsRent.equipment'
             ])
             ->limit($limit)
             ->offset($offset)
@@ -71,7 +71,7 @@ class BookingRepository
             ->where('end_time', '<=', $endTime->toDayDateTimeString())
             ->with([
                 'playground',
-                'equipmentRent.equipment'
+                'equipmentsRent.equipment',
             ])
             ->limit($limit)
             ->offset($offset)

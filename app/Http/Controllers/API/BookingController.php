@@ -52,14 +52,14 @@ class BookingController extends Controller
      *      @OA\Parameter(
      *          name="limit",
      *          description="Records limit. Max: 100",
-     *          in="path",
+     *          in="query",
      *          required=true,
      *          @OA\Schema(type="integer")
      *      ),
      *      @OA\Parameter(
      *          name="offset",
      *          description="Offset",
-     *          in="path",
+     *          in="query",
      *          required=true,
      *          @OA\Schema(type="integer")
      *      ),
@@ -133,30 +133,7 @@ class BookingController extends Controller
      *                                                  @OA\Property(
      *                                                      property="equipment",
      *                                                      type="object",
-     *                                                      allOf={
-     *                                                          @OA\Schema(
-     *                                                              @OA\Property(
-     *                                                                  property="uuid",
-     *                                                                  type="string"
-     *                                                              ),
-     *                                                              @OA\Property(
-     *                                                                  property="name",
-     *                                                                  type="string"
-     *                                                              ),
-     *                                                              @OA\Property(
-     *                                                                  property="price_per_hour",
-     *                                                                  type="integer"
-     *                                                              ),
-     *                                                              @OA\Property(
-     *                                                                  property="currency",
-     *                                                                  type="string"
-     *                                                              ),
-     *                                                              @OA\Property(
-     *                                                                  property="availability",
-     *                                                                  type="integer"
-     *                                                              ),
-     *                                                          )
-     *                                                      }
+     *                                                      ref="#/components/schemas/Equipment"
      *                                                  ),
      *                                              )
      *                                          }
@@ -254,14 +231,14 @@ class BookingController extends Controller
      *      @OA\Parameter(
      *          name="limit",
      *          description="Records limit. Max: 100",
-     *          in="path",
+     *          in="query",
      *          required=true,
      *          @OA\Schema(type="integer")
      *      ),
      *      @OA\Parameter(
      *          name="offset",
      *          description="Offset",
-     *          in="path",
+     *          in="query",
      *          required=true,
      *          @OA\Schema(type="integer")
      *      ),
@@ -328,30 +305,7 @@ class BookingController extends Controller
      *                                                  @OA\Property(
      *                                                      property="equipment",
      *                                                      type="object",
-     *                                                      allOf={
-     *                                                          @OA\Schema(
-     *                                                              @OA\Property(
-     *                                                                  property="uuid",
-     *                                                                  type="string"
-     *                                                              ),
-     *                                                              @OA\Property(
-     *                                                                  property="name",
-     *                                                                  type="string"
-     *                                                              ),
-     *                                                              @OA\Property(
-     *                                                                  property="price_per_hour",
-     *                                                                  type="integer"
-     *                                                              ),
-     *                                                              @OA\Property(
-     *                                                                  property="currency",
-     *                                                                  type="string"
-     *                                                              ),
-     *                                                              @OA\Property(
-     *                                                                  property="availability",
-     *                                                                  type="integer"
-     *                                                              ),
-     *                                                          )
-     *                                                      }
+     *                                                      ref="#/components/schemas/Equipment"
      *                                                  ),
      *                                              )
      *                                          }
@@ -446,16 +400,28 @@ class BookingController extends Controller
      *              mediaType="application/json",
      *              @OA\Schema(
      *                  type="object",
+     *                  required={
+     *                      "start_time",
+     *                      "end_time",
+     *                      "bookable_uuid",
+     *                  },
+     *                  example={
+     *                      "start_time": "2019-01-01 00:00:00",
+     *                      "end_time": "2019-01-01 01:00:00",
+     *                      "bookable_uuid": "0000000-1111-2222-3333-444444444444",
+     *                      "playground_uuid": "0000000-1111-2222-3333-444444444444",
+     *                      "players_count": "1",
+     *                      "equipments": {{
+     *                          "uuid": "0000000-1111-2222-3333-444444444444",
+     *                          "count": "1",
+     *                      }}
+     *                  },
      *                  @OA\Property(
      *                      property="start_time",
      *                      type="string",
      *                  ),
      *                  @OA\Property(
      *                      property="end_time",
-     *                      type="string"
-     *                  ),
-     *                  @OA\Property(
-     *                      property="note",
      *                      type="string"
      *                  ),
      *                  @OA\Property(
@@ -477,6 +443,10 @@ class BookingController extends Controller
      *                          allOf={
      *                              @OA\Schema(
      *                                  type="object",
+     *                                  required={
+     *                                      "uuid",
+     *                                      "count",
+     *                                  },
      *                                  @OA\Property(
      *                                      property="uuid",
      *                                      type="string",
@@ -753,9 +723,17 @@ class BookingController extends Controller
      *          @OA\MediaType(
      *              mediaType="application/json",
      *              @OA\Schema(
+     *                  type="object",
+     *                  required={
+     *                      "note",
+     *                  },
      *                  example={
-     *                      "note": "Booking note",
-     *                  }
+     *                      "note": "Decline reason",
+     *                  },
+     *                  @OA\Property(
+     *                      property="note",
+     *                      type="string",
+     *                  ),
      *              )
      *          )
      *      ),

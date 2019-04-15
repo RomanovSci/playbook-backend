@@ -39,15 +39,50 @@ class UserController extends Controller
      *          @OA\MediaType(
      *              mediaType="application/json",
      *              @OA\Schema(
+     *                  type="object",
+     *                  required={
+     *                      "first_name",
+     *                      "last_name",
+     *                      "phone",
+     *                      "is_trainer"
+     *                  },
      *                  example={
-     *                      "first_name": "First",
-     *                      "last_name": "Last",
-     *                      "middle_name": "Middle",
-     *                      "phone": "380123456789",
-     *                      "password": "User password",
-     *                      "c_password": "User password confirm",
-     *                      "is_trainer": "Boolean flag (0 or 1)"
-     *                  }
+     *                      "first_name": "First name",
+     *                      "last_name": "Last name",
+     *                      "middle_name": "Middle name",
+     *                      "phone": "123456789",
+     *                      "password": "1111",
+     *                      "c_password": "1111",
+     *                      "is_trainer": "1",
+     *                  },
+     *                  @OA\Property(
+     *                      property="first_name",
+     *                      type="string",
+     *                  ),
+     *                  @OA\Property(
+     *                      property="last_name",
+     *                      type="string"
+     *                  ),
+     *                  @OA\Property(
+     *                      property="middle_name",
+     *                      type="string"
+     *                  ),
+     *                  @OA\Property(
+     *                      property="phone",
+     *                      type="string",
+     *                  ),
+     *                  @OA\Property(
+     *                      property="password",
+     *                      type="string",
+     *                  ),
+     *                  @OA\Property(
+     *                      property="c_password",
+     *                      type="string"
+     *                  ),
+     *                  @OA\Property(
+     *                      property="is_trainer",
+     *                      type="boolean"
+     *                  ),
      *              )
      *         )
      *     ),
@@ -147,10 +182,23 @@ class UserController extends Controller
      *          @OA\MediaType(
      *              mediaType="application/json",
      *              @OA\Schema(
+     *                  type="object",
+     *                  required={
+     *                      "phone",
+     *                      "password"
+     *                  },
      *                  example={
-     *                      "phone": "380123456789",
-     *                      "password": "User password",
-     *                  }
+     *                      "phone": "1234567890",
+     *                      "password": "1111"
+     *                  },
+     *                  @OA\Property(
+     *                      property="phone",
+     *                      type="string",
+     *                  ),
+     *                  @OA\Property(
+     *                      property="password",
+     *                      type="string",
+     *                  ),
      *              )
      *         )
      *     ),
@@ -284,9 +332,17 @@ class UserController extends Controller
      *          @OA\MediaType(
      *              mediaType="application/json",
      *              @OA\Schema(
+     *                  type="object",
+     *                  required={
+     *                      "code"
+     *                  },
      *                  example={
      *                      "code": "AbC123"
-     *                  }
+     *                  },
+     *                  @OA\Property(
+     *                      property="code",
+     *                      type="string",
+     *                  ),
      *              )
      *         )
      *      ),
@@ -366,9 +422,17 @@ class UserController extends Controller
      *          @OA\MediaType(
      *              mediaType="application/json",
      *              @OA\Schema(
+     *                  type="object",
+     *                  required={
+     *                      "phone"
+     *                  },
      *                  example={
-     *                      "phone": "380123456789"
-     *                  }
+     *                      "phone": "1234567890"
+     *                  },
+     *                  @OA\Property(
+     *                      property="phone",
+     *                      type="string",
+     *                  ),
      *              )
      *         )
      *      ),
@@ -434,9 +498,17 @@ class UserController extends Controller
      *          @OA\MediaType(
      *              mediaType="application/json",
      *              @OA\Schema(
+     *                  type="object",
+     *                  required={
+     *                      "phone"
+     *                  },
      *                  example={
-     *                      "phone": "380123456789"
-     *                  }
+     *                      "phone": "1234567890"
+     *                  },
+     *                  @OA\Property(
+     *                      property="phone",
+     *                      type="string",
+     *                  ),
      *              )
      *         )
      *      ),

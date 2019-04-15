@@ -105,12 +105,35 @@ class EquipmentController extends Controller
      *          @OA\MediaType(
      *              mediaType="application/json",
      *              @OA\Schema(
+     *                  type="object",
+     *                  required={
+     *                      "name",
+     *                      "price_per_hour",
+     *                      "currency",
+     *                      "availability",
+     *                  },
      *                  example={
-     *                      "name": "TENNIS RACKET",
+     *                      "name": "Tennis racket",
      *                      "price_per_hour": "2000",
      *                      "currency": "USD",
      *                      "availability": "1",
-     *                  }
+     *                  },
+     *                  @OA\Property(
+     *                      property="name",
+     *                      type="string"
+     *                  ),
+     *                  @OA\Property(
+     *                      property="price_per_hour",
+     *                      type="integer"
+     *                  ),
+     *                  @OA\Property(
+     *                      property="currency",
+     *                      type="string"
+     *                  ),
+     *                  @OA\Property(
+     *                      property="availability",
+     *                      type="integer"
+     *                  ),
      *              )
      *          )
      *      ),
