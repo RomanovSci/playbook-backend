@@ -13,17 +13,6 @@ use App\Models\User;
 | is assigned the "api" middleware group. Enjoy building your API!
 |
 */
-Route::get('/test', function () {
-    $twilio = new \App\Services\SmsDelivery\Providers\Twilio();
-    $res = $twilio->send('380507707018', "test");
-
-    return response()->json([
-        'success' => $res->getSuccess(),
-        'message' => $res->getMessage(),
-        'data' => $res->getData()
-    ]) ;
-});
-
 /** User */
 Route::post('/resend_verification_code', 'API\UserController@resendVerificationCode')->name('user.resendVerificationCode');
 Route::post('/reset_password', 'API\UserController@resetPassword')->name('user.resetPassword');
