@@ -557,8 +557,9 @@ services:
       volumes:
         - elasticsearch:/usr/share/elasticsearch/data
       environment:
-        - cluster.name=laradock-cluster
+        - cluster.name=playbook-cluster
         - bootstrap.memory_lock=true
+        - discovery.type=single-node
         - "ES_JAVA_OPTS=-Xms512m -Xmx512m"
       ulimits:
         memlock:
@@ -583,6 +584,24 @@ services:
       networks:
         - frontend
         - backend
+
+### Logstash ##############################################
+    logstash:
+      build: ./logstash
+      volumes:
+        - './logstash/config/logstash.yml:/usr/share/logstash/config/logstash.yml'
+        - './logstash/pipeline:/usr/share/logstash/pipeline'
+      ports:
+        - '5001:5001'
+      environment:
+        LS_JAVA_OPTS: '-Xmx1g -Xms1g'
+      env_file:
+        - .env
+      networks:
+        - frontend
+        - backend
+      depends_on:
+        - elasticsearch
 
 ### Certbot #########################################
     certbot:
