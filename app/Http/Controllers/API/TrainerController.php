@@ -32,14 +32,14 @@ class TrainerController extends Controller
      *      @OA\Parameter(
      *          name="limit",
      *          description="Limit",
-     *          in="path",
+     *          in="query",
      *          required=true,
      *          @OA\Schema(type="integer"),
      *      ),
      *      @OA\Parameter(
      *          name="offset",
      *          description="Offset",
-     *          in="path",
+     *          in="query",
      *          required=true,
      *          @OA\Schema(type="integer"),
      *      ),
@@ -217,14 +217,46 @@ class TrainerController extends Controller
      *          @OA\MediaType(
      *              mediaType="application/json",
      *              @OA\Schema(
+     *                  type="object",
+     *                  required={
+     *                      "playgrounds",
+     *                      "min_price",
+     *                      "max_price",
+     *                      "currency",
+     *                  },
      *                  example={
-     *                      "playgrounds": "Array of playgrounds uuids",
+     *                      "playgrounds": {"0000000-1111-2222-3333-444444444444"},
      *                      "about": "Short information about trainer",
      *                      "min_price": "7000",
      *                      "max_price": "9000",
      *                      "currency": "USD",
      *                      "image": "Trainer image"
-     *                  }
+     *                  },
+     *                  @OA\Property(
+     *                      property="playgrounds",
+     *                      type="array",
+     *                      @OA\Items()
+     *                  ),
+     *                  @OA\Property(
+     *                      property="about",
+     *                      type="string",
+     *                  ),
+     *                  @OA\Property(
+     *                      property="min_price",
+     *                      type="integer",
+     *                  ),
+     *                  @OA\Property(
+     *                      property="max_price",
+     *                      type="integer",
+     *                  ),
+     *                  @OA\Property(
+     *                      property="currency",
+     *                      type="string",
+     *                  ),
+     *                  @OA\Property(
+     *                      property="image",
+     *                      type="string",
+     *                  ),
      *              )
      *          )
      *      ),
@@ -349,14 +381,46 @@ class TrainerController extends Controller
      *          @OA\MediaType(
      *              mediaType="application/json",
      *              @OA\Schema(
+     *                  type="object",
+     *                  required={
+     *                      "playgrounds",
+     *                      "min_price",
+     *                      "max_price",
+     *                      "currency",
+     *                  },
      *                  example={
-     *                      "playgrounds": "Array of playgrounds uuids",
+     *                      "playgrounds": {"0000000-1111-2222-3333-444444444444"},
      *                      "about": "Short information about trainer",
      *                      "min_price": "7000",
      *                      "max_price": "9000",
      *                      "currency": "USD",
      *                      "image": "Trainer image"
-     *                  }
+     *                  },
+     *                  @OA\Property(
+     *                      property="playgrounds",
+     *                      type="array",
+     *                      @OA\Items()
+     *                  ),
+     *                  @OA\Property(
+     *                      property="about",
+     *                      type="string",
+     *                  ),
+     *                  @OA\Property(
+     *                      property="min_price",
+     *                      type="integer",
+     *                  ),
+     *                  @OA\Property(
+     *                      property="max_price",
+     *                      type="integer",
+     *                  ),
+     *                  @OA\Property(
+     *                      property="currency",
+     *                      type="string",
+     *                  ),
+     *                  @OA\Property(
+     *                      property="image",
+     *                      type="string",
+     *                  ),
      *              )
      *          )
      *      ),

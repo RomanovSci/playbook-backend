@@ -121,6 +121,20 @@ class PlaygroundController extends Controller
      *      tags={"Playground"},
      *      summary="Search by playground name",
      *      @OA\Parameter(
+     *          name="limit",
+     *          description="Limit",
+     *          in="query",
+     *          required=true,
+     *          @OA\Schema(type="integer")
+     *      ),
+     *      @OA\Parameter(
+     *          name="offset",
+     *          description="Offset",
+     *          in="query",
+     *          required=true,
+     *          @OA\Schema(type="integer")
+     *      ),
+     *      @OA\Parameter(
      *          name="query",
      *          description="Search string",
      *          in="query",
@@ -186,7 +200,7 @@ class PlaygroundController extends Controller
      */
     public function search(SearchFormRequest $request)
     {
-        $playgrounds = PlaygroundRepository::search($request->get('query'));
+        $playgrounds = PlaygroundRepository::search($request->all());
         return $this->success($playgrounds);
     }
 
@@ -202,15 +216,51 @@ class PlaygroundController extends Controller
      *          @OA\MediaType(
      *              mediaType="application/json",
      *              @OA\Schema(
+     *                  type="object",
+     *                  required={
+     *                      "name",
+     *                      "description",
+     *                      "address",
+     *                      "opening_time",
+     *                      "closing_time",
+     *                  },
      *                  example={
      *                      "name": "Playground name",
      *                      "description": "Playground description",
      *                      "address": "Playground address",
      *                      "opening_time": "09:00:00",
      *                      "closing_time": "23:20:00",
-     *                      "type_uuid": "Playground type uuid",
-     *                      "organization_uuid": "Organization uuid"
-     *                  }
+     *                      "type_uuid": "0000000-1111-2222-3333-444444444444",
+     *                      "organization_uuid": "0000000-1111-2222-3333-444444444444"
+     *                  },
+     *                  @OA\Property(
+     *                      property="name",
+     *                      type="string"
+     *                  ),
+     *                  @OA\Property(
+     *                      property="description",
+     *                      type="string"
+     *                  ),
+     *                  @OA\Property(
+     *                      property="address",
+     *                      type="string"
+     *                  ),
+     *                  @OA\Property(
+     *                      property="opening_time",
+     *                      type="string"
+     *                  ),
+     *                  @OA\Property(
+     *                      property="closing_time",
+     *                      type="string"
+     *                  ),
+     *                  @OA\Property(
+     *                      property="type_uuid",
+     *                      type="string"
+     *                  ),
+     *                  @OA\Property(
+     *                      property="organization_uuid",
+     *                      type="string"
+     *                  ),
      *              )
      *          )
      *      ),

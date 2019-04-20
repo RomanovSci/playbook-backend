@@ -3,8 +3,9 @@
 namespace App\Http\Controllers\API;
 
 use App\Http\Controllers\Controller;
-use App\Http\Requests\Common\GetFormRequest;
+use App\Http\Requests\City\SearchCitiesFormRequest;
 use App\Http\Requests\Common\SearchFormRequest;
+use App\Http\Requests\City\GetCitiesFormRequest;
 use App\Repositories\CityRepository;
 use Illuminate\Http\JsonResponse;
 
@@ -15,7 +16,7 @@ use Illuminate\Http\JsonResponse;
 class CityController extends Controller
 {
     /**
-     * @param GetFormRequest $request
+     * @param GetCitiesFormRequest $request
      * @return JsonResponse
      *
      * @OA\Get(
@@ -35,6 +36,13 @@ class CityController extends Controller
      *          in="query",
      *          required=true,
      *          @OA\Schema(type="integer")
+     *      ),
+     *      @OA\Parameter(
+     *          name="country_uuid",
+     *          description="Country uuid",
+     *          in="query",
+     *          required=false,
+     *          @OA\Schema(type="string")
      *      ),
      *      @OA\Response(
      *          response="200",
@@ -96,12 +104,9 @@ class CityController extends Controller
      *      security={{"Bearer":{}}}
      * )
      */
-    public function get(GetFormRequest $request)
+    public function get(GetCitiesFormRequest $request)
     {
-        $cities = CityRepository::get(
-            $request->get('limit'),
-            $request->get('offset')
-        );
+        $cities = CityRepository::get($request->all());
         return $this->success($cities);
     }
 
@@ -114,10 +119,31 @@ class CityController extends Controller
      *      tags={"City"},
      *      summary="Search cities",
      *      @OA\Parameter(
+     *          name="limit",
+     *          description="Limit",
+     *          in="query",
+     *          required=true,
+     *          @OA\Schema(type="integer")
+     *      ),
+     *      @OA\Parameter(
+     *          name="offset",
+     *          description="Offset",
+     *          in="query",
+     *          required=true,
+     *          @OA\Schema(type="integer")
+     *      ),
+     *      @OA\Parameter(
      *          name="query",
      *          description="Search string",
      *          in="query",
      *          required=true,
+     *          @OA\Schema(type="string")
+     *      ),
+     *      @OA\Parameter(
+     *          name="country_uuid",
+     *          description="Country uuid",
+     *          in="query",
+     *          required=false,
      *          @OA\Schema(type="string")
      *      ),
      *      @OA\Response(
@@ -177,9 +203,9 @@ class CityController extends Controller
      *      security={{"Bearer":{}}}
      * )
      */
-    public function search(SearchFormRequest $request)
+    public function search(SearchCitiesFormRequest $request)
     {
-        $cities = CityRepository::search($request->get('query'));
+        $cities = CityRepository::search($request->all());
         return $this->success($cities);
     }
 }

@@ -2,7 +2,7 @@
 
 namespace App\Providers;
 
-use App\Services\SmsDelivery\Providers\SmsRuProvider;
+use App\Services\SmsDelivery\Providers\Twilio;
 use App\Services\SmsDelivery\SmsDeliveryInterface;
 use Illuminate\Support\ServiceProvider;
 
@@ -29,6 +29,6 @@ class SmsDeliveryServiceProvider extends ServiceProvider
      */
     public function register()
     {
-        $this->app->bind(SmsDeliveryInterface::class, SmsRuProvider::class);
+        $this->app->bind(SmsDeliveryInterface::class, Twilio::class);
     }
 }

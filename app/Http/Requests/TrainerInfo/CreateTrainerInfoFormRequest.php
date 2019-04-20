@@ -15,13 +15,10 @@ class CreateTrainerInfoFormRequest extends BaseFormRequest
      */
     protected function prepareForValidation()
     {
-        $this->replace(array_merge(
-            $this->all(),
-            [
-                'min_price' => (string) (int) $this->input('min_price'),
-                'max_price' => (string) (int) $this->input('max_price'),
-            ]
-        ));
+        $this->replace(array_merge($this->all(), [
+            'min_price' => (string) (int) $this->input('min_price'),
+            'max_price' => (string) (int) $this->input('max_price'),
+        ]));
     }
 
     /**

@@ -12,23 +12,45 @@ use Illuminate\Database\Eloquent\Collection;
 class CityRepository
 {
     /**
-     * @param int $limit
-     * @param int $offset
+     * @param array $data
      * @return Collection
      */
-    public static function get(int $limit, int $offset): Collection
+    public static function get(array $data): Collection
     {
-        return City::limit($limit)->offset($offset)->get();
+        $query = self::query($data['limit'], $data['offset']);
+
+        if (isset($data['country_uuid'])) {
+            $query->where('country_uuid', $data['country_uuid']);
+        }
+
+        return $query->get();
     }
 
     /**
      * Search cities
      *
-     * @param string $query
+     * @param array $data
      * @return Collection
      */
-    public static function search(string $query): Collection
+    public static function search(array $data): Collection
     {
-        return City::where('name', 'ilike', "%$query%")->get();
+        $query = self::query($data['limit'], $data['offset'])
+            ->where('name', 'ilike', '%' . $data['query'] . '%');
+
+        if (isset($data['country_uuid'])) {
+            $query->where('country_uuid', $data['country_uuid']);
+        }
+
+        return $query->get();
+    }
+
+    /**
+     * @param int $limit
+     * @param int $offset
+     * @return mixed
+     */
+    protected static function query(int $limit, int $offset)
+    {
+        return City::limit($limit)->offset($offset);
     }
 }

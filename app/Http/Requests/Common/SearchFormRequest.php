@@ -2,19 +2,19 @@
 
 namespace App\Http\Requests\Common;
 
-use App\Http\Requests\BaseFormRequest;
-
 /**
  * Class SearchFormRequest
  * @package App\Http\Requests\Common
  */
-class SearchFormRequest extends BaseFormRequest
+class SearchFormRequest extends GetFormRequest
 {
     /**
      * @return array
      */
     public function rules(): array
     {
-        return ['query' => 'required'];
+        return array_merge(parent::rules(), [
+            'query' => 'required'
+        ]);
     }
 }
