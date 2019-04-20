@@ -4,7 +4,7 @@ use Illuminate\Support\Facades\Schema;
 use Illuminate\Database\Schema\Blueprint;
 use Illuminate\Database\Migrations\Migration;
 
-class CreateTournamentsParticipantsTable extends Migration
+class CreateTournamentsRequestsTable extends Migration
 {
     /**
      * Run the migrations.
@@ -13,19 +13,16 @@ class CreateTournamentsParticipantsTable extends Migration
      */
     public function up()
     {
-        Schema::create('tournaments_participants', function (Blueprint $table) {
+        Schema::create('tournaments_requests', function (Blueprint $table) {
             $table->uuid('uuid')->primary();
-            $table->string('nickname');
-            $table->uuid('user_uuid');
             $table->uuid('tournament_uuid');
-            $table->unsignedBigInteger('challonge_id')
-                ->nullable()
-                ->comment('External participant id at https://challonge.com system');
+            $table->uuid('user_uuid');
+            $table->dateTime('approved_at')->nullable();
             $table->timestamps();
             $table->softDeletes();
-            $table->foreign('user_uuid')->references('uuid')->on('users');
             $table->foreign('tournament_uuid')->references('uuid')->on('tournaments');
-            $table->unique(['user_uuid', 'tournament_uuid']);
+            $table->foreign('user_uuid')->references('uuid')->on('users');
+            $table->unique(['tournament_uuid', 'user_uuid']);
         });
     }
 
@@ -36,6 +33,6 @@ class CreateTournamentsParticipantsTable extends Migration
      */
     public function down()
     {
-        Schema::dropIfExists('tournaments_participants');
+        Schema::dropIfExists('tournaments_requests');
     }
 }

@@ -16,16 +16,16 @@ class CreateTournamentsMatchesTable extends Migration
         Schema::create('tournaments_matches', function (Blueprint $table) {
             $table->uuid('uuid')->primary();
             $table->uuid('tournament_uuid');
-            $table->uuid('first_participant');
-            $table->uuid('second_participant');
+            $table->uuid('first_participant_uuid');
+            $table->uuid('second_participant_uuid');
             $table->unsignedBigInteger('challonge_id')
                 ->nullable()
                 ->comment('External match id at https://challonge.com system');
             $table->timestamps();
             $table->softDeletes();
             $table->foreign('tournament_uuid')->references('uuid')->on('tournaments');
-            $table->foreign('first_participant')->references('uuid')->on('users');
-            $table->foreign('second_participant')->references('uuid')->on('users');
+            $table->foreign('first_participant_uuid')->references('uuid')->on('users');
+            $table->foreign('second_participant_uuid')->references('uuid')->on('users');
         });
     }
 
