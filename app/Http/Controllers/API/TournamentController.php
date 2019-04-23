@@ -3,7 +3,9 @@
 namespace App\Http\Controllers\API;
 
 use App\Http\Controllers\Controller;
+use App\Http\Requests\Common\GetFormRequest;
 use App\Http\Requests\Tournament\CreateTournamentFormRequest;
+use App\Repositories\TournamentRepository;
 use App\Repositories\TournamentTypeRepository;
 use App\Services\Tournament\CreateTournamentService;
 use Illuminate\Http\JsonResponse;
@@ -14,6 +16,89 @@ use Illuminate\Http\JsonResponse;
  */
 class TournamentController extends Controller
 {
+    /**
+     * @param GetFormRequest $request
+     * @return JsonResponse
+     *
+     * @OA\Get(
+     *      path="/api/tournaments",
+     *      tags={"Tournament"},
+     *      summary="Get all tournaments",
+     *      @OA\Parameter(
+     *          name="limit",
+     *          description="Limit",
+     *          in="query",
+     *          required=true,
+     *          @OA\Schema(type="integer")
+     *      ),
+     *      @OA\Parameter(
+     *          name="offset",
+     *          description="Offset",
+     *          in="query",
+     *          required=true,
+     *          @OA\Schema(type="integer")
+     *      ),
+     *      @OA\Response(
+     *          response="200",
+     *          description="Success",
+     *          @OA\MediaType(
+     *              mediaType="application/json",
+     *              @OA\Schema(
+     *                  type="object",
+     *                  @OA\Property(
+     *                      property="success",
+     *                      type="boolean"
+     *                  ),
+     *                  @OA\Property(
+     *                      property="message",
+     *                      type="string",
+     *                  ),
+     *                  @OA\Property(
+     *                      type="array",
+     *                      property="data",
+     *                      @OA\Items(ref="#/components/schemas/Tournament")
+     *                  )
+     *              )
+     *         )
+     *      ),
+     *      @OA\Response(
+     *          response="401",
+     *          description="Unauthorized",
+     *          @OA\MediaType(
+     *              mediaType="application/json",
+     *              @OA\Schema(
+     *                  example={
+     *                      "success": false,
+     *                      "message": "Unauthorized"
+     *                  },
+     *              )
+     *          )
+     *      ),
+     *      @OA\Response(
+     *          response="403",
+     *          description="Forbidden",
+     *          @OA\MediaType(
+     *              mediaType="application/json",
+     *              @OA\Schema(
+     *                  example={
+     *                      "success": false,
+     *                      "message": "Forbidden"
+     *                  },
+     *              )
+     *          )
+     *      ),
+     *      security={{"Bearer":{}}}
+     * )
+     */
+    public function get(GetFormRequest $request)
+    {
+        $tournaments = TournamentRepository::get(
+            $request->get('limit'),
+            $request->get('offset')
+        );
+        return $this->success($tournaments);
+    }
+
     /**
      * @return JsonResponse
      *
@@ -73,7 +158,7 @@ class TournamentController extends Controller
      *      security={{"Bearer":{}}}
      * )
      */
-    public function types()
+    public function getTypes()
     {
         return $this->success(TournamentTypeRepository::all());
     }
@@ -84,7 +169,7 @@ class TournamentController extends Controller
      * @return JsonResponse
      *
      * @OA\Post(
-     *      path="/api/tournament/create",
+     *      path="/api/tournament",
      *      tags={"Tournament"},
      *      summary="Create tournament",
      *      @OA\RequestBody(

@@ -36,4 +36,12 @@ class TournamentRequest extends BaseModel
      * @var string
      */
     protected $table = 'tournaments_requests';
+
+    /**
+     * @var array
+     */
+    protected $fillable = [
+        'tournament_uuid',
+        'user_uuid',
+    ];
 }

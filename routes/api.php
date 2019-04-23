@@ -78,6 +78,12 @@ Route::middleware(['auth:api'])->group(function () {
     Route::prefix('organization')->group(function () {
         Route::get('/', 'API\OrganizationController@get')->name('organization.get');
     });
+
+    /** Tournament */
+    Route::get('/tournaments', 'API\TournamentController@get')->name('tournament.get');
+    Route::prefix('tournament')->group(function () {
+        Route::post('/request', 'API\TournamentRequestController@create')->name('tournament.request.create');
+    });
 });
 
 /**
@@ -106,8 +112,8 @@ Route::middleware(['role:'
 
     /** Tournament */
     Route::prefix('tournament')->group(function () {
-        Route::get('/types', 'API\TournamentController@types')->name('tournament.types');
-        Route::post('/create', 'API\TournamentController@create')->name('tournament.create');
+        Route::post('/', 'API\TournamentController@create')->name('tournament.create');
+        Route::get('/types', 'API\TournamentController@getTypes')->name('tournament.getTypes');
     });
 
     /** Schedule */
