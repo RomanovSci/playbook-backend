@@ -24,6 +24,34 @@ namespace App\Models;
  *                  type="string",
  *              ),
  *              @OA\Property(
+ *                  property="is_private",
+ *                  type="boolean",
+ *              ),
+ *              @OA\Property(
+ *                  property="start_date",
+ *                  type="string",
+ *              ),
+ *              @OA\Property(
+ *                  property="end_date",
+ *                  type="string",
+ *              ),
+ *              @OA\Property(
+ *                  property="max_participants_count",
+ *                  type="integer",
+ *              ),
+ *              @OA\Property(
+ *                  property="start_registration_date",
+ *                  type="string",
+ *              ),
+ *              @OA\Property(
+ *                  property="price",
+ *                  type="integer",
+ *              ),
+ *              @OA\Property(
+ *                  property="currency",
+ *                  type="string",
+ *              ),
+ *              @OA\Property(
  *                  property="tournament_type_uuid",
  *                  type="string",
  *              ),
@@ -47,6 +75,9 @@ class Tournament extends BaseModel
      */
     protected $casts = [
         'challonge_id' => 'integer',
+        'is_private' => 'boolean',
+        'max_participants_count' => 'integer',
+        'price' => 'integer',
     ];
 
     /**
@@ -55,9 +86,16 @@ class Tournament extends BaseModel
     protected $fillable = [
         'name',
         'description',
+        'is_private',
+        'start_date',
+        'end_date',
+        'start_registration_date',
+        'max_participants_count',
+        'price',
+        'currency',
         'tournament_type_uuid',
         'creator_uuid',
-        'challonge_id'
+        'challonge_id',
     ];
 
     /**

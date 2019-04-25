@@ -82,6 +82,7 @@ Route::middleware(['auth:api'])->group(function () {
     /** Tournament */
     Route::get('/tournaments', 'API\TournamentController@get')->name('tournament.get');
     Route::prefix('tournament')->group(function () {
+        Route::post('/invitation', 'API\TournamentInvitationController@create')->name('tournament.invitation.create');
         Route::post('/request', 'API\TournamentRequestController@create')->name('tournament.request.create');
     });
 });

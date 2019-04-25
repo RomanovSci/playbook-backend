@@ -8,7 +8,7 @@ use App\Http\Requests\BaseFormRequest;
  * Class CreateTournamentInviteFormRequest
  * @package App\Http\Requests\Tournament
  */
-class CreateTournamentInviteFormRequest extends BaseFormRequest
+class CreateTournamentInvitationFormRequest extends BaseFormRequest
 {
     /**
      * @return array

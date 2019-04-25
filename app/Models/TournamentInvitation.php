@@ -41,4 +41,13 @@ class TournamentInvitation extends BaseModel
      * @var string
      */
     protected $table = 'tournaments_invitations';
+
+    /**
+     * @var array
+     */
+    protected $fillable = [
+        'tournament_uuid',
+        'inviter_uuid',
+        'invited_uuid',
+    ];
 }

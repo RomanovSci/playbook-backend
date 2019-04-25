@@ -19,6 +19,7 @@ class CreateTournamentFormRequest extends BaseFormRequest
             'name' => 'required|string|max:255',
             'description' => 'string|max:255',
             'tournament_type_uuid' => 'required|uuid|exists:tournaments_types,uuid',
+            'start_date' => 'required|date_format:Y-m-d H:i:s',
         ];
     }
 }
