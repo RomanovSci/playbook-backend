@@ -18,13 +18,14 @@ class CreateTournamentsTable extends Migration
             $table->string('name');
             $table->string('description')->nullable();
             $table->boolean('is_private')->default(false);
-            $table->dateTime('start_date')->nullable();
-            $table->date('end_date')->nullable();
-            $table->dateTime('start_registration_date')->nullable();
+            $table->dateTime('start_time')->nullable();
+            $table->date('end_time')->nullable();
+            $table->dateTime('registration_start_time')->nullable();
             $table->unsignedInteger('max_participants_count')->nullable();
             $table->unsignedInteger('price')->default(0);
             $table->char('currency', 3)->default('RUB');
             $table->uuid('tournament_type_uuid');
+            $table->uuid('tournament_grid_type_uuid');
             $table->uuid('creator_uuid');
             $table->unsignedBigInteger('challonge_id')
                 ->nullable()
@@ -33,6 +34,7 @@ class CreateTournamentsTable extends Migration
             $table->timestamps();
             $table->softDeletes();
             $table->foreign('tournament_type_uuid')->references('uuid')->on('tournaments_types');
+            $table->foreign('tournament_grid_type_uuid')->references('uuid')->on('tournaments_grids_types');
             $table->foreign('creator_uuid')->references('uuid')->on('users');
         });
     }

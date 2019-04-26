@@ -15,10 +15,8 @@ class CreateTournamentsTypes extends Migration
     public function up()
     {
         $types = [
-            'single elimination',
-            'double elimination',
-            'round robin',
-            'swiss'
+            'single stage',
+            'two stage',
         ];
 
         foreach ($types as $type) {

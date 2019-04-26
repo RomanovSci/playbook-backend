@@ -3,7 +3,7 @@
 namespace App\Models;
 
 /**
- * Class TournamentType
+ * Class TournamentGridType
  * @package App\Models
  *
  * @property string name
@@ -25,12 +25,12 @@ namespace App\Models;
  *      }
  * )
  */
-class TournamentType extends BaseModel
+class TournamentGridType extends BaseModel
 {
     /**
      * @var string
      */
-    protected $table = 'tournaments_types';
+    protected $table = 'tournaments_grids_types';
 
     /**
      * @var array

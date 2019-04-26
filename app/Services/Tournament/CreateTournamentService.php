@@ -45,14 +45,27 @@ class CreateTournamentService
             $tournament = Tournament::create(array_merge($data, [
                 'creator_uuid' => $user->uuid,
             ]));
-            $challongeCreateResult = $this->challongeAPI->createTournament([
+
+            $challongeOptions = [
                 'tournament' => [
                     'name' => $data['name'],
                     'description' => $data['description'] ?? '',
                     'url' => str_replace('-', '_', (string) $tournament->uuid),
                     'game_name' => 'Tennis',
+                    'private' => $data['is_private'],
                 ],
-            ]);
+            ];
+
+            if (isset($data['max_participants_count'])) {
+                $challongeOptions['tournament']['signup_cap'] = $data['max_participants_count'];
+            }
+
+            if (isset($data['start_time'])) {
+                $challongeOptions['tournament']['start_at'] = $data['start_time'];
+
+            }
+
+            $challongeCreateResult = $this->challongeAPI->createTournament($challongeOptions);
 
             if ($challongeCreateResult['status_code'] !== 200) {
                 throw new \Exception(

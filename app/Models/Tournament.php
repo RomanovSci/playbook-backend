@@ -28,11 +28,11 @@ namespace App\Models;
  *                  type="boolean",
  *              ),
  *              @OA\Property(
- *                  property="start_date",
+ *                  property="start_time",
  *                  type="string",
  *              ),
  *              @OA\Property(
- *                  property="end_date",
+ *                  property="end_time",
  *                  type="string",
  *              ),
  *              @OA\Property(
@@ -40,7 +40,7 @@ namespace App\Models;
  *                  type="integer",
  *              ),
  *              @OA\Property(
- *                  property="start_registration_date",
+ *                  property="registration_start_time",
  *                  type="string",
  *              ),
  *              @OA\Property(
@@ -53,6 +53,10 @@ namespace App\Models;
  *              ),
  *              @OA\Property(
  *                  property="tournament_type_uuid",
+ *                  type="string",
+ *              ),
+ *              @OA\Property(
+ *                  property="tournament_grid_type_uuid",
  *                  type="string",
  *              ),
  *              @OA\Property(
@@ -87,13 +91,14 @@ class Tournament extends BaseModel
         'name',
         'description',
         'is_private',
-        'start_date',
-        'end_date',
-        'start_registration_date',
+        'start_time',
+        'end_time',
+        'registration_start_time',
         'max_participants_count',
         'price',
         'currency',
         'tournament_type_uuid',
+        'tournament_grid_type_uuid',
         'creator_uuid',
         'challonge_id',
     ];

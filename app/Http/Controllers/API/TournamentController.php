@@ -179,7 +179,9 @@ class TournamentController extends Controller
      *                  type="object",
      *                  required={
      *                      "name",
-     *                      "tournament_type_uuid"
+     *                      "is_private",
+     *                      "tournament_type_uuid",
+     *                      "tournament_grid_type_uuid"
      *                  },
      *                  @OA\Property(
      *                      property="name",
@@ -190,8 +192,40 @@ class TournamentController extends Controller
      *                      type="string",
      *                  ),
      *                  @OA\Property(
+     *                      property="is_private",
+     *                      type="boolean",
+     *                  ),
+     *                  @OA\Property(
+     *                      property="start_time",
+     *                      type="string",
+     *                  ),
+     *                  @OA\Property(
+     *                      property="end_time",
+     *                      type="string",
+     *                  ),
+     *                  @OA\Property(
+     *                      property="max_participants_count",
+     *                      type="integer",
+     *                  ),
+     *                  @OA\Property(
+     *                      property="registration_start_time",
+     *                      type="string",
+     *                  ),
+     *                  @OA\Property(
+     *                      property="price",
+     *                      type="integer",
+     *                  ),
+     *                  @OA\Property(
+     *                      property="currency",
+     *                      type="string",
+     *                  ),
+     *                  @OA\Property(
      *                      property="tournament_type_uuid",
-     *                      type="string"
+     *                      type="string",
+     *                  ),
+     *                  @OA\Property(
+     *                      property="tournament_grid_type_uuid",
+     *                      type="string",
      *                  ),
      *              )
      *          )
@@ -232,8 +266,14 @@ class TournamentController extends Controller
      *                          "name": {
      *                              "The name field is required."
      *                          },
+     *                          "is_private": {
+     *                              "The is_private field is required."
+     *                          },
      *                          "tournament_type_uuid": {
      *                              "The tournament_type_uuid field is required."
+     *                          },
+     *                          "tournament_grid_type_uuid": {
+     *                              "The tournament_grid_type_uuid field is required."
      *                          },
      *                      }
      *                  },
