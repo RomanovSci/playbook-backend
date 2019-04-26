@@ -42,10 +42,7 @@ class CreateTournamentService
              * @var Tournament $tournament
              */
             $user = Auth::user();
-            $tournament = Tournament::create(array_merge($data, [
-                'creator_uuid' => $user->uuid,
-            ]));
-
+            $tournament = Tournament::create(array_merge($data, ['creator_uuid' => $user->uuid]));
             $challongeOptions = [
                 'tournament' => [
                     'name' => $data['name'],

@@ -367,7 +367,7 @@ class PlaygroundController extends Controller
             'creator_uuid' => $user->uuid,
         ]));
 
-        return $this->success($playground->toArray());
+        return $this->success($playground);
     }
 
     /**

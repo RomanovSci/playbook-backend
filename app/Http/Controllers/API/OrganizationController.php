@@ -207,6 +207,6 @@ class OrganizationController extends Controller
             ['owner_uuid' => Auth::user()->uuid]
         ));
 
-        return $this->success($organization->toArray());
+        return $this->success($organization);
     }
 }

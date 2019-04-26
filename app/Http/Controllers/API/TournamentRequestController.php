@@ -118,6 +118,6 @@ class TournamentRequestController extends Controller
             'user_uuid' => $user->uuid,
         ]));
 
-        return $this->success($tournamentRequest->toArray());
+        return $this->success($tournamentRequest);
     }
 }

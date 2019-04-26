@@ -699,7 +699,7 @@ class BookingController extends Controller
             $this->error($changeStatusResult->getMessage(), $booking->toArray());
         }
 
-        return $this->success($booking->toArray());
+        return $this->success($booking);
     }
 
     /**
@@ -840,6 +840,6 @@ class BookingController extends Controller
             $this->error($changeStatusResult->getMessage(), $booking->toArray());
         }
 
-        return $this->success($booking->toArray());
+        return $this->success($booking);
     }
 }

@@ -11,6 +11,11 @@ use Illuminate\Database\Eloquent\Collection;
  */
 class TournamentRepository
 {
+    public static function getByUuid(string $uuid): ?Tournament
+    {
+        return Tournament::where('uuid', $uuid)->first();
+    }
+
     /**
      * Get all tournaments
      *
