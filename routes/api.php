@@ -115,6 +115,7 @@ Route::middleware(['role:'
     Route::prefix('tournament')->group(function () {
         Route::post('/', 'API\TournamentController@create')->name('tournament.create');
         Route::get('/types', 'API\TournamentController@getTypes')->name('tournament.getTypes');
+        Route::get('/grid_types', 'API\TournamentController@getGridTypes')->name('tournament.getGridTypes');
     });
 
     /** Schedule */

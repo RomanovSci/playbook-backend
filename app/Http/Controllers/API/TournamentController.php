@@ -5,6 +5,7 @@ namespace App\Http\Controllers\API;
 use App\Http\Controllers\Controller;
 use App\Http\Requests\Common\GetFormRequest;
 use App\Http\Requests\Tournament\CreateTournamentFormRequest;
+use App\Repositories\TournamentGridTypeRepository;
 use App\Repositories\TournamentRepository;
 use App\Repositories\TournamentTypeRepository;
 use App\Services\Tournament\CreateTournamentService;
@@ -90,7 +91,7 @@ class TournamentController extends Controller
      *      security={{"Bearer":{}}}
      * )
      */
-    public function get(GetFormRequest $request)
+    public function get(GetFormRequest $request): JsonResponse
     {
         $tournaments = TournamentRepository::get(
             $request->get('limit'),
@@ -158,9 +159,73 @@ class TournamentController extends Controller
      *      security={{"Bearer":{}}}
      * )
      */
-    public function getTypes()
+    public function getTypes(): JsonResponse
     {
         return $this->success(TournamentTypeRepository::all());
+    }
+
+    /**
+     * @return JsonResponse
+     *
+     * @OA\Get(
+     *      path="/api/tournament/grid_types",
+     *      tags={"Tournament"},
+     *      summary="Get tournament grid types",
+     *      @OA\Response(
+     *          response="200",
+     *          description="Success",
+     *          @OA\MediaType(
+     *              mediaType="application/json",
+     *              @OA\Schema(
+     *                  type="object",
+     *                  @OA\Property(
+     *                      property="success",
+     *                      type="boolean"
+     *                  ),
+     *                  @OA\Property(
+     *                      property="message",
+     *                      type="string",
+     *                  ),
+     *                  @OA\Property(
+     *                      type="array",
+     *                      property="data",
+     *                      @OA\Items(ref="#/components/schemas/TournamentGridType")
+     *                  )
+     *              )
+     *         )
+     *      ),
+     *      @OA\Response(
+     *          response="401",
+     *          description="Unauthorized",
+     *          @OA\MediaType(
+     *              mediaType="application/json",
+     *              @OA\Schema(
+     *                  example={
+     *                      "success": false,
+     *                      "message": "Unauthorized"
+     *                  },
+     *              )
+     *          )
+     *      ),
+     *      @OA\Response(
+     *          response="403",
+     *          description="Forbidden",
+     *          @OA\MediaType(
+     *              mediaType="application/json",
+     *              @OA\Schema(
+     *                  example={
+     *                      "success": false,
+     *                      "message": "Forbidden"
+     *                  },
+     *              )
+     *          )
+     *      ),
+     *      security={{"Bearer":{}}}
+     * )
+     */
+    public function getGridTypes(): JsonResponse
+    {
+        return $this->success(TournamentGridTypeRepository::all());
     }
 
     /**
@@ -309,8 +374,10 @@ class TournamentController extends Controller
      *      security={{"Bearer":{}}}
      * )
      */
-    public function create(CreateTournamentFormRequest $request, CreateTournamentService $createTournamentService)
-    {
+    public function create(
+        CreateTournamentFormRequest $request,
+        CreateTournamentService $createTournamentService
+    ): JsonResponse {
         $result = $createTournamentService->run($request->all());
 
         if (!$result->getSuccess()) {
