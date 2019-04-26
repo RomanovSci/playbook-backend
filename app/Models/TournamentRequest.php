@@ -2,6 +2,8 @@
 
 namespace App\Models;
 
+use Illuminate\Database\Eloquent\Relations\BelongsTo;
+
 /**
  * Class TournamentRequest
  * @package App\Models
@@ -9,6 +11,8 @@ namespace App\Models;
  * @property string tournament_uuid
  * @property string user_uuid
  * @property string approved_at
+ *
+ * @property Tournament tournament
  *
  * @OA\Schema(
  *      allOf={
@@ -44,4 +48,23 @@ class TournamentRequest extends BaseModel
         'tournament_uuid',
         'user_uuid',
     ];
+
+    /**
+     * TournamentRequest constructor.
+     *
+     * @param array $attributes
+     */
+    public function __construct(array $attributes = [])
+    {
+        parent::__construct($attributes);
+        $this->hidden = array_merge($this->hidden, ['tournament']);
+    }
+
+    /**
+     * @return BelongsTo
+     */
+    public function tournament()
+    {
+        return $this->belongsTo(Tournament::class);
+    }
 }

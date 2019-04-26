@@ -82,8 +82,12 @@ Route::middleware(['auth:api'])->group(function () {
     /** Tournament */
     Route::get('/tournaments', 'API\TournamentController@get')->name('tournament.get');
     Route::prefix('tournament')->group(function () {
+        Route::post('/', 'API\TournamentController@create')->name('tournament.create');
+        Route::get('/types', 'API\TournamentController@getTypes')->name('tournament.getTypes');
+        Route::get('/grid_types', 'API\TournamentController@getGridTypes')->name('tournament.getGridTypes');
         Route::post('/invitation', 'API\TournamentInvitationController@create')->name('tournament.invitation.create');
         Route::post('/request', 'API\TournamentRequestController@create')->name('tournament.request.create');
+        Route::post('/request/approve', 'API\TournamentRequestController@approve')->name('tournament.request.approve');
     });
 });
 
@@ -109,13 +113,6 @@ Route::middleware(['role:'
     /** Playground */
     Route::prefix('playground')->group(function () {
         Route::post('/create', 'API\PlaygroundController@create')->name('playground.create');
-    });
-
-    /** Tournament */
-    Route::prefix('tournament')->group(function () {
-        Route::post('/', 'API\TournamentController@create')->name('tournament.create');
-        Route::get('/types', 'API\TournamentController@getTypes')->name('tournament.getTypes');
-        Route::get('/grid_types', 'API\TournamentController@getGridTypes')->name('tournament.getGridTypes');
     });
 
     /** Schedule */

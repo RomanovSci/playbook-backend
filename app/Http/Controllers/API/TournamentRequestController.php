@@ -2,10 +2,15 @@
 
 namespace App\Http\Controllers\API;
 
+use App\Exceptions\Http\ForbiddenHttpException;
 use App\Http\Controllers\Controller;
+use App\Http\Requests\Tournament\ApproveTournamentRequestFormRequest;
 use App\Http\Requests\Tournament\CreateTournamentRequestFormRequest;
 use App\Models\TournamentRequest;
 use App\Models\User;
+use App\Repositories\TournamentRequestRepository;
+use Carbon\Carbon;
+use Illuminate\Http\JsonResponse;
 use Illuminate\Support\Facades\Auth;
 
 /**
@@ -16,7 +21,7 @@ class TournamentRequestController extends Controller
 {
     /**
      * @param CreateTournamentRequestFormRequest $request
-     * @return \Illuminate\Http\JsonResponse
+     * @return JsonResponse
      *
      * @OA\Post(
      *      path="/api/tournament/request",
@@ -107,16 +112,142 @@ class TournamentRequestController extends Controller
      *      security={{"Bearer":{}}}
      * )
      */
-    public function create(CreateTournamentRequestFormRequest $request)
+    public function create(CreateTournamentRequestFormRequest $request): JsonResponse
     {
         /**
          * @var User $user
          * @var TournamentRequest $tournamentRequest
          */
         $user = Auth::user();
+        $tournamentRequest = TournamentRequestRepository::getByTournamentAndUserUuid(
+            $request->get('tournament_uuid'),
+            $user->uuid
+        );
+
+        if ($tournamentRequest) {
+            return $this->error('Tournament request already exists', $tournamentRequest);
+        }
+
         $tournamentRequest = TournamentRequest::create(array_merge($request->all(), [
             'user_uuid' => $user->uuid,
         ]));
+
+        return $this->success($tournamentRequest);
+    }
+
+    /**
+     * @param ApproveTournamentRequestFormRequest $request
+     * @return JsonResponse
+     *
+     * @OA\Post(
+     *      path="/api/tournament/request/approve",
+     *      tags={"Tournament"},
+     *      summary="Approve tournament request",
+     *      @OA\RequestBody(
+     *          @OA\MediaType(
+     *              mediaType="application/json",
+     *              @OA\Schema(
+     *                  type="object",
+     *                  required={
+     *                      "tournament_request_uuid"
+     *                  },
+     *                  @OA\Property(
+     *                      property="tournament_request_uuid",
+     *                      type="string",
+     *                  ),
+     *              )
+     *          )
+     *      ),
+     *      @OA\Response(
+     *          response="200",
+     *          description="Success",
+     *          @OA\MediaType(
+     *              mediaType="application/json",
+     *              @OA\Schema(
+     *                  type="object",
+     *                  @OA\Property(
+     *                      property="success",
+     *                      type="boolean"
+     *                  ),
+     *                  @OA\Property(
+     *                      property="message",
+     *                      type="string",
+     *                  ),
+     *                  @OA\Property(
+     *                      property="data",
+     *                      type="object",
+     *                      ref="#/components/schemas/TournamentRequest"
+     *                  )
+     *              )
+     *         )
+     *      ),
+     *      @OA\Response(
+     *          response="400",
+     *          description="Bad request",
+     *          @OA\MediaType(
+     *              mediaType="application/json",
+     *              @OA\Schema(
+     *                  example={
+     *                      "success": false,
+     *                      "message": "Validation error",
+     *                      "data": {
+     *                          "tournament_request_uuid": {
+     *                              "The tournament_request_uuid field is required."
+     *                          },
+     *                      }
+     *                  },
+     *              )
+     *          )
+     *      ),
+     *      @OA\Response(
+     *          response="401",
+     *          description="Unauthorized",
+     *          @OA\MediaType(
+     *              mediaType="application/json",
+     *              @OA\Schema(
+     *                  example={
+     *                      "success": false,
+     *                      "message": "Unauthorized"
+     *                  },
+     *              )
+     *          )
+     *      ),
+     *      @OA\Response(
+     *          response="403",
+     *          description="Forbidden",
+     *          @OA\MediaType(
+     *              mediaType="application/json",
+     *              @OA\Schema(
+     *                  example={
+     *                      "success": false,
+     *                      "message": "Forbidden"
+     *                  },
+     *              )
+     *          )
+     *      ),
+     *      security={{"Bearer":{}}}
+     * )
+     */
+    public function approve(ApproveTournamentRequestFormRequest $request): JsonResponse
+    {
+        /** @var User $user */
+        $user = Auth::user();
+        $tournamentRequest = TournamentRequestRepository::getByUuid($request->get('tournament_request_uuid'));
+
+        if (!$tournamentRequest) {
+            return $this->error('Tournament request does not exists');
+        }
+
+        if ($user->cant('approve', $tournamentRequest)) {
+            throw new ForbiddenHttpException('Can not approve tournament request');
+        }
+
+        if ($tournamentRequest->approved_at) {
+            return $this->error('Tournament request already approved', $tournamentRequest);
+        }
+
+        $tournamentRequest->approved_at = Carbon::now()->format('Y-m-d H:i:s');
+        $tournamentRequest->update(['approved_at']);
 
         return $this->success($tournamentRequest);
     }
