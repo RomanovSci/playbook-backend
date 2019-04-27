@@ -43,8 +43,8 @@ class TournamentRequestController extends Controller
      *          )
      *      ),
      *      @OA\Response(
-     *          response="200",
-     *          description="Success",
+     *          response="201",
+     *          description="Created",
      *          @OA\MediaType(
      *              mediaType="application/json",
      *              @OA\Schema(
@@ -132,7 +132,7 @@ class TournamentRequestController extends Controller
             'user_uuid' => $user->uuid,
         ]));
 
-        return $this->success($tournamentRequest);
+        return $this->created($tournamentRequest);
     }
 
     /**

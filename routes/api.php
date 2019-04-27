@@ -80,12 +80,13 @@ Route::middleware(['auth:api'])->group(function () {
     });
 
     /** Tournament */
-    Route::get('/tournaments', 'API\TournamentController@get')->name('tournament.get');
     Route::prefix('tournament')->group(function () {
+        Route::get('/', 'API\TournamentController@get')->name('tournament.get');
         Route::post('/', 'API\TournamentController@create')->name('tournament.create');
-        Route::get('/types', 'API\TournamentController@getTypes')->name('tournament.getTypes');
-        Route::get('/grid_types', 'API\TournamentController@getGridTypes')->name('tournament.getGridTypes');
+        Route::get('/type', 'API\TournamentController@getTypes')->name('tournament.getTypes');
+        Route::get('/grid_type', 'API\TournamentController@getGridTypes')->name('tournament.getGridTypes');
         Route::post('/invitation', 'API\TournamentInvitationController@create')->name('tournament.invitation.create');
+        Route::post('/invitation/approve', 'API\TournamentInvitationController@approve')->name('tournament.invitation.approve');
         Route::post('/request', 'API\TournamentRequestController@create')->name('tournament.request.create');
         Route::post('/request/approve', 'API\TournamentRequestController@approve')->name('tournament.request.approve');
     });

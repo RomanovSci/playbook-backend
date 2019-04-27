@@ -11,6 +11,15 @@ use App\Models\TournamentInvitation;
 class TournamentInvitationRepository
 {
     /**
+     * @param string $uuid
+     * @return TournamentInvitation|null
+     */
+    public static function getByUuid(string $uuid): ?TournamentInvitation
+    {
+        return TournamentInvitation::where('uuid', $uuid)->first();
+    }
+
+    /**
      * @param string $tournamentUuid
      * @param string $invitedUuid
      * @return TournamentInvitation|null

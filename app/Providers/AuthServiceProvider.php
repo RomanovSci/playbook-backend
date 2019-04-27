@@ -7,12 +7,14 @@ use App\Models\Organization;
 use App\Models\Playground;
 use App\Models\Schedule;
 use App\Models\Tournament;
+use App\Models\TournamentInvitation;
 use App\Models\TournamentRequest;
 use App\Models\TrainerInfo;
 use App\Policies\BookingPolicy;
 use App\Policies\OrganizationPolicy;
 use App\Policies\PlaygroundPolicy;
 use App\Policies\SchedulePolicy;
+use App\Policies\TournamentInvitationPolicy;
 use App\Policies\TournamentPolicy;
 use App\Policies\TournamentRequestPolicy;
 use App\Policies\TrainerInfoPolicy;
@@ -40,6 +42,7 @@ class AuthServiceProvider extends ServiceProvider
         TrainerInfo::class => TrainerInfoPolicy::class,
         Tournament::class => TournamentPolicy::class,
         TournamentRequest::class => TournamentRequestPolicy::class,
+        TournamentInvitation::class => TournamentInvitationPolicy::class,
     ];
 
     /**

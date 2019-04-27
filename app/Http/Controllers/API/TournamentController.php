@@ -22,7 +22,7 @@ class TournamentController extends Controller
      * @return JsonResponse
      *
      * @OA\Get(
-     *      path="/api/tournaments",
+     *      path="/api/tournament",
      *      tags={"Tournament"},
      *      summary="Get all tournaments",
      *      @OA\Parameter(
@@ -104,7 +104,7 @@ class TournamentController extends Controller
      * @return JsonResponse
      *
      * @OA\Get(
-     *      path="/api/tournament/types",
+     *      path="/api/tournament/type",
      *      tags={"Tournament"},
      *      summary="Get tournament types",
      *      @OA\Response(
@@ -168,7 +168,7 @@ class TournamentController extends Controller
      * @return JsonResponse
      *
      * @OA\Get(
-     *      path="/api/tournament/grid_types",
+     *      path="/api/tournament/grid_type",
      *      tags={"Tournament"},
      *      summary="Get tournament grid types",
      *      @OA\Response(
@@ -296,8 +296,8 @@ class TournamentController extends Controller
      *          )
      *      ),
      *      @OA\Response(
-     *          response="200",
-     *          description="Success",
+     *          response="201",
+     *          description="Created",
      *          @OA\MediaType(
      *              mediaType="application/json",
      *              @OA\Schema(
@@ -384,6 +384,6 @@ class TournamentController extends Controller
             return $this->error($result->getMessage());
         }
 
-        return $this->success($result->getData());
+        return $this->created($result->getData());
     }
 }

@@ -22,7 +22,7 @@ class CreateTournamentFormRequest extends BaseFormRequest
             'start_time' => 'date_format:Y-m-d H:i:s',
             'end_time' => 'date_format:Y-m-d H:i:s|after:start_time',
             'registration_start_time' => 'date_format:Y-m-d H:i:s|after:start_time',
-            'max_participants_count' => 'integer|min:1',
+            'max_participants_count' => 'integer|min:4',
             'price' => 'integer|min:0',
             'currency' => 'currency',
             'tournament_type_uuid' => 'required|uuid|exists:tournaments_types,uuid',

@@ -26,9 +26,10 @@ class Controller extends BaseController
      *
      * @param null $message
      * @param array $data
+     * @param int $code
      * @return JsonResponse
      */
-    protected function success($data = [], $message = null): JsonResponse
+    protected function success($data = [], $message = null, int $code = 200): JsonResponse
     {
         $response = [
             'success' => true,
@@ -36,7 +37,19 @@ class Controller extends BaseController
             'data' => $data,
         ];
 
-        return response()->json($response);
+        return response()->json($response, $code);
+    }
+
+    /**
+     * Created response
+     *
+     * @param array $data
+     * @param null $message
+     * @return JsonResponse
+     */
+    protected function created($data = [], $message = null): JsonResponse
+    {
+        return $this->success($data, $message, 201);
     }
 
     /**
