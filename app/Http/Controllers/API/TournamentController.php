@@ -378,7 +378,7 @@ class TournamentController extends Controller
         CreateTournamentFormRequest $request,
         CreateTournamentService $createTournamentService
     ): JsonResponse {
-        $result = $createTournamentService->run($request->all());
+        $result = $createTournamentService->create($request->all());
 
         if (!$result->getSuccess()) {
             return $this->error($result->getMessage());

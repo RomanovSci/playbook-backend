@@ -9,6 +9,7 @@ use App\Http\Requests\Tournament\CreateTournamentRequestFormRequest;
 use App\Models\TournamentRequest;
 use App\Models\User;
 use App\Repositories\TournamentRequestRepository;
+use App\Services\Tournament\ApproveTournamentRequestService;
 use Carbon\Carbon;
 use Illuminate\Http\JsonResponse;
 use Illuminate\Support\Facades\Auth;
@@ -137,6 +138,7 @@ class TournamentRequestController extends Controller
 
     /**
      * @param ApproveTournamentRequestFormRequest $request
+     * @param ApproveTournamentRequestService $approveTournamentRequestService
      * @return JsonResponse
      *
      * @OA\Post(
@@ -228,8 +230,10 @@ class TournamentRequestController extends Controller
      *      security={{"Bearer":{}}}
      * )
      */
-    public function approve(ApproveTournamentRequestFormRequest $request): JsonResponse
-    {
+    public function approve(
+        ApproveTournamentRequestFormRequest $request,
+        ApproveTournamentRequestService $approveTournamentRequestService
+    ): JsonResponse {
         /** @var User $user */
         $user = Auth::user();
         $tournamentRequest = TournamentRequestRepository::getByUuid($request->get('tournament_request_uuid'));
@@ -246,9 +250,12 @@ class TournamentRequestController extends Controller
             return $this->error('Tournament request already approved', $tournamentRequest);
         }
 
-        $tournamentRequest->approved_at = Carbon::now()->format('Y-m-d H:i:s');
-        $tournamentRequest->update(['approved_at']);
+        $result = $approveTournamentRequestService->approve($tournamentRequest);
 
-        return $this->success($tournamentRequest);
+        if (!$result->getSuccess()) {
+            return $this->error($result->getMessage());
+        }
+
+        return $this->success($result->getData());
     }
 }

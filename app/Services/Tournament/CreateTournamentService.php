@@ -32,7 +32,7 @@ class CreateTournamentService
      * @param array $data
      * @return ExecResult
      */
-    public function run(array $data): ExecResult
+    public function create(array $data): ExecResult
     {
         DB::beginTransaction();
 

@@ -38,6 +38,11 @@ namespace App\Models;
 class TournamentParticipant extends BaseModel
 {
     /**
+     * @var string
+     */
+    protected $table = 'tournaments_participants';
+
+    /**
      * @var array
      */
     protected $casts = [
@@ -45,7 +50,12 @@ class TournamentParticipant extends BaseModel
     ];
 
     /**
-     * @var string
+     * @var array
      */
-    protected $table = 'tournaments_participants';
+    protected $fillable = [
+        'nickname',
+        'user_uuid',
+        'tournament_uuid',
+        'challonge_id',
+    ];
 }
