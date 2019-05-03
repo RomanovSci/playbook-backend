@@ -2,16 +2,20 @@
 
 namespace App\Http\Controllers\API;
 
+use App\Exceptions\Http\ForbiddenHttpException;
 use App\Http\Controllers\Controller;
 use App\Http\Requests\Common\GetFormRequest;
 use App\Http\Requests\Tournament\CreateTournamentFormRequest;
 use App\Http\Requests\Tournament\StartTournamentFormRequest;
+use App\Models\Tournament;
+use App\Models\User;
 use App\Repositories\TournamentGridTypeRepository;
 use App\Repositories\TournamentRepository;
 use App\Repositories\TournamentTypeRepository;
 use App\Services\StartTournamentService;
 use App\Services\Tournament\CreateTournamentService;
 use Illuminate\Http\JsonResponse;
+use Illuminate\Support\Facades\Auth;
 
 /**
  * Class TournamentController
@@ -398,9 +402,18 @@ class TournamentController extends Controller
         StartTournamentFormRequest $request,
         StartTournamentService $startTournamentService
     ): JsonResponse {
-        $result = $startTournamentService->start(
-            TournamentRepository::getByUuid($request->get('tournament_uuid'))
-        );
+        /**
+         * @var User $user
+         * @var Tournament $tournament
+         */
+        $user = Auth::user();
+        $tournament = TournamentRepository::getByUuid($request->get('tournament_uuid'));
+
+        if ($user->cant('manage', $tournament)) {
+            throw new ForbiddenHttpException('Can not start tournament');
+        }
+
+        $result = $startTournamentService->start($tournament);
 
         if (!$result->getSuccess()) {
             return $this->error($result->getMessage());

@@ -11,6 +11,7 @@ namespace App\Models;
  * @property string tournament_type_uuid
  * @property string creator_uuid
  * @property integer challonge_id
+ * @property string started_at
  *
  * @OA\Schema(
  *      allOf={
@@ -66,6 +67,10 @@ namespace App\Models;
  *              @OA\Property(
  *                  property="challonge_id",
  *                  type="integer",
+ *              ),
+ *              @OA\Property(
+ *                  property="started_at",
+ *                  type="string",
  *              )
  *          ),
  *          @OA\Schema(ref="#/components/schemas/BaseModel")

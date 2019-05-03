@@ -131,7 +131,7 @@ class TournamentInvitationController extends Controller
         $user = Auth::user();
         $tournament = TournamentRepository::getByUuid($request->get('tournament_uuid'));
 
-        if ($user->cant('invite', $tournament)) {
+        if ($user->cant('manage', $tournament)) {
             throw new ForbiddenHttpException('Only tournament owner can invite user');
         }
 

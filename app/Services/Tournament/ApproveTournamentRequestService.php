@@ -7,6 +7,7 @@ use App\Models\TournamentRequest;
 use App\Services\ExecResult;
 use Carbon\Carbon;
 use Illuminate\Support\Facades\DB;
+use Illuminate\Support\Facades\Log;
 
 /**
  * Class ApproveTournamentRequestService
@@ -52,6 +53,7 @@ class ApproveTournamentRequestService
             );
         } catch (\Throwable $e) {
             DB::rollBack();
+            Log::error($e->getMessage());
             return ExecResult::instance()->setMessage($e->getMessage());
         }
 
