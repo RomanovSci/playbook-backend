@@ -351,7 +351,7 @@ class TrainerController extends Controller
             return $this->error(__('errors.trainer_info_exists'));
         }
 
-        $createResult = $createInfoService->run($user, $request->all());
+        $createResult = $createInfoService->create($user, $request->all());
 
         return $this->success(array_merge($createResult->getData('info')->toArray(), [
             'playgrounds' => $user->playgrounds,
@@ -528,7 +528,7 @@ class TrainerController extends Controller
             throw new ForbiddenHttpException(__('errors.user_cant_edit_info'));
         }
 
-        $editResult = $editInfoService->run($user, $info, $request->all());
+        $editResult = $editInfoService->edit($user, $info, $request->all());
         return $this->success(array_merge($editResult->getData('info')->toArray(), [
             'playgrounds' => $user->playgrounds,
             'images' => $editResult->getData('info')->images,

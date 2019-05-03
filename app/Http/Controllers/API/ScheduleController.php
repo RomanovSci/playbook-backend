@@ -372,7 +372,7 @@ class ScheduleController extends Controller
             }
         }
 
-        $createResult = $createScheduleService->run($schedulable, $request->all());
+        $createResult = $createScheduleService->create($schedulable, $request->all());
         return $this->success($createResult->getData('schedules'));
     }
 
@@ -524,7 +524,7 @@ class ScheduleController extends Controller
         }
 
         return $this->success(
-            $editScheduleService->run($schedule, $request->all())->getData('schedule')
+            $editScheduleService->edit($schedule, $request->all())->getData('schedule')
         );
     }
 

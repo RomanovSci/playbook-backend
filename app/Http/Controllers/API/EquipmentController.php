@@ -220,7 +220,7 @@ class EquipmentController extends Controller
     {
         /** @var User $user */
         $user = Auth::user();
-        $result = $createEquipmentService->run($user, $request->all());
+        $result = $createEquipmentService->create($user, $request->all());
 
         if (!$result->getSuccess()) {
             return $this->error($result->getMessage());

@@ -38,7 +38,7 @@ class CreateInfoService
      * @return ExecResult
      * @throws \Throwable
      */
-    public function run(User $user, array $data): ExecResult
+    public function create(User $user, array $data): ExecResult
     {
         try {
             DB::beginTransaction();
@@ -54,7 +54,7 @@ class CreateInfoService
             }
 
             if (isset($data['image'])) {
-                $this->uploadFileService->run('trainer/' . $user->uuid, $data['image'], $info);
+                $this->uploadFileService->upload('trainer/' . $user->uuid, $data['image'], $info);
             }
         } catch (\Throwable $e) {
             DB::rollBack();

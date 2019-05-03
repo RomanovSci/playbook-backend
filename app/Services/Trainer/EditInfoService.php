@@ -39,7 +39,7 @@ class EditInfoService
      * @return ExecResult
      * @throws \Throwable
      */
-    public function run(User $user, TrainerInfo $info, array $data): ExecResult
+    public function edit(User $user, TrainerInfo $info, array $data): ExecResult
     {
         try {
             DB::beginTransaction();
@@ -55,7 +55,7 @@ class EditInfoService
 
             if (isset($data['image'])) {
                 $info->images()->delete();
-                $this->uploadFileService->run('trainer/' . $user->uuid, $data['image'], $info);
+                $this->uploadFileService->upload('trainer/' . $user->uuid, $data['image'], $info);
             }
         } catch (\Throwable $e) {
             DB::rollBack();

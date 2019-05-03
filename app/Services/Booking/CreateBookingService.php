@@ -41,7 +41,7 @@ class CreateBookingService
      * @return ExecResult
      * @throws IncorrectDateRange
      */
-    public function run(User $creator, string $bookableType, array $data): ExecResult
+    public function create(User $creator, string $bookableType, array $data): ExecResult
     {
         $bookableUuid = $data['bookable_uuid'];
         $getPriceResult = BookingHelper::getBookingPrice(

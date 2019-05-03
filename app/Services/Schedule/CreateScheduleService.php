@@ -28,7 +28,7 @@ class CreateScheduleService
      *
      * @throws \Throwable
      */
-    public function run(Model $schedulable, array $data): ExecResult
+    public function create(Model $schedulable, array $data): ExecResult
     {
         $schedules = [];
         $data['price_per_hour'] = money($data['price_per_hour'], $data['currency'])->getAmount();

@@ -36,7 +36,7 @@ class ChangeBookingStatusService
      * @param string|null $note
      * @return ExecResult
      */
-    public function run(Booking $booking, int $status, string $note = null): ExecResult
+    public function change(Booking $booking, int $status, string $note = null): ExecResult
     {
         if ($booking->status === $status) {
             return ExecResult::instance()->setMessage(__('errors.status_already_set'));

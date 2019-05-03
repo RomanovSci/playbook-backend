@@ -166,7 +166,7 @@ class UserController extends Controller
      */
     public function register(RegisterFormRequest $request, RegisterService $registerService)
     {
-        return $this->success($registerService->run($request->all())->getData());
+        return $this->success($registerService->register($request->all())->getData());
     }
 
     /**
@@ -273,7 +273,7 @@ class UserController extends Controller
      */
     public function login(LoginFormRequest $request, LoginService $loginService)
     {
-        return $this->success($loginService->run($request->all())->getData());
+        return $this->success($loginService->login($request->all())->getData());
     }
 
     /**
@@ -557,7 +557,7 @@ class UserController extends Controller
      */
     public function resetPassword(ResetPasswordFormRequest $request, ResetPasswordService $resetPasswordService)
     {
-        $resetResult = $resetPasswordService->run(
+        $resetResult = $resetPasswordService->reset(
             UserRepository::getByPhone($request->get('phone'))
         );
 

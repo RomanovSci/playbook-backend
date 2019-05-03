@@ -25,7 +25,7 @@ class EditScheduleService
      *
      * @throws IncorrectDateRange
      */
-    public function run(Schedule $schedule, array $data): ExecResult
+    public function edit(Schedule $schedule, array $data): ExecResult
     {
         $newStartTime = Carbon::parse($data['start_time']);
         $newEndTime = Carbon::parse($data['end_time']);

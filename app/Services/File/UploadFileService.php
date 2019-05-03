@@ -22,7 +22,7 @@ class UploadFileService
      * @param Model $relatedModel
      * @return ExecResult
      */
-    public function run(string $path, UploadedFile  $uploadedFile, Model $relatedModel): ExecResult
+    public function upload(string $path, UploadedFile  $uploadedFile, Model $relatedModel): ExecResult
     {
         $uploadedFile->store($path);
 

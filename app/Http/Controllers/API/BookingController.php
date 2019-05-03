@@ -594,7 +594,7 @@ class BookingController extends Controller
     ) {
         /** @var User $user */
         $user = Auth::user();
-        $result = $createBookingService->run($user, $bookableType, $request->all());
+        $result = $createBookingService->create($user, $bookableType, $request->all());
 
         if (!$result->getSuccess()) {
             throw new ForbiddenHttpException($result->getMessage());
@@ -690,7 +690,7 @@ class BookingController extends Controller
             );
         }
 
-        $changeStatusResult = $changeBookingStatusService->run(
+        $changeStatusResult = $changeBookingStatusService->change(
             $booking,
             Booking::STATUS_CONFIRMED
         );
@@ -830,7 +830,7 @@ class BookingController extends Controller
             throw new ForbiddenHttpException(__('errors.cant_decline_booking'));
         }
 
-        $changeStatusResult = $changeBookingStatusService->run(
+        $changeStatusResult = $changeBookingStatusService->change(
             $booking,
             Booking::STATUS_DECLINED,
             $request->post('note')

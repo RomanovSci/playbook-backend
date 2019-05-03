@@ -22,7 +22,7 @@ class LoginService
      * @param array $data
      * @return ExecResult
      */
-    public function run(array $data): ExecResult
+    public function login(array $data): ExecResult
     {
         /** @var User $user */
         $user = User::where('phone', $data['phone'])->first();

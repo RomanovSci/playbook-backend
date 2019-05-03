@@ -36,7 +36,7 @@ class ResetPasswordService
      * @param User $user
      * @return ExecResult
      */
-    public function run(User $user): ExecResult
+    public function reset(User $user): ExecResult
     {
         try {
             /** @var PasswordReset $passwordReset */

@@ -17,7 +17,7 @@ class CreateEquipmentService
      * @param array $data
      * @return ExecResult
      */
-    public function run(User $user, array $data): ExecResult
+    public function create(User $user, array $data): ExecResult
     {
         /** @var Equipment $equipment */
         $equipment = Equipment::create(array_merge($data, ['creator_uuid' => $user->uuid]));

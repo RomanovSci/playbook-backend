@@ -37,7 +37,7 @@ class RegisterService
      * @return ExecResult
      * @throws \Throwable
      */
-    public function run(array $data): ExecResult
+    public function register(array $data): ExecResult
     {
         $data['verification_code'] = Str::random(6);
         $data['password'] = bcrypt($data['password'] ?? $data['verification_code']);
