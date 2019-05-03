@@ -5,9 +5,11 @@ namespace App\Http\Controllers\API;
 use App\Http\Controllers\Controller;
 use App\Http\Requests\Common\GetFormRequest;
 use App\Http\Requests\Tournament\CreateTournamentFormRequest;
+use App\Http\Requests\Tournament\StartTournamentFormRequest;
 use App\Repositories\TournamentGridTypeRepository;
 use App\Repositories\TournamentRepository;
 use App\Repositories\TournamentTypeRepository;
+use App\Services\StartTournamentService;
 use App\Services\Tournament\CreateTournamentService;
 use Illuminate\Http\JsonResponse;
 
@@ -385,5 +387,25 @@ class TournamentController extends Controller
         }
 
         return $this->created($result->getData());
+    }
+
+    /**
+     * @param StartTournamentFormRequest $request
+     * @param StartTournamentService $startTournamentService
+     * @return JsonResponse
+     */
+    public function start(
+        StartTournamentFormRequest $request,
+        StartTournamentService $startTournamentService
+    ): JsonResponse {
+        $result = $startTournamentService->start(
+            TournamentRepository::getByUuid($request->get('tournament_uuid'))
+        );
+
+        if (!$result->getSuccess()) {
+            return $this->error($result->getMessage());
+        }
+
+        return $this->success($result->getData());
     }
 }
