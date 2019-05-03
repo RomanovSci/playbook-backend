@@ -158,7 +158,7 @@ class ScheduleController extends Controller
      *      ),
      * )
      */
-    public function get(TimeIntervalFormRequest $request, string $schedulableType, string $uuid = null)
+    public function get(TimeIntervalFormRequest $request, string $schedulableType, string $uuid = null): JsonResponse
     {
         $schedules = ScheduleRepository::getBetween(
             Carbon::parse($request->get('start_time')),
@@ -265,8 +265,8 @@ class ScheduleController extends Controller
      *          )
      *      ),
      *      @OA\Response(
-     *          response="200",
-     *          description="Success",
+     *          response="201",
+     *          description="Created",
      *          @OA\MediaType(
      *              mediaType="application/json",
      *              @OA\Schema(
@@ -347,7 +347,7 @@ class ScheduleController extends Controller
         CreateScheduleFormRequest $request,
         string $schedulableType,
         CreateScheduleService $createScheduleService
-    ) {
+    ): JsonResponse {
         /** @var User $schedulable */
         $schedulable = Auth::user();
 
@@ -373,7 +373,7 @@ class ScheduleController extends Controller
         }
 
         $createResult = $createScheduleService->create($schedulable, $request->all());
-        return $this->success($createResult->getData('schedules'));
+        return $this->created($createResult->getData('schedules'));
     }
 
     /**
@@ -517,8 +517,11 @@ class ScheduleController extends Controller
      *      security={{"Bearer":{}}}
      * )
      */
-    public function edit(Schedule $schedule, EditScheduleFormRequest $request, EditScheduleService $editScheduleService)
-    {
+    public function edit(
+        Schedule $schedule,
+        EditScheduleFormRequest $request,
+        EditScheduleService $editScheduleService
+    ): JsonResponse {
         if (Auth::user()->cant('manageSchedule', $schedule)) {
             throw new ForbiddenHttpException(__('errors.cant_manage_schedule'));
         }
@@ -596,7 +599,7 @@ class ScheduleController extends Controller
      *      security={{"Bearer":{}}}
      * )
      */
-    public function delete(Schedule $schedule)
+    public function delete(Schedule $schedule): JsonResponse
     {
         if (Auth::user()->cant('manageSchedule', $schedule)) {
             throw new ForbiddenHttpException(__('errors.cant_manage_schedule'));

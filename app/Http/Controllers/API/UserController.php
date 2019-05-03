@@ -164,7 +164,7 @@ class UserController extends Controller
      *      ),
      * )
      */
-    public function register(RegisterFormRequest $request, RegisterService $registerService)
+    public function register(RegisterFormRequest $request, RegisterService $registerService): JsonResponse
     {
         return $this->success($registerService->register($request->all())->getData());
     }
@@ -271,7 +271,7 @@ class UserController extends Controller
      *      ),
      * )
      */
-    public function login(LoginFormRequest $request, LoginService $loginService)
+    public function login(LoginFormRequest $request, LoginService $loginService): JsonResponse
     {
         return $this->success($loginService->login($request->all())->getData());
     }
@@ -314,7 +314,7 @@ class UserController extends Controller
      *      security={{"Bearer":{}}}
      * )
      */
-    public function logout(Request $request)
+    public function logout(Request $request): JsonResponse
     {
         $request->user()->token()->revoke();
         return $this->success();
@@ -394,7 +394,7 @@ class UserController extends Controller
      *      security={{"Bearer":{}}}
      * )
      */
-    public function verifyPhone(VerifyPhoneFormRequest $request)
+    public function verifyPhone(VerifyPhoneFormRequest $request): JsonResponse
     {
         /** @var User $user */
         $user = Auth::user();
@@ -473,7 +473,7 @@ class UserController extends Controller
     public function resendVerificationCode(
         ResendVerificationCodeFormRequest $request,
         SmsDeliveryService $smsDeliveryService
-    ) {
+    ): JsonResponse {
         /** @var User $user */
         $user = UserRepository::getByPhone($request->get('phone'));
         $smsDeliveryService->send($user->phone, $user->verification_code);
@@ -555,11 +555,11 @@ class UserController extends Controller
      *      )
      * )
      */
-    public function resetPassword(ResetPasswordFormRequest $request, ResetPasswordService $resetPasswordService)
-    {
-        $resetResult = $resetPasswordService->reset(
-            UserRepository::getByPhone($request->get('phone'))
-        );
+    public function resetPassword(
+        ResetPasswordFormRequest $request,
+        ResetPasswordService $resetPasswordService
+    ): JsonResponse {
+        $resetResult = $resetPasswordService->reset(UserRepository::getByPhone($request->get('phone')));
 
         return $resetResult->getSuccess()
             ? $this->success($resetResult->getData('passwordReset'))

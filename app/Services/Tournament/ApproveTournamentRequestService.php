@@ -38,7 +38,6 @@ class ApproveTournamentRequestService
      *
      * @param TournamentRequest $tournamentRequest
      * @return ExecResult
-     * @throws \Throwable
      */
     public function approve(TournamentRequest $tournamentRequest): ExecResult
     {

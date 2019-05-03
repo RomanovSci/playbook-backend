@@ -103,13 +103,14 @@ class PlaygroundController extends Controller
      *      security={{"Bearer":{}}}
      * )
      */
-    public function get(GetFormRequest $request)
+    public function get(GetFormRequest $request): JsonResponse
     {
-        $playgrounds = PlaygroundRepository::get(
-            $request->get('limit'),
-            $request->get('offset')
+        return $this->success(
+            PlaygroundRepository::get(
+                $request->get('limit'),
+                $request->get('offset')
+            )
         );
-        return $this->success($playgrounds);
     }
 
     /**
@@ -198,15 +199,14 @@ class PlaygroundController extends Controller
      *      security={{"Bearer":{}}}
      * )
      */
-    public function search(SearchFormRequest $request)
+    public function search(SearchFormRequest $request): JsonResponse
     {
-        $playgrounds = PlaygroundRepository::search($request->all());
-        return $this->success($playgrounds);
+        return $this->success(PlaygroundRepository::search($request->all()));
     }
 
     /**
      * @param CreatePlaygroundFormRequest $request
-     * @return string
+     * @return JsonResponse
      *
      * @OA\Post(
      *      path="/api/playground/create",
@@ -265,8 +265,8 @@ class PlaygroundController extends Controller
      *          )
      *      ),
      *      @OA\Response(
-     *          response="200",
-     *          description="Success",
+     *          response="201",
+     *          description="Created",
      *          @OA\MediaType(
      *              mediaType="application/json",
      *              @OA\Schema(
@@ -346,7 +346,7 @@ class PlaygroundController extends Controller
      *      security={{"Bearer":{}}}
      * )
      */
-    public function create(CreatePlaygroundFormRequest $request)
+    public function create(CreatePlaygroundFormRequest $request): JsonResponse
     {
         /**
          * @var User $user
@@ -367,7 +367,7 @@ class PlaygroundController extends Controller
             'creator_uuid' => $user->uuid,
         ]));
 
-        return $this->success($playground);
+        return $this->created($playground);
     }
 
     /**
@@ -416,7 +416,7 @@ class PlaygroundController extends Controller
      *      security={{"Bearer":{}}}
      * )
      */
-    public function getTypes()
+    public function getTypes(): JsonResponse
     {
         return $this->success(PlaygroundTypesRepository::all());
     }

@@ -78,7 +78,7 @@ class EquipmentController extends Controller
      *      )
      * )
      */
-    public function get(string $bookableType, string $uuid)
+    public function get(string $bookableType, string $uuid): JsonResponse
     {
         if ($bookableType === Playground::class) {
             /**
@@ -138,8 +138,8 @@ class EquipmentController extends Controller
      *          )
      *      ),
      *      @OA\Response(
-     *          response="200",
-     *          description="Success",
+     *          response="201",
+     *          description="Created",
      *          @OA\MediaType(
      *              mediaType="application/json",
      *              @OA\Schema(
@@ -216,8 +216,10 @@ class EquipmentController extends Controller
      *      security={{"Bearer":{}}}
      * )
      */
-    public function create(CreateEquipmentFormRequest $request, CreateEquipmentService $createEquipmentService)
-    {
+    public function create(
+        CreateEquipmentFormRequest $request,
+        CreateEquipmentService $createEquipmentService
+    ): JsonResponse {
         /** @var User $user */
         $user = Auth::user();
         $result = $createEquipmentService->create($user, $request->all());
@@ -226,6 +228,6 @@ class EquipmentController extends Controller
             return $this->error($result->getMessage());
         }
 
-        return $this->success($result->getData());
+        return $this->created($result->getData());
     }
 }

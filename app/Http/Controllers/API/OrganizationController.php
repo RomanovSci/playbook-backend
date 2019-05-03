@@ -98,13 +98,14 @@ class OrganizationController extends Controller
      *      security={{"Bearer":{}}}
      * )
      */
-    public function get(GetFormRequest $request)
+    public function get(GetFormRequest $request): JsonResponse
     {
-        $organizations = OrganizationRepository::get(
-            $request->get('limit'),
-            $request->get('offset')
+        return $this->success(
+            OrganizationRepository::get(
+                $request->get('limit'),
+                $request->get('offset')
+            )
         );
-        return $this->success($organizations);
     }
 
     /**
@@ -140,8 +141,8 @@ class OrganizationController extends Controller
      *          )
      *      ),
      *      @OA\Response(
-     *          response="200",
-     *          description="Success",
+     *          response="201",
+     *          description="Created",
      *          @OA\MediaType(
      *              mediaType="application/json",
      *              @OA\Schema(
@@ -199,14 +200,13 @@ class OrganizationController extends Controller
      *      security={{"Bearer":{}}}
      * )
      */
-    public function create(CreateOrganizationFormRequest $request)
+    public function create(CreateOrganizationFormRequest $request): JsonResponse
     {
-        /** @var Organization $organization */
-        $organization = Organization::create(array_merge(
-            $request->all(),
-            ['owner_uuid' => Auth::user()->uuid]
-        ));
-
-        return $this->success($organization);
+        return $this->created(
+            Organization::create(array_merge(
+                $request->all(),
+                ['owner_uuid' => Auth::user()->uuid]
+            ))
+        );
     }
 }

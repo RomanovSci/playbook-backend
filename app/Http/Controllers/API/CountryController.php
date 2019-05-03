@@ -96,13 +96,14 @@ class CountryController extends Controller
      *      security={{"Bearer":{}}}
      * )
      */
-    public function get(GetFormRequest $request)
+    public function get(GetFormRequest $request): JsonResponse
     {
-        $cities = CountryRepository::get(
-            $request->get('limit'),
-            $request->get('offset')
+        return $this->success(
+            CountryRepository::get(
+                $request->get('limit'),
+                $request->get('offset')
+            )
         );
-        return $this->success($cities);
     }
 
     /**
@@ -191,9 +192,8 @@ class CountryController extends Controller
      *      security={{"Bearer":{}}}
      * )
      */
-    public function search(SearchFormRequest $request)
+    public function search(SearchFormRequest $request): JsonResponse
     {
-        $cities = CountryRepository::search($request->all());
-        return $this->success($cities);
+        return $this->success(CountryRepository::search($request->all()));
     }
 }

@@ -10,7 +10,6 @@ use App\Models\TournamentRequest;
 use App\Models\User;
 use App\Repositories\TournamentRequestRepository;
 use App\Services\Tournament\ApproveTournamentRequestService;
-use Carbon\Carbon;
 use Illuminate\Http\JsonResponse;
 use Illuminate\Support\Facades\Auth;
 

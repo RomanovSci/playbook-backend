@@ -202,7 +202,7 @@ class BookingController extends Controller
      *      security={{"Bearer":{}}}
      * )
      */
-    public function get(TimeIntervalFormRequest $request, string $bookableType, string $uuid)
+    public function get(TimeIntervalFormRequest $request, string $bookableType, string $uuid): JsonResponse
     {
         if (Gate::denies('getBookingsList', [$bookableType, $uuid])) {
             throw new ForbiddenHttpException(__('errors.cant_get_bookings'));
@@ -361,7 +361,7 @@ class BookingController extends Controller
      *      security={{"Bearer":{}}}
      * )
      */
-    public function getUserBookings(TimeIntervalFormRequest $request)
+    public function getUserBookings(TimeIntervalFormRequest $request): JsonResponse
     {
         /** @var User $user */
         $user = Auth::user();
@@ -463,8 +463,8 @@ class BookingController extends Controller
      *          )
      *      ),
      *      @OA\Response(
-     *          response="200",
-     *          description="Success",
+     *          response="201",
+     *          description="Created",
      *          @OA\MediaType(
      *              mediaType="application/json",
      *              @OA\Schema(
@@ -591,7 +591,7 @@ class BookingController extends Controller
         string $bookableType,
         CreateBookingFormRequest $request,
         CreateBookingService $createBookingService
-    ) {
+    ): JsonResponse {
         /** @var User $user */
         $user = Auth::user();
         $result = $createBookingService->create($user, $bookableType, $request->all());
@@ -600,7 +600,7 @@ class BookingController extends Controller
             throw new ForbiddenHttpException($result->getMessage());
         }
 
-        return $this->success($result->getData());
+        return $this->created($result->getData());
     }
 
     /**
@@ -680,7 +680,7 @@ class BookingController extends Controller
      *      security={{"Bearer":{}}}
      * )
      */
-    public function confirm(Booking $booking, ChangeBookingStatusService $changeBookingStatusService)
+    public function confirm(Booking $booking, ChangeBookingStatusService $changeBookingStatusService): JsonResponse
     {
         $checkAvailabilityResult = BookingHelper::timeIsAvailable($booking);
 
@@ -825,7 +825,7 @@ class BookingController extends Controller
         Booking $booking,
         DeclineBookingFormRequest $request,
         ChangeBookingStatusService $changeBookingStatusService
-    ) {
+    ): JsonResponse {
         if (Auth::user()->cant('declineBooking', $booking)) {
             throw new ForbiddenHttpException(__('errors.cant_decline_booking'));
         }

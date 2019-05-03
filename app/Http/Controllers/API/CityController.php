@@ -104,14 +104,13 @@ class CityController extends Controller
      *      security={{"Bearer":{}}}
      * )
      */
-    public function get(GetCitiesFormRequest $request)
+    public function get(GetCitiesFormRequest $request): JsonResponse
     {
-        $cities = CityRepository::get($request->all());
-        return $this->success($cities);
+        return $this->success(CityRepository::get($request->all()));
     }
 
     /**
-     * @param SearchFormRequest $request
+     * @param SearchCitiesFormRequest $request
      * @return JsonResponse
      *
      * @OA\Get(
@@ -203,9 +202,8 @@ class CityController extends Controller
      *      security={{"Bearer":{}}}
      * )
      */
-    public function search(SearchCitiesFormRequest $request)
+    public function search(SearchCitiesFormRequest $request): JsonResponse
     {
-        $cities = CityRepository::search($request->all());
-        return $this->success($cities);
+        return $this->success(CityRepository::search($request->all()));
     }
 }

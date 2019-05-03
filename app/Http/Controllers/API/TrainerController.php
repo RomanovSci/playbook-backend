@@ -121,7 +121,7 @@ class TrainerController extends Controller
      *      )
      * )
      */
-    public function getTrainers(GetFormRequest $request)
+    public function getTrainers(GetFormRequest $request): JsonResponse
     {
         $trainers = UserRepository::getByRole(
             User::ROLE_TRAINER,
@@ -195,7 +195,7 @@ class TrainerController extends Controller
      *      )
      * )
      */
-    public function getTrainerInfo(User $user)
+    public function getTrainerInfo(User $user): JsonResponse
     {
         return $this->success(array_merge($user->toArray(), [
             'playgrounds' => $user->playgrounds,
@@ -261,8 +261,8 @@ class TrainerController extends Controller
      *          )
      *      ),
      *      @OA\Response(
-     *          response="200",
-     *          description="Success",
+     *          response="201",
+     *          description="Created",
      *          @OA\MediaType(
      *              mediaType="application/json",
      *              @OA\Schema(
@@ -342,8 +342,10 @@ class TrainerController extends Controller
      *      security={{"Bearer":{}}}
      * )
      */
-    public function createInfo(CreateTrainerInfoFormRequest $request, CreateInfoService $createInfoService)
-    {
+    public function createInfo(
+        CreateTrainerInfoFormRequest $request,
+        CreateInfoService $createInfoService
+    ): JsonResponse {
         /** @var User $user */
         $user = Auth::user();
 
@@ -353,7 +355,7 @@ class TrainerController extends Controller
 
         $createResult = $createInfoService->create($user, $request->all());
 
-        return $this->success(array_merge($createResult->getData('info')->toArray(), [
+        return $this->created(array_merge($createResult->getData('info')->toArray(), [
             'playgrounds' => $user->playgrounds,
             'images' => $createResult->getData('info')->images,
         ]));
@@ -519,8 +521,11 @@ class TrainerController extends Controller
      *      security={{"Bearer":{}}}
      * )
      */
-    public function editInfo(EditTrainerInfoFormRequest $request, TrainerInfo $info, EditInfoService $editInfoService)
-    {
+    public function editInfo(
+        EditTrainerInfoFormRequest $request,
+        TrainerInfo $info,
+        EditInfoService $editInfoService
+    ): JsonResponse {
         /** @var User $user */
         $user = Auth::user();
 
@@ -529,6 +534,7 @@ class TrainerController extends Controller
         }
 
         $editResult = $editInfoService->edit($user, $info, $request->all());
+
         return $this->success(array_merge($editResult->getData('info')->toArray(), [
             'playgrounds' => $user->playgrounds,
             'images' => $editResult->getData('info')->images,
