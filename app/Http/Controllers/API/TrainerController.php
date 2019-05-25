@@ -26,7 +26,7 @@ class TrainerController extends Controller
      * @return JsonResponse
      *
      * @OA\Get(
-     *      path="/api/trainer/list",
+     *      path="/api/trainer",
      *      tags={"Trainer"},
      *      summary="Get trainers list",
      *      @OA\Parameter(
@@ -121,7 +121,7 @@ class TrainerController extends Controller
      *      )
      * )
      */
-    public function getTrainers(GetFormRequest $request): JsonResponse
+    public function get(GetFormRequest $request): JsonResponse
     {
         $trainers = UserRepository::getByRole(
             User::ROLE_TRAINER,
@@ -140,7 +140,7 @@ class TrainerController extends Controller
      * @return JsonResponse
      *
      * @OA\Get(
-     *      path="/api/trainer/info/{trainer_uuid}",
+     *      path="/api/trainer/{trainer_uuid}/info",
      *      tags={"Trainer"},
      *      summary="Get trainer information",
      *      @OA\Parameter(
@@ -195,7 +195,7 @@ class TrainerController extends Controller
      *      )
      * )
      */
-    public function getTrainerInfo(User $user): JsonResponse
+    public function getInfo(User $user): JsonResponse
     {
         return $this->success(array_merge($user->toArray(), [
             'playgrounds' => $user->playgrounds,
@@ -210,7 +210,7 @@ class TrainerController extends Controller
      * @throws \Throwable
      *
      * @OA\Post(
-     *      path="/api/trainer/info/create",
+     *      path="/api/trainer/info",
      *      tags={"Trainer"},
      *      summary="Create trainer information",
      *      @OA\RequestBody(
@@ -368,8 +368,8 @@ class TrainerController extends Controller
      * @return JsonResponse
      * @throws \Throwable
      *
-     * @OA\Post(
-     *      path="/api/trainer/info/edit/{trainer_info_uuid}",
+     * @OA\Put(
+     *      path="/api/trainer/info/{trainer_info_uuid}",
      *      tags={"Trainer"},
      *      summary="Edit trainer information",
      *      @OA\Parameter(

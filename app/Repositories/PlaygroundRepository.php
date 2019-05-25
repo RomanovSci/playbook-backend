@@ -3,6 +3,7 @@
 namespace App\Repositories;
 
 use App\Models\Playground;
+use Illuminate\Database\Eloquent\Builder;
 use Illuminate\Database\Eloquent\Collection;
 
 /**
@@ -12,37 +13,20 @@ use Illuminate\Database\Eloquent\Collection;
 class PlaygroundRepository
 {
     /**
-     * @param int $limit
-     * @param int $offset
-     * @return Collection
-     */
-    public static function get(int $limit, int $offset): Collection
-    {
-        return self::query($limit, $offset)->get();
-    }
-
-    /**
-     * Search playgrounds
-     *
      * @param array $data
      * @return Collection
      */
-    public static function search(array $data): Collection
+    public static function get(array $data): Collection
     {
-        return self::query($data['limit'], $data['offset'])
-            ->where('name', 'ilike', '%' . $data['query'] . '%')
-            ->orWhere('description', 'ilike', '%' . $data['query'] . '%')
-            ->orWhere('address', 'ilike', '%' . $data['query'] . '%')
-            ->get();
-    }
+        /** @var Builder $query */
+        $query = Playground::limit($data['limit'])->offset($data['offset']);
 
-    /**
-     * @param int $limit
-     * @param int $offset
-     * @return mixed
-     */
-    protected static function query(int $limit, int $offset)
-    {
-        return Playground::limit($limit)->offset($offset);
+        if (isset($data['query'])) {
+            $query->where('name', 'ilike', '%' . $data['query'] . '%')
+                ->orWhere('description', 'ilike', '%' . $data['query'] . '%')
+                ->orWhere('address', 'ilike', '%' . $data['query'] . '%');
+        }
+
+        return $query->get();
     }
 }

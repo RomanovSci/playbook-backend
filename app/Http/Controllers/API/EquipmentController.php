@@ -98,7 +98,7 @@ class EquipmentController extends Controller
      * @return JsonResponse
      *
      * @OA\Post(
-     *      path="/api/equipment/create",
+     *      path="/api/equipment",
      *      tags={"Equipment"},
      *      summary="Create equipment",
      *      @OA\RequestBody(

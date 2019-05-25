@@ -100,12 +100,10 @@ class OrganizationController extends Controller
      */
     public function get(GetFormRequest $request): JsonResponse
     {
-        return $this->success(
-            OrganizationRepository::get(
-                $request->get('limit'),
-                $request->get('offset')
-            )
-        );
+        return $this->success(OrganizationRepository::get(
+            $request->get('limit'),
+            $request->get('offset')
+        ));
     }
 
     /**
@@ -113,7 +111,7 @@ class OrganizationController extends Controller
      * @return JsonResponse
      *
      * @OA\Post(
-     *      path="/api/organization/create",
+     *      path="/api/organization",
      *      tags={"Organization"},
      *      summary="Create organization",
      *      @OA\RequestBody(

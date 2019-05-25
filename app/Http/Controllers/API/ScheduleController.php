@@ -192,7 +192,7 @@ class ScheduleController extends Controller
      * @throws \Throwable
      *
      * @OA\Post(
-     *      path="/api/schedule/{type}/create",
+     *      path="/api/schedule/{type}",
      *      tags={"Schedule"},
      *      summary="Create schedule",
      *      @OA\Parameter(
@@ -384,8 +384,8 @@ class ScheduleController extends Controller
      *
      * @throws IncorrectDateRange
      *
-     * @OA\Post(
-     *      path="/api/schedule/edit/{schedule_uuid}",
+     * @OA\Put(
+     *      path="/api/schedule/{schedule_uuid}",
      *      tags={"Schedule"},
      *      summary="Edit schedule",
      *      @OA\Parameter(
@@ -538,7 +538,7 @@ class ScheduleController extends Controller
      * @throws \Exception
      *
      * @OA\Delete(
-     *      path="/api/schedule/delete/{schedule_uuid}",
+     *      path="/api/schedule/{schedule_uuid}",
      *      tags={"Schedule"},
      *      summary="Delete schedule",
      *      @OA\Parameter(

@@ -16,6 +16,7 @@ class GetFormRequest extends BaseFormRequest
     public function rules(): array
     {
         return [
+            'query' => 'string|max:100',
             'limit' => 'required|integer|max:100',
             'offset' => 'required|integer'
         ];

@@ -385,7 +385,7 @@ class BookingController extends Controller
      * @throws IncorrectDateRange
      *
      * @OA\Post(
-     *      path="/api/booking/{type}/create",
+     *      path="/api/booking/{type}",
      *      tags={"Booking"},
      *      summary="Create booking",
      *      @OA\Parameter(
@@ -609,7 +609,7 @@ class BookingController extends Controller
      * @return JsonResponse
      *
      * @OA\Post(
-     *      path="/api/booking/confirm/{booking_uuid}",
+     *      path="/api/booking/{booking_uuid}/confirm",
      *      tags={"Booking"},
      *      summary="Confirm booking",
      *      @OA\Parameter(
@@ -709,7 +709,7 @@ class BookingController extends Controller
      * @return JsonResponse
      *
      * @OA\Post(
-     *      path="/api/booking/decline/{booking_uuid}",
+     *      path="/api/booking/{booking_uuid}/decline",
      *      tags={"Booking"},
      *      summary="Decline booking",
      *      @OA\Parameter(

@@ -3,8 +3,6 @@
 namespace App\Http\Controllers\API;
 
 use App\Http\Controllers\Controller;
-use App\Http\Requests\City\SearchCitiesFormRequest;
-use App\Http\Requests\Common\SearchFormRequest;
 use App\Http\Requests\City\GetCitiesFormRequest;
 use App\Repositories\CityRepository;
 use Illuminate\Http\JsonResponse;
@@ -36,6 +34,13 @@ class CityController extends Controller
      *          in="query",
      *          required=true,
      *          @OA\Schema(type="integer")
+     *      ),
+     *      @OA\Parameter(
+     *          name="query",
+     *          description="Search string",
+     *          in="query",
+     *          required=false,
+     *          @OA\Schema(type="string")
      *      ),
      *      @OA\Parameter(
      *          name="country_uuid",
@@ -107,103 +112,5 @@ class CityController extends Controller
     public function get(GetCitiesFormRequest $request): JsonResponse
     {
         return $this->success(CityRepository::get($request->all()));
-    }
-
-    /**
-     * @param SearchCitiesFormRequest $request
-     * @return JsonResponse
-     *
-     * @OA\Get(
-     *      path="/api/city/search",
-     *      tags={"City"},
-     *      summary="Search cities",
-     *      @OA\Parameter(
-     *          name="limit",
-     *          description="Limit",
-     *          in="query",
-     *          required=true,
-     *          @OA\Schema(type="integer")
-     *      ),
-     *      @OA\Parameter(
-     *          name="offset",
-     *          description="Offset",
-     *          in="query",
-     *          required=true,
-     *          @OA\Schema(type="integer")
-     *      ),
-     *      @OA\Parameter(
-     *          name="query",
-     *          description="Search string",
-     *          in="query",
-     *          required=true,
-     *          @OA\Schema(type="string")
-     *      ),
-     *      @OA\Parameter(
-     *          name="country_uuid",
-     *          description="Country uuid",
-     *          in="query",
-     *          required=false,
-     *          @OA\Schema(type="string")
-     *      ),
-     *      @OA\Response(
-     *          response="200",
-     *          description="Success",
-     *          @OA\MediaType(
-     *              mediaType="application/json",
-     *              @OA\Schema(
-     *                  type="object",
-     *                  @OA\Property(
-     *                      property="success",
-     *                      type="boolean"
-     *                  ),
-     *                  @OA\Property(
-     *                      property="message",
-     *                      type="string",
-     *                  ),
-     *                  @OA\Property(
-     *                      type="array",
-     *                      property="data",
-     *                      @OA\Items(ref="#/components/schemas/City")
-     *                  )
-     *              )
-     *         )
-     *      ),
-     *      @OA\Response(
-     *          response="400",
-     *          description="Bad request",
-     *          @OA\MediaType(
-     *              mediaType="application/json",
-     *              @OA\Schema(
-     *                  example={
-     *                      "success": false,
-     *                      "message": "Validation error",
-     *                      "data": {
-     *                          "query": {
-     *                              "The query field is required."
-     *                          }
-     *                      }
-     *                  },
-     *              )
-     *          )
-     *      ),
-     *      @OA\Response(
-     *          response="401",
-     *          description="Unauthorized",
-     *          @OA\MediaType(
-     *              mediaType="application/json",
-     *              @OA\Schema(
-     *                  example={
-     *                      "success": false,
-     *                      "message": "Unauthorized"
-     *                  },
-     *              )
-     *          )
-     *      ),
-     *      security={{"Bearer":{}}}
-     * )
-     */
-    public function search(SearchCitiesFormRequest $request): JsonResponse
-    {
-        return $this->success(CityRepository::search($request->all()));
     }
 }
