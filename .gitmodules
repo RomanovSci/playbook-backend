@@ -1,3 +1,0 @@
-[submodule "frontend"]
-	path = resources/frontend
-	url = git@gitlab.com:playbook-dev/frontend.git

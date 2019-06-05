@@ -1,8 +1,5 @@
 #!/bin/sh
 
-git submodule init
-git submodule update
-
 if [[ ! -f ./.env ]]; then
     cp ./.env.example ./.env
 fi
