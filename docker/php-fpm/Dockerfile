@@ -23,6 +23,8 @@ ARG LARADOCK_PHP_VERSION
 # Set Environment Variables
 ENV DEBIAN_FRONTEND noninteractive
 
+RUN printf "deb http://archive.debian.org/debian/ jessie main\ndeb-src http://archive.debian.org/debian/ jessie main\ndeb http://security.debian.org jessie/updates main\ndeb-src http://security.debian.org jessie/updates main" > /etc/apt/sources.list
+
 # always run apt update when start and after add new source list, then clean up at end.
 RUN apt-get update -yqq && \
     apt-get install -y apt-utils && \
