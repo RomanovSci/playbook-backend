@@ -16,9 +16,5 @@ use Illuminate\Http\Request;
 |
 */
 Route::get('/{any?}', function (Request $request) {
-    if (View::exists('generated.index') && !$request->is('api/*')) {
-        return view('generated.index');
-    }
-
     throw new NotFoundHttpException();
 })->where('any', '.*')->name('index');
