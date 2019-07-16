@@ -1,4 +1,5 @@
 <?php
+declare(strict_types = 1);
 
 namespace App\Repositories;
 
@@ -44,9 +45,9 @@ class UserRepository
      * Get user by phone
      *
      * @param string $phone
-     * @return mixed
+     * @return User
      */
-    public static function getByPhone(string $phone)
+    public static function getByPhone(string $phone): User
     {
         return User::where('phone', $phone)->firstOrFail();
     }
@@ -55,9 +56,9 @@ class UserRepository
      * Get user by uuid
      *
      * @param string $uuid
-     * @return mixed
+     * @return User
      */
-    public static function getByUuid(string $uuid)
+    public static function getByUuid(string $uuid): User
     {
         return User::where('uuid', $uuid)->firstOrFail();
     }

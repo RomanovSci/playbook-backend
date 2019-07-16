@@ -1,9 +1,11 @@
 <?php
+declare(strict_types = 1);
 
 namespace App\Exceptions;
 
 use Exception;
 use Illuminate\Foundation\Exceptions\Handler as ExceptionHandler;
+use Illuminate\Http\Response;
 use Illuminate\Support\Facades\Log;
 
 /**
@@ -37,7 +39,7 @@ class Handler extends ExceptionHandler
      * @return void
      * @throws Exception
      */
-    public function report(Exception $exception)
+    public function report(Exception $exception): void
     {
         parent::report($exception);
     }
@@ -47,9 +49,9 @@ class Handler extends ExceptionHandler
      *
      * @param  \Illuminate\Http\Request  $request
      * @param  \Exception  $e
-     * @return \Illuminate\Http\Response
+     * @return Response
      */
-    public function render($request, Exception $e)
+    public function render($request, Exception $e): Response
     {
         Log::error($e->getMessage(), $e->getTrace());
 

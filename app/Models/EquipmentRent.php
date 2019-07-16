@@ -1,4 +1,5 @@
 <?php
+declare(strict_types = 1);
 
 namespace App\Models;
 
@@ -57,7 +58,7 @@ class EquipmentRent extends BaseModel
     /**
      * @return BelongsTo
      */
-    public function equipment()
+    public function equipment(): BelongsTo
     {
         return $this->belongsTo(Equipment::class);
     }

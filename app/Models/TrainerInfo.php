@@ -1,6 +1,10 @@
 <?php
+declare(strict_types = 1);
 
 namespace App\Models;
+
+use Illuminate\Database\Eloquent\Relations\BelongsTo;
+use Illuminate\Database\Eloquent\Relations\MorphMany;
 
 /**
  * Class TrainerInfo
@@ -80,7 +84,7 @@ class TrainerInfo extends BaseModel
     /**
      * @return \Illuminate\Database\Eloquent\Relations\BelongsTo
      */
-    public function user()
+    public function user(): BelongsTo
     {
         return $this->belongsTo(User::class);
     }
@@ -88,7 +92,7 @@ class TrainerInfo extends BaseModel
     /**
      * @return \Illuminate\Database\Eloquent\Relations\MorphMany
      */
-    public function images()
+    public function images(): MorphMany
     {
         return $this->morphMany(File::class, 'entity', null, 'entity_uuid');
     }

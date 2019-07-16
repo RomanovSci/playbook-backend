@@ -1,4 +1,5 @@
 <?php
+declare(strict_types = 1);
 
 namespace App\Providers;
 
@@ -26,7 +27,7 @@ class RouteServiceProvider extends ServiceProvider
      *
      * @return void
      */
-    public function boot()
+    public function boot(): void
     {
         /** Patterns */
         Route::patterns([
@@ -55,7 +56,7 @@ class RouteServiceProvider extends ServiceProvider
      *
      * @return void
      */
-    public function map()
+    public function map(): void
     {
         $this->mapApiRoutes();
         $this->mapWebRoutes();
@@ -67,7 +68,7 @@ class RouteServiceProvider extends ServiceProvider
      *
      * @return void
      */
-    protected function mapWebRoutes()
+    protected function mapWebRoutes(): void
     {
         Route::middleware('web')
              ->namespace($this->namespace)
@@ -80,7 +81,7 @@ class RouteServiceProvider extends ServiceProvider
      *
      * @return void
      */
-    protected function mapApiRoutes()
+    protected function mapApiRoutes(): void
     {
         Route::prefix('api')
              ->middleware('api')

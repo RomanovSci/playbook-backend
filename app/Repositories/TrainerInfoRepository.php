@@ -1,4 +1,5 @@
 <?php
+declare(strict_types = 1);
 
 namespace App\Repositories;
 
@@ -15,9 +16,9 @@ class TrainerInfoRepository
      * Get trainer info by user uuid
      *
      * @param User $user
-     * @return mixed
+     * @return TrainerInfo|null
      */
-    public static function getByUser(User $user)
+    public static function getByUser(User $user): ?TrainerInfo
     {
         return TrainerInfo::where('user_uuid', $user->uuid)->with('user')->first();
     }

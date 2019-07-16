@@ -1,4 +1,5 @@
 <?php
+declare(strict_types = 1);
 
 namespace App\Console\Commands;
 
@@ -28,9 +29,9 @@ class UserCreate extends Command
     /**
      * Execute the console command.
      *
-     * @return mixed
+     * @return bool
      */
-    public function handle()
+    public function handle(): bool
     {
         $data = [
             'first_name' => $this->ask('First name'),

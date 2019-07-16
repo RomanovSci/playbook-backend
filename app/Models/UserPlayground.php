@@ -1,4 +1,5 @@
 <?php
+declare(strict_types = 1);
 
 namespace App\Models;
 
@@ -41,7 +42,7 @@ class UserPlayground extends Model
     /**
      * @inheritdoc
      */
-    public static function boot()
+    public static function boot(): void
     {
         parent::boot();
         self::creating(function ($model) {

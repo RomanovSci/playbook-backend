@@ -1,4 +1,5 @@
 <?php
+declare(strict_types = 1);
 
 namespace App\Providers;
 
@@ -6,7 +7,6 @@ use App\Models\Playground;
 use App\Models\User;
 use Illuminate\Support\Facades\Validator;
 use Illuminate\Support\ServiceProvider;
-use Laravel\Passport\Passport;
 
 /**
  * Class AppServiceProvider
@@ -19,7 +19,7 @@ class AppServiceProvider extends ServiceProvider
      *
      * @return void
      */
-    public function boot()
+    public function boot(): void
     {
         /**
          * Uppercase validation
@@ -48,7 +48,7 @@ class AppServiceProvider extends ServiceProvider
      *
      * @return void
      */
-    public function register()
+    public function register(): void
     {
         //
     }

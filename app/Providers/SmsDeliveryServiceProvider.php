@@ -1,4 +1,5 @@
 <?php
+declare(strict_types = 1);
 
 namespace App\Providers;
 
@@ -17,7 +18,7 @@ class SmsDeliveryServiceProvider extends ServiceProvider
      *
      * @return void
      */
-    public function boot()
+    public function boot(): void
     {
        //
     }
@@ -27,7 +28,7 @@ class SmsDeliveryServiceProvider extends ServiceProvider
      *
      * @return void
      */
-    public function register()
+    public function register(): void
     {
         $this->app->bind(SmsDeliveryInterface::class, Twilio::class);
     }

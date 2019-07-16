@@ -1,4 +1,5 @@
 <?php
+declare(strict_types = 1);
 
 namespace App\Repositories;
 
@@ -19,7 +20,7 @@ class PasswordResetRepository
      * @param User $user
      * @return mixed
      */
-    public static function getActualByUser(User $user)
+    public static function getActualByUser(User $user): ?PasswordReset
     {
         return PasswordReset::where('user_uuid', $user->uuid)
             ->where('expired_at', '>', Carbon::now()->toDateTimeString())

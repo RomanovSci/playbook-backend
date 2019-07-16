@@ -1,4 +1,5 @@
 <?php
+declare(strict_types = 1);
 
 namespace App\Models;
 
@@ -63,7 +64,7 @@ class TournamentRequest extends BaseModel
     /**
      * @return BelongsTo
      */
-    public function tournament()
+    public function tournament(): BelongsTo
     {
         return $this->belongsTo(Tournament::class);
     }

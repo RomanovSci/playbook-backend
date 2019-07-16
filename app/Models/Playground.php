@@ -1,6 +1,11 @@
 <?php
+declare(strict_types = 1);
 
 namespace App\Models;
+
+use Illuminate\Database\Eloquent\Relations\BelongsTo;
+use Illuminate\Database\Eloquent\Relations\MorphMany;
+use Illuminate\Database\Eloquent\Relations\MorphTo;
 
 /**
  * Class Playground
@@ -120,7 +125,7 @@ class Playground extends BaseModel
      *
      * @return \Illuminate\Database\Eloquent\Relations\BelongsTo
      */
-    public function type()
+    public function type(): BelongsTo
     {
         return $this->belongsTo(PlaygroundType::class);
     }
@@ -130,7 +135,7 @@ class Playground extends BaseModel
      *
      * @return \Illuminate\Database\Eloquent\Relations\BelongsTo
      */
-    public function creator()
+    public function creator(): BelongsTo
     {
         return $this->belongsTo(User::class);
     }
@@ -140,7 +145,7 @@ class Playground extends BaseModel
      *
      * @return \Illuminate\Database\Eloquent\Relations\BelongsTo
      */
-    public function organization()
+    public function organization(): BelongsTo
     {
         return $this->belongsTo(Organization::class);
     }
@@ -150,7 +155,7 @@ class Playground extends BaseModel
      *
      * @return \Illuminate\Database\Eloquent\Relations\MorphMany
      */
-    public function schedules()
+    public function schedules(): MorphMany
     {
         return $this->morphMany(Schedule::class, 'schedulable', null, 'schedulable_uuid');
     }
@@ -160,7 +165,7 @@ class Playground extends BaseModel
      *
      * @return \Illuminate\Database\Eloquent\Relations\MorphMany
      */
-    public function bookings()
+    public function bookings(): MorphMany
     {
         return $this->morphMany(Booking::class, 'schedulable', null, 'schedulable_uuid');
     }

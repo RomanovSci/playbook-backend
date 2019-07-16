@@ -1,4 +1,5 @@
 <?php
+declare(strict_types = 1);
 
 namespace App\Models;
 
@@ -59,7 +60,7 @@ abstract class BaseModel extends Model
     /**
      * @inheritdoc
      */
-    public static function boot()
+    public static function boot(): void
     {
         parent::boot();
         self::creating(function ($model) {
@@ -71,7 +72,7 @@ abstract class BaseModel extends Model
      * @inheritdoc
      * @return string
      */
-    public function getRouteKeyName()
+    public function getRouteKeyName(): string
     {
         return 'uuid';
     }

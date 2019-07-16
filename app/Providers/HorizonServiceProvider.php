@@ -1,8 +1,8 @@
 <?php
+declare(strict_types = 1);
 
 namespace App\Providers;
 
-use Illuminate\Support\Facades\Log;
 use Laravel\Horizon\Horizon;
 use Laravel\Horizon\HorizonApplicationServiceProvider;
 
@@ -13,7 +13,7 @@ class HorizonServiceProvider extends HorizonApplicationServiceProvider
      *
      * @return void
      */
-    public function boot()
+    public function boot(): void
     {
         parent::boot();
     }
@@ -22,7 +22,7 @@ class HorizonServiceProvider extends HorizonApplicationServiceProvider
      * @inheritdoc
      * @return void
      */
-    protected function authorization()
+    protected function authorization(): void
     {
         Horizon::auth(function ($request) {
             return app()->environment('local') || in_array($request->ip(), [
@@ -37,7 +37,7 @@ class HorizonServiceProvider extends HorizonApplicationServiceProvider
      *
      * @return void
      */
-    public function register()
+    public function register(): void
     {
         // Horizon::night();
     }

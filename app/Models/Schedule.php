@@ -1,8 +1,11 @@
 <?php
+declare(strict_types = 1);
 
 namespace App\Models;
 
 use Carbon\Carbon;
+use Illuminate\Database\Eloquent\Relations\BelongsToMany;
+use Illuminate\Database\Eloquent\Relations\MorphTo;
 
 /**
  * Class PlaygroundSchedule
@@ -110,7 +113,7 @@ class Schedule extends BaseModel
     /**
      * @return \Illuminate\Database\Eloquent\Relations\MorphTo
      */
-    public function schedulable()
+    public function schedulable(): MorphTo
     {
         return $this->morphTo(null, null, 'schedulable_uuid');
     }
@@ -118,7 +121,7 @@ class Schedule extends BaseModel
     /**
      * @return \Illuminate\Database\Eloquent\Relations\BelongsToMany
      */
-    public function playgrounds()
+    public function playgrounds(): BelongsToMany
     {
         return $this->belongsToMany(Playground::class, 'schedules_playgrounds');
     }

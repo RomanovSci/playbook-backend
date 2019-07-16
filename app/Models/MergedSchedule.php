@@ -1,4 +1,5 @@
 <?php
+declare(strict_types = 1);
 
 namespace App\Models;
 
@@ -18,7 +19,7 @@ class MergedSchedule extends Schedule
      *
      * @return array
      */
-    public function getSchedules()
+    public function getSchedules(): array
     {
         return $this->schedules;
     }
@@ -27,8 +28,9 @@ class MergedSchedule extends Schedule
      * Add schedule to origin schedules
      *
      * @param Schedule $schedule
+     * @return void
      */
-    public function setSchedule(Schedule $schedule)
+    public function setSchedule(Schedule $schedule): void
     {
         $this->schedules[] = $schedule;
     }

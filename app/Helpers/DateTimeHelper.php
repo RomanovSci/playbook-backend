@@ -1,10 +1,10 @@
 <?php
+declare(strict_types = 1);
 
 namespace App\Helpers;
 
 use App\Exceptions\Internal\IncorrectDateRange;
 use Carbon\Carbon;
-use Carbon\CarbonPeriod;
 
 /**
  * Class DateTimeHelper

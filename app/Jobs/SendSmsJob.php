@@ -1,4 +1,5 @@
 <?php
+declare(strict_types = 1);
 
 namespace App\Jobs;
 
@@ -47,7 +48,7 @@ class SendSmsJob implements ShouldQueue
      * @param SmsDeliveryInterface $smsDeliveryService
      * @return void
      */
-    public function handle(SmsDeliveryInterface $smsDeliveryService)
+    public function handle(SmsDeliveryInterface $smsDeliveryService): void
     {
         $data = [
             'phone' => $this->phone,

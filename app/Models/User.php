@@ -1,8 +1,14 @@
 <?php
+declare(strict_types = 1);
 
 namespace App\Models;
 
 use App\Models\Interfaces\BaseStatusInterface;
+use Illuminate\Database\Eloquent\Builder;
+use Illuminate\Database\Eloquent\Relations\BelongsTo;
+use Illuminate\Database\Eloquent\Relations\BelongsToMany;
+use Illuminate\Database\Eloquent\Relations\HasOne;
+use Illuminate\Database\Eloquent\Relations\MorphMany;
 use Illuminate\Database\Eloquent\SoftDeletes;
 use Illuminate\Notifications\Notifiable;
 use Illuminate\Foundation\Auth\User as Authenticatable;
@@ -147,7 +153,7 @@ class User extends Authenticatable implements BaseStatusInterface
     /**
      * @inheritdoc
      */
-    public static function boot()
+    public static function boot(): void
     {
         parent::boot();
         self::creating(function ($model) {
@@ -159,7 +165,7 @@ class User extends Authenticatable implements BaseStatusInterface
      * @inheritdoc
      * @return string
      */
-    public function getRouteKeyName()
+    public function getRouteKeyName(): string
     {
         return 'uuid';
     }
@@ -170,7 +176,7 @@ class User extends Authenticatable implements BaseStatusInterface
      * @param \Illuminate\Database\Eloquent\Builder  $query
      * @return \Illuminate\Database\Eloquent\Builder
      */
-    public function scopeActive($query)
+    public function scopeActive($query): Builder
     {
         return $query->where('status', self::STATUS_ACTIVE);
     }
@@ -179,7 +185,7 @@ class User extends Authenticatable implements BaseStatusInterface
      * @param $username
      * @return mixed
      */
-    public function findForPassport($username)
+    public function findForPassport($username): ?User
     {
         return $this->where('phone', $username)->first();
     }
@@ -189,7 +195,7 @@ class User extends Authenticatable implements BaseStatusInterface
      *
      * @return \Illuminate\Database\Eloquent\Relations\MorphMany
      */
-    public function schedules()
+    public function schedules(): MorphMany
     {
         return $this->morphMany(Schedule::class, 'schedulable', null, 'schedulable_uuid');
     }
@@ -199,7 +205,7 @@ class User extends Authenticatable implements BaseStatusInterface
      *
      * @return \Illuminate\Database\Eloquent\Relations\HasOne
      */
-    public function trainerInfo()
+    public function trainerInfo(): HasOne
     {
         return $this->hasOne(TrainerInfo::class);
     }
@@ -209,7 +215,7 @@ class User extends Authenticatable implements BaseStatusInterface
      *
      * @return \Illuminate\Database\Eloquent\Relations\MorphMany
      */
-    public function trainerBookings()
+    public function trainerBookings(): MorphMany
     {
         return $this->morphMany(Booking::class, 'bookable', null, 'bookable_uuid');
     }
@@ -219,7 +225,7 @@ class User extends Authenticatable implements BaseStatusInterface
      *
      * @return \Illuminate\Database\Eloquent\Relations\BelongsToMany
      */
-    public function playgrounds()
+    public function playgrounds(): BelongsToMany
     {
         return $this->belongsToMany(Playground::class, 'users_playgrounds');
     }
@@ -227,7 +233,7 @@ class User extends Authenticatable implements BaseStatusInterface
     /**
      * @return \Illuminate\Database\Eloquent\Relations\BelongsTo
      */
-    public function timezone()
+    public function timezone(): BelongsTo
     {
         return $this->belongsTo(Timezone::class);
     }
@@ -235,7 +241,7 @@ class User extends Authenticatable implements BaseStatusInterface
     /**
      * @return string
      */
-    public function getFullName()
+    public function getFullName(): string
     {
         return $this->first_name . ' ' . $this->last_name;
     }

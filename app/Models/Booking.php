@@ -1,4 +1,5 @@
 <?php
+declare(strict_types = 1);
 
 namespace App\Models;
 
@@ -142,7 +143,7 @@ class Booking extends BaseModel
      *
      * @return MorphTo
      */
-    public function bookable()
+    public function bookable(): MorphTo
     {
         return $this->morphTo(null, null, 'bookable_uuid');
     }
@@ -152,7 +153,7 @@ class Booking extends BaseModel
      *
      * @return BelongsTo
      */
-    public function creator()
+    public function creator(): BelongsTo
     {
         return $this->belongsTo(User::class);
     }
@@ -162,7 +163,7 @@ class Booking extends BaseModel
      *
      * @return BelongsTo
      */
-    public function playground()
+    public function playground(): BelongsTo
     {
         return $this->belongsTo(Playground::class);
     }
@@ -170,7 +171,7 @@ class Booking extends BaseModel
     /**
      * @return HasMany
      */
-    public function equipmentsRent()
+    public function equipmentsRent(): HasMany
     {
         return $this->hasMany(EquipmentRent::class);
     }

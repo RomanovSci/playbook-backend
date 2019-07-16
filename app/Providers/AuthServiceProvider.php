@@ -1,4 +1,5 @@
 <?php
+declare(strict_types = 1);
 
 namespace App\Providers;
 
@@ -50,7 +51,7 @@ class AuthServiceProvider extends ServiceProvider
      *
      * @return void
      */
-    public function boot()
+    public function boot(): void
     {
         $this->registerPolicies();
 
@@ -67,7 +68,7 @@ class AuthServiceProvider extends ServiceProvider
      * @inheritdoc
      * @return void
      */
-    public function register()
+    public function register(): void
     {
         Passport::ignoreMigrations();
     }
