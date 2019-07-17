@@ -1,4 +1,5 @@
 <?php
+declare(strict_type = 1);
 
 namespace App\Services;
 
@@ -42,7 +43,7 @@ final class ExecResult
      *
      * @return ExecResult
      */
-    public static function instance()
+    public static function instance(): ExecResult
     {
         if (!self::$inst) {
             self::$inst = new ExecResult;
