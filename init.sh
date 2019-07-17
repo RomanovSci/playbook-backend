@@ -1,10 +1,10 @@
 #!/bin/sh
 
-if [[ ! -f ./.env ]]; then
+if [ ! -f ./.env ]; then
     cp ./.env.example ./.env
 fi
 
-if [[ ! -f ./docker/.env ]]; then
+if [ ! -f ./docker/.env ]; then
     cp ./docker/env-example ./docker/.env
 fi
 
