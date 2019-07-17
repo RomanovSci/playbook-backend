@@ -1,5 +1,6 @@
 # Playbook backend
 
+
 ### Initialization
 * Install docker: `sudo snap install docker`
 * Run initialization script: `./init.sh`
