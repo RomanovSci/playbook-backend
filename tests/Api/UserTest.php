@@ -62,4 +62,55 @@ class UserTest extends ApiTestCase
                 ]
             ]);
     }
+
+    /**
+     * @return void
+     */
+    public function testLoginUserSuccess(): void
+    {
+        /** @var User $user */
+        $password = '1111';
+        $user = factory(User::class)->create([
+            'password' => bcrypt($password),
+            'status' => User::STATUS_INACTIVE,
+        ]);
+
+        $this->post(route('user.login'), ['phone' => $user->phone, 'password' => $password])
+            ->assertStatus(Response::HTTP_OK)
+            ->assertJson([
+                'success' => true,
+                'message' => 'Success',
+                'data' => [
+                    'roles' => [],
+                    'first_name' => $user->first_name,
+                    'last_name' => $user->last_name,
+                    'middle_name' => $user->middle_name,
+                    'phone' => $user->phone,
+                    'status' => $user->status,
+                    'timezone_uuid' => null,
+                    'language_code' => null,
+                    'city_uuid' => null,
+                    'phone_verified_at' => null,
+                    'created_at' => $user->created_at,
+                    'updated_at' => $user->updated_at,
+                ]
+            ]);
+    }
+
+    /**
+     * @return void
+     */
+    public function testLoginUserBadRequest(): void
+    {
+        $this->post(route('user.login'))
+            ->assertStatus(Response::HTTP_BAD_REQUEST)
+            ->assertJson([
+                'success' => false,
+                'message' => 'Validation error',
+                'data' => [
+                    'phone' => [],
+                    'password' => [],
+                ]
+            ]);
+    }
 }
