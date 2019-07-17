@@ -17,20 +17,16 @@ class TrainerTest extends ApiTestCase
      */
     public function testGetTrainerListSuccess(): void
     {
-        $response = $this->call('GET', route('trainer.get'), [
-            'limit' => 1,
-            'offset' => 1,
-        ]);
-
-        $response->assertStatus(Response::HTTP_OK);
-        $response->assertJson([
-            'success' => true,
-            'message' => 'Success',
-            'data' => [
-                'total_count' => null,
-                'list' => []
-            ]
-        ]);
+        $this->call('GET', route('trainer.get'), ['limit' => 1, 'offset' => 1,])
+            ->assertStatus(Response::HTTP_OK)
+            ->assertJson([
+                'success' => true,
+                'message' => 'Success',
+                'data' => [
+                    'total_count' => null,
+                    'list' => []
+                ]
+            ]);
     }
 
     /**
@@ -38,16 +34,15 @@ class TrainerTest extends ApiTestCase
      */
     public function testGetTrainerListValidationError(): void
     {
-        $response = $this->call('GET', route('trainer.get'));
-
-        $response->assertStatus(Response::HTTP_BAD_REQUEST);
-        $response->assertJson([
-            'success' => false,
-            'message' => 'Validation error',
-            'data' => [
-                'offset' => [],
-                'limit' => [],
-            ]
-        ]);
+        $this->call('GET', route('trainer.get'))
+            ->assertStatus(Response::HTTP_BAD_REQUEST)
+            ->assertJson([
+                'success' => false,
+                'message' => 'Validation error',
+                'data' => [
+                    'offset' => [],
+                    'limit' => [],
+                ]
+            ]);
     }
 }
