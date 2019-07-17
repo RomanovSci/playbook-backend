@@ -28,8 +28,8 @@ class CreatePlaygroundTypes extends Migration
             DB::table('playground_types')->insert([
                 'uuid' => Uuid::uuid4(),
                 'type' => $type,
-                'created_at' => DB::raw('NOW()'),
-                'updated_at' => DB::raw('NOW()'),
+                'created_at' => DB::raw('CURRENT_TIMESTAMP'),
+                'updated_at' => DB::raw('CURRENT_TIMESTAMP'),
             ]);
         }
     }

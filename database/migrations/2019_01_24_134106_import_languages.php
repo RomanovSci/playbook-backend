@@ -19,8 +19,8 @@ class ImportLanguages extends Migration
                 'code' => $languageCode,
                 'name' => $languageData['name'],
                 'native_name' => $languageData['native_name'],
-                'created_at' => DB::raw('NOW()'),
-                'updated_at' => DB::raw('NOW()'),
+                'created_at' => DB::raw('CURRENT_TIMESTAMP'),
+                'updated_at' => DB::raw('CURRENT_TIMESTAMP'),
             ]);
         }
     }

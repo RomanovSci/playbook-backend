@@ -4,20 +4,20 @@ declare(strict_types = 1);
 namespace Tests\Api;
 
 use Illuminate\Http\Response;
-use Tests\TestCase;
+use Tests\ApiTestCase;
 
 /**
  * Class TrainerTest
  * @package Tests\Api
  */
-class TrainerTest extends TestCase
+class TrainerTest extends ApiTestCase
 {
     /**
      * @return void
      */
     public function testGetTrainerListSuccess(): void
     {
-        $response = $this->call('GET', '/api/trainer', [
+        $response = $this->call('GET', route('trainer.get'), [
             'limit' => 1,
             'offset' => 1,
         ]);
@@ -38,7 +38,7 @@ class TrainerTest extends TestCase
      */
     public function testGetTrainerListValidationError(): void
     {
-        $response = $this->call('GET', '/api/trainer');
+        $response = $this->call('GET', route('trainer.get'));
 
         $response->assertStatus(Response::HTTP_BAD_REQUEST);
         $response->assertJson([

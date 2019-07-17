@@ -49,9 +49,9 @@ class Handler extends ExceptionHandler
      *
      * @param  \Illuminate\Http\Request  $request
      * @param  \Exception  $e
-     * @return Response
+     * @return mixed
      */
-    public function render($request, Exception $e): Response
+    public function render($request, Exception $e)
     {
         Log::error($e->getMessage(), $e->getTrace());
 

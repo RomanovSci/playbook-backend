@@ -13,3 +13,5 @@ yarn-error.log
 .env
 .phpunit.result.cache
 .DS_Store
+test.sqlite3
+test.sqlite3-journal

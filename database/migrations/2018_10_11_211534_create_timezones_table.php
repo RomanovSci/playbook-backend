@@ -41,8 +41,8 @@ class CreateTimezonesTable extends Migration
                     'is_dst' => $timezone->isdst,
                     'text' => $timezone->text,
                     'utc' => $utc,
-                    'created_at' => DB::raw('NOW()'),
-                    'updated_at' => DB::raw('NOW()'),
+                    'created_at' => DB::raw('CURRENT_TIMESTAMP'),
+                    'updated_at' => DB::raw('CURRENT_TIMESTAMP'),
                 ]);
             }
         }

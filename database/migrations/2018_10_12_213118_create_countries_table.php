@@ -34,8 +34,8 @@ class CreateCountriesTable extends Migration
                 'code' => $country->code,
                 'name' => $country->name,
                 'dial_code' => $country->dial_code,
-                'created_at' => DB::raw('NOW()'),
-                'updated_at' => DB::raw('NOW()'),
+                'created_at' => DB::raw('CURRENT_TIMESTAMP'),
+                'updated_at' => DB::raw('CURRENT_TIMESTAMP'),
             ]);
         }
     }

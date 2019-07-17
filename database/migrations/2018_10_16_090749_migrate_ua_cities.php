@@ -36,8 +36,8 @@ class MigrateUaCities extends Migration
                 'uuid' => Uuid::uuid4(),
                 'country_uuid' => $this->countryUuid,
                 'name' => $city->name,
-                'created_at' => DB::raw('NOW()'),
-                'updated_at' => DB::raw('NOW()'),
+                'created_at' => DB::raw('CURRENT_TIMESTAMP'),
+                'updated_at' => DB::raw('CURRENT_TIMESTAMP'),
             ]);
         }
     }

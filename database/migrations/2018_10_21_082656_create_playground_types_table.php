@@ -32,10 +32,6 @@ class CreatePlaygroundTypesTable extends Migration
      */
     public function down()
     {
-        Schema::table('playgrounds', function (Blueprint $table) {
-            $table->dropForeign('type_id');
-        });
-
         Schema::dropIfExists('playground_types');
     }
 }
