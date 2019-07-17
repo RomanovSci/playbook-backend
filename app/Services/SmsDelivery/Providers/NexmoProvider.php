@@ -15,7 +15,7 @@ use Nexmo\Client\Credentials\Basic;
  */
 class NexmoProvider implements SmsDeliveryInterface
 {
-    const STATUS_SUCCESS = '0';
+    public const STATUS_SUCCESS = '0';
 
     /**
      * @var Client

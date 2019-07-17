@@ -58,7 +58,7 @@ use Illuminate\Database\Eloquent\Relations\MorphTo;
  */
 class Schedule extends BaseModel
 {
-    const SCHEDULE_TYPES = [
+    public const SCHEDULE_TYPES = [
         'trainer' => User::class,
         'playground' => Playground::class,
     ];

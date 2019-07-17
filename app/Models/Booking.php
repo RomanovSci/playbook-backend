@@ -82,9 +82,9 @@ use Illuminate\Database\Eloquent\Relations\MorphTo;
  */
 class Booking extends BaseModel
 {
-    const STATUS_CREATED = 0;
-    const STATUS_CONFIRMED = 1;
-    const STATUS_DECLINED = 2;
+    public const STATUS_CREATED = 0;
+    public const STATUS_CONFIRMED = 1;
+    public const STATUS_DECLINED = 2;
 
     /**
      * @var string

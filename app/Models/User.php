@@ -99,10 +99,10 @@ class User extends Authenticatable implements BaseStatusInterface
 {
     use Notifiable, HasApiTokens, HasRoles, SoftDeletes;
 
-    const ROLE_USER = 'user';
-    const ROLE_TRAINER = 'trainer';
-    const ROLE_ORGANIZATION_ADMIN = 'organization-admin';
-    const ROLE_ADMIN = 'admin';
+    public const ROLE_USER = 'user';
+    public const ROLE_TRAINER = 'trainer';
+    public const ROLE_ORGANIZATION_ADMIN = 'organization-admin';
+    public const ROLE_ADMIN = 'admin';
 
     /**
      * @var string
