@@ -1,10 +1,9 @@
 <?php
-declare(strict_type = 1);
+declare(strict_types = 1);
 
 namespace App\Services\Schedule;
 
 use App\Exceptions\Internal\IncorrectDateRange;
-use App\Helpers\ScheduleHelper;
 use App\Models\Schedule;
 use App\Models\SchedulePlayground;
 use App\Models\User;
@@ -15,11 +14,25 @@ use Illuminate\Support\Facades\DB;
 use Illuminate\Support\Facades\Log;
 
 /**
- * Class ScheduleCreateService
+ * Class ScheduleService
  * @package App\Services\Schedule
  */
-class ScheduleCreateService
+class ScheduleService
 {
+    /**
+     * @var ScheduleTimingService
+     */
+    protected $scheduleTimingService;
+
+    /**
+     * ScheduleService constructor.
+     * @param ScheduleTimingService $scheduleTimingService
+     */
+    public function __construct(ScheduleTimingService $scheduleTimingService)
+    {
+        $this->scheduleTimingService = $scheduleTimingService;
+    }
+
     /**
      * Create schedules for schedulable entity
      *
@@ -43,7 +56,7 @@ class ScheduleCreateService
                 /**
                  * Check if time periods is overlaps
                  */
-                if (ScheduleHelper::periodsIsOverlaps($schedulable, $startTime, $endTime)) {
+                if ($this->scheduleTimingService->scheduleExistsForPeriod($schedulable, $startTime, $endTime)) {
                     throw new IncorrectDateRange(__('errors.schedule_already_exists'));
                 }
 
@@ -81,5 +94,45 @@ class ScheduleCreateService
         return ExecResult::instance()
             ->setSuccess()
             ->setData(['schedules' => $schedules]);
+    }
+
+    /**
+     * Edit schedule
+     *
+     * @param Schedule $schedule
+     * @param array $data
+     * @return ExecResult
+     *
+     * @throws IncorrectDateRange
+     */
+    public function edit(Schedule $schedule, array $data): ExecResult
+    {
+        $newStartTime = Carbon::parse($data['start_time']);
+        $newEndTime = Carbon::parse($data['end_time']);
+
+        if ($this->scheduleTimingService->scheduleExistsForPeriod(
+            $schedule->schedulable,
+            $newStartTime,
+            $newEndTime,
+            [$schedule]
+        )) {
+            throw new IncorrectDateRange();
+        }
+
+        $schedule->fill($data)->update();
+
+        if ($schedule->schedulable instanceof User) {
+            $schedule->playgrounds()->detach();
+            foreach ($data['playgrounds'] as $playgroundUuid) {
+                $playgrounds[] = SchedulePlayground::create([
+                    'playground_uuid' => $playgroundUuid,
+                    'schedule_uuid' => $schedule->uuid,
+                ]);
+            }
+        }
+
+        return ExecResult::instance()
+            ->setSuccess()
+            ->setData(['schedule' => $schedule->refresh()]);
     }
 }

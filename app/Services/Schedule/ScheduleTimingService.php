@@ -1,45 +1,33 @@
 <?php
 declare(strict_types = 1);
 
-namespace App\Helpers;
+namespace App\Services\Schedule;
 
 use App\Exceptions\Internal\IncorrectDateRange;
+use App\Helpers\DateTimeHelper;
 use App\Models\Booking;
-use App\Models\Playground;
 use App\Models\MergedSchedule;
+use App\Models\Playground;
 use App\Models\Schedule;
 use App\Models\User;
-use App\Services\ExecResult;
 use App\Repositories\BookingRepository;
 use App\Repositories\ScheduleRepository;
+use App\Services\ExecResult;
 use Carbon\Carbon;
 use Illuminate\Database\Eloquent\Model;
 
 /**
- * Class ScheduleHelper
- * @package App\Helpers
+ * Class ScheduleTimingService
+ * @package App\Services\Schedule
  */
-class ScheduleHelper
+class ScheduleTimingService
 {
     /**
-     * Return schedule price per one minute
-     *
-     * @param Schedule $schedule
-     * @return int
-     */
-    public static function getMinutesRate(Schedule $schedule): int
-    {
-        return money($schedule->price_per_hour, $schedule->currency)
-            ->divide(60)
-            ->getAmount();
-    }
-
-    /**
-     * Check if schedulable has schedules
+     * Check if schedulable (trainer/playground) has schedules
      * that overlaps with period (startTime - endTime).
      * Exclude $excludedSchedules from the checking
      *
-     * @param Model $schedulable
+     * @param Model|User|Playground $schedulable
      * @param Carbon $startTime
      * @param Carbon $endTime
      * @param array $excludedSchedules
@@ -47,7 +35,7 @@ class ScheduleHelper
      *
      * @throws IncorrectDateRange
      */
-    public static function periodsIsOverlaps(
+    public static function scheduleExistsForPeriod(
         Model $schedulable,
         Carbon $startTime,
         Carbon $endTime,
@@ -89,7 +77,7 @@ class ScheduleHelper
 
     /**
      * Check if confirmed bookings in requested range
-     * ($startTime - $endTime) doesn't overlaps with schedule period.
+     * ($startTime - $endTime) don't overlaps with schedule period.
      *
      * @param Carbon $startTime
      * @param Carbon $endTime
@@ -97,7 +85,7 @@ class ScheduleHelper
      * @param string $schedulableUuid
      * @param Schedule $schedule
      * @return ExecResult
-     * @throws \App\Exceptions\Internal\IncorrectDateRange
+     * @throws IncorrectDateRange
      */
     public static function scheduleTimeIsAvailable(
         Carbon $startTime,
@@ -130,7 +118,7 @@ class ScheduleHelper
     }
 
     /**
-     * Get appropriate schedule for dates range
+     * Get appropriate schedule for range
      *
      * @param Carbon $startTime
      * @param Carbon $endTime
@@ -138,7 +126,7 @@ class ScheduleHelper
      * @param string $bookableUuid
      * @return ExecResult
      */
-    public static function getAppropriateSchedule(
+    public function getScheduleInRange(
         Carbon $startTime,
         Carbon $endTime,
         string $bookableType,

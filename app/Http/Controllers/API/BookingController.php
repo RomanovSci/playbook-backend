@@ -5,7 +5,6 @@ namespace App\Http\Controllers\API;
 
 use App\Exceptions\Http\ForbiddenHttpException;
 use App\Exceptions\Internal\IncorrectDateRange;
-use App\Helpers\BookingHelper;
 use App\Http\Controllers\Controller;
 use App\Http\Requests\Booking\CreateBookingFormRequest;
 use App\Http\Requests\Booking\DeclineBookingFormRequest;
@@ -13,8 +12,8 @@ use App\Http\Requests\Common\TimeIntervalFormRequest;
 use App\Models\Booking;
 use App\Models\User;
 use App\Repositories\BookingRepository;
-use App\Services\Booking\BookingChangeStatusService;
-use App\Services\Booking\BookingCreateService;
+use App\Services\Booking\BookingService;
+use App\Services\Booking\BookingTimingService;
 use Carbon\Carbon;
 use Illuminate\Http\JsonResponse;
 use Illuminate\Support\Facades\Auth;
@@ -381,7 +380,7 @@ class BookingController extends Controller
     /**
      * @param string $bookableType
      * @param CreateBookingFormRequest $request
-     * @param BookingCreateService $bookingCreateService
+     * @param BookingService $bookingService
      * @return JsonResponse
      * @throws IncorrectDateRange
      *
@@ -591,11 +590,11 @@ class BookingController extends Controller
     public function create(
         string $bookableType,
         CreateBookingFormRequest $request,
-        BookingCreateService $bookingCreateService
+        BookingService $bookingService
     ): JsonResponse {
         /** @var User $user */
         $user = Auth::user();
-        $result = $bookingCreateService->create($user, $bookableType, $request->all());
+        $result = $bookingService->create($user, $bookableType, $request->all());
 
         if (!$result->getSuccess()) {
             throw new ForbiddenHttpException($result->getMessage());
@@ -606,7 +605,8 @@ class BookingController extends Controller
 
     /**
      * @param Booking $booking
-     * @param BookingChangeStatusService $bookingChangeStatusService
+     * @param BookingService $bookingService
+     * @param BookingTimingService $bookingTimingService
      * @return JsonResponse
      *
      * @OA\Post(
@@ -681,9 +681,12 @@ class BookingController extends Controller
      *      security={{"Bearer":{}}}
      * )
      */
-    public function confirm(Booking $booking, BookingChangeStatusService $bookingChangeStatusService): JsonResponse
-    {
-        $checkAvailabilityResult = BookingHelper::timeIsAvailable($booking);
+    public function confirm(
+        Booking $booking,
+        BookingService $bookingService,
+        BookingTimingService $bookingTimingService
+    ): JsonResponse {
+        $checkAvailabilityResult = $bookingTimingService->timeIsAvailable($booking);
 
         if (!$checkAvailabilityResult->getSuccess() || Auth::user()->cant('confirmBooking', $booking)) {
             throw new ForbiddenHttpException(
@@ -691,7 +694,7 @@ class BookingController extends Controller
             );
         }
 
-        $changeStatusResult = $bookingChangeStatusService->change(
+        $changeStatusResult = $bookingService->changeStatus(
             $booking,
             Booking::STATUS_CONFIRMED
         );
@@ -706,7 +709,7 @@ class BookingController extends Controller
     /**
      * @param Booking $booking
      * @param DeclineBookingFormRequest $request
-     * @param BookingChangeStatusService $bookingChangeStatusService
+     * @param BookingService $bookingService
      * @return JsonResponse
      *
      * @OA\Post(
@@ -825,13 +828,13 @@ class BookingController extends Controller
     public function decline(
         Booking $booking,
         DeclineBookingFormRequest $request,
-        BookingChangeStatusService $bookingChangeStatusService
+        BookingService $bookingService
     ): JsonResponse {
         if (Auth::user()->cant('declineBooking', $booking)) {
             throw new ForbiddenHttpException(__('errors.cant_decline_booking'));
         }
 
-        $changeStatusResult = $bookingChangeStatusService->change(
+        $changeStatusResult = $bookingService->changeStatus(
             $booking,
             Booking::STATUS_DECLINED,
             $request->post('note')

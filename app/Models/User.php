@@ -28,7 +28,7 @@ use Spatie\Permission\Traits\HasRoles;
  * @property string     middle_name
  * @property integer    phone
  * @property string     password
- * @property integer    verification_code
+ * @property string     verification_code
  * @property string     phone_verified_at
  * @property string     created_at
  * @property string     updated_at

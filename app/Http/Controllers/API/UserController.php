@@ -12,9 +12,7 @@ use App\Http\Requests\User\VerifyPhoneFormRequest;
 use App\Models\User;
 use App\Repositories\UserRepository;
 use App\Services\SmsDelivery\SmsDeliveryService;
-use App\Services\User\LoginService;
-use App\Services\User\RegisterService;
-use App\Services\User\ResetPasswordService;
+use App\Services\User\UserService;
 use Carbon\Carbon;
 use Illuminate\Http\JsonResponse;
 use Illuminate\Http\Request;
@@ -28,7 +26,7 @@ class UserController extends Controller
 {
     /**
      * @param RegisterFormRequest $request
-     * @param RegisterService $registerService
+     * @param UserService $userService
      * @return JsonResponse
      * @throws \Throwable
      *
@@ -165,14 +163,14 @@ class UserController extends Controller
      *      ),
      * )
      */
-    public function register(RegisterFormRequest $request, RegisterService $registerService): JsonResponse
+    public function register(RegisterFormRequest $request, UserService $userService): JsonResponse
     {
-        return $this->success($registerService->register($request->all())->getData());
+        return $this->success($userService->register($request->all())->getData());
     }
 
     /**
      * @param LoginFormRequest $request
-     * @param LoginService $loginService
+     * @param UserService $userService
      * @return JsonResponse
      *
      * @OA\Post(
@@ -272,9 +270,9 @@ class UserController extends Controller
      *      ),
      * )
      */
-    public function login(LoginFormRequest $request, LoginService $loginService): JsonResponse
+    public function login(LoginFormRequest $request, UserService $userService): JsonResponse
     {
-        return $this->success($loginService->login($request->all())->getData());
+        return $this->success($userService->login($request->all())->getData());
     }
 
     /**
@@ -488,7 +486,7 @@ class UserController extends Controller
 
     /**
      * @param ResetPasswordFormRequest $request
-     * @param ResetPasswordService $resetPasswordService
+     * @param UserService $userService
      * @return JsonResponse
      *
      * @OA\Post(
@@ -558,9 +556,9 @@ class UserController extends Controller
      */
     public function resetPassword(
         ResetPasswordFormRequest $request,
-        ResetPasswordService $resetPasswordService
+        UserService $userService
     ): JsonResponse {
-        $resetResult = $resetPasswordService->reset(UserRepository::getByPhone($request->get('phone')));
+        $resetResult = $userService->resetPassword(UserRepository::getByPhone($request->get('phone')));
 
         return $resetResult->getSuccess()
             ? $this->success($resetResult->getData('passwordReset'))

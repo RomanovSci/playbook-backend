@@ -5,17 +5,32 @@ namespace App\Services\Booking;
 
 use App\Exceptions\Internal\IncorrectDateRange;
 use App\Helpers\DateTimeHelper;
-use App\Helpers\ScheduleHelper;
+use App\Helpers\MoneyHelper;
 use App\Models\MergedSchedule;
 use App\Services\ExecResult;
+use App\Services\Schedule\ScheduleTimingService;
 use Carbon\Carbon;
 
 /**
- * Class BookingPriceService
+ * Class BookingPricingService
  * @package App\Services\Booking
  */
-class BookingPriceService
+class BookingPricingService
 {
+    /**
+     * @var ScheduleTimingService
+     */
+    protected $scheduleTimingService;
+
+    /**
+     * BookingPricingService constructor.
+     * @param ScheduleTimingService $scheduleTimingService
+     */
+    public function __construct(ScheduleTimingService $scheduleTimingService)
+    {
+        $this->scheduleTimingService = $scheduleTimingService;
+    }
+
     /**
      * Get booking price for period ($startTime - $endTime)
      *
@@ -33,7 +48,7 @@ class BookingPriceService
         string $bookableType,
         string $bookableUuid
     ): ExecResult {
-        $getScheduleResult = ScheduleHelper::getAppropriateSchedule(
+        $getScheduleResult = $this->scheduleTimingService->getScheduleInRange(
             $startTime,
             $endTime,
             $bookableType,
@@ -46,7 +61,7 @@ class BookingPriceService
 
         /** @var MergedSchedule $appropriateSchedule */
         $appropriateSchedule = $getScheduleResult->getData('schedule');
-        $scheduleAvailabilityCheckResult = ScheduleHelper::scheduleTimeIsAvailable(
+        $scheduleAvailabilityCheckResult = $this->scheduleTimingService->scheduleTimeIsAvailable(
             $startTime,
             $endTime,
             $bookableType,
@@ -62,7 +77,7 @@ class BookingPriceService
         $currencySubunit = currency($appropriateSchedule->currency)->getSubunit();
 
         foreach ($appropriateSchedule->getSchedules() as $schedule) {
-            $minutesRate = ScheduleHelper::getMinutesRate($schedule);
+            $minutesRate = MoneyHelper::getMinutesRate($schedule);
             $overlappedMinutes = DateTimeHelper::getOverlappedMinutesAmount(
                 $startTime,
                 $endTime,

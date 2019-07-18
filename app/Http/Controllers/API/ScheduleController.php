@@ -14,8 +14,7 @@ use App\Models\Schedule;
 use App\Models\User;
 use App\Repositories\BookingRepository;
 use App\Repositories\ScheduleRepository;
-use App\Services\Schedule\ScheduleCreateService;
-use App\Services\Schedule\ScheduleEditService;
+use App\Services\Schedule\ScheduleService;
 use Carbon\Carbon;
 use Illuminate\Http\JsonResponse;
 use Illuminate\Support\Facades\Auth;
@@ -187,7 +186,7 @@ class ScheduleController extends Controller
     /**
      * @param CreateScheduleFormRequest $request
      * @param string $schedulableType
-     * @param ScheduleCreateService $scheduleCreateService
+     * @param ScheduleService $scheduleService
      * @return JsonResponse
      *
      * @throws \Throwable
@@ -347,7 +346,7 @@ class ScheduleController extends Controller
     public function create(
         CreateScheduleFormRequest $request,
         string $schedulableType,
-        ScheduleCreateService $scheduleCreateService
+        ScheduleService $scheduleService
     ): JsonResponse {
         /** @var User $schedulable */
         $schedulable = Auth::user();
@@ -373,14 +372,14 @@ class ScheduleController extends Controller
             }
         }
 
-        $createResult = $scheduleCreateService->create($schedulable, $request->all());
+        $createResult = $scheduleService->create($schedulable, $request->all());
         return $this->created($createResult->getData('schedules'));
     }
 
     /**
      * @param Schedule $schedule
      * @param EditScheduleFormRequest $request
-     * @param ScheduleEditService $scheduleEditService
+     * @param ScheduleService $scheduleService
      * @return JsonResponse
      *
      * @throws IncorrectDateRange
@@ -521,14 +520,14 @@ class ScheduleController extends Controller
     public function edit(
         Schedule $schedule,
         EditScheduleFormRequest $request,
-        ScheduleEditService $scheduleEditService
+        ScheduleService $scheduleService
     ): JsonResponse {
         if (Auth::user()->cant('manageSchedule', $schedule)) {
             throw new ForbiddenHttpException(__('errors.cant_manage_schedule'));
         }
 
         return $this->success(
-            $scheduleEditService->edit($schedule, $request->all())->getData('schedule')
+            $scheduleService->edit($schedule, $request->all())->getData('schedule')
         );
     }
 
