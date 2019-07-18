@@ -474,7 +474,7 @@ class UserController extends Controller
         SmsDeliveryService $smsDeliveryService
     ): JsonResponse {
         /** @var User $user */
-        $user = UserRepository::getByPhone($request->get('phone'));
+        $user = UserRepository::getByPhone((string) $request->get('phone'));
         $smsDeliveryService->send($user->phone, $user->verification_code);
 
         return $this->success(
@@ -558,7 +558,7 @@ class UserController extends Controller
         ResetPasswordFormRequest $request,
         UserService $userService
     ): JsonResponse {
-        $resetResult = $userService->resetPassword(UserRepository::getByPhone($request->get('phone')));
+        $resetResult = $userService->resetPassword(UserRepository::getByPhone((string) $request->get('phone')));
 
         return $resetResult->getSuccess()
             ? $this->success($resetResult->getData('passwordReset'))
