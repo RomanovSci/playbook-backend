@@ -140,7 +140,7 @@ class UserService
                     'expired_at' => Carbon::now()->addHours(3),
                 ]);
             }
-            $this->smsDeliveryService->send((string) $user->phone, __('sms.user.reset', [
+            $this->smsDeliveryService->send($user->phone, __('sms.user.reset', [
                 'code' => $passwordReset->reset_code
             ]));
 

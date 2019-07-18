@@ -138,7 +138,7 @@ class BookingService
              */
             if ($status === Booking::STATUS_DECLINED && $booking->bookable_type === User::class) {
                 $declineByUser = $booking->bookable_uuid !== $user->uuid;
-                $phone = (string) ($declineByUser ? $booking->bookable->phone : $booking->creator->phone);
+                $phone = $declineByUser ? $booking->bookable->phone : $booking->creator->phone;
                 $text = $declineByUser
                     ? __('sms.booking.decline_by_user', [
                         'player_name' => $user->getFullName(),
@@ -167,7 +167,7 @@ class BookingService
                 $booking->bookable_uuid !== $booking->creator_uuid
             ) {
                 $this->smsDeliveryService->send(
-                    (string) $booking->creator->phone,
+                    $booking->creator->phone,
                     __('sms.booking.confirm', [
                         'trainer_name' => $booking->bookable->getFullName(),
                         'date' => $booking->start_time

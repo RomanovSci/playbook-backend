@@ -14,6 +14,33 @@ use Tests\ApiTestCase;
 class UserTest extends ApiTestCase
 {
     /**
+     * @var User
+     */
+    protected $user;
+
+    /**
+     * @var array
+     */
+    protected $authorizationHeader;
+
+    /**
+     * @return void
+     */
+    protected function setUp(): void
+    {
+        parent::setUp();
+
+        $this->user = factory(User::class)->create([
+            'password' => bcrypt('1111'),
+            'status' => User::STATUS_INACTIVE,
+            'verification_code' => '111111',
+        ]);
+        $this->authorizationHeader = [
+            'Authorization' => 'Bearer ' . $this->user->createToken('TestToken')->accessToken
+        ];
+    }
+
+    /**
      * @return void
      */
     public function testRegisterUserSuccess(): void
@@ -30,18 +57,14 @@ class UserTest extends ApiTestCase
 
         $this->post(route('user.register'), $data)
             ->assertStatus(Response::HTTP_OK)
-            ->assertJson([
-                'success' => true,
-                'message' => 'Success',
-                'data' => [
-                    'roles' => [User::ROLE_TRAINER],
-                    'first_name' => $data['first_name'],
-                    'last_name' => $data['last_name'],
-                    'middle_name' => $data['middle_name'],
-                    'phone' => $data['phone'],
-                    'status' => User::STATUS_INACTIVE,
-                ]
-            ]);
+            ->assertJson($this->successResponse([
+                'roles' => [User::ROLE_TRAINER],
+                'first_name' => $data['first_name'],
+                'last_name' => $data['last_name'],
+                'middle_name' => $data['middle_name'],
+                'phone' => $data['phone'],
+                'status' => User::STATUS_INACTIVE,
+            ]));
     }
 
     /**
@@ -51,16 +74,12 @@ class UserTest extends ApiTestCase
     {
         $this->post(route('user.register'))
             ->assertStatus(Response::HTTP_BAD_REQUEST)
-            ->assertJson([
-                'success' => false,
-                'message' => 'Validation error',
-                'data' => [
-                    'first_name' => [],
-                    'last_name' => [],
-                    'phone' => [],
-                    'is_trainer' => [],
-                ]
-            ]);
+            ->assertJson($this->errorResponse([
+                'first_name' => [],
+                'last_name' => [],
+                'phone' => [],
+                'is_trainer' => [],
+            ]));
     }
 
     /**
@@ -68,33 +87,22 @@ class UserTest extends ApiTestCase
      */
     public function testLoginUserSuccess(): void
     {
-        /** @var User $user */
-        $password = '1111';
-        $user = factory(User::class)->create([
-            'password' => bcrypt($password),
-            'status' => User::STATUS_INACTIVE,
-        ]);
-
-        $this->post(route('user.login'), ['phone' => $user->phone, 'password' => $password])
+        $this->post(route('user.login'), ['phone' => $this->user->phone, 'password' => '1111'])
             ->assertStatus(Response::HTTP_OK)
-            ->assertJson([
-                'success' => true,
-                'message' => 'Success',
-                'data' => [
-                    'roles' => [],
-                    'first_name' => $user->first_name,
-                    'last_name' => $user->last_name,
-                    'middle_name' => $user->middle_name,
-                    'phone' => $user->phone,
-                    'status' => $user->status,
-                    'timezone_uuid' => null,
-                    'language_code' => null,
-                    'city_uuid' => null,
-                    'phone_verified_at' => null,
-                    'created_at' => $user->created_at,
-                    'updated_at' => $user->updated_at,
-                ]
-            ]);
+            ->assertJson($this->successResponse([
+                'roles' => [],
+                'first_name' => $this->user->first_name,
+                'last_name' => $this->user->last_name,
+                'middle_name' => $this->user->middle_name,
+                'phone' => $this->user->phone,
+                'status' => $this->user->status,
+                'timezone_uuid' => null,
+                'language_code' => null,
+                'city_uuid' => null,
+                'phone_verified_at' => null,
+                'created_at' => $this->user->created_at,
+                'updated_at' => $this->user->updated_at,
+            ]));
     }
 
     /**
@@ -104,13 +112,59 @@ class UserTest extends ApiTestCase
     {
         $this->post(route('user.login'))
             ->assertStatus(Response::HTTP_BAD_REQUEST)
-            ->assertJson([
-                'success' => false,
-                'message' => 'Validation error',
-                'data' => [
-                    'phone' => [],
-                    'password' => [],
-                ]
-            ]);
+            ->assertJson($this->errorResponse([
+                'phone' => [],
+                'password' => [],
+            ]));
+    }
+
+    /**
+     * @return void
+     */
+    public function testLogoutUserSuccess(): void
+    {
+        $this->post(route('user.logout'), [], $this->authorizationHeader)
+            ->assertStatus(Response::HTTP_OK)
+            ->assertJson($this->successResponse());
+    }
+
+    /**
+     * @return void
+     */
+    public function testLogoutUserUnauthorized(): void
+    {
+        $this->post(route('user.logout'))
+            ->assertStatus(Response::HTTP_UNAUTHORIZED)
+            ->assertJson($this->unauthorizedResponse());
+    }
+
+    /**
+     * @return void
+     */
+    public function testPhoneVerifySuccess(): void
+    {
+        $this->post(route('user.verifyPhone'), ['code' => $this->user->verification_code], $this->authorizationHeader)
+            ->assertStatus(Response::HTTP_OK)
+            ->assertJson($this->successResponse());
+    }
+
+    /**
+     * @return void
+     */
+    public function testPhoneVerifyUnauthorized(): void
+    {
+        $this->post(route('user.verifyPhone'))
+            ->assertStatus(Response::HTTP_UNAUTHORIZED)
+            ->assertJson($this->unauthorizedResponse());
+    }
+
+    /**
+     * @return void
+     */
+    public function testPhoneVerifyValidationError(): void
+    {
+        $this->post(route('user.verifyPhone'), [], $this->authorizationHeader)
+            ->assertStatus(Response::HTTP_BAD_REQUEST)
+            ->assertJson($this->errorResponse(['code' => []]));
     }
 }

@@ -19,24 +19,24 @@ use Spatie\Permission\Traits\HasRoles;
  * Class User
  * @package App\Models
  *
- * @property string     uuid
- * @property string     timezone_uuid
- * @property string     city_uuid
- * @property string     language_uuid
- * @property string     first_name
- * @property string     last_name
- * @property string     middle_name
- * @property integer    phone
- * @property string     password
- * @property string     verification_code
- * @property string     phone_verified_at
- * @property string     created_at
- * @property string     updated_at
- * @property string     deleted_at
+ * @property string uuid
+ * @property string timezone_uuid
+ * @property string city_uuid
+ * @property string language_uuid
+ * @property string first_name
+ * @property string last_name
+ * @property string middle_name
+ * @property string phone
+ * @property string password
+ * @property string verification_code
+ * @property string phone_verified_at
+ * @property string created_at
+ * @property string updated_at
+ * @property string deleted_at
  *
- * @property Playground[]   playgrounds
- * @property TrainerInfo    trainerInfo
- * @property Timezone       timezone
+ * @property Playground[] playgrounds
+ * @property TrainerInfo  trainerInfo
+ * @property Timezone     timezone
  *
  * @OA\Schema(
  *      allOf={
