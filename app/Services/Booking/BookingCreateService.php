@@ -4,7 +4,6 @@ declare(strict_type = 1);
 namespace App\Services\Booking;
 
 use App\Exceptions\Internal\IncorrectDateRange;
-use App\Helpers\BookingHelper;
 use App\Models\Booking;
 use App\Models\EquipmentRent;
 use App\Models\User;
@@ -14,10 +13,10 @@ use App\Services\SmsDelivery\SmsDeliveryService;
 use Carbon\Carbon;
 
 /**
- * Class CreateBookingService
+ * Class BookingCreateService
  * @package App\Services\Booking
  */
-class CreateBookingService
+class BookingCreateService
 {
     /**
      * @var SmsDeliveryService
@@ -25,12 +24,21 @@ class CreateBookingService
     protected $smsDeliveryService;
 
     /**
-     * ChangeBookingStatusService constructor.
-     * @param SmsDeliveryService $smsDeliveryService
+     * @var BookingPriceService
      */
-    public function __construct(SmsDeliveryService $smsDeliveryService)
-    {
+    protected $bookingPriceService;
+
+    /**
+     * BookingChangeStatusService constructor.
+     * @param SmsDeliveryService $smsDeliveryService
+     * @param BookingPriceService $bookingPriceService
+     */
+    public function __construct(
+        SmsDeliveryService $smsDeliveryService,
+        BookingPriceService $bookingPriceService
+    ) {
         $this->smsDeliveryService = $smsDeliveryService;
+        $this->bookingPriceService = $bookingPriceService;
     }
 
     /**
@@ -45,7 +53,7 @@ class CreateBookingService
     public function create(User $creator, string $bookableType, array $data): ExecResult
     {
         $bookableUuid = $data['bookable_uuid'];
-        $getPriceResult = BookingHelper::getBookingPrice(
+        $getPriceResult = $this->bookingPriceService->getBookingPrice(
             Carbon::parse($data['start_time']),
             Carbon::parse($data['end_time']),
             $bookableType,

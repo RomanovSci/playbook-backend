@@ -7,45 +7,45 @@ use App\Models\TrainerInfo;
 use App\Models\User;
 use App\Models\UserPlayground;
 use App\Services\ExecResult;
-use App\Services\File\UploadFileService;
+use App\Services\File\FileUploadService;
 use Illuminate\Support\Facades\DB;
 
 /**
- * Class CreateInfoService
+ * Class TrainerInfoEditService
  * @package App\Services\Trainer
  */
-class CreateInfoService
+class TrainerInfoEditService
 {
     /**
-     * @var UploadFileService
+     * @var FileUploadService
      */
     protected $uploadFileService;
 
     /**
-     * CreateInfoService constructor.
+     * TrainerInfoEditService constructor.
      *
-     * @param UploadFileService $uploadFileService
+     * @param FileUploadService $uploadFileService
      */
-    public function __construct(UploadFileService $uploadFileService)
+    public function __construct(FileUploadService $uploadFileService)
     {
         $this->uploadFileService = $uploadFileService;
     }
 
     /**
-     * Create trainer info
+     * Edit trainer info
      *
      * @param User $user
+     * @param TrainerInfo $info
      * @param array $data
      * @return ExecResult
      * @throws \Throwable
      */
-    public function create(User $user, array $data): ExecResult
+    public function edit(User $user, TrainerInfo $info, array $data): ExecResult
     {
         try {
             DB::beginTransaction();
-            $info = TrainerInfo::create(array_merge($data, [
-                'user_uuid' => $user->uuid,
-            ]));
+            $info->fill($data)->update();
+            UserPlayground::where('user_uuid', $user->uuid)->delete();
 
             foreach ($data['playgrounds'] as $playgroundUuid) {
                 UserPlayground::create([
@@ -55,6 +55,7 @@ class CreateInfoService
             }
 
             if (isset($data['image'])) {
+                $info->images()->delete();
                 $this->uploadFileService->upload('trainer/' . $user->uuid, $data['image'], $info);
             }
         } catch (\Throwable $e) {

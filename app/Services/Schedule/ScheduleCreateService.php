@@ -15,10 +15,10 @@ use Illuminate\Support\Facades\DB;
 use Illuminate\Support\Facades\Log;
 
 /**
- * Class CreateScheduleService
+ * Class ScheduleCreateService
  * @package App\Services\Schedule
  */
-class CreateScheduleService
+class ScheduleCreateService
 {
     /**
      * Create schedules for schedulable entity

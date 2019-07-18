@@ -10,10 +10,10 @@ use App\Services\SmsDelivery\SmsDeliveryService;
 use Illuminate\Support\Facades\Auth;
 
 /**
- * Class ChangeBookingStatusService
+ * Class BookingChangeStatusService
  * @package App\Services\Booking
  */
-class ChangeBookingStatusService
+class BookingChangeStatusService
 {
     /**
      * @var SmsDeliveryService
@@ -21,7 +21,7 @@ class ChangeBookingStatusService
     protected $smsDeliveryService;
 
     /**
-     * ChangeBookingStatusService constructor.
+     * BookingChangeStatusService constructor.
      * @param SmsDeliveryService $smsDeliveryService
      */
     public function __construct(SmsDeliveryService $smsDeliveryService)

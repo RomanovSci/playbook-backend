@@ -12,10 +12,10 @@ use App\Services\ExecResult;
 use Carbon\Carbon;
 
 /**
- * Class EditScheduleService
+ * Class ScheduleEditService
  * @package App\Services\Schedule
  */
-class EditScheduleService
+class ScheduleEditService
 {
     /**
      * Edit schedule

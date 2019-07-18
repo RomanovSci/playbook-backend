@@ -8,7 +8,7 @@ use App\Http\Requests\Equipment\CreateEquipmentFormRequest;
 use App\Models\Playground;
 use App\Models\User;
 use App\Repositories\EquipmentRepository;
-use App\Services\Equipment\CreateEquipmentService;
+use App\Services\Equipment\EquipmentCreateService;
 use Illuminate\Http\JsonResponse;
 use Illuminate\Support\Facades\Auth;
 
@@ -95,7 +95,7 @@ class EquipmentController extends Controller
 
     /**
      * @param CreateEquipmentFormRequest $request
-     * @param CreateEquipmentService $createEquipmentService
+     * @param EquipmentCreateService $equipmentCreateService
      * @return JsonResponse
      *
      * @OA\Post(
@@ -219,11 +219,11 @@ class EquipmentController extends Controller
      */
     public function create(
         CreateEquipmentFormRequest $request,
-        CreateEquipmentService $createEquipmentService
+        EquipmentCreateService $equipmentCreateService
     ): JsonResponse {
         /** @var User $user */
         $user = Auth::user();
-        $result = $createEquipmentService->create($user, $request->all());
+        $result = $equipmentCreateService->create($user, $request->all());
 
         if (!$result->getSuccess()) {
             return $this->error($result->getMessage());

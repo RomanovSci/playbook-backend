@@ -13,8 +13,8 @@ use App\Http\Requests\Common\TimeIntervalFormRequest;
 use App\Models\Booking;
 use App\Models\User;
 use App\Repositories\BookingRepository;
-use App\Services\Booking\ChangeBookingStatusService;
-use App\Services\Booking\CreateBookingService;
+use App\Services\Booking\BookingChangeStatusService;
+use App\Services\Booking\BookingCreateService;
 use Carbon\Carbon;
 use Illuminate\Http\JsonResponse;
 use Illuminate\Support\Facades\Auth;
@@ -381,7 +381,7 @@ class BookingController extends Controller
     /**
      * @param string $bookableType
      * @param CreateBookingFormRequest $request
-     * @param CreateBookingService $createBookingService
+     * @param BookingCreateService $bookingCreateService
      * @return JsonResponse
      * @throws IncorrectDateRange
      *
@@ -591,11 +591,11 @@ class BookingController extends Controller
     public function create(
         string $bookableType,
         CreateBookingFormRequest $request,
-        CreateBookingService $createBookingService
+        BookingCreateService $bookingCreateService
     ): JsonResponse {
         /** @var User $user */
         $user = Auth::user();
-        $result = $createBookingService->create($user, $bookableType, $request->all());
+        $result = $bookingCreateService->create($user, $bookableType, $request->all());
 
         if (!$result->getSuccess()) {
             throw new ForbiddenHttpException($result->getMessage());
@@ -606,7 +606,7 @@ class BookingController extends Controller
 
     /**
      * @param Booking $booking
-     * @param ChangeBookingStatusService $changeBookingStatusService
+     * @param BookingChangeStatusService $bookingChangeStatusService
      * @return JsonResponse
      *
      * @OA\Post(
@@ -681,7 +681,7 @@ class BookingController extends Controller
      *      security={{"Bearer":{}}}
      * )
      */
-    public function confirm(Booking $booking, ChangeBookingStatusService $changeBookingStatusService): JsonResponse
+    public function confirm(Booking $booking, BookingChangeStatusService $bookingChangeStatusService): JsonResponse
     {
         $checkAvailabilityResult = BookingHelper::timeIsAvailable($booking);
 
@@ -691,7 +691,7 @@ class BookingController extends Controller
             );
         }
 
-        $changeStatusResult = $changeBookingStatusService->change(
+        $changeStatusResult = $bookingChangeStatusService->change(
             $booking,
             Booking::STATUS_CONFIRMED
         );
@@ -706,7 +706,7 @@ class BookingController extends Controller
     /**
      * @param Booking $booking
      * @param DeclineBookingFormRequest $request
-     * @param ChangeBookingStatusService $changeBookingStatusService
+     * @param BookingChangeStatusService $bookingChangeStatusService
      * @return JsonResponse
      *
      * @OA\Post(
@@ -825,13 +825,13 @@ class BookingController extends Controller
     public function decline(
         Booking $booking,
         DeclineBookingFormRequest $request,
-        ChangeBookingStatusService $changeBookingStatusService
+        BookingChangeStatusService $bookingChangeStatusService
     ): JsonResponse {
         if (Auth::user()->cant('declineBooking', $booking)) {
             throw new ForbiddenHttpException(__('errors.cant_decline_booking'));
         }
 
-        $changeStatusResult = $changeBookingStatusService->change(
+        $changeStatusResult = $bookingChangeStatusService->change(
             $booking,
             Booking::STATUS_DECLINED,
             $request->post('note')

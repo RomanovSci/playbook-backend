@@ -10,10 +10,10 @@ use Illuminate\Http\UploadedFile;
 use Illuminate\Support\Facades\Storage;
 
 /**
- * Class UploadFileService
+ * Class FileUploadService
  * @package App\Services\File
  */
-class UploadFileService
+class FileUploadService
 {
     /**
      * Upload file

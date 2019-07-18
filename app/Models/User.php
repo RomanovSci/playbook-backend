@@ -3,7 +3,6 @@ declare(strict_types = 1);
 
 namespace App\Models;
 
-use App\Models\Interfaces\BaseStatusInterface;
 use Illuminate\Database\Eloquent\Builder;
 use Illuminate\Database\Eloquent\Relations\BelongsTo;
 use Illuminate\Database\Eloquent\Relations\BelongsToMany;
@@ -95,7 +94,7 @@ use Spatie\Permission\Traits\HasRoles;
  *      }
  * )
  */
-class User extends Authenticatable implements BaseStatusInterface
+class User extends Authenticatable
 {
     use Notifiable, HasApiTokens, HasRoles, SoftDeletes;
 
@@ -103,6 +102,9 @@ class User extends Authenticatable implements BaseStatusInterface
     public const ROLE_TRAINER = 'trainer';
     public const ROLE_ORGANIZATION_ADMIN = 'organization-admin';
     public const ROLE_ADMIN = 'admin';
+
+    public const STATUS_INACTIVE = 0;
+    public const STATUS_ACTIVE = 1;
 
     /**
      * @var string

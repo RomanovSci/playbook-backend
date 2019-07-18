@@ -7,45 +7,45 @@ use App\Models\TrainerInfo;
 use App\Models\User;
 use App\Models\UserPlayground;
 use App\Services\ExecResult;
-use App\Services\File\UploadFileService;
+use App\Services\File\FileUploadService;
 use Illuminate\Support\Facades\DB;
 
 /**
- * Class EditInfoService
+ * Class TrainerInfoCreateService
  * @package App\Services\Trainer
  */
-class EditInfoService
+class TrainerInfoCreateService
 {
     /**
-     * @var UploadFileService
+     * @var FileUploadService
      */
-    protected $uploadFileService;
+    protected $fileUploadService;
 
     /**
-     * EditInfoService constructor.
+     * TrainerInfoCreateService constructor.
      *
-     * @param UploadFileService $uploadFileService
+     * @param FileUploadService $fileUploadService
      */
-    public function __construct(UploadFileService $uploadFileService)
+    public function __construct(FileUploadService $fileUploadService)
     {
-        $this->uploadFileService = $uploadFileService;
+        $this->fileUploadService = $fileUploadService;
     }
 
     /**
-     * Edit trainer info
+     * Create trainer info
      *
      * @param User $user
-     * @param TrainerInfo $info
      * @param array $data
      * @return ExecResult
      * @throws \Throwable
      */
-    public function edit(User $user, TrainerInfo $info, array $data): ExecResult
+    public function create(User $user, array $data): ExecResult
     {
         try {
             DB::beginTransaction();
-            $info->fill($data)->update();
-            UserPlayground::where('user_uuid', $user->uuid)->delete();
+            $info = TrainerInfo::create(array_merge($data, [
+                'user_uuid' => $user->uuid,
+            ]));
 
             foreach ($data['playgrounds'] as $playgroundUuid) {
                 UserPlayground::create([
@@ -55,8 +55,7 @@ class EditInfoService
             }
 
             if (isset($data['image'])) {
-                $info->images()->delete();
-                $this->uploadFileService->upload('trainer/' . $user->uuid, $data['image'], $info);
+                $this->fileUploadService->upload('trainer/' . $user->uuid, $data['image'], $info);
             }
         } catch (\Throwable $e) {
             DB::rollBack();
