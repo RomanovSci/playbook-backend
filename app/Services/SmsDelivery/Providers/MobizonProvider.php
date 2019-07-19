@@ -28,8 +28,8 @@ class MobizonProvider implements SmsDeliveryInterface
     {
         try {
             $this->mobizonApi = new MobizonApi([
-                'apiKey' => env('SMS_DELIVERY_MOBIZON_KEY'),
-                'apiServer' => env('SMS_DELIVERY_MOBIZON_DOMAIN')
+                'apiKey' => config('sms.mobizon.api_key'),
+                'apiServer' => config('sms.mobizon.api_server')
             ]);
         } catch (\Throwable $e) {
             Log::error($e->getMessage());

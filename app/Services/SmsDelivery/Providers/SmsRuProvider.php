@@ -39,7 +39,7 @@ class SmsRuProvider implements SmsDeliveryInterface
      */
     public function __construct()
     {
-        $this->apiKey = env('SMS_DELIVERY_SMS_RU_API_KEY');
+        $this->apiKey = config('sms.sms_ru.api_key');
     }
 
     /**

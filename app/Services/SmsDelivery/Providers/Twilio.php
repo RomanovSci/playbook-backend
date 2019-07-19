@@ -21,9 +21,9 @@ class Twilio implements SmsDeliveryInterface
     {
         try {
             $twilio = new \Aloha\Twilio\Twilio(
-                env('SMS_DELIVERY_TWILIO_SID'),
-                env('SMS_DELIVERY_TWILIO_TOKEN'),
-                env('SMS_DELIVERY_TWILIO_SENDER')
+                config('sms.twilio.sid'),
+                config('sms.twilio.token'),
+                config('sms.twilio.sender')
             );
             $sendResult = $twilio->message($phone, $text);
 

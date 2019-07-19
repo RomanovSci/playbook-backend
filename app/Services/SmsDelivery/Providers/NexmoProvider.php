@@ -32,8 +32,8 @@ class NexmoProvider implements SmsDeliveryInterface
         try {
             $this->apiClient = new Client(
                 new Basic(
-                    env('SMS_DELIVERY_NEXMO_API_KEY'),
-                    env('SMS_DELIVERY_NEXMO_API_SECRET')
+                    config('sms.nexmo.api_key'),
+                    config('sms.nexmo.api_secret')
                 )
             );
         } catch (\Throwable $e) {
