@@ -19,7 +19,7 @@ class CityController extends Controller
      * @return JsonResponse
      *
      * @OA\Get(
-     *      path="/api/city",
+     *      path="/api/cities",
      *      tags={"City"},
      *      summary="Get cities",
      *      @OA\Parameter(

@@ -24,7 +24,7 @@ class EquipmentController extends Controller
      * @return JsonResponse
      *
      * @OA\Get(
-     *      path="/api/equipment/{bookable_type}/{bookable_uuid}",
+     *      path="/api/equipments/{bookable_type}/{bookable_uuid}",
      *      tags={"Equipment"},
      *      summary="Get all equipments for bookable",
      *      @OA\Parameter(
@@ -93,7 +93,7 @@ class EquipmentController extends Controller
      * @return JsonResponse
      *
      * @OA\Post(
-     *      path="/api/equipment",
+     *      path="/api/equipments",
      *      tags={"Equipment"},
      *      summary="Create equipment",
      *      @OA\RequestBody(

@@ -26,7 +26,7 @@ class PlaygroundController extends Controller
      * @return JsonResponse
      *
      * @OA\Get(
-     *      path="/api/playground",
+     *      path="/api/playgrounds",
      *      tags={"Playground"},
      *      summary="Get playgrounds",
      *      @OA\Parameter(
@@ -114,7 +114,7 @@ class PlaygroundController extends Controller
      * @return JsonResponse
      *
      * @OA\Post(
-     *      path="/api/playground",
+     *      path="/api/playgrounds",
      *      tags={"Playground"},
      *      summary="Create new playground for organization",
      *      @OA\RequestBody(
@@ -272,7 +272,7 @@ class PlaygroundController extends Controller
      * @return string
      *
      * @OA\Get(
-     *      path="/api/playground/types",
+     *      path="/api/playgrounds/types",
      *      tags={"Playground"},
      *      summary="Get all playground types",
      *      @OA\Response(

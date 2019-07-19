@@ -26,7 +26,7 @@ class TrainerController extends Controller
      * @return JsonResponse
      *
      * @OA\Get(
-     *      path="/api/trainer",
+     *      path="/api/trainers",
      *      tags={"Trainer"},
      *      summary="Get trainers list",
      *      @OA\Parameter(
@@ -135,7 +135,7 @@ class TrainerController extends Controller
      * @return JsonResponse
      *
      * @OA\Get(
-     *      path="/api/trainer/{trainer_uuid}/info",
+     *      path="/api/trainers/{trainer_uuid}/info",
      *      tags={"Trainer"},
      *      summary="Get trainer information",
      *      @OA\Parameter(
@@ -201,7 +201,7 @@ class TrainerController extends Controller
      * @throws \Throwable
      *
      * @OA\Post(
-     *      path="/api/trainer/info",
+     *      path="/api/trainers/info",
      *      tags={"Trainer"},
      *      summary="Create trainer information",
      *      @OA\RequestBody(
@@ -354,7 +354,7 @@ class TrainerController extends Controller
      * @throws \Throwable
      *
      * @OA\Put(
-     *      path="/api/trainer/info/{trainer_info_uuid}",
+     *      path="/api/trainers/info/{trainer_info_uuid}",
      *      tags={"Trainer"},
      *      summary="Edit trainer information",
      *      @OA\Parameter(

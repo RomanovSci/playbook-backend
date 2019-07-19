@@ -22,7 +22,7 @@ class OrganizationController extends Controller
      * @return JsonResponse
      *
      * @OA\Get(
-     *      path="/api/organization",
+     *      path="/api/organizations",
      *      tags={"Organization"},
      *      summary="Get organizations",
      *      @OA\Parameter(
@@ -106,7 +106,7 @@ class OrganizationController extends Controller
      * @return JsonResponse
      *
      * @OA\Post(
-     *      path="/api/organization",
+     *      path="/api/organizations",
      *      tags={"Organization"},
      *      summary="Create organization",
      *      @OA\RequestBody(

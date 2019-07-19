@@ -32,7 +32,7 @@ class ScheduleController extends Controller
      * @return JsonResponse
      *
      * @OA\Get(
-     *      path="/api/schedule/{type}/{uuid}",
+     *      path="/api/schedules/{type}/{uuid}",
      *      tags={"Schedule"},
      *      summary="Get schedules for trainer or playground",
      *      @OA\Parameter(
@@ -187,7 +187,7 @@ class ScheduleController extends Controller
      * @throws \Throwable
      *
      * @OA\Post(
-     *      path="/api/schedule/{type}",
+     *      path="/api/schedules/{type}",
      *      tags={"Schedule"},
      *      summary="Create schedule",
      *      @OA\Parameter(
@@ -373,7 +373,7 @@ class ScheduleController extends Controller
      * @throws IncorrectDateRange
      *
      * @OA\Put(
-     *      path="/api/schedule/{schedule_uuid}",
+     *      path="/api/schedules/{schedule_uuid}",
      *      tags={"Schedule"},
      *      summary="Edit schedule",
      *      @OA\Parameter(
@@ -519,7 +519,7 @@ class ScheduleController extends Controller
      * @throws \Exception
      *
      * @OA\Delete(
-     *      path="/api/schedule/{schedule_uuid}",
+     *      path="/api/schedules/{schedule_uuid}",
      *      tags={"Schedule"},
      *      summary="Delete schedule",
      *      @OA\Parameter(

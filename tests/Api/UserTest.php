@@ -143,7 +143,7 @@ class UserTest extends ApiTestCase
      */
     public function testPhoneVerifySuccess(): void
     {
-        $this->post(route('user.verifyPhone'), ['code' => $this->user->verification_code], $this->authorizationHeader)
+        $this->post(route('user.verify_phone'), ['code' => $this->user->verification_code], $this->authorizationHeader)
             ->assertStatus(Response::HTTP_OK)
             ->assertJson($this->successResponse());
     }
@@ -153,7 +153,7 @@ class UserTest extends ApiTestCase
      */
     public function testPhoneVerifyUnauthorized(): void
     {
-        $this->post(route('user.verifyPhone'))
+        $this->post(route('user.verify_phone'))
             ->assertStatus(Response::HTTP_UNAUTHORIZED)
             ->assertJson($this->unauthorizedResponse());
     }
@@ -163,7 +163,7 @@ class UserTest extends ApiTestCase
      */
     public function testPhoneVerifyValidationError(): void
     {
-        $this->post(route('user.verifyPhone'), [], $this->authorizationHeader)
+        $this->post(route('user.verify_phone'), [], $this->authorizationHeader)
             ->assertStatus(Response::HTTP_BAD_REQUEST)
             ->assertJson($this->errorResponse(['code' => []]));
     }
@@ -173,7 +173,7 @@ class UserTest extends ApiTestCase
      */
     public function testResendVerificationCodeSuccess(): void
     {
-        $this->post(route('user.resendVerificationCode'), ['phone' => $this->user->phone])
+        $this->post(route('user.resend_verification_code'), ['phone' => $this->user->phone])
             ->assertStatus(Response::HTTP_OK)
             ->assertJson($this->successResponse([
                 'verification_code' => $this->user->verification_code,
@@ -185,7 +185,7 @@ class UserTest extends ApiTestCase
      */
     public function testResendVerificationCodeValidationError(): void
     {
-        $this->post(route('user.resendVerificationCode'))
+        $this->post(route('user.resend_verification_code'))
             ->assertStatus(Response::HTTP_BAD_REQUEST)
             ->assertJson($this->errorResponse(['phone' => []]));
     }
@@ -195,7 +195,7 @@ class UserTest extends ApiTestCase
      */
     public function testResetPasswordSuccess(): void
     {
-        $response = $this->post(route('user.resetPassword'), ['phone' => $this->user->phone]);
+        $response = $this->post(route('user.reset_password'), ['phone' => $this->user->phone]);
         $content = json_decode($response->getContent());
         $response->assertStatus(Response::HTTP_OK)
             ->assertExactJson($this->successResponse([
@@ -213,7 +213,7 @@ class UserTest extends ApiTestCase
      */
     public function testResetPasswordValidationError(): void
     {
-        $this->post(route('user.resetPassword'))
+        $this->post(route('user.reset_password'))
             ->assertStatus(Response::HTTP_BAD_REQUEST)
             ->assertJson($this->errorResponse([
                 'phone' => []

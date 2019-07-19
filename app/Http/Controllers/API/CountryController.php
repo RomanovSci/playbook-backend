@@ -19,7 +19,7 @@ class CountryController extends Controller
      * @return JsonResponse
      *
      * @OA\Get(
-     *      path="/api/country",
+     *      path="/api/countries",
      *      tags={"Country"},
      *      summary="Get countries",
      *      @OA\Parameter(
