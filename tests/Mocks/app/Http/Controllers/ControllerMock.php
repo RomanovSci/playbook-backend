@@ -17,9 +17,9 @@ class ControllerMock extends Controller
      * @param null $message
      * @return JsonResponse
      */
-    public function success($data = [], $message = null, int $code = 200): JsonResponse
+    public function success($data = [], $message = null): JsonResponse
     {
-        return parent::success($data, $message, $code);
+        return parent::success($data, $message);
     }
 
     /**
@@ -29,8 +29,8 @@ class ControllerMock extends Controller
      * @param int $code
      * @return JsonResponse
      */
-    public function error($message = null, $data = [], int $code = 400): JsonResponse
+    public function error($message = null, $data = []): JsonResponse
     {
-        return parent::error($message, $data, $code);
+        return parent::error($message, $data);
     }
 }

@@ -92,8 +92,7 @@ class UserController extends Controller
      *              mediaType="application/json",
      *              @OA\Schema(
      *                  example={
-     *                      "success": true,
-     *                      "message": "string",
+     *                      "message": "Success",
      *                      "data": {
      *                          "access_token": "Bearer token",
      *                          "verification_code": "Phone verification code. Empty for prod env",
@@ -122,7 +121,6 @@ class UserController extends Controller
      *              mediaType="application/json",
      *              @OA\Schema(
      *                  example={
-     *                      "success": false,
      *                      "message": "Validation error",
      *                      "data": {
      *                          "first_name": {
@@ -155,7 +153,6 @@ class UserController extends Controller
      *              mediaType="application/json",
      *              @OA\Schema(
      *                  example={
-     *                      "success": false,
      *                      "message": "Forbidden"
      *                  },
      *              )
@@ -208,8 +205,7 @@ class UserController extends Controller
      *              mediaType="application/json",
      *              @OA\Schema(
      *                  example={
-     *                      "success": true,
-     *                      "message": "string",
+     *                      "message": "Success",
      *                      "data": {
      *                          "access_token": "Bearer token",
      *                          "roles": {
@@ -262,7 +258,6 @@ class UserController extends Controller
      *              mediaType="application/json",
      *              @OA\Schema(
      *                  example={
-     *                      "success": false,
      *                      "message": "Forbidden"
      *                  },
      *              )
@@ -290,7 +285,6 @@ class UserController extends Controller
      *              mediaType="application/json",
      *              @OA\Schema(
      *                  example={
-     *                      "success": true,
      *                      "message": "string",
      *                      "data": {}
      *                  }
@@ -304,7 +298,6 @@ class UserController extends Controller
      *              mediaType="application/json",
      *              @OA\Schema(
      *                  example={
-     *                      "success": false,
      *                      "message": "Unauthorized"
      *                  },
      *              )
@@ -352,7 +345,6 @@ class UserController extends Controller
      *              mediaType="application/json",
      *              @OA\Schema(
      *                  example={
-     *                      "success": "true",
      *                      "message": "Success",
      *                      "data": {}
      *                  }
@@ -366,7 +358,6 @@ class UserController extends Controller
      *              mediaType="application/json",
      *              @OA\Schema(
      *                  example={
-     *                      "success": false,
      *                      "message": "Validation error",
      *                      "data": {
      *                          "code": {
@@ -384,7 +375,6 @@ class UserController extends Controller
      *              mediaType="application/json",
      *              @OA\Schema(
      *                  example={
-     *                      "success": false,
      *                      "message": "Unauthorized"
      *                  },
      *              )
@@ -442,7 +432,6 @@ class UserController extends Controller
      *              mediaType="application/json",
      *              @OA\Schema(
      *                  example={
-     *                      "success": "true",
      *                      "message": "Success",
      *                      "data": {}
      *                  }
@@ -456,7 +445,6 @@ class UserController extends Controller
      *              mediaType="application/json",
      *              @OA\Schema(
      *                  example={
-     *                      "success": false,
      *                      "message": "Validation error",
      *                      "data": {
      *                          "phone": {
@@ -519,10 +507,6 @@ class UserController extends Controller
      *              @OA\Schema(
      *                  type="object",
      *                  @OA\Property(
-     *                      property="success",
-     *                      type="boolean"
-     *                  ),
-     *                  @OA\Property(
      *                      property="message",
      *                      type="string",
      *                  ),
@@ -541,7 +525,6 @@ class UserController extends Controller
      *              mediaType="application/json",
      *              @OA\Schema(
      *                  example={
-     *                      "success": false,
      *                      "message": "Validation error",
      *                      "data": {
      *                          "phone": {

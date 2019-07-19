@@ -85,10 +85,6 @@ class BookingController extends Controller
      *              @OA\Schema(
      *                  type="object",
      *                  @OA\Property(
-     *                      property="success",
-     *                      type="boolean"
-     *                  ),
-     *                  @OA\Property(
      *                      property="message",
      *                      type="string",
      *                  ),
@@ -153,7 +149,6 @@ class BookingController extends Controller
      *              mediaType="application/json",
      *              @OA\Schema(
      *                  example={
-     *                      "success": false,
      *                      "message": "Validation error",
      *                      "data": {
      *                          "start_time": {
@@ -180,7 +175,6 @@ class BookingController extends Controller
      *              mediaType="application/json",
      *              @OA\Schema(
      *                  example={
-     *                      "success": false,
      *                      "message": "Unauthorized"
      *                  },
      *              )
@@ -193,7 +187,6 @@ class BookingController extends Controller
      *              mediaType="application/json",
      *              @OA\Schema(
      *                  example={
-     *                      "success": false,
      *                      "message": "Forbidden"
      *                  },
      *              )
@@ -264,10 +257,6 @@ class BookingController extends Controller
      *              @OA\Schema(
      *                  type="object",
      *                  @OA\Property(
-     *                      property="success",
-     *                      type="boolean"
-     *                  ),
-     *                  @OA\Property(
      *                      property="message",
      *                      type="string",
      *                  ),
@@ -325,7 +314,6 @@ class BookingController extends Controller
      *              mediaType="application/json",
      *              @OA\Schema(
      *                  example={
-     *                      "success": false,
      *                      "message": "Validation error",
      *                      "data": {
      *                          "start_time": {
@@ -352,7 +340,6 @@ class BookingController extends Controller
      *              mediaType="application/json",
      *              @OA\Schema(
      *                  example={
-     *                      "success": false,
      *                      "message": "Unauthorized"
      *                  },
      *              )
@@ -470,10 +457,6 @@ class BookingController extends Controller
      *              @OA\Schema(
      *                  type="object",
      *                  @OA\Property(
-     *                      property="success",
-     *                      type="boolean"
-     *                  ),
-     *                  @OA\Property(
      *                      property="message",
      *                      type="string",
      *                  ),
@@ -538,7 +521,6 @@ class BookingController extends Controller
      *              mediaType="application/json",
      *              @OA\Schema(
      *                  example={
-     *                      "success": false,
      *                      "message": "Validation error",
      *                      "data": {
      *                          "start_time": {
@@ -565,7 +547,6 @@ class BookingController extends Controller
      *              mediaType="application/json",
      *              @OA\Schema(
      *                  example={
-     *                      "success": false,
      *                      "message": "Unauthorized"
      *                  },
      *              )
@@ -578,7 +559,6 @@ class BookingController extends Controller
      *              mediaType="application/json",
      *              @OA\Schema(
      *                  example={
-     *                      "success": false,
      *                      "message": "Forbidden"
      *                  },
      *              )
@@ -628,10 +608,6 @@ class BookingController extends Controller
      *              @OA\Schema(
      *                  type="object",
      *                  @OA\Property(
-     *                      property="success",
-     *                      type="boolean"
-     *                  ),
-     *                  @OA\Property(
      *                      property="message",
      *                      type="string",
      *                  ),
@@ -659,7 +635,6 @@ class BookingController extends Controller
      *              mediaType="application/json",
      *              @OA\Schema(
      *                  example={
-     *                      "success": false,
      *                      "message": "Unauthorized"
      *                  },
      *              )
@@ -672,7 +647,6 @@ class BookingController extends Controller
      *              mediaType="application/json",
      *              @OA\Schema(
      *                  example={
-     *                      "success": false,
      *                      "message": "Forbidden"
      *                  },
      *              )
@@ -749,10 +723,6 @@ class BookingController extends Controller
      *              @OA\Schema(
      *                  type="object",
      *                  @OA\Property(
-     *                      property="success",
-     *                      type="boolean"
-     *                  ),
-     *                  @OA\Property(
      *                      property="message",
      *                      type="string",
      *                  ),
@@ -785,7 +755,6 @@ class BookingController extends Controller
      *              mediaType="application/json",
      *              @OA\Schema(
      *                  example={
-     *                      "success": false,
      *                      "message": "Validation error",
      *                      "data": {
      *                          "note": {
@@ -803,7 +772,6 @@ class BookingController extends Controller
      *              mediaType="application/json",
      *              @OA\Schema(
      *                  example={
-     *                      "success": false,
      *                      "message": "Unauthorized"
      *                  },
      *              )
@@ -816,7 +784,6 @@ class BookingController extends Controller
      *              mediaType="application/json",
      *              @OA\Schema(
      *                  example={
-     *                      "success": false,
      *                      "message": "Forbidden"
      *                  },
      *              )

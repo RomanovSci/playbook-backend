@@ -58,10 +58,6 @@ class CityController extends Controller
      *              @OA\Schema(
      *                  type="object",
      *                  @OA\Property(
-     *                      property="success",
-     *                      type="boolean"
-     *                  ),
-     *                  @OA\Property(
      *                      property="message",
      *                      type="string",
      *                  ),
@@ -80,7 +76,6 @@ class CityController extends Controller
      *              mediaType="application/json",
      *              @OA\Schema(
      *                  example={
-     *                      "success": false,
      *                      "message": "Validation error",
      *                      "data": {
      *                          "limit": {
@@ -101,7 +96,6 @@ class CityController extends Controller
      *              mediaType="application/json",
      *              @OA\Schema(
      *                  example={
-     *                      "success": false,
      *                      "message": "Unauthorized"
      *                  },
      *              )

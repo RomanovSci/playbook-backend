@@ -85,10 +85,6 @@ class ScheduleController extends Controller
      *              @OA\Schema(
      *                  type="object",
      *                  @OA\Property(
-     *                      property="success",
-     *                      type="boolean"
-     *                  ),
-     *                  @OA\Property(
      *                      property="message",
      *                      type="string",
      *                  ),
@@ -136,7 +132,6 @@ class ScheduleController extends Controller
      *              mediaType="application/json",
      *              @OA\Schema(
      *                  example={
-     *                      "success": false,
      *                      "message": "Validation error",
      *                      "data": {
      *                          "start_time": {
@@ -272,10 +267,6 @@ class ScheduleController extends Controller
      *              @OA\Schema(
      *                  type="object",
      *                  @OA\Property(
-     *                      property="success",
-     *                      type="boolean"
-     *                  ),
-     *                  @OA\Property(
      *                      property="message",
      *                      type="string",
      *                  ),
@@ -294,7 +285,6 @@ class ScheduleController extends Controller
      *              mediaType="application/json",
      *              @OA\Schema(
      *                  example={
-     *                      "success": false,
      *                      "message": "Validation error",
      *                      "data": {
      *                          "dates": {
@@ -321,7 +311,6 @@ class ScheduleController extends Controller
      *              mediaType="application/json",
      *              @OA\Schema(
      *                  example={
-     *                      "success": false,
      *                      "message": "Unauthorized"
      *                  },
      *              )
@@ -334,7 +323,6 @@ class ScheduleController extends Controller
      *              mediaType="application/json",
      *              @OA\Schema(
      *                  example={
-     *                      "success": false,
      *                      "message": "Forbidden"
      *                  },
      *              )
@@ -446,10 +434,6 @@ class ScheduleController extends Controller
      *              @OA\Schema(
      *                  type="object",
      *                  @OA\Property(
-     *                      property="success",
-     *                      type="boolean"
-     *                  ),
-     *                  @OA\Property(
      *                      property="message",
      *                      type="string",
      *                  ),
@@ -468,7 +452,6 @@ class ScheduleController extends Controller
      *              mediaType="application/json",
      *              @OA\Schema(
      *                  example={
-     *                      "success": false,
      *                      "message": "Validation error",
      *                      "data": {
      *                          "start_time": {
@@ -495,7 +478,6 @@ class ScheduleController extends Controller
      *              mediaType="application/json",
      *              @OA\Schema(
      *                  example={
-     *                      "success": false,
      *                      "message": "Unauthorized"
      *                  },
      *              )
@@ -508,7 +490,6 @@ class ScheduleController extends Controller
      *              mediaType="application/json",
      *              @OA\Schema(
      *                  example={
-     *                      "success": false,
      *                      "message": "Forbidden"
      *                  },
      *              )
@@ -556,10 +537,6 @@ class ScheduleController extends Controller
      *              @OA\Schema(
      *                  type="object",
      *                  @OA\Property(
-     *                      property="success",
-     *                      type="boolean"
-     *                  ),
-     *                  @OA\Property(
      *                      property="message",
      *                      type="string",
      *                  )
@@ -577,7 +554,6 @@ class ScheduleController extends Controller
      *              mediaType="application/json",
      *              @OA\Schema(
      *                  example={
-     *                      "success": false,
      *                      "message": "Unauthorized"
      *                  },
      *              )
@@ -590,7 +566,6 @@ class ScheduleController extends Controller
      *              mediaType="application/json",
      *              @OA\Schema(
      *                  example={
-     *                      "success": false,
      *                      "message": "Forbidden"
      *                  },
      *              )

@@ -27,11 +27,7 @@ class ApiTestCase extends TestCase
      */
     protected function successResponse(array $data = []): array
     {
-        return [
-            'success' => true,
-            'message' => 'Success',
-            'data' => $data
-        ];
+        return $this->response($data);
     }
 
     /**
@@ -39,10 +35,7 @@ class ApiTestCase extends TestCase
      */
     protected function unauthorizedResponse(): array
     {
-        return [
-            'success' => false,
-            'message' => 'Unauthorized',
-        ];
+        return ['message' => 'Unauthorized'];
     }
 
     /**
@@ -52,8 +45,17 @@ class ApiTestCase extends TestCase
      */
     protected function errorResponse(array $data = [], string $message = 'Validation error'): array
     {
+        return $this->response($data, $message);
+    }
+
+    /**
+     * @param array $data
+     * @param string $message
+     * @return array
+     */
+    protected function response(array $data = [], string $message = 'Success'): array
+    {
         return [
-            'success' => false,
             'message' => $message,
             'data' => $data,
         ];

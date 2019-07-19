@@ -51,10 +51,6 @@ class TrainerController extends Controller
      *              @OA\Schema(
      *                  type="object",
      *                  @OA\Property(
-     *                      property="success",
-     *                      type="boolean",
-     *                  ),
-     *                  @OA\Property(
      *                      property="message",
      *                      type="string",
      *                  ),
@@ -105,7 +101,6 @@ class TrainerController extends Controller
      *              mediaType="application/json",
      *              @OA\Schema(
      *                  example={
-     *                      "success": false,
      *                      "message": "Validation error",
      *                      "data": {
      *                          "limit": {
@@ -125,8 +120,8 @@ class TrainerController extends Controller
     {
         $trainers = UserRepository::getByRole(
             User::ROLE_TRAINER,
-            $request->get('limit'),
-            $request->get('offset')
+            (int) $request->get('limit'),
+            (int) $request->get('offset')
         );
 
         return $this->success([
@@ -157,10 +152,6 @@ class TrainerController extends Controller
      *              mediaType="application/json",
      *              @OA\Schema(
      *                  type="object",
-     *                  @OA\Property(
-     *                      property="success",
-     *                      type="boolean"
-     *                  ),
      *                  @OA\Property(
      *                      property="message",
      *                      type="string",
@@ -268,10 +259,6 @@ class TrainerController extends Controller
      *              @OA\Schema(
      *                  type="object",
      *                  @OA\Property(
-     *                      property="success",
-     *                      type="boolean"
-     *                  ),
-     *                  @OA\Property(
      *                      property="message",
      *                      type="string",
      *                  ),
@@ -306,7 +293,6 @@ class TrainerController extends Controller
      *              mediaType="application/json",
      *              @OA\Schema(
      *                  example={
-     *                      "success": false,
      *                      "message": "Validation error",
      *                      "data": {
      *                          "playgrounds": {
@@ -333,7 +319,6 @@ class TrainerController extends Controller
      *              mediaType="application/json",
      *              @OA\Schema(
      *                  example={
-     *                      "success": false,
      *                      "message": "Unauthorized"
      *                  },
      *              )
@@ -434,10 +419,6 @@ class TrainerController extends Controller
      *              @OA\Schema(
      *                  type="object",
      *                  @OA\Property(
-     *                      property="success",
-     *                      type="boolean"
-     *                  ),
-     *                  @OA\Property(
      *                      property="message",
      *                      type="string",
      *                  ),
@@ -472,7 +453,6 @@ class TrainerController extends Controller
      *              mediaType="application/json",
      *              @OA\Schema(
      *                  example={
-     *                      "success": false,
      *                      "message": "Validation error",
      *                      "data": {
      *                          "playgrounds": {
@@ -499,7 +479,6 @@ class TrainerController extends Controller
      *              mediaType="application/json",
      *              @OA\Schema(
      *                  example={
-     *                      "success": false,
      *                      "message": "Unauthorized"
      *                  },
      *              )
@@ -512,7 +491,6 @@ class TrainerController extends Controller
      *              mediaType="application/json",
      *              @OA\Schema(
      *                  example={
-     *                      "success": false,
      *                      "message": "Forbidden"
      *                  },
      *              )

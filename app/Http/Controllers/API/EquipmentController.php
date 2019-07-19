@@ -47,11 +47,6 @@ class EquipmentController extends Controller
      *          @OA\MediaType(
      *              mediaType="application/json",
      *              @OA\Schema(
-     *                  type="object",
-     *                  @OA\Property(
-     *                      property="success",
-     *                      type="boolean"
-     *                  ),
      *                  @OA\Property(
      *                      property="message",
      *                      type="string",
@@ -71,7 +66,6 @@ class EquipmentController extends Controller
      *              mediaType="application/json",
      *              @OA\Schema(
      *                  example={
-     *                      "success": false,
      *                      "message": "Unauthorized"
      *                  },
      *              )
@@ -146,10 +140,6 @@ class EquipmentController extends Controller
      *              @OA\Schema(
      *                  type="object",
      *                  @OA\Property(
-     *                      property="success",
-     *                      type="boolean"
-     *                  ),
-     *                  @OA\Property(
      *                      property="message",
      *                      type="string",
      *                  ),
@@ -168,7 +158,6 @@ class EquipmentController extends Controller
      *              mediaType="application/json",
      *              @OA\Schema(
      *                  example={
-     *                      "success": false,
      *                      "message": "Validation error",
      *                      "data": {
      *                          "name": {
@@ -195,7 +184,6 @@ class EquipmentController extends Controller
      *              mediaType="application/json",
      *              @OA\Schema(
      *                  example={
-     *                      "success": false,
      *                      "message": "Unauthorized"
      *                  },
      *              )
@@ -208,7 +196,6 @@ class EquipmentController extends Controller
      *              mediaType="application/json",
      *              @OA\Schema(
      *                  example={
-     *                      "success": false,
      *                      "message": "Forbidden"
      *                  },
      *              )

@@ -5,6 +5,7 @@ namespace App\Http\Controllers;
 
 use Illuminate\Foundation\Bus\DispatchesJobs;
 use Illuminate\Http\JsonResponse;
+use Illuminate\Http\Response;
 use Illuminate\Routing\Controller as BaseController;
 use Illuminate\Foundation\Validation\ValidatesRequests;
 use Illuminate\Foundation\Auth\Access\AuthorizesRequests;
@@ -27,18 +28,11 @@ class Controller extends BaseController
      *
      * @param null $message
      * @param array $data
-     * @param int $code
      * @return JsonResponse
      */
-    protected function success($data = [], $message = null, int $code = 200): JsonResponse
+    protected function success($data = [], $message = null): JsonResponse
     {
-        $response = [
-            'success' => true,
-            'message' => $message ?? 'Success',
-            'data' => $data,
-        ];
-
-        return response()->json($response, $code);
+        return $this->response(Response::HTTP_OK, $data, $message ?? 'Success');
     }
 
     /**
@@ -50,7 +44,7 @@ class Controller extends BaseController
      */
     protected function created($data = [], $message = null): JsonResponse
     {
-        return $this->success($data, $message, 201);
+        return $this->response(Response::HTTP_CREATED, $data, $message ?? 'Created');
     }
 
     /**
@@ -58,17 +52,24 @@ class Controller extends BaseController
      *
      * @param null $message
      * @param array $data
-     * @param int $code
      * @return JsonResponse
      */
-    protected function error($message = null, $data = [], int $code = 400): JsonResponse
+    protected function error($message = null, $data = []): JsonResponse
     {
-        $response = [
-            'success' => false,
-            'message' => $message ?? 'Ooops...Something went wrong',
-            'data' => $data
-        ];
+        return $this->response(Response::HTTP_BAD_REQUEST, $data, $message ?? 'Ooops...Something went wrong');
+    }
 
-        return response()->json($response, $code);
+    /**
+     * @param int $code
+     * @param array $data
+     * @param string $message
+     * @return JsonResponse
+     */
+    protected function response(int $code, $data = [], $message = ''): JsonResponse
+    {
+        return response()->json([
+            'message' => $message,
+            'data' => $data,
+        ], $code);
     }
 }
