@@ -98,25 +98,7 @@ class ScheduleController extends Controller
      *                                  @OA\Property(
      *                                      property="confirmed_bookings",
      *                                      type="array",
-     *                                      @OA\Items(
-     *                                          allOf={
-     *                                              @OA\Schema(ref="#/components/schemas/Booking"),
-     *                                              @OA\Schema(
-     *                                                  @OA\Property(
-     *                                                      property="creator",
-     *                                                      type="object",
-     *                                                      ref="#/components/schemas/User",
-     *                                                  )
-     *                                              ),
-     *                                              @OA\Schema(
-     *                                                  @OA\Property(
-     *                                                      property="bookable",
-     *                                                      type="object",
-     *                                                      ref="#/components/schemas/User"
-     *                                                  ),
-     *                                              ),
-     *                                          }
-     *                                      )
+     *                                      @OA\Items(ref="#/components/schemas/Booking")
      *                                  ),
      *                              ),
      *                          }
