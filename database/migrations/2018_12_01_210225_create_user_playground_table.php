@@ -4,7 +4,7 @@ use Illuminate\Support\Facades\Schema;
 use Illuminate\Database\Schema\Blueprint;
 use Illuminate\Database\Migrations\Migration;
 
-class CreateSchedulesPlaygroundsTable extends Migration
+class CreateUserPlaygroundTable extends Migration
 {
     /**
      * Run the migrations.
@@ -13,15 +13,12 @@ class CreateSchedulesPlaygroundsTable extends Migration
      */
     public function up()
     {
-        Schema::create('schedules_playgrounds', function (Blueprint $table) {
-            $table->uuid('uuid')->primary();
-            $table->uuid('schedule_uuid');
+        Schema::create('user_playground', function (Blueprint $table) {
+            $table->uuid('user_uuid');
             $table->uuid('playground_uuid');
-            $table->timestamps();
-            $table->softDeletes();
-            $table->foreign('schedule_uuid')->references('uuid')->on('schedules');
+            $table->foreign('user_uuid')->references('uuid')->on('users');
             $table->foreign('playground_uuid')->references('uuid')->on('playgrounds');
-            $table->unique(['schedule_uuid', 'playground_uuid']);
+            $table->unique(['user_uuid', 'playground_uuid']);
         });
     }
 
@@ -32,6 +29,6 @@ class CreateSchedulesPlaygroundsTable extends Migration
      */
     public function down()
     {
-        Schema::dropIfExists('schedules_playgrounds');
+        Schema::dropIfExists('user_playground');
     }
 }

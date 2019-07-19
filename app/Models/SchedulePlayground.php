@@ -3,8 +3,6 @@ declare(strict_types = 1);
 
 namespace App\Models;
 
-use Illuminate\Database\Eloquent\SoftDeletes;
-
 /**
  * Class SchedulePlayground
  * @package App\Models
@@ -14,12 +12,10 @@ use Illuminate\Database\Eloquent\SoftDeletes;
  */
 class SchedulePlayground extends BaseModel
 {
-    use SoftDeletes;
-
     /**
      * @var string
      */
-    protected $table = 'schedules_playgrounds';
+    protected $table = 'schedule_playground';
 
     /**
      * @var array
