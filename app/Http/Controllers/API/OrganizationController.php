@@ -96,8 +96,8 @@ class OrganizationController extends Controller
     public function get(GetFormRequest $request): JsonResponse
     {
         return $this->success(OrganizationRepository::get(
-            $request->get('limit'),
-            $request->get('offset')
+            (int) $request->get('limit'),
+            (int) $request->get('offset')
         ));
     }
 
@@ -141,10 +141,6 @@ class OrganizationController extends Controller
      *              @OA\Schema(
      *                  type="object",
      *                  @OA\Property(
-     *                      property="success",
-     *                      type="boolean"
-     *                  ),
-     *                  @OA\Property(
      *                      property="message",
      *                      type="string",
      *                  ),
@@ -163,7 +159,6 @@ class OrganizationController extends Controller
      *              mediaType="application/json",
      *              @OA\Schema(
      *                  example={
-     *                      "success": false,
      *                      "message": "Validation error",
      *                      "data" : {
      *                          "name": {
@@ -184,7 +179,6 @@ class OrganizationController extends Controller
      *              mediaType="application/json",
      *              @OA\Schema(
      *                  example={
-     *                      "success": false,
      *                      "message": "Unauthorized"
      *                  },
      *              )

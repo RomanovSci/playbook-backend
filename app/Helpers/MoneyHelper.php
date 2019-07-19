@@ -21,7 +21,7 @@ class MoneyHelper
      */
     public static function getMinutesRate(Model $entity): int
     {
-        return money($entity->price_per_hour, $entity->currency)
+        return (int) money($entity->price_per_hour, $entity->currency)
             ->divide(60)
             ->getAmount();
     }

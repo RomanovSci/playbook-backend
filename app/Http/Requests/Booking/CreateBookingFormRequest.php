@@ -19,7 +19,7 @@ class CreateBookingFormRequest extends BaseFormRequest
         return [
             'start_time' => 'required|date_format:Y-m-d H:i:s',
             'end_time' => 'required|date_format:Y-m-d H:i:s|after:start_time',
-            'bookable_uuid' => 'required|bookable_exists',
+            'bookable_uuid' => 'required|uuid|bookable_exists',
             'playground_uuid' => 'uuid|exists:playgrounds,uuid',
             'players_count' => 'integer|min:1',
             'equipments' => 'array',

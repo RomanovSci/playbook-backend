@@ -158,8 +158,8 @@ class ScheduleController extends Controller
         $schedules = ScheduleRepository::getBetween(
             Carbon::parse($request->get('start_time')),
             Carbon::parse($request->get('end_time')),
-            $request->get('limit'),
-            $request->get('offset'),
+            (int) $request->get('limit'),
+            (int) $request->get('offset'),
             $schedulableType,
             $uuid
         );

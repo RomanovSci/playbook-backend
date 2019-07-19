@@ -25,6 +25,11 @@ class UserPlayground extends Model
     public $incrementing = false;
 
     /**
+     * @var bool
+     */
+    public $timestamps = false;
+
+    /**
      * @var array
      */
     protected $fillable = [

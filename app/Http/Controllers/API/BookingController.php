@@ -205,8 +205,8 @@ class BookingController extends Controller
             BookingRepository::getByBookable(
                 Carbon::parse($request->get('start_time')),
                 Carbon::parse($request->get('end_time')),
-                $request->get('limit'),
-                $request->get('offset'),
+                (int) $request->get('limit'),
+                (int) $request->get('offset'),
                 $bookableType,
                 $uuid
             )
@@ -357,8 +357,8 @@ class BookingController extends Controller
             BookingRepository::getByCreator(
                 Carbon::parse($request->get('start_time')),
                 Carbon::parse($request->get('end_time')),
-                $request->get('limit'),
-                $request->get('offset'),
+                (int) $request->get('limit'),
+                (int) $request->get('offset'),
                 $user
             )
         );
