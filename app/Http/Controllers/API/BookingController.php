@@ -218,7 +218,7 @@ class BookingController extends Controller
      * @return JsonResponse
      *
      * @OA\Get(
-     *      path="/api/bookings/all",
+     *      path="/api/bookings",
      *      tags={"Booking"},
      *      summary="Get all bookings for user",
      *      @OA\Parameter(

@@ -62,7 +62,7 @@ Route::middleware(['auth:api'])->group(function () {
 
     /** Booking */
     Route::prefix('bookings')->group(function () {
-        Route::get('/all', 'API\BookingController@getUserBookings')->name('booking.get_user_bookings');
+        Route::get('/', 'API\BookingController@getUserBookings')->name('booking.get_user_bookings');
         Route::post('/{bookable_type}', 'API\BookingController@create')->name('booking.create');
         Route::post('/{booking}/decline', 'API\BookingController@decline')->name('booking.decline');
     });
