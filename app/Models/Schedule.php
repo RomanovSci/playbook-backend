@@ -123,6 +123,6 @@ class Schedule extends BaseModel
      */
     public function playgrounds(): BelongsToMany
     {
-        return $this->belongsToMany(Playground::class, 'schedules_playgrounds');
+        return $this->belongsToMany(Playground::class, 'schedule_playground');
     }
 }

@@ -229,7 +229,7 @@ class User extends Authenticatable
      */
     public function playgrounds(): BelongsToMany
     {
-        return $this->belongsToMany(Playground::class, 'users_playgrounds');
+        return $this->belongsToMany(Playground::class, 'user_playground');
     }
 
     /**
