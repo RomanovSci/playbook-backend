@@ -96,27 +96,6 @@ class BookingController extends Controller
      *                              @OA\Schema(ref="#/components/schemas/Booking"),
      *                              @OA\Schema(
      *                                  @OA\Property(
-     *                                      property="playground",
-     *                                      type="object",
-     *                                      ref="#/components/schemas/Playground"
-     *                                  ),
-     *                              ),
-     *                              @OA\Schema(
-     *                                  @OA\Property(
-     *                                      property="bookable",
-     *                                      type="object",
-     *                                      ref="#/components/schemas/User"
-     *                                  ),
-     *                              ),
-     *                              @OA\Schema(
-     *                                  @OA\Property(
-     *                                      property="creator",
-     *                                      type="object",
-     *                                      ref="#/components/schemas/User"
-     *                                  ),
-     *                              ),
-     *                              @OA\Schema(
-     *                                  @OA\Property(
      *                                      property="equipments_rent",
      *                                      type="array",
      *                                      @OA\Items(
@@ -266,20 +245,6 @@ class BookingController extends Controller
      *                      @OA\Items(
      *                          allOf={
      *                              @OA\Schema(ref="#/components/schemas/Booking"),
-     *                              @OA\Schema(
-     *                                  @OA\Property(
-     *                                      property="bookable",
-     *                                      type="object",
-     *                                      ref="#/components/schemas/User"
-     *                                  ),
-     *                              ),
-     *                              @OA\Schema(
-     *                                  @OA\Property(
-     *                                      property="playground",
-     *                                      type="object",
-     *                                      ref="#/components/schemas/Playground"
-     *                                  ),
-     *                              ),
      *                              @OA\Schema(
      *                                  @OA\Property(
      *                                      property="equipments_rent",
@@ -588,6 +553,7 @@ class BookingController extends Controller
      * @param BookingService $bookingService
      * @param BookingTimingService $bookingTimingService
      * @return JsonResponse
+     * @throws \Throwable
      *
      * @OA\Post(
      *      path="/api/bookings/{booking_uuid}/confirm",
@@ -614,16 +580,7 @@ class BookingController extends Controller
      *                  @OA\Property(
      *                      type="object",
      *                      property="data",
-     *                      allOf={
-     *                          @OA\Schema(ref="#/components/schemas/Booking"),
-     *                          @OA\Schema(
-     *                              @OA\Property(
-     *                                  property="bookable",
-     *                                  type="object",
-     *                                  ref="#/components/schemas/User"
-     *                              ),
-     *                          )
-     *                      }
+     *                      ref="#/components/schemas/Booking"
      *                  )
      *              )
      *         )
@@ -685,6 +642,7 @@ class BookingController extends Controller
      * @param DeclineBookingFormRequest $request
      * @param BookingService $bookingService
      * @return JsonResponse
+     * @throws \Throwable
      *
      * @OA\Post(
      *      path="/api/bookings/{booking_uuid}/decline",
@@ -729,21 +687,7 @@ class BookingController extends Controller
      *                  @OA\Property(
      *                      type="object",
      *                      property="data",
-     *                      allOf={
-     *                          @OA\Schema(ref="#/components/schemas/Booking"),
-     *                          @OA\Schema(
-     *                              @OA\Property(
-     *                                  property="bookable",
-     *                                  type="object",
-     *                                  ref="#/components/schemas/User"
-     *                              ),
-     *                              @OA\Property(
-     *                                  property="creator",
-     *                                  type="object",
-     *                                  ref="#/components/schemas/User"
-     *                              ),
-     *                          )
-     *                      }
+     *                      ref="#/components/schemas/Booking"
      *                  )
      *              )
      *         )

@@ -13,7 +13,7 @@ use Illuminate\Database\Eloquent\Relations\MorphTo;
  * @package App\Models
  *
  * @property string bookable_uuid
- * @property integer bookable_type
+ * @property string bookable_type
  * @property string creator_uuid
  * @property Carbon start_time
  * @property Carbon end_time
@@ -37,11 +37,11 @@ use Illuminate\Database\Eloquent\Relations\MorphTo;
  *              ),
  *              @OA\Property(
  *                  property="bookable_uuid",
- *                  description="hidden",
+ *                  description="string",
  *              ),
  *              @OA\Property(
  *                  property="bookable_type",
- *                  description="hidden",
+ *                  description="string",
  *              ),
  *              @OA\Property(
  *                  property="start_time",
@@ -86,6 +86,11 @@ class Booking extends BaseModel
     public const STATUS_CONFIRMED = 1;
     public const STATUS_DECLINED = 2;
 
+    public const BOOKABLE_TYPES = [
+        User::class => 'trainer',
+        Playground::class => 'playground',
+    ];
+
     /**
      * @var string
      */
@@ -118,23 +123,12 @@ class Booking extends BaseModel
     ];
 
     /**
-     * @var array
+     * @return array
      */
-    protected $with = [
-        'bookable',
-    ];
-
-    /**
-     * Booking constructor.
-     *
-     * @param array $attributes
-     */
-    public function __construct(array $attributes = [])
+    public function toArray(): array
     {
-        parent::__construct($attributes);
-        $this->hidden = array_merge($this->hidden, [
-            'bookable_uuid',
-            'bookable_type',
+        return array_merge(parent::toArray(), [
+            'bookable_type' => self::BOOKABLE_TYPES[$this->bookable_type] ?? $this->bookable_type
         ]);
     }
 

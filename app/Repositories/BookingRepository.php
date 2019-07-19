@@ -39,8 +39,6 @@ class BookingRepository
             ->where('start_time', '>=', $startTime->toDayDateTimeString())
             ->where('end_time', '<=', $endTime->toDayDateTimeString())
             ->with([
-                'playground',
-                'creator',
                 'equipmentsRent.equipment'
             ])
             ->limit($limit)
@@ -71,7 +69,6 @@ class BookingRepository
             ->where('start_time', '>=', $startTime->toDayDateTimeString())
             ->where('end_time', '<=', $endTime->toDayDateTimeString())
             ->with([
-                'playground',
                 'equipmentsRent.equipment',
             ])
             ->limit($limit)
