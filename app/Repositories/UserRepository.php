@@ -23,7 +23,7 @@ class UserRepository
     public static function getByRole(string $role, int $limit, int $offset): Collection
     {
         return User::role($role)
-            ->with(['trainerInfo', 'playgrounds'])
+            ->with('trainerInfo')
             ->active()
             ->limit($limit)
             ->offset($offset)

@@ -50,24 +50,16 @@ use Illuminate\Database\Eloquent\Relations\MorphTo;
  *                  type="integer",
  *              ),
  *              @OA\Property(
- *                  property="type",
- *                  type="object",
- *                  ref="#/components/schemas/PlaygroundType"
+ *                  property="type_uuid",
+ *                  type="string",
  *              ),
  *              @OA\Property(
- *                  property="organization",
- *                  type="object",
- *                  ref="#/components/schemas/Organization"
+ *                  property="organization_uuid",
+ *                  type="string",
  *              ),
  *              @OA\Property(
- *                  property="creator",
- *                  type="object",
- *                  ref="#/components/schemas/User"
- *              ),
- *              @OA\Property(
- *                  property="schedules",
- *                  type="array",
- *                  @OA\Items(ref="#/components/schemas/Schedule")
+ *                  property="creator_uuid",
+ *                  type="string",
  *              ),
  *          ),
  *          @OA\Schema(ref="#/components/schemas/BaseModel"),
@@ -94,31 +86,6 @@ class Playground extends BaseModel
         'organization_uuid',
         'creator_uuid',
     ];
-
-    /**
-     * @var array
-     */
-    protected $with = [
-        'organization',
-        'type',
-        'creator',
-        'schedules',
-    ];
-
-    /**
-     * Playground constructor.
-     *
-     * @param array $attributes
-     */
-    public function __construct(array $attributes = [])
-    {
-        parent::__construct($attributes);
-        $this->hidden = array_merge($this->hidden, [
-            'organization_uuid',
-            'type_uuid',
-            'creator_uuid',
-        ]);
-    }
 
     /**
      * Get type

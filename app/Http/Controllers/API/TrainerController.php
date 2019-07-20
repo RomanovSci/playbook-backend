@@ -78,13 +78,6 @@ class TrainerController extends Controller
      *                                                  ref="#/components/schemas/TrainerInfo"
      *                                              ),
      *                                          ),
-     *                                          @OA\Schema(
-     *                                              @OA\Property(
-     *                                                  property="playgrounds",
-     *                                                  type="array",
-     *                                                  @OA\Items(ref="#/components/schemas/Playground")
-     *                                              ),
-     *                                          ),
      *                                      }
      *                                  )
      *                              ),
