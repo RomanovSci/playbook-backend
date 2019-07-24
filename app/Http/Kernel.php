@@ -5,6 +5,7 @@ namespace App\Http;
 use App\Http\Middleware\Authenticate;
 use App\Http\Middleware\CheckForMaintenanceMode;
 use App\Http\Middleware\EncryptCookies;
+use App\Http\Middleware\HorizonAuthBasic;
 use App\Http\Middleware\PermissionMiddleware;
 use App\Http\Middleware\RedirectIfAuthenticated;
 use App\Http\Middleware\RoleOrPermissionMiddleware;
@@ -42,7 +43,7 @@ class Kernel extends HttpKernel
      * @var array
      */
     protected $middleware = [
-        HttpsProtocol::class,
+//        HttpsProtocol::class,
         CheckForMaintenanceMode::class,
         ValidatePostSize::class,
         TrimStrings::class,
@@ -80,8 +81,9 @@ class Kernel extends HttpKernel
      */
     protected $routeMiddleware = [
         'auth' => Authenticate::class,
-        'guest' => RedirectIfAuthenticated::class,
         'auth.basic' => AuthenticateWithBasicAuth::class,
+        'auth.horizon' => HorizonAuthBasic::class,
+        'guest' => RedirectIfAuthenticated::class,
         'bindings' => SubstituteBindings::class,
         'cache.headers' => SetCacheHeaders::class,
         'can' => Authorize::class,

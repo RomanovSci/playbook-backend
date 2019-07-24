@@ -3,6 +3,8 @@ declare(strict_types = 1);
 
 namespace App\Providers;
 
+use App\Models\User;
+use Illuminate\Http\Request;
 use Laravel\Horizon\Horizon;
 use Laravel\Horizon\HorizonApplicationServiceProvider;
 
@@ -24,11 +26,8 @@ class HorizonServiceProvider extends HorizonApplicationServiceProvider
      */
     protected function authorization(): void
     {
-        Horizon::auth(function ($request) {
-            return app()->environment('local') || in_array($request->ip(), [
-                '172.22.0.1',
-                '185.38.209.242'
-            ]);
+        Horizon::auth(function (Request $request) {
+            return app()->environment('local') || $request->user('web')->hasRole([User::ROLE_ADMIN]);
         });
     }
 

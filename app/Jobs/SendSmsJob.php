@@ -4,12 +4,14 @@ declare(strict_types = 1);
 namespace App\Jobs;
 
 use App\Models\SmsDelivery;
+use App\Services\SmsDelivery\Providers\Twilio;
 use App\Services\SmsDelivery\SmsDeliveryInterface;
 use Illuminate\Bus\Queueable;
 use Illuminate\Queue\SerializesModels;
 use Illuminate\Queue\InteractsWithQueue;
 use Illuminate\Contracts\Queue\ShouldQueue;
 use Illuminate\Foundation\Bus\Dispatchable;
+use Illuminate\Support\Facades\Log;
 
 /**
  * Class SendSmsJob
@@ -45,8 +47,9 @@ class SendSmsJob implements ShouldQueue
     /**
      * Execute the job.
      *
-     * @param SmsDeliveryInterface $smsDeliveryService
+     * @param SmsDeliveryInterface|Twilio $smsDeliveryService
      * @return void
+     * @throws \Throwable
      */
     public function handle(SmsDeliveryInterface $smsDeliveryService): void
     {
@@ -60,6 +63,12 @@ class SendSmsJob implements ShouldQueue
             $result = $smsDeliveryService->send($this->phone, $this->text);
             $data['success'] = $result->getSuccess();
             $data['data'] = json_encode($result->getData());
+
+            if (!$data['success'] && $result->getMessage()) {
+                $data['data'] = json_encode([
+                    'message' => $result->getMessage()
+                ]);
+            }
         }
 
         SmsDelivery::create($data);

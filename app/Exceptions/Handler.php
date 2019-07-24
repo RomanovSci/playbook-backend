@@ -7,7 +7,6 @@ use Exception;
 use Illuminate\Foundation\Exceptions\Handler as ExceptionHandler;
 use Illuminate\Http\Request;
 use Illuminate\Http\Response;
-use Illuminate\Support\Facades\Log;
 
 /**
  * Class Handler
@@ -48,30 +47,24 @@ class Handler extends ExceptionHandler
     /**
      * Render an exception into an HTTP response.
      *
-     * @param  Request  $request
-     * @param  \Exception  $e
+     * @param Request  $request
+     * @param \Exception  $e
      * @return mixed
      */
     public function render($request, Exception $e)
     {
-        Log::error($e->getMessage(), $e->getTrace());
+        $response = ['message' => $e->getMessage()];
 
-        if ($request->is('api/*')) {
-            $response = ['message' => $e->getMessage()];
-
-            if (config('app.debug')) {
-                $response['trace'] = $e->getTrace();
-            }
-
-            $status = Response::HTTP_BAD_REQUEST;
-
-            if ($this->isHttpException($e)) {
-                $status = $e->getStatusCode();
-            }
-
-            return response()->json($response, $status);
+        if (config('app.debug')) {
+            $response['trace'] = $e->getTrace();
         }
 
-        return parent::render($request, $e);
+        $status = Response::HTTP_BAD_REQUEST;
+
+        if ($this->isHttpException($e)) {
+            $status = $e->getStatusCode();
+        }
+
+        return response()->json($response, $status);
     }
 }

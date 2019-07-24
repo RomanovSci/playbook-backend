@@ -27,12 +27,9 @@ class Twilio implements SmsDeliveryInterface
             );
             $sendResult = $twilio->message($phone, $text);
 
-            return ExecResult::instance()
-                ->setSuccess()
-                ->setData((array) $sendResult);
+            return ExecResult::instance()->setSuccess()->setData((array) $sendResult);
         } catch (\Throwable $e) {
-            return ExecResult::instance()
-                ->setMessage($e->getMessage());
+            return ExecResult::instance()->setMessage($e->getMessage());
         }
     }
 }
