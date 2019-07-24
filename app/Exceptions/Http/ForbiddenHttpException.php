@@ -12,11 +12,11 @@ use Symfony\Component\HttpKernel\Exception\HttpException;
 class ForbiddenHttpException extends HttpException
 {
     public function __construct(
-        string $message = null,
+        string $message = '',
         \Exception $previous = null,
         array $headers = [],
         ?int $code = 0
     ) {
-        parent::__construct(403, $message ?? 'Forbidden', $previous, $headers, $code);
+        parent::__construct(403, $message ?: 'Forbidden', $previous, $headers, $code);
     }
 }

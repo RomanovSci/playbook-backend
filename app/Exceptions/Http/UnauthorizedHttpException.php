@@ -12,11 +12,11 @@ use Symfony\Component\HttpKernel\Exception\UnauthorizedHttpException as BaseUnau
 class UnauthorizedHttpException extends BaseUnauthorizedHttpException
 {
     public function __construct(
-        string $message = null,
+        string $message = '',
         \Exception $previous = null,
         ?int $code = 0,
         array $headers = []
     ) {
-        parent::__construct('Bearer', $message ?? 'Unauthorized', $previous, $code, $headers);
+        parent::__construct('Bearer', $message ?: 'Unauthorized', $previous, $code, $headers);
     }
 }
