@@ -85,10 +85,10 @@ class BookingPricingService
                 Carbon::parse($schedule->end_time)
             );
             $price += round(
-                    (money($minutesRate, $appropriateSchedule->currency)
-                        ->multiply($overlappedMinutes)
-                        ->getAmount()) / $currencySubunit
-                ) * $currencySubunit;
+                (money($minutesRate, $appropriateSchedule->currency)
+                    ->multiply($overlappedMinutes)
+                    ->getAmount()) / $currencySubunit
+            ) * $currencySubunit;
         }
 
         return ExecResult::instance()
