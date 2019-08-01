@@ -11,13 +11,13 @@ use Illuminate\Database\Eloquent\Collection;
  * Class PlaygroundRepository
  * @package App\Repositories
  */
-class PlaygroundRepository
+class PlaygroundRepository extends Repository
 {
     /**
      * @param array $data
      * @return Collection
      */
-    public static function get(array $data): Collection
+    public function get(array $data): Collection
     {
         /** @var Builder $query */
         $query = Playground::limit($data['limit'])->offset($data['offset']);

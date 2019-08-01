@@ -13,8 +13,10 @@ use Illuminate\Database\Eloquent\Collection;
  * Class BookingRepository
  * @package App\Repositories
  */
-class BookingRepository
+class BookingRepository extends Repository
 {
+    protected const MODEL = Booking::class;
+
     /**
      * Get bookings by bookable data
      *
@@ -26,7 +28,7 @@ class BookingRepository
      * @param string $bookableUuid
      * @return Collection
      */
-    public static function getByBookable(
+    public function getByBookable(
         Carbon $startTime,
         Carbon $endTime,
         int $limit,
@@ -34,13 +36,12 @@ class BookingRepository
         string $bookableType,
         string $bookableUuid
     ): Collection {
-        $bookings = Booking::where('bookable_type', $bookableType)
+        $bookings = $this->builder()
+            ->where('bookable_type', $bookableType)
             ->where('bookable_uuid', $bookableUuid)
             ->where('start_time', '>=', $startTime->toDayDateTimeString())
             ->where('end_time', '<=', $endTime->toDayDateTimeString())
-            ->with([
-                'equipmentsRent.equipment'
-            ])
+            ->with(['equipmentsRent.equipment'])
             ->limit($limit)
             ->offset($offset)
             ->get();
@@ -58,19 +59,18 @@ class BookingRepository
      * @param User $user
      * @return Collection
      */
-    public static function getByCreator(
+    public function getByCreator(
         Carbon $startTime,
         Carbon $endTime,
         int $limit,
         int $offset,
         User $user
     ): Collection {
-        return Booking::where('creator_uuid', $user->uuid)
+        return $this->builder()
+            ->where('creator_uuid', $user->uuid)
             ->where('start_time', '>=', $startTime->toDayDateTimeString())
             ->where('end_time', '<=', $endTime->toDayDateTimeString())
-            ->with([
-                'equipmentsRent.equipment',
-            ])
+            ->with(['equipmentsRent.equipment'])
             ->limit($limit)
             ->offset($offset)
             ->get();
@@ -86,14 +86,15 @@ class BookingRepository
      * @param int|null $status
      * @return Collection
      */
-    public static function getBetween(
+    public function getBetween(
         Carbon $startTime,
         Carbon $endTime,
         string $bookableType = null,
         string $bookableUuid = null,
         int $status = null
     ): Collection {
-        $query = Booking::where('start_time', '>=', $startTime->toDateTimeString())
+        $query = $this->builder()
+            ->where('start_time', '>=', $startTime->toDateTimeString())
             ->where('end_time', '<=', $endTime->toDayDateTimeString());
 
         if ($bookableType) {
@@ -117,9 +118,10 @@ class BookingRepository
      * @param Schedule $schedule
      * @return Collection
      */
-    public static function getConfirmedForSchedule(Schedule $schedule): Collection
+    public function getConfirmedForSchedule(Schedule $schedule): Collection
     {
-        return Booking::where('bookable_uuid', $schedule->schedulable_uuid)
+        return $this->builder()
+            ->where('bookable_uuid', $schedule->schedulable_uuid)
             ->where('bookable_type', $schedule->schedulable_type)
             ->where('status', Booking::STATUS_CONFIRMED)
             ->whereRaw("tsrange(bookings.start_time, bookings.end_time, '()') && tsrange(?, ?, '()')", [
@@ -137,9 +139,10 @@ class BookingRepository
      * @param Carbon $endTime
      * @return Collection
      */
-    public static function getConfirmedInDatesRange(Carbon $startTime, Carbon $endTime): Collection
+    public function getConfirmedInDatesRange(Carbon $startTime, Carbon $endTime): Collection
     {
-        return Booking::where('status', Booking::STATUS_CONFIRMED)
+        return $this->builder()
+            ->where('status', Booking::STATUS_CONFIRMED)
             ->whereRaw("tsrange(bookings.start_time, bookings.end_time, '()') && tsrange(?, ?, '()')", [
                 $startTime,
                 $endTime

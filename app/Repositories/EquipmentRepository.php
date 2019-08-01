@@ -10,16 +10,18 @@ use Illuminate\Support\Collection;
  * Class EquipmentRepository
  * @package App\Repositories
  */
-class EquipmentRepository
+class EquipmentRepository extends Repository
 {
+    protected const MODEL = Equipment::class;
+
     /**
      * Get by creator uuid
      *
      * @param string $uuid
      * @return mixed
      */
-    public static function getByCreatorUuid(string $uuid): Collection
+    public function getByCreatorUuid(string $uuid): Collection
     {
-        return Equipment::where('creator_uuid', $uuid)->get();
+        return $this->builder()->where('creator_uuid', $uuid)->get();
     }
 }

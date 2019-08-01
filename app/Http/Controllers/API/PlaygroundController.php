@@ -23,6 +23,7 @@ class PlaygroundController extends Controller
 {
     /**
      * @param GetFormRequest $request
+     * @param PlaygroundRepository $repository
      * @return JsonResponse
      *
      * @OA\Get(
@@ -104,9 +105,9 @@ class PlaygroundController extends Controller
      *      security={{"Bearer":{}}}
      * )
      */
-    public function get(GetFormRequest $request): JsonResponse
+    public function get(GetFormRequest $request, PlaygroundRepository $repository): JsonResponse
     {
-        return $this->success(PlaygroundRepository::get($request->all()));
+        return $this->success($repository->get($request->all()));
     }
 
     /**
@@ -269,7 +270,8 @@ class PlaygroundController extends Controller
     }
 
     /**
-     * @return string
+     * @param PlaygroundTypesRepository $repository
+     * @return JsonResponse
      *
      * @OA\Get(
      *      path="/api/playgrounds/types",
@@ -309,8 +311,8 @@ class PlaygroundController extends Controller
      *      security={{"Bearer":{}}}
      * )
      */
-    public function getTypes(): JsonResponse
+    public function getTypes(PlaygroundTypesRepository $repository): JsonResponse
     {
-        return $this->success(PlaygroundTypesRepository::all());
+        return $this->success($repository->all());
     }
 }

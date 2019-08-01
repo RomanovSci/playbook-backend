@@ -15,6 +15,21 @@ use Carbon\Carbon;
 class BookingTimingService
 {
     /**
+     * @var BookingRepository
+     */
+    protected $bookingRepository;
+
+    /**
+     * BookingTimingService constructor.
+     *
+     * @param BookingRepository $bookingRepository
+     */
+    public function __construct(BookingRepository $bookingRepository)
+    {
+        $this->bookingRepository = $bookingRepository;
+    }
+
+    /**
      * Check if booking has available time
      * and can be confirmed by trainer
      *
@@ -23,7 +38,7 @@ class BookingTimingService
      */
     public function timeIsAvailable(Booking $booking): ExecResult
     {
-        $confirmedBookingsCount = BookingRepository::getConfirmedInDatesRange(
+        $confirmedBookingsCount = $this->bookingRepository->getConfirmedInDatesRange(
             Carbon::parse($booking->start_time),
             Carbon::parse($booking->end_time)
         )->count();

@@ -5,13 +5,16 @@ namespace App\Repositories;
 
 use App\Models\User;
 use Illuminate\Database\Eloquent\Collection;
+use Illuminate\Database\Eloquent\Model;
 
 /**
  * Class UserRepository
  * @package App\Repositories
  */
-class UserRepository
+class UserRepository extends Repository
 {
+    protected const MODEL = User::class;
+
     /**
      * Get users list by role
      *
@@ -20,9 +23,10 @@ class UserRepository
      * @param int $offset
      * @return Collection
      */
-    public static function getByRole(string $role, int $limit, int $offset): Collection
+    public function getByRole(string $role, int $limit, int $offset): Collection
     {
-        return User::role($role)
+        return $this->builder()
+            ->role($role)
             ->with('trainerInfo')
             ->active()
             ->limit($limit)
@@ -31,35 +35,24 @@ class UserRepository
     }
 
     /**
-     * Get users count by role
-     *
-     * @param string $role
-     * @return int
-     */
-    public static function getCountByRole(string $role): int
-    {
-        return User::role($role)->active()->count();
-    }
-
-    /**
      * Get user by phone
      *
      * @param string $phone
-     * @return User
+     * @return User|Model
      */
-    public static function getByPhone(string $phone): User
+    public function getByPhone(string $phone): User
     {
-        return User::where('phone', $phone)->firstOrFail();
+        return $this->builder()->where('phone', $phone)->firstOrFail();
     }
 
     /**
      * Get user by uuid
      *
      * @param string $uuid
-     * @return User
+     * @return User|Model
      */
-    public static function getByUuid(string $uuid): User
+    public function getByUuid(string $uuid): User
     {
-        return User::where('uuid', $uuid)->firstOrFail();
+        return $this->builder()->where('uuid', $uuid)->firstOrFail();
     }
 }

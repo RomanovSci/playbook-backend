@@ -27,6 +27,7 @@ class BookingController extends Controller
 {
     /**
      * @param TimeIntervalFormRequest $request
+     * @param BookingRepository $repository
      * @param string $bookableType
      * @param string $uuid
      * @return JsonResponse
@@ -174,14 +175,18 @@ class BookingController extends Controller
      *      security={{"Bearer":{}}}
      * )
      */
-    public function get(TimeIntervalFormRequest $request, string $bookableType, string $uuid): JsonResponse
-    {
+    public function get(
+        TimeIntervalFormRequest $request,
+        BookingRepository $repository,
+        string $bookableType,
+        string $uuid
+    ): JsonResponse {
         if (Gate::denies('getBookingsList', [$bookableType, $uuid])) {
             throw new ForbiddenHttpException(__('errors.cant_get_bookings'));
         }
 
         return $this->success(
-            BookingRepository::getByBookable(
+            $repository->getByBookable(
                 Carbon::parse($request->get('start_time')),
                 Carbon::parse($request->get('end_time')),
                 (int) $request->get('limit'),
@@ -194,6 +199,7 @@ class BookingController extends Controller
 
     /**
      * @param TimeIntervalFormRequest $request
+     * @param BookingRepository $repository
      * @return JsonResponse
      *
      * @OA\Get(
@@ -313,13 +319,13 @@ class BookingController extends Controller
      *      security={{"Bearer":{}}}
      * )
      */
-    public function getUserBookings(TimeIntervalFormRequest $request): JsonResponse
+    public function getUserBookings(TimeIntervalFormRequest $request, BookingRepository $repository): JsonResponse
     {
         /** @var User $user */
         $user = Auth::user();
 
         return $this->success(
-            BookingRepository::getByCreator(
+            $repository->getByCreator(
                 Carbon::parse($request->get('start_time')),
                 Carbon::parse($request->get('end_time')),
                 (int) $request->get('limit'),

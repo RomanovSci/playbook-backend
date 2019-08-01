@@ -16,6 +16,7 @@ class CityController extends Controller
 {
     /**
      * @param GetCitiesFormRequest $request
+     * @param CityRepository $repository
      * @return JsonResponse
      *
      * @OA\Get(
@@ -104,8 +105,8 @@ class CityController extends Controller
      *      security={{"Bearer":{}}}
      * )
      */
-    public function get(GetCitiesFormRequest $request): JsonResponse
+    public function get(GetCitiesFormRequest $request, CityRepository $repository): JsonResponse
     {
-        return $this->success(CityRepository::get($request->all()));
+        return $this->success($repository->get($request->all()));
     }
 }

@@ -19,6 +19,7 @@ class OrganizationController extends Controller
 {
     /**
      * @param GetFormRequest $request
+     * @param OrganizationRepository $repository
      * @return JsonResponse
      *
      * @OA\Get(
@@ -93,9 +94,9 @@ class OrganizationController extends Controller
      *      security={{"Bearer":{}}}
      * )
      */
-    public function get(GetFormRequest $request): JsonResponse
+    public function get(GetFormRequest $request, OrganizationRepository $repository): JsonResponse
     {
-        return $this->success(OrganizationRepository::get(
+        return $this->success($repository->get(
             (int) $request->get('limit'),
             (int) $request->get('offset')
         ));

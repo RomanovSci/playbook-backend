@@ -401,6 +401,7 @@ class UserController extends Controller
     /**
      * @param ResendVerificationCodeFormRequest $request
      * @param SmsDeliveryService $smsDeliveryService
+     * @param UserRepository $repository
      * @return JsonResponse
      *
      * @OA\Post(
@@ -459,10 +460,11 @@ class UserController extends Controller
      */
     public function resendVerificationCode(
         ResendVerificationCodeFormRequest $request,
-        SmsDeliveryService $smsDeliveryService
+        SmsDeliveryService $smsDeliveryService,
+        UserRepository $repository
     ): JsonResponse {
         /** @var User $user */
-        $user = UserRepository::getByPhone((string) $request->get('phone'));
+        $user = $repository->getByPhone((string) $request->get('phone'));
         $smsDeliveryService->send($user->phone, $user->verification_code);
 
         return $this->success(
@@ -475,6 +477,7 @@ class UserController extends Controller
     /**
      * @param ResetPasswordFormRequest $request
      * @param UserService $userService
+     * @param UserRepository $repository
      * @return JsonResponse
      *
      * @OA\Post(
@@ -539,9 +542,10 @@ class UserController extends Controller
      */
     public function resetPassword(
         ResetPasswordFormRequest $request,
-        UserService $userService
+        UserService $userService,
+        UserRepository $repository
     ): JsonResponse {
-        $resetResult = $userService->resetPassword(UserRepository::getByPhone((string) $request->get('phone')));
+        $resetResult = $userService->resetPassword($repository->getByPhone((string) $request->get('phone')));
 
         return $resetResult->getSuccess()
             ? $this->success($resetResult->getData('passwordReset'))

@@ -15,6 +15,7 @@ use Illuminate\Http\JsonResponse;
 class CountryController extends Controller
 {
     /**
+     * @param CountryRepository $repository
      * @param GetFormRequest $request
      * @return JsonResponse
      *
@@ -97,8 +98,8 @@ class CountryController extends Controller
      *      security={{"Bearer":{}}}
      * )
      */
-    public function get(GetFormRequest $request): JsonResponse
+    public function get(GetFormRequest $request, CountryRepository $repository): JsonResponse
     {
-        return $this->success(CountryRepository::get($request->all()));
+        return $this->success($repository->get($request->all()));
     }
 }

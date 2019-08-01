@@ -4,21 +4,12 @@ declare(strict_types = 1);
 namespace App\Repositories;
 
 use App\Models\PlaygroundType;
-use Illuminate\Support\Collection;
 
 /**
  * Class PlaygroundTypesRepository
  * @package App\Repositories
  */
-class PlaygroundTypesRepository
+class PlaygroundTypesRepository extends Repository
 {
-    /**
-     * Get all playground types
-     *
-     * @return Collection
-     */
-    public static function all(): Collection
-    {
-        return PlaygroundType::all();
-    }
+    protected const MODEL = PlaygroundType::class;
 }
