@@ -10,15 +10,17 @@ use Illuminate\Database\Eloquent\Collection;
  * Class CityRepository
  * @package App\Repositories
  */
-class CityRepository
+class CityRepository extends Repository
 {
+    protected const MODEL = City::class;
+
     /**
      * @param array $data
      * @return Collection
      */
-    public static function get(array $data): Collection
+    public function get(array $data): Collection
     {
-        $query = City::limit($data['limit'])->offset($data['offset']);
+        $query = $this->builder()->limit($data['limit'])->offset($data['offset']);
 
         if (isset($data['country_uuid'])) {
             $query->where('country_uuid', $data['country_uuid']);

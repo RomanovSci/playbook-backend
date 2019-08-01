@@ -23,6 +23,28 @@ use Illuminate\Database\Eloquent\Model;
 class ScheduleTimingService
 {
     /**
+     * @var ScheduleRepository
+     */
+    protected $scheduleRepository;
+
+    /**
+     * @var BookingRepository
+     */
+    protected $bookingRepository;
+
+    /**
+     * ScheduleTimingService constructor.
+     *
+     * @param ScheduleRepository $scheduleRepository
+     * @param BookingRepository $bookingRepository
+     */
+    public function __construct(ScheduleRepository $scheduleRepository, BookingRepository $bookingRepository)
+    {
+        $this->scheduleRepository = $scheduleRepository;
+        $this->bookingRepository = $bookingRepository;
+    }
+
+    /**
      * Check if schedulable (trainer/playground) has schedules
      * that overlaps with period (startTime - endTime).
      * Exclude $excludedSchedules from the checking
@@ -35,13 +57,13 @@ class ScheduleTimingService
      *
      * @throws IncorrectDateRange
      */
-    public static function scheduleExistsForPeriod(
+    public function scheduleExistsForPeriod(
         Model $schedulable,
         Carbon $startTime,
         Carbon $endTime,
         $excludedSchedules = []
     ): bool {
-        $existedSchedules = ScheduleRepository::getBySchedulable(
+        $existedSchedules = $this->scheduleRepository->getBySchedulable(
             get_class($schedulable),
             $schedulable->uuid
         );
@@ -87,14 +109,14 @@ class ScheduleTimingService
      * @return ExecResult
      * @throws IncorrectDateRange
      */
-    public static function scheduleTimeIsAvailable(
+    public function scheduleTimeIsAvailable(
         Carbon $startTime,
         Carbon $endTime,
         string $schedulableType,
         string $schedulableUuid,
         Schedule $schedule
     ): ExecResult {
-        $confirmedBookings = BookingRepository::getBetween(
+        $confirmedBookings = $this->bookingRepository->getBetween(
             Carbon::parse($schedule->start_time),
             Carbon::parse($schedule->end_time),
             $schedulableType,
@@ -141,7 +163,7 @@ class ScheduleTimingService
          * @var MergedSchedule $schedule
          */
         $schedule = null;
-        $mergedSchedules = ScheduleRepository::getMergedSchedules(
+        $mergedSchedules = $this->scheduleRepository->getMergedSchedules(
             $bookableType,
             $bookableUuid,
             $startTime,

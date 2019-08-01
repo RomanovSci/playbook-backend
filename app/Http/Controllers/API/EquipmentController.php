@@ -19,6 +19,7 @@ use Illuminate\Support\Facades\Auth;
 class EquipmentController extends Controller
 {
     /**
+     * @param EquipmentRepository $repository
      * @param string $bookableType
      * @param string $uuid
      * @return JsonResponse
@@ -73,7 +74,7 @@ class EquipmentController extends Controller
      *      )
      * )
      */
-    public function get(string $bookableType, string $uuid): JsonResponse
+    public function get(EquipmentRepository $repository, string $bookableType, string $uuid): JsonResponse
     {
         if ($bookableType === Playground::class) {
             /**
@@ -82,9 +83,7 @@ class EquipmentController extends Controller
             return $this->success();
         }
 
-        return $this->success(
-            EquipmentRepository::getByCreatorUuid($uuid)
-        );
+        return $this->success($repository->getByCreatorUuid($uuid));
     }
 
     /**

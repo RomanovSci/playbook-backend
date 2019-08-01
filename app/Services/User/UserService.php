@@ -27,12 +27,22 @@ class UserService
     protected $smsDeliveryService;
 
     /**
-     * UserService constructor.
-     * @param SmsDeliveryService $smsDeliveryService
+     * @var PasswordResetRepository
      */
-    public function __construct(SmsDeliveryService $smsDeliveryService)
-    {
+    protected $passwordResetRepository;
+
+    /**
+     * UserService constructor.
+     *
+     * @param SmsDeliveryService $smsDeliveryService
+     * @param PasswordResetRepository $passwordResetRepository
+     */
+    public function __construct(
+        SmsDeliveryService $smsDeliveryService,
+        PasswordResetRepository $passwordResetRepository
+    ) {
         $this->smsDeliveryService = $smsDeliveryService;
+        $this->passwordResetRepository = $passwordResetRepository;
     }
 
     /**
@@ -95,7 +105,7 @@ class UserService
         }
 
         /** @var PasswordReset $passwordReset */
-        $passwordReset = PasswordResetRepository::getActualByUser($user);
+        $passwordReset = $this->passwordResetRepository->getActualByUser($user);
 
         /**
          * Set new password if password
@@ -131,7 +141,7 @@ class UserService
     {
         try {
             /** @var PasswordReset $passwordReset */
-            $passwordReset = PasswordResetRepository::getActualByUser($user);
+            $passwordReset = $this->passwordResetRepository->getActualByUser($user);
 
             if (!$passwordReset) {
                 $passwordReset = PasswordReset::create([

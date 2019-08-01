@@ -23,6 +23,7 @@ class TrainerController extends Controller
 {
     /**
      * @param GetFormRequest $request
+     * @param UserRepository $repository
      * @return JsonResponse
      *
      * @OA\Get(
@@ -109,16 +110,16 @@ class TrainerController extends Controller
      *      )
      * )
      */
-    public function get(GetFormRequest $request): JsonResponse
+    public function get(GetFormRequest $request, UserRepository $repository): JsonResponse
     {
-        $trainers = UserRepository::getByRole(
+        $trainers = $repository->getByRole(
             User::ROLE_TRAINER,
             (int) $request->get('limit'),
             (int) $request->get('offset')
         );
 
         return $this->success([
-            'total_count' => UserRepository::getCountByRole(User::ROLE_TRAINER),
+            'total_count' => count($trainers),
             'list' => $trainers,
         ]);
     }

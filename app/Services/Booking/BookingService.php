@@ -31,16 +31,25 @@ class BookingService
     protected $bookingPricingService;
 
     /**
+     * @var UserRepository
+     */
+    protected $userRepository;
+
+    /**
      * BookingChangeStatusService constructor.
+     *
      * @param SmsDeliveryService $smsDeliveryService
      * @param BookingPricingService $bookingPricingService
+     * @param UserRepository $userRepository
      */
     public function __construct(
         SmsDeliveryService $smsDeliveryService,
-        BookingPricingService $bookingPricingService
+        BookingPricingService $bookingPricingService,
+        UserRepository $userRepository
     ) {
         $this->smsDeliveryService = $smsDeliveryService;
         $this->bookingPricingService = $bookingPricingService;
+        $this->userRepository = $userRepository;
     }
 
     /**
@@ -94,7 +103,7 @@ class BookingService
         if ($bookableType === User::class && $bookableUuid !== $creator->uuid) {
             $timezoneOffset = $creator->timezone->offset ?? 0;
             $this->smsDeliveryService->send(
-                UserRepository::getByUuid($bookableUuid)->phone,
+                $this->userRepository->getByUuid($bookableUuid)->phone,
                 __('sms.booking.create', [
                     'player_name' => $creator->getFullName(),
                     'date' => $booking->start_time->addHours($timezoneOffset)->format('d-m-Y'),

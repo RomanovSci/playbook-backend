@@ -10,15 +10,17 @@ use Illuminate\Support\Collection;
  * Class OrganizationRepository
  * @package App\Repositories
  */
-class OrganizationRepository
+class OrganizationRepository extends Repository
 {
+    protected const MODEL = Organization::class;
+
     /**
      * @param int $limit
      * @param int $offset
      * @return Collection
      */
-    public static function get(int $limit, int $offset): Collection
+    public function get(int $limit, int $offset): Collection
     {
-        return Organization::limit($limit)->offset($offset)->get();
+        return $this->builder()->limit($limit)->offset($offset)->get();
     }
 }

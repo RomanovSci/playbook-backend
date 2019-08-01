@@ -27,6 +27,8 @@ class ScheduleController extends Controller
 {
     /**
      * @param TimeIntervalFormRequest $request
+     * @param ScheduleRepository $scheduleRepository
+     * @param BookingRepository $bookingRepository
      * @param string $schedulableType
      * @param string $uuid
      * @return JsonResponse
@@ -135,9 +137,14 @@ class ScheduleController extends Controller
      *      ),
      * )
      */
-    public function get(TimeIntervalFormRequest $request, string $schedulableType, string $uuid = null): JsonResponse
-    {
-        $schedules = ScheduleRepository::getBetween(
+    public function get(
+        TimeIntervalFormRequest $request,
+        ScheduleRepository $scheduleRepository,
+        BookingRepository $bookingRepository,
+        string $schedulableType,
+        string $uuid = null
+    ): JsonResponse {
+        $schedules = $scheduleRepository->getBetween(
             Carbon::parse($request->get('start_time')),
             Carbon::parse($request->get('end_time')),
             (int) $request->get('limit'),
@@ -151,10 +158,7 @@ class ScheduleController extends Controller
          * @var Schedule $schedule
          */
         foreach ($schedules as $schedule) {
-            $schedule->setAttribute(
-                'confirmed_bookings',
-                BookingRepository::getConfirmedForSchedule($schedule)
-            );
+            $schedule->setAttribute('confirmed_bookings', $bookingRepository->getConfirmedForSchedule($schedule));
         }
 
         return $this->success($schedules);

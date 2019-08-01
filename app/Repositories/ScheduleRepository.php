@@ -12,8 +12,10 @@ use Illuminate\Database\Eloquent\Collection;
  * Class ScheduleRepository
  * @package App\Repositories
  */
-class ScheduleRepository
+class ScheduleRepository extends Repository
 {
+    protected const MODEL = Schedule::class;
+
     /**
      * Get schedule by schedulable data
      *
@@ -23,13 +25,14 @@ class ScheduleRepository
      * @param Carbon $endTime
      * @return Collection
      */
-    public static function getBySchedulable(
+    public function getBySchedulable(
         string $schedulableType = null,
         string $schedulableUuid = null,
         Carbon $startTime = null,
         Carbon $endTime = null
     ): Collection {
-        $query = Schedule::where('schedulable_uuid', $schedulableUuid)
+        $query = $this->builder()
+            ->where('schedulable_uuid', $schedulableUuid)
             ->where('schedulable_type', $schedulableType)
             ->orderBy('start_time', 'asc');
 
@@ -54,7 +57,7 @@ class ScheduleRepository
      * @param string $schedulableUuid
      * @return mixed
      */
-    public static function getBetween(
+    public function getBetween(
         Carbon $startTime,
         Carbon $endTime,
         int $limit = 100,
@@ -62,7 +65,8 @@ class ScheduleRepository
         string $schedulableType = null,
         string $schedulableUuid = null
     ): Collection {
-        $query = Schedule::where('start_time', '>=', $startTime->toDateTimeString())
+        $query = $this->builder()
+            ->where('start_time', '>=', $startTime->toDateTimeString())
             ->orderBy('start_time', 'asc')
             ->where('end_time', '<=', $endTime->toDayDateTimeString())
             ->limit($limit)
@@ -103,13 +107,13 @@ class ScheduleRepository
      * @param Carbon $endTime
      * @return Collection
      */
-    public static function getMergedSchedules(
+    public function getMergedSchedules(
         string $schedulableType,
         string $schedulableUuid,
         Carbon $startTime = null,
         Carbon $endTime = null
     ): Collection {
-        $schedules = ScheduleRepository::getBySchedulable(
+        $schedules = $this->getBySchedulable(
             $schedulableType,
             $schedulableUuid,
             $startTime,

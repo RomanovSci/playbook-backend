@@ -9,14 +9,7 @@ use App\Models\Timezone;
  * Class TimezoneRepository
  * @package App\Repositories
  */
-class TimezoneRepository
+class TimezoneRepository extends Repository
 {
-    /**
-     * @param string $name
-     * @return Timezone
-     */
-    public static function getFirstByName(string $name): ?Timezone
-    {
-        return Timezone::where('utc', $name)->first();
-    }
+    protected const MODEL = Timezone::class;
 }
