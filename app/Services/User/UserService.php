@@ -69,7 +69,7 @@ class UserService
             $token = $user->createToken('MyApp');
 
             if (!isset($data['c_password'])) {
-                $this->smsDeliveryService->send($user->phone, $data['verification_code']);
+                $this->smsDeliveryService->send((string) $user->phone, $data['verification_code']);
             }
 
             DB::commit();
