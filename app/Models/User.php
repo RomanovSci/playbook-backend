@@ -159,7 +159,7 @@ class User extends Authenticatable
     {
         parent::boot();
         self::creating(function ($model) {
-            $model->uuid = Uuid::uuid4();
+            $model->uuid = Uuid::uuid4()->toString();
         });
     }
 
