@@ -3,6 +3,7 @@ declare(strict_types = 1);
 
 namespace App\Exceptions;
 
+use App\Helpers\DebugbarHelper;
 use Exception;
 use Illuminate\Foundation\Exceptions\Handler as ExceptionHandler;
 use Illuminate\Http\Request;
@@ -56,6 +57,7 @@ class Handler extends ExceptionHandler
         $response = ['message' => $e->getMessage()];
 
         if (config('app.debug')) {
+            $response['debug'] = DebugbarHelper::getBaseProfilingData();
             $response['trace'] = $e->getTrace();
         }
 

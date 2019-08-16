@@ -3,6 +3,7 @@ declare(strict_types = 1);
 
 namespace App\Http\Controllers;
 
+use App\Helpers\DebugbarHelper;
 use Illuminate\Foundation\Bus\DispatchesJobs;
 use Illuminate\Http\JsonResponse;
 use Illuminate\Http\Response;
@@ -67,9 +68,15 @@ class Controller extends BaseController
      */
     protected function response(int $code, $data = [], $message = ''): JsonResponse
     {
-        return response()->json([
+        $response = [
             'message' => $message,
             'data' => $data,
-        ], $code);
+        ];
+
+        if (config('app.debug')) {
+            $response['debug'] = DebugbarHelper::getBaseProfilingData();
+        }
+
+        return response()->json($response, $code);
     }
 }

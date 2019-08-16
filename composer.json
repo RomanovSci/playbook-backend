@@ -7,6 +7,7 @@
         "akaunting/money": "^1.0",
         "aloha/twilio": "^4.0",
         "barryvdh/laravel-cors": "^0.11.2",
+        "barryvdh/laravel-debugbar": "^3.2",
         "darkaonline/l5-swagger": "5.7.*",
         "fideloper/proxy": "^4.0",
         "laravel/framework": "5.7.*",
