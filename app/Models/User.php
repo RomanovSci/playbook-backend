@@ -30,6 +30,8 @@ use Spatie\Permission\Traits\HasRoles;
  * @property string password
  * @property string verification_code
  * @property string phone_verified_at
+ * @property int    status
+ * @property string language_code
  * @property string created_at
  * @property string updated_at
  * @property string deleted_at

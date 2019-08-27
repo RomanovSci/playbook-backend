@@ -31,6 +31,15 @@ class ApiTestCase extends TestCase
     }
 
     /**
+     * @param array $data
+     * @return array
+     */
+    protected function createdResponse(array $data = []): array
+    {
+        return $this->response($data, 'Created');
+    }
+
+    /**
      * @return array
      */
     protected function unauthorizedResponse(): array
