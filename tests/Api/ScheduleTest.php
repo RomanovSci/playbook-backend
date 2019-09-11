@@ -3,6 +3,7 @@ declare(strict_types = 1);
 
 namespace Tests\Api;
 
+use App\Models\Playground;
 use App\Models\Schedule;
 use App\Models\User;
 use Carbon\Carbon;
@@ -29,6 +30,11 @@ class ScheduleTest extends ApiTestCase
      * @var Schedule
      */
     protected $schedule;
+
+    /**
+     * @var Playground
+     */
+    protected $playground;
 
     /**
      * @var string
@@ -61,9 +67,11 @@ class ScheduleTest extends ApiTestCase
             'start_time' => $this->startTime,
             'end_time' => $this->endTime,
         ]);
-
+        $this->playground = factory(Playground::class)->create([
+            'creator_uuid' => $this->user->uuid,
+        ]);
         $this->authorizationHeader = [
-            'Authorization' => 'Bearer ' . $this->user->createToken('TestToken')->accessToken
+            'Authorization' => 'Bearer ' . $this->user->createToken('TestToken')->accessToken,
         ];
     }
 
@@ -134,5 +142,49 @@ class ScheduleTest extends ApiTestCase
         )
             ->assertStatus(Response::HTTP_BAD_REQUEST)
             ->assertJson($this->errorResponse());
+    }
+
+    /**
+     * @return void
+     */
+    public function testCreateScheduleSuccess(): void
+    {
+        $data = [
+            'dates' => [
+                [
+                    'start_time' => Carbon::now()->addDays(2)->toDateTimeString(),
+                    'end_time' => Carbon::now()->addDays(3)->toDateTimeString(),
+                ]
+            ],
+            'price_per_hour' => 7000,
+            'currency' => 'USD',
+            'playgrounds' => [(string) $this->playground->uuid]
+        ];
+
+        $this->post(route('schedule.create', ['schedulable_type' => 'trainer']), $data, $this->authorizationHeader)
+            ->assertJson($this->createdResponse([
+                [
+                    'start_time' => $data['dates'][0]['start_time'] . ' +00:00',
+                    'end_time' => $data['dates'][0]['end_time'] . ' +00:00',
+                    'price_per_hour' => $data['price_per_hour'],
+                    'currency' => $data['currency'],
+                    'playgrounds' => [
+                        [
+                            'uuid' => $this->playground->uuid->toString(),
+                            'name' => $this->playground->name,
+                            'description' => $this->playground->description,
+                            'address' => $this->playground->address,
+                            'opening_time' => $this->playground->opening_time,
+                            'closing_time' => $this->playground->closing_time,
+                            'status' => $this->playground->status,
+                            'type_uuid' => $this->playground->type_uuid,
+                            'organization_uuid' => $this->playground->organization_uuid,
+                            'creator_uuid' => $this->playground->creator_uuid,
+                            'created_at' => $this->playground->created_at->toDateTimeString(),
+                            'updated_at' => $this->playground->updated_at->toDateTimeString(),
+                        ]
+                    ]
+                ]
+            ]));
     }
 }
