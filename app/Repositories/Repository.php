@@ -18,6 +18,11 @@ abstract class Repository
     protected const MODEL = Model::class;
 
     /**
+     * @var Builder
+     */
+    protected $builder;
+
+    /**
      * Find model by parameter
      *
      * @param $param
@@ -142,7 +147,6 @@ abstract class Repository
 
     /**
      * @param  bool $withoutNamespace
-     *
      * @return string
      *
      * @throws ReflectionException
@@ -151,7 +155,9 @@ abstract class Repository
     {
         $reflectionModel = new ReflectionClass(static::MODEL);
 
-        return $withoutNamespace ? $reflectionModel->getShortName() : $reflectionModel->getName();
+        return $withoutNamespace
+            ? $reflectionModel->getShortName()
+            : $reflectionModel->getName();
     }
 
     /**
@@ -159,6 +165,10 @@ abstract class Repository
      */
     public function builder(): Builder
     {
-        return call_user_func([static::MODEL, 'query']);
+        if (!$this->builder) {
+            $this->builder = call_user_func([static::MODEL, 'query']);
+        }
+
+        return $this->builder;
     }
 }

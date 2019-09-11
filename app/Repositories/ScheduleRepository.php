@@ -3,8 +3,10 @@ declare(strict_types = 1);
 
 namespace  App\Repositories;
 
+use App\Exceptions\Internal\IncorrectDateRange;
 use App\Models\MergedSchedule;
 use App\Models\Schedule;
+use App\Repositories\Queries\TimeIntervalQueries;
 use Carbon\Carbon;
 use Illuminate\Database\Eloquent\Collection;
 
@@ -14,6 +16,8 @@ use Illuminate\Database\Eloquent\Collection;
  */
 class ScheduleRepository extends Repository
 {
+    use TimeIntervalQueries;
+
     protected const MODEL = Schedule::class;
 
     /**
@@ -24,6 +28,7 @@ class ScheduleRepository extends Repository
      * @param Carbon $startTime
      * @param Carbon $endTime
      * @return Collection
+     * @throws IncorrectDateRange
      */
     public function getBySchedulable(
         string $schedulableType = null,
@@ -31,19 +36,15 @@ class ScheduleRepository extends Repository
         Carbon $startTime = null,
         Carbon $endTime = null
     ): Collection {
-        $query = $this->builder()
-            ->where('schedulable_uuid', $schedulableUuid)
-            ->where('schedulable_type', $schedulableType)
-            ->orderBy('start_time', 'asc');
-
         if ($startTime && $endTime) {
-            $query->whereRaw("tsrange(schedules.start_time, schedules.end_time, '()') && tsrange(?, ?, '()')", [
-                $startTime,
-                $endTime
-            ]);
+            $this->intersectsWith($startTime, $endTime);
         }
 
-        return $query->get();
+        return $this->builder()
+            ->where('schedulable_uuid', $schedulableUuid)
+            ->where('schedulable_type', $schedulableType)
+            ->orderBy('start_time', 'asc')
+            ->get();
     }
 
     /**
@@ -106,6 +107,7 @@ class ScheduleRepository extends Repository
      * @param Carbon $startTime
      * @param Carbon $endTime
      * @return Collection
+     * @throws IncorrectDateRange
      */
     public function getMergedSchedules(
         string $schedulableType,

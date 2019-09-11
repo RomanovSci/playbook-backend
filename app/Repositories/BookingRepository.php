@@ -3,9 +3,11 @@ declare(strict_types = 1);
 
 namespace App\Repositories;
 
+use App\Exceptions\Internal\IncorrectDateRange;
 use App\Models\Booking;
 use App\Models\Schedule;
 use App\Models\User;
+use App\Repositories\Queries\TimeIntervalQueries;
 use Carbon\Carbon;
 use Illuminate\Database\Eloquent\Collection;
 
@@ -15,6 +17,8 @@ use Illuminate\Database\Eloquent\Collection;
  */
 class BookingRepository extends Repository
 {
+    use TimeIntervalQueries;
+
     protected const MODEL = Booking::class;
 
     /**
@@ -117,17 +121,14 @@ class BookingRepository extends Repository
      *
      * @param Schedule $schedule
      * @return Collection
+     * @throws IncorrectDateRange
      */
     public function getConfirmedForSchedule(Schedule $schedule): Collection
     {
-        return $this->builder()
+        return $this->intersectsWith($schedule->start_time, $schedule->end_time)
             ->where('bookable_uuid', $schedule->schedulable_uuid)
             ->where('bookable_type', $schedule->schedulable_type)
             ->where('status', Booking::STATUS_CONFIRMED)
-            ->whereRaw("tsrange(bookings.start_time, bookings.end_time, '()') && tsrange(?, ?, '()')", [
-                $schedule->start_time,
-                $schedule->end_time
-            ])
             ->orderBy('start_time', 'asc')
             ->get();
     }
@@ -138,15 +139,12 @@ class BookingRepository extends Repository
      * @param Carbon $startTime
      * @param Carbon $endTime
      * @return Collection
+     * @throws IncorrectDateRange
      */
     public function getConfirmedInDatesRange(Carbon $startTime, Carbon $endTime): Collection
     {
-        return $this->builder()
+        return $this->intersectsWith($startTime, $endTime)
             ->where('status', Booking::STATUS_CONFIRMED)
-            ->whereRaw("tsrange(bookings.start_time, bookings.end_time, '()') && tsrange(?, ?, '()')", [
-                $startTime,
-                $endTime
-            ])
             ->orderBy('start_time', 'asc')
             ->get();
     }
