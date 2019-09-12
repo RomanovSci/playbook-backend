@@ -1,5 +1,5 @@
 # Playbook backend
-
+![Master](https://travis-ci.org/RomanovSci/playbook-backend.svg?branch=master)
 
 ### Initialization
 * Install docker: `sudo snap install docker`
