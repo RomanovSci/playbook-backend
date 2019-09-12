@@ -1,0 +1,10 @@
+language: php
+
+services:
+  - docker
+
+before_install:
+  - ./init.sh
+
+script:
+  - ./test.sh
