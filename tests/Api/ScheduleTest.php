@@ -94,8 +94,8 @@ class ScheduleTest extends ApiTestCase
             ->assertJson($this->successResponse([
                 [
                     'uuid' => $this->schedule->uuid,
-                    'start_time' => $this->startTime . ' +00:00',
-                    'end_time' => $this->endTime . ' +00:00',
+                    'start_time' => $this->startTime,
+                    'end_time' => $this->endTime,
                     'price_per_hour' => $this->schedule->price_per_hour,
                     'currency' => $this->schedule->currency,
                     'created_at' => $this->schedule->created_at,
@@ -158,14 +158,15 @@ class ScheduleTest extends ApiTestCase
             ],
             'price_per_hour' => 7000,
             'currency' => 'USD',
-            'playgrounds' => [(string) $this->playground->uuid]
+            'playgrounds' => [$this->playground->uuid->toString()]
         ];
 
         $this->post(route('schedule.create', ['schedulable_type' => 'trainer']), $data, $this->authorizationHeader)
+            ->assertStatus(Response::HTTP_CREATED)
             ->assertJson($this->createdResponse([
                 [
-                    'start_time' => $data['dates'][0]['start_time'] . ' +00:00',
-                    'end_time' => $data['dates'][0]['end_time'] . ' +00:00',
+                    'start_time' => $data['dates'][0]['start_time'],
+                    'end_time' => $data['dates'][0]['end_time'],
                     'price_per_hour' => $data['price_per_hour'],
                     'currency' => $data['currency'],
                     'playgrounds' => [
@@ -186,5 +187,125 @@ class ScheduleTest extends ApiTestCase
                     ]
                 ]
             ]));
+    }
+
+    /**
+     * @return void
+     */
+    public function testCreateScheduleValidationError(): void
+    {
+        $this->post(route('schedule.create', ['schedulable_type' => 'trainer']), [], $this->authorizationHeader)
+            ->assertStatus(Response::HTTP_BAD_REQUEST)
+            ->assertJson($this->errorResponse([
+                'dates' => [],
+                'price_per_hour' => [],
+                'currency' => [],
+                'playgrounds' => [],
+            ]));
+    }
+
+    /**
+     * @return void
+     */
+    public function testCreateScheduleUnauthorized(): void
+    {
+        $this->post(route('schedule.create', ['schedulable_type' => 'trainer']), [])
+            ->assertStatus(Response::HTTP_UNAUTHORIZED)
+            ->assertJson($this->unauthorizedResponse());
+    }
+
+    /**
+     * @return void
+     */
+    public function testEditScheduleSuccess(): void
+    {
+        $data = [
+            'start_time' => Carbon::now()->addDays(2)->toDateTimeString(),
+            'end_time' => Carbon::now()->addDays(3)->toDateTimeString(),
+            'price_per_hour' => 6000,
+            'currency' => 'UAH',
+            'playgrounds' => [$this->playground->uuid->toString()]
+        ];
+
+        $this->put(route('schedule.edit', ['schedule' => $this->schedule->uuid]), $data, $this->authorizationHeader)
+            ->assertStatus(Response::HTTP_OK)
+            ->assertJson($this->successResponse([
+                'uuid' => $this->schedule->uuid->toString(),
+                'start_time' => $data['start_time'],
+                'end_time' => $data['end_time'],
+                'price_per_hour' => $data['price_per_hour'],
+                'currency' => $data['currency'],
+                'playgrounds' => [
+                    [
+                        'uuid' => $this->playground->uuid->toString(),
+                        'name' => $this->playground->name,
+                        'description' => $this->playground->description,
+                        'address' => $this->playground->address,
+                        'opening_time' => $this->playground->opening_time,
+                        'closing_time' => $this->playground->closing_time,
+                        'status' => $this->playground->status,
+                        'type_uuid' => $this->playground->type_uuid,
+                        'organization_uuid' => $this->playground->organization_uuid,
+                        'creator_uuid' => $this->playground->creator_uuid,
+                        'created_at' => $this->playground->created_at->toDateTimeString(),
+                        'updated_at' => $this->playground->updated_at->toDateTimeString(),
+                    ]
+                ]
+            ]));
+    }
+
+    /**
+     * @return void
+     */
+    public function testEditScheduleValidationError(): void
+    {
+        $this->put(route('schedule.edit', ['schedule' => $this->schedule->uuid]), [], $this->authorizationHeader)
+            ->assertStatus(Response::HTTP_BAD_REQUEST)
+            ->assertJson($this->errorResponse([
+                'start_time' => [],
+                'end_time' => [],
+                'price_per_hour' => [],
+                'currency' => [],
+                'playgrounds' => [],
+            ]));
+    }
+
+    /**
+     * @return void
+     */
+    public function testEditScheduleUnauthorized(): void
+    {
+        $this->put(route('schedule.edit', ['schedule' => $this->schedule->uuid]), [])
+            ->assertStatus(Response::HTTP_UNAUTHORIZED)
+            ->assertJson($this->unauthorizedResponse());
+    }
+
+    /**
+     * @return void
+     */
+    public function testDeleteScheduleSuccess(): void
+    {
+        $this->delete(route('schedule.delete', ['schedule' => $this->schedule->uuid]), [], $this->authorizationHeader)
+            ->assertStatus(Response::HTTP_OK)
+            ->assertJson($this->successResponse());
+    }
+
+    /**
+     * @return void
+     */
+    public function testDeleteScheduleValidationError(): void
+    {
+        $this->delete(route('schedule.delete', ['schedule' => $this->playground->uuid]), [], $this->authorizationHeader)
+            ->assertStatus(Response::HTTP_BAD_REQUEST);
+    }
+
+    /**
+     * @return void
+     */
+    public function testDeleteScheduleUnauthorized(): void
+    {
+        $this->delete(route('schedule.delete', ['schedule' => $this->schedule->uuid]))
+            ->assertStatus(Response::HTTP_UNAUTHORIZED)
+            ->assertJson($this->unauthorizedResponse());
     }
 }

@@ -84,8 +84,8 @@ class Schedule extends BaseModel
      * @var array
      */
     protected $casts = [
-        'start_time' => 'datetime:Y-m-d H:i:s P',
-        'end_time' => 'datetime:Y-m-d H:i:s P',
+        'start_time' => 'datetime:Y-m-d H:i:s',
+        'end_time' => 'datetime:Y-m-d H:i:s',
         'price_per_hour' => 'integer',
     ];
 
@@ -111,7 +111,7 @@ class Schedule extends BaseModel
     }
 
     /**
-     * @return \Illuminate\Database\Eloquent\Relations\MorphTo
+     * @return MorphTo
      */
     public function schedulable(): MorphTo
     {
@@ -119,7 +119,7 @@ class Schedule extends BaseModel
     }
 
     /**
-     * @return \Illuminate\Database\Eloquent\Relations\BelongsToMany
+     * @return BelongsToMany
      */
     public function playgrounds(): BelongsToMany
     {

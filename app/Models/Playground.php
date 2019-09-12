@@ -17,6 +17,7 @@ use Illuminate\Database\Eloquent\Relations\MorphTo;
  * @property \DateTime opening_time
  * @property \DateTime closing_time
  * @property string type_uuid
+ * @property integer status
  * @property string organization_uuid
  * @property string creator_uuid
  * @property Organization organization
