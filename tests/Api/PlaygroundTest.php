@@ -4,6 +4,7 @@ declare(strict_types = 1);
 namespace Tests\Api;
 
 use App\Models\Playground;
+use App\Models\PlaygroundType;
 use App\Models\User;
 use Illuminate\Http\Response;
 use Tests\ApiTestCase;
@@ -94,6 +95,80 @@ class PlaygroundTest extends ApiTestCase
     public function testGetPlaygroundsUnauthorized(): void
     {
         $this->get(route('playground.get'))
+            ->assertStatus(Response::HTTP_UNAUTHORIZED)
+            ->assertJson($this->unauthorizedResponse());
+    }
+
+    /**
+     * @return void
+     */
+    public function testCreatePlaygroundSuccess(): void
+    {
+        /** @var PlaygroundType $type */
+        $type = factory(PlaygroundType::class)->create();
+        $data = [
+            'name' => 'name',
+            'description' => 'description',
+            'address' => 'address',
+            'opening_time' => '09:00:00',
+            'closing_time' => '17:00:00',
+            'type_uuid' => $type->uuid->toString(),
+        ];
+
+        $this->post(route('playground.create'), $data, $this->authorizationHeader)
+            ->assertStatus(Response::HTTP_CREATED)
+            ->assertJson($this->createdResponse([
+                'name' => $data['name'],
+                'description' => $data['description'],
+                'address' => $data['address'],
+                'opening_time' => $data['opening_time'],
+                'closing_time' => $data['closing_time'],
+                'type_uuid' => $data['type_uuid'],
+            ]));
+    }
+
+    /**
+     * @return void
+     */
+    public function testCreatePlaygroundValidationError(): void
+    {
+        $this->post(route('playground.create'), [], $this->authorizationHeader)
+            ->assertStatus(Response::HTTP_BAD_REQUEST)
+            ->assertJson($this->errorResponse([
+                'name' => [],
+                'description' => [],
+                'address' => [],
+                'opening_time' => [],
+                'closing_time' => [],
+            ]));
+    }
+
+    /**
+     * @return void
+     */
+    public function testCreatePlaygroundUnauthorized(): void
+    {
+        $this->post(route('playground.create'), [])
+            ->assertStatus(Response::HTTP_UNAUTHORIZED)
+            ->assertJson($this->unauthorizedResponse());
+    }
+
+    /**
+     * @return void
+     */
+    public function testGetPlaygroundTypesSuccess(): void
+    {
+        $this->get(route('playground.get_types'), $this->authorizationHeader)
+            ->assertStatus(Response::HTTP_OK)
+            ->assertJson($this->successResponse());
+    }
+
+    /**
+     * @return void
+     */
+    public function testGetPlaygroundTypesUnauthorized(): void
+    {
+        $this->get(route('playground.get_types'))
             ->assertStatus(Response::HTTP_UNAUTHORIZED)
             ->assertJson($this->unauthorizedResponse());
     }
