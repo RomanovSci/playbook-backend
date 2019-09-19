@@ -60,7 +60,7 @@ class TrainerTest extends ApiTestCase
      */
     public function testGetTrainerListSuccess(): void
     {
-        $this->call('GET', route('trainer.get'), ['limit' => 1, 'offset' => 1,])
+        $this->call('GET', route('trainer.get'), ['limit' => 1, 'offset' => 1])
             ->assertStatus(Response::HTTP_OK)
             ->assertJson($this->successResponse([
                 'total_count' => 1,

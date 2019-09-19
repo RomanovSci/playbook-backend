@@ -28,6 +28,6 @@ class PlaygroundRepository extends Repository
                 ->orWhere('address', 'ilike', '%' . $data['query'] . '%');
         }
 
-        return $query->get();
+        return $query->orderBy('created_at', 'DESC')->get();
     }
 }
