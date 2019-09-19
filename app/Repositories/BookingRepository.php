@@ -72,8 +72,8 @@ class BookingRepository extends Repository
     ): Collection {
         return $this->builder()
             ->where('creator_uuid', $user->uuid)
-            ->where('start_time', '>=', $startTime->toDayDateTimeString())
-            ->where('end_time', '<=', $endTime->toDayDateTimeString())
+            ->where('start_time', '>=', $startTime->toDateTimeString())
+            ->where('end_time', '<=', $endTime->toDateTimeString())
             ->with(['equipmentsRent.equipment'])
             ->limit($limit)
             ->offset($offset)
@@ -99,7 +99,7 @@ class BookingRepository extends Repository
     ): Collection {
         $query = $this->builder()
             ->where('start_time', '>=', $startTime->toDateTimeString())
-            ->where('end_time', '<=', $endTime->toDayDateTimeString());
+            ->where('end_time', '<=', $endTime->toDateTimeString());
 
         if ($bookableType) {
             $query->where('bookable_type', $bookableType);

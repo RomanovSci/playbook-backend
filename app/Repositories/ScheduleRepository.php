@@ -68,8 +68,8 @@ class ScheduleRepository extends Repository
     ): Collection {
         $query = $this->builder()
             ->where('start_time', '>=', $startTime->toDateTimeString())
+            ->where('end_time', '<=', $endTime->toDateTimeString())
             ->orderBy('start_time', 'asc')
-            ->where('end_time', '<=', $endTime->toDayDateTimeString())
             ->limit($limit)
             ->offset($offset);
 
