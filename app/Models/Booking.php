@@ -23,6 +23,7 @@ use Illuminate\Database\Eloquent\Relations\MorphTo;
  * @property string note
  * @property integer price
  * @property string currency
+ * @property string playground_uuid
  *
  * @property Schedule schedule
  * @property Playground|User bookable
@@ -120,6 +121,8 @@ class Booking extends BaseModel
         'start_time' => 'datetime:Y-m-d H:i:s',
         'end_time' => 'datetime:Y-m-d H:i:s',
         'price' => 'integer',
+        'status' => 'integer',
+        'players_count' => 'integer',
     ];
 
     /**
