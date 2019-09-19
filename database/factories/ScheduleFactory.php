@@ -11,7 +11,7 @@ $factory->define(App\Models\Schedule::class, function (Generator $faker) {
         'end_time' => Carbon::now()->addHours(2)->toDateTimeString(),
         'price_per_hour' => $faker->numberBetween(0,2),
         'currency' => 'USD',
-        'created_at' => $faker->dateTime,
-        'updated_at' => $faker->dateTime,
+        'created_at' => now(),
+        'updated_at' => now(),
     ];
 });

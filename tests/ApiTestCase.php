@@ -11,6 +11,8 @@ use Illuminate\Support\Facades\Artisan;
  */
 class ApiTestCase extends TestCase
 {
+    public const MESSAGE_FORBIDDEN_ROLE = 'User does not have the right roles.';
+
     /**
      * @return void
      */
@@ -45,6 +47,15 @@ class ApiTestCase extends TestCase
     protected function unauthorizedResponse(): array
     {
         return ['message' => 'Unauthorized'];
+    }
+
+    /**
+     * @param string $message
+     * @return array
+     */
+    protected function forbiddenResponse(string $message = ''): array
+    {
+        return ['message' => $message ?: 'Forbidden'];
     }
 
     /**

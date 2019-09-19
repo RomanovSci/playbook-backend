@@ -21,6 +21,6 @@ class OrganizationRepository extends Repository
      */
     public function get(int $limit, int $offset): Collection
     {
-        return $this->builder()->limit($limit)->offset($offset)->get();
+        return $this->builder()->limit($limit)->offset($offset)->orderBy('created_at', 'DESC')->get();
     }
 }

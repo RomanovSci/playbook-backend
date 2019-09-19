@@ -10,7 +10,7 @@ $factory->define(App\Models\User::class, function (Generator $faker) {
         'last_name' => $faker->lastName,
         'middle_name' => $faker->lastName,
         'phone' => $faker->randomNumber(9),
-        'created_at' => $faker->dateTime,
-        'updated_at' => $faker->dateTime,
+        'created_at' => now(),
+        'updated_at' => now(),
     ];
 });

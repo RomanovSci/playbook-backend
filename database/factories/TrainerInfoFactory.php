@@ -11,7 +11,7 @@ $factory->define(App\Models\TrainerInfo::class, function (Generator $faker) {
         'min_price' => 1,
         'max_price' => 2,
         'currency' => $faker->currencyCode,
-        'created_at' => $faker->dateTime,
-        'updated_at' => $faker->dateTime,
+        'created_at' => now(),
+        'updated_at' => now(),
     ];
 });

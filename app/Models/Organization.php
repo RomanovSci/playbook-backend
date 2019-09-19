@@ -3,13 +3,15 @@ declare(strict_types = 1);
 
 namespace App\Models;
 
+use Ramsey\Uuid\Uuid;
+
 /**
  * Class Organization
  * @package App\Models
  *
  * @property string name
- * @property integer owner_uuid
- * @property integer city_uuid
+ * @property Uuid owner_uuid
+ * @property Uuid city_uuid
  *
  * @OA\Schema(
  *      allOf={

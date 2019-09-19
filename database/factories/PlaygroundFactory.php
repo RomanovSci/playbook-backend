@@ -15,7 +15,7 @@ $factory->define(App\Models\Playground::class, function (Generator $faker) {
         'type_uuid' => null,
         'organization_uuid' => null,
         'creator_uuid' => null,
-        'created_at' => $faker->dateTime,
-        'updated_at' => $faker->dateTime,
+        'created_at' => now(),
+        'updated_at' => now(),
     ];
 });
