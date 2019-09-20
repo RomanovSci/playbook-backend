@@ -4,6 +4,7 @@ declare(strict_types = 1);
 namespace Tests\Api;
 
 use App\Models\Booking;
+use App\Models\Schedule;
 use App\Models\User;
 use Carbon\Carbon;
 use Illuminate\Http\Response;
@@ -31,6 +32,11 @@ class BookingTest extends ApiTestCase
     protected $booking;
 
     /**
+     * @var Schedule
+     */
+    protected $schedule;
+
+    /**
      * @return void
      */
     protected function setUp(): void
@@ -51,6 +57,10 @@ class BookingTest extends ApiTestCase
             'bookable_uuid' => $this->user->uuid,
             'creator_uuid' => $this->user->uuid,
             'status' => Booking::STATUS_CREATED,
+        ]);
+        $this->schedule = factory(Schedule::class)->create([
+            'schedulable_uuid' => $this->user->uuid,
+            'schedulable_type' => User::class,
         ]);
     }
 
@@ -169,5 +179,33 @@ class BookingTest extends ApiTestCase
         $this->get(route('booking.get_user_bookings'))
             ->assertStatus(Response::HTTP_UNAUTHORIZED)
             ->assertJson($this->unauthorizedResponse());
+    }
+
+    /**
+     * @return void
+     */
+    public function testCreateBookingSuccess(): void
+    {
+        $data = [
+            'start_time' => $this->schedule->start_time->toDateTimeString(),
+            'end_time' => $this->schedule->end_time->toDateTimeString(),
+            'bookable_uuid' => $this->user->uuid,
+        ];
+
+        $this->post(route('booking.create', ['bookable_type' => 'trainer']), $data, $this->authorizationHeader)
+            ->assertStatus(Response::HTTP_CREATED)
+            ->assertJson($this->createdResponse([
+                'bookable_uuid' => $this->user->uuid,
+                'bookable_type' => 'trainer',
+                'creator_uuid' => $this->user->uuid,
+                'start_time' => $data['start_time'],
+                'end_time' => $data['end_time'],
+                'note' => null,
+                'price' => 0,
+                'currency' => 'USD',
+                'status' => Booking::STATUS_CREATED,
+                'players_count' => 1,
+                'playground_uuid' => null,
+            ]));
     }
 }
