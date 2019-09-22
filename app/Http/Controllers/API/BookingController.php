@@ -524,18 +524,6 @@ class BookingController extends Controller
      *              )
      *          )
      *      ),
-     *      @OA\Response(
-     *          response="403",
-     *          description="Forbidden",
-     *          @OA\MediaType(
-     *              mediaType="application/json",
-     *              @OA\Schema(
-     *                  example={
-     *                      "message": "Forbidden"
-     *                  },
-     *              )
-     *          )
-     *      ),
      *      security={{"Bearer":{}}}
      * )
      */
