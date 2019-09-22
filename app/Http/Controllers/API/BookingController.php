@@ -18,6 +18,7 @@ use Carbon\Carbon;
 use Illuminate\Http\JsonResponse;
 use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\Gate;
+use Symfony\Component\HttpKernel\Exception\BadRequestHttpException;
 
 /**
  * Class BookingController
@@ -548,7 +549,7 @@ class BookingController extends Controller
         $result = $bookingService->create($user, $bookableType, $request->all());
 
         if (!$result->getSuccess()) {
-            throw new ForbiddenHttpException($result->getMessage());
+            throw new BadRequestHttpException($result->getMessage());
         }
 
         return $this->created($result->getData());

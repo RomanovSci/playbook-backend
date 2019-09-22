@@ -136,7 +136,7 @@ class BookingService
             DB::beginTransaction();
 
             if ($booking->status === $status) {
-                return ExecResult::instance()->setMessage(__('errors.status_already_set'));
+                return ExecResult::instance()->setSuccess(false)->setMessage(__('errors.status_already_set'));
             }
 
             /** @var User $user */

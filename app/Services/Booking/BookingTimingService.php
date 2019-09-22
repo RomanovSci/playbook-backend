@@ -3,6 +3,7 @@ declare(strict_types = 1);
 
 namespace App\Services\Booking;
 
+use App\Exceptions\Internal\IncorrectDateRange;
 use App\Models\Booking;
 use App\Repositories\BookingRepository;
 use App\Services\ExecResult;
@@ -35,6 +36,7 @@ class BookingTimingService
      *
      * @param Booking $booking
      * @return ExecResult
+     * @throws IncorrectDateRange
      */
     public function timeIsAvailable(Booking $booking): ExecResult
     {
@@ -47,6 +49,6 @@ class BookingTimingService
             return ExecResult::instance()->setSuccess();
         }
 
-        return ExecResult::instance()->setMessage(__('errors.booking_time_busy'));
+        return ExecResult::instance()->setSuccess(false)->setMessage(__('errors.booking_time_busy'));
     }
 }

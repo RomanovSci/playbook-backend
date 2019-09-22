@@ -208,4 +208,44 @@ class BookingTest extends ApiTestCase
                 'playground_uuid' => null,
             ]));
     }
+
+    /**
+     * @return void
+     */
+    public function testCreateBookingWithoutSchedule(): void
+    {
+        $data = [
+            'start_time' => Carbon::now()->addDays(1)->toDateTimeString(),
+            'end_time' => Carbon::now()->addDays(2)->toDateTimeString(),
+            'bookable_uuid' => $this->user->uuid,
+        ];
+
+        $this->post(route('booking.create', ['bookable_type' => 'trainer']), $data, $this->authorizationHeader)
+            ->assertStatus(Response::HTTP_BAD_REQUEST)
+            ->assertJson($this->errorResponse(null, __('errors.schedule_time_unavailable')));
+    }
+
+    /**
+     * @return void
+     */
+    public function testCreateBookingValidationError(): void
+    {
+        $this->post(route('booking.create', ['bookable_type' => 'trainer']), [], $this->authorizationHeader)
+            ->assertStatus(Response::HTTP_BAD_REQUEST)
+            ->assertJson($this->errorResponse([
+                'start_time' => [],
+                'end_time' => [],
+                'bookable_uuid' => [],
+            ]));
+    }
+
+    /**
+     * @return void
+     */
+    public function testCreateBookingUnauthorized(): void
+    {
+        $this->post(route('booking.create', ['bookable_type' => 'trainer']))
+            ->assertStatus(Response::HTTP_UNAUTHORIZED)
+            ->assertJson($this->unauthorizedResponse());
+    }
 }

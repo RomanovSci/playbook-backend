@@ -132,7 +132,7 @@ class ScheduleTimingService
                 $endTime
             )) {
                 /** Can't get price for reserved period */
-                return ExecResult::instance()->setMessage(__('errors.time_already_reserved'));
+                return ExecResult::instance()->setSuccess(false)->setMessage(__('errors.time_already_reserved'));
             }
         }
 
@@ -147,6 +147,7 @@ class ScheduleTimingService
      * @param string $bookableType
      * @param string $bookableUuid
      * @return ExecResult
+     * @throws IncorrectDateRange
      */
     public function getScheduleInRange(
         Carbon $startTime,
@@ -155,7 +156,7 @@ class ScheduleTimingService
         string $bookableUuid
     ): ExecResult {
         if (!in_array($bookableType, [User::class, Playground::class])) {
-            return ExecResult::instance()->setMessage(__('errors.incorrect_bookable_type'));
+            return ExecResult::instance()->setSuccess(false)->setMessage(__('errors.incorrect_bookable_type'));
         }
 
         /**
@@ -178,13 +179,11 @@ class ScheduleTimingService
         }
 
         if (!$schedule) {
-            return ExecResult::instance()->setMessage(__('errors.schedule_time_unavailable'));
+            return ExecResult::instance()->setSuccess(false)->setMessage(__('errors.schedule_time_unavailable'));
         }
 
         return ExecResult::instance()
             ->setSuccess()
-            ->setData([
-                'schedule' => $schedule
-            ]);
+            ->setData(['schedule' => $schedule]);
     }
 }

@@ -58,7 +58,7 @@ class NexmoProvider implements SmsDeliveryInterface
             ]);
         } catch (\Exception $e) {
             Log::error($e->getMessage());
-            return ExecResult::instance()->setMessage($e->getMessage());
+            return ExecResult::instance()->setSuccess(false)->setMessage($e->getMessage());
         }
 
         if ($message->getStatus() === self::STATUS_SUCCESS) {

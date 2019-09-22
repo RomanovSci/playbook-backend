@@ -162,7 +162,7 @@ class UserService
                         : ['passwordReset' => $passwordReset]
                 );
         } catch (\Exception $e) {
-            return ExecResult::instance()->setMessage($e->getMessage());
+            return ExecResult::instance()->setSuccess(false)->setMessage($e->getMessage());
         }
     }
 }

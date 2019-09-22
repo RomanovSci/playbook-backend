@@ -27,7 +27,7 @@ class ApiTestCase extends TestCase
      * @param array $data
      * @return array
      */
-    protected function successResponse(array $data = []): array
+    protected function successResponse(?array $data = []): array
     {
         return $this->response($data);
     }
@@ -36,7 +36,7 @@ class ApiTestCase extends TestCase
      * @param array $data
      * @return array
      */
-    protected function createdResponse(array $data = []): array
+    protected function createdResponse(?array $data = []): array
     {
         return $this->response($data, 'Created');
     }
@@ -63,7 +63,7 @@ class ApiTestCase extends TestCase
      * @param string $message
      * @return array
      */
-    protected function errorResponse(array $data = [], string $message = 'Validation error'): array
+    protected function errorResponse(?array $data = [], string $message = 'Validation error'): array
     {
         return $this->response($data, $message);
     }
@@ -73,11 +73,17 @@ class ApiTestCase extends TestCase
      * @param string $message
      * @return array
      */
-    protected function response(array $data = [], string $message = 'Success'): array
+    protected function response(?array $data = [], string $message = 'Success'): array
     {
-        return [
+        $response = [
             'message' => $message,
             'data' => $data,
         ];
+
+        if (is_null($data)) {
+            unset($response['data']);
+        }
+
+        return $response;
     }
 }
