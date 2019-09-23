@@ -337,9 +337,119 @@ class BookingTest extends ApiTestCase
     /**
      * @return void
      */
-    public function ConfirmBookingUnauthorized(): void
+    public function testConfirmBookingUnauthorized(): void
     {
         $this->post(route('booking.confirm', ['booking' => $this->booking->uuid->toString()]))
+            ->assertStatus(Response::HTTP_UNAUTHORIZED)
+            ->assertJson($this->unauthorizedResponse());
+    }
+
+    /**
+     * @return void
+     */
+    public function testDeclineBookingSuccess(): void
+    {
+        $this->post(
+            route('booking.decline', ['booking' => $this->booking->uuid->toString()]),
+            ['note' => 'note'],
+            $this->authorizationHeader
+        )
+            ->assertStatus(Response::HTTP_OK)
+            ->assertJson($this->successResponse([
+                'uuid' => $this->booking->uuid->toString(),
+                'bookable_uuid' => $this->booking->bookable_uuid,
+                'bookable_type' => 'trainer',
+                'creator_uuid' => $this->booking->creator_uuid,
+                'start_time' => $this->booking->start_time->toDateTimeString(),
+                'end_time' => $this->booking->end_time->toDateTimeString(),
+                'note' => 'note',
+                'price' => $this->booking->price,
+                'currency' => $this->booking->currency,
+                'status' => Booking::STATUS_DECLINED,
+                'players_count' => $this->booking->players_count,
+                'playground_uuid' => $this->booking->playground_uuid,
+                'created_at' => $this->booking->created_at->toDateTimeString(),
+            ]));
+    }
+
+    /**
+     * @return void
+     */
+    public function testDeclineBookingForbidden(): void
+    {
+        /**
+         * @var User $anotherUser
+         * @var Booking $anotherBooking
+         */
+        $anotherUser = factory(User::class)->create([
+            'password' => bcrypt('1111'),
+            'status' => User::STATUS_ACTIVE,
+            'verification_code' => '111111',
+        ]);
+        $anotherBooking = factory(Booking::class)->create([
+            'bookable_type' => User::class,
+            'bookable_uuid' => $anotherUser->uuid,
+            'creator_uuid' => $anotherUser->uuid,
+            'status' => Booking::STATUS_CREATED,
+        ]);
+        $this->post(
+            route('booking.decline', ['booking' => $anotherBooking->uuid->toString()]),
+            ['note' => 'note'],
+            $this->authorizationHeader
+        )
+            ->assertStatus(Response::HTTP_FORBIDDEN)
+            ->assertJson($this->forbiddenResponse(__('errors.cant_decline_booking')));
+    }
+
+    /**
+     * @return void
+     */
+    public function testDeclineAlreadyDeclinedBooking(): void
+    {
+        $this->bookingRepository->updateByArray($this->booking, ['status' => Booking::STATUS_DECLINED]);
+        $this->post(
+            route('booking.decline', ['booking' => $this->booking->uuid->toString()]),
+            ['note' => 'note'],
+            $this->authorizationHeader
+        )
+            ->assertStatus(Response::HTTP_BAD_REQUEST)
+            ->assertJson($this->errorResponse([
+                'uuid' => $this->booking->uuid->toString(),
+                'bookable_uuid' => $this->booking->bookable_uuid,
+                'bookable_type' => 'trainer',
+                'creator_uuid' => $this->booking->creator_uuid,
+                'start_time' => $this->booking->start_time->toDateTimeString(),
+                'end_time' => $this->booking->end_time->toDateTimeString(),
+                'note' => $this->booking->note,
+                'price' => $this->booking->price,
+                'currency' => $this->booking->currency,
+                'status' => Booking::STATUS_DECLINED,
+                'players_count' => $this->booking->players_count,
+                'playground_uuid' => $this->booking->playground_uuid,
+                'created_at' => $this->booking->created_at->toDateTimeString(),
+            ], __('errors.status_already_set')));
+    }
+
+    /**
+     * @return void
+     */
+    public function testDeclineBookingValidationError(): void
+    {
+        $this->post(
+            route('booking.decline', ['booking' => $this->booking->uuid->toString()]),
+            [],
+            $this->authorizationHeader
+        )
+            ->assertStatus(Response::HTTP_BAD_REQUEST)
+            ->assertJson($this->errorResponse(['note' => []]));
+    }
+
+    /**
+     * @return void
+     */
+    public function testDeclineBookingUnauthorized(): void
+    {
+        $this->post(route('booking.decline', ['booking' => $this->booking->uuid->toString()]))
             ->assertStatus(Response::HTTP_UNAUTHORIZED)
             ->assertJson($this->unauthorizedResponse());
     }
