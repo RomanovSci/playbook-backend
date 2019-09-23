@@ -612,21 +612,20 @@ class BookingController extends Controller
         BookingService $bookingService,
         BookingTimingService $bookingTimingService
     ): JsonResponse {
-        $checkAvailabilityResult = $bookingTimingService->timeIsAvailable($booking);
-
-        if (!$checkAvailabilityResult->getSuccess() || Auth::user()->cant('confirmBooking', $booking)) {
-            throw new ForbiddenHttpException(
-                $checkAvailabilityResult->getMessage() ?: __('errors.cant_confirm_booking')
-            );
+        if (Auth::user()->cant('confirmBooking', $booking)) {
+            throw new ForbiddenHttpException(__('errors.cant_confirm_booking'));
         }
 
-        $changeStatusResult = $bookingService->changeStatus(
-            $booking,
-            Booking::STATUS_CONFIRMED
-        );
+        $checkAvailabilityResult = $bookingTimingService->timeIsAvailable($booking);
+
+        if (!$checkAvailabilityResult->getSuccess()) {
+            throw new BadRequestHttpException($checkAvailabilityResult->getMessage());
+        }
+
+        $changeStatusResult = $bookingService->changeStatus($booking, Booking::STATUS_CONFIRMED);
 
         if (!$changeStatusResult->getSuccess()) {
-            $this->error($changeStatusResult->getMessage(), $booking->toArray());
+            return $this->error($changeStatusResult->getMessage(), $booking->toArray());
         }
 
         return $this->success($booking);
@@ -747,7 +746,7 @@ class BookingController extends Controller
         );
 
         if (!$changeStatusResult->getSuccess()) {
-            $this->error($changeStatusResult->getMessage(), $booking->toArray());
+            return $this->error($changeStatusResult->getMessage(), $booking->toArray());
         }
 
         return $this->success($booking);

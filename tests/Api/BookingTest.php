@@ -6,8 +6,10 @@ namespace Tests\Api;
 use App\Models\Booking;
 use App\Models\Schedule;
 use App\Models\User;
+use App\Repositories\BookingRepository;
 use Carbon\Carbon;
 use Illuminate\Http\Response;
+use Illuminate\Support\Facades\DB;
 use Tests\ApiTestCase;
 
 /**
@@ -37,6 +39,11 @@ class BookingTest extends ApiTestCase
     protected $schedule;
 
     /**
+     * @var BookingRepository
+     */
+    protected $bookingRepository;
+
+    /**
      * @return void
      */
     protected function setUp(): void
@@ -62,6 +69,7 @@ class BookingTest extends ApiTestCase
             'schedulable_uuid' => $this->user->uuid,
             'schedulable_type' => User::class,
         ]);
+        $this->bookingRepository = new BookingRepository();
     }
 
     /**
@@ -245,6 +253,93 @@ class BookingTest extends ApiTestCase
     public function testCreateBookingUnauthorized(): void
     {
         $this->post(route('booking.create', ['bookable_type' => 'trainer']))
+            ->assertStatus(Response::HTTP_UNAUTHORIZED)
+            ->assertJson($this->unauthorizedResponse());
+    }
+
+    /**
+     * @return void
+     */
+    public function testConfirmBookingSuccess(): void
+    {
+        /** Remove all bookings except current */
+        $this->bookingRepository->builder()
+            ->where('uuid', '!=', $this->booking->uuid->toString())
+            ->delete();
+
+        $this->post(
+            route('booking.confirm', ['booking' => $this->booking->uuid->toString()]),
+            [],
+            $this->authorizationHeader
+        )
+            ->assertStatus(Response::HTTP_OK)
+            ->assertJson($this->successResponse([
+                'uuid' => $this->booking->uuid->toString(),
+                'bookable_uuid' => $this->booking->bookable_uuid,
+                'bookable_type' => 'trainer',
+                'creator_uuid' => $this->booking->creator_uuid,
+                'start_time' => $this->booking->start_time->toDateTimeString(),
+                'end_time' => $this->booking->end_time->toDateTimeString(),
+                'note' => $this->booking->note,
+                'price' => $this->booking->price,
+                'currency' => $this->booking->currency,
+                'status' => Booking::STATUS_CONFIRMED,
+                'players_count' => $this->booking->players_count,
+                'playground_uuid' => $this->booking->playground_uuid,
+                'created_at' => $this->booking->created_at->toDateTimeString(),
+            ]));
+    }
+
+    /**
+     * @return void
+     */
+    public function testConfirmBookingForbidden(): void
+    {
+        /**
+         * @var User $anotherUser
+         * @var Booking $anotherBooking
+         */
+        $anotherUser = factory(User::class)->create([
+            'password' => bcrypt('1111'),
+            'status' => User::STATUS_ACTIVE,
+            'verification_code' => '111111',
+        ]);
+        $anotherBooking = factory(Booking::class)->create([
+            'bookable_type' => User::class,
+            'bookable_uuid' => $anotherUser->uuid,
+            'creator_uuid' => $anotherUser->uuid,
+            'status' => Booking::STATUS_CREATED,
+        ]);
+
+        $this->post(
+            route('booking.confirm', ['booking' => $anotherBooking->uuid->toString()]),
+            [],
+            $this->authorizationHeader
+        )
+            ->assertStatus(Response::HTTP_FORBIDDEN)
+            ->assertJson($this->forbiddenResponse(__('errors.cant_confirm_booking')));
+    }
+
+    /**
+     * @return void
+     */
+    public function testConfirmBookingForBusyTime(): void
+    {
+        $this->post(
+            route('booking.confirm', ['booking' => $this->booking->uuid->toString()]),
+            [],
+            $this->authorizationHeader
+        )
+            ->assertStatus(Response::HTTP_BAD_REQUEST)
+            ->assertJson($this->errorResponse(null, __('errors.booking_time_busy')));
+    }
+
+    /**
+     * @return void
+     */
+    public function ConfirmBookingUnauthorized(): void
+    {
+        $this->post(route('booking.confirm', ['booking' => $this->booking->uuid->toString()]))
             ->assertStatus(Response::HTTP_UNAUTHORIZED)
             ->assertJson($this->unauthorizedResponse());
     }

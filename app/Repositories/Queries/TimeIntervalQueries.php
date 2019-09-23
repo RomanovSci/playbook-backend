@@ -32,21 +32,24 @@ trait TimeIntervalQueries
         $table = $this->builder()->getModel()->getTable();
 
         return $this->builder()
-            ->where([
-                ["$table.start_time", '=', $startTime],
-                ["$table.end_time", '=', $endTime]
-            ])
-            ->orWhere([
-                ["$table.end_time", '>', $startTime],
-                ["$table.end_time", '<=', $endTime],
-            ])
-            ->orWhere([
-                ["$table.start_time", '>=', $startTime],
-                ["$table.start_time", '<', $endTime],
-            ])
-            ->orWhere([
-                ["$table.start_time", '<', $endTime],
-                ["$table.end_time", '>=', $endTime]
-            ]);
+            ->where(function (Builder $query) use ($table, $startTime, $endTime) {
+                $query
+                    ->where([
+                        ["$table.start_time", '=', $startTime],
+                        ["$table.end_time", '=', $endTime]
+                    ])
+                    ->orWhere([
+                        ["$table.end_time", '>', $startTime],
+                        ["$table.end_time", '<=', $endTime],
+                    ])
+                    ->orWhere([
+                        ["$table.start_time", '>=', $startTime],
+                        ["$table.start_time", '<', $endTime],
+                    ])
+                    ->orWhere([
+                        ["$table.start_time", '<', $endTime],
+                        ["$table.end_time", '>=', $endTime]
+                    ]);
+            });
     }
 }

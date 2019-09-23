@@ -75,7 +75,7 @@ class BookingPolicy
     protected function manageBooking(User $user, Booking $booking): bool
     {
         /**
-         * Trainer can confirm
+         * Trainer can manage
          * self booking requests
          */
         if ($booking->bookable_type === User::class) {
@@ -83,7 +83,7 @@ class BookingPolicy
         }
 
         /**
-         * Playground admin can confirm
+         * Playground admin can manage
          * self booking requests
          */
         if ($booking->bookable_type === Playground::class) {
