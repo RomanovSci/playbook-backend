@@ -10,11 +10,6 @@ namespace App\Services;
 final class ExecResult
 {
     /**
-     * @var ExecResult
-     */
-    private static $inst = null;
-
-    /**
      * @var bool
      */
     private $success = false;
@@ -30,26 +25,13 @@ final class ExecResult
     private $data = [];
 
     /**
-     * Result constructor.
-     *
-     * @return void
-     */
-    private function __construct()
-    {
-    }
-
-    /**
      * Get new instance
      *
      * @return ExecResult
      */
     public static function instance(): ExecResult
     {
-        if (!self::$inst) {
-            self::$inst = new ExecResult;
-        }
-
-        return self::$inst;
+        return new static;
     }
 
     /**
