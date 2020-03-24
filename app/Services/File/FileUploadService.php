@@ -36,8 +36,6 @@ class FileService
         $file->mime_type = $uploadedFile->getMimeType();
         $file->save();
 
-        return ExecResult::instance()->setData([
-            'file' => $file,
-        ]);
+        return ExecResult::instance()->setData(['file' => $file]);
     }
 }
