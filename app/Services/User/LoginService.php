@@ -12,10 +12,10 @@ use Carbon\Carbon;
 use Illuminate\Support\Facades\Hash;
 
 /**
- * Class UserLoginService
+ * Class LoginService
  * @package App\Services\User
  */
-class UserLoginService
+class LoginService
 {
     /**
      * @var PasswordResetRepository

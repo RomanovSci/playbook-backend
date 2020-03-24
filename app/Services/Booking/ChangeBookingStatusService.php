@@ -5,7 +5,6 @@ namespace App\Services\Booking;
 
 use App\Models\Booking;
 use App\Models\User;
-use App\Repositories\UserRepository;
 use App\Services\ExecResult;
 use App\Services\SmsDelivery\SmsDeliveryService;
 use Illuminate\Support\Facades\Auth;
@@ -15,7 +14,7 @@ use Illuminate\Support\Facades\DB;
  * Class BookingService
  * @package App\Services\Booking
  */
-class BookingService
+class ChangeBookingStatusService
 {
     /**
      * @var SmsDeliveryService
@@ -23,32 +22,21 @@ class BookingService
     protected $smsDeliveryService;
 
     /**
-     * @var UserRepository
-     */
-    protected $userRepository;
-
-    /**
      * @param SmsDeliveryService $smsDeliveryService
-     * @param UserRepository $userRepository
      */
-    public function __construct(
-        SmsDeliveryService $smsDeliveryService,
-        UserRepository $userRepository
-    ) {
+    public function __construct(SmsDeliveryService $smsDeliveryService)
+    {
         $this->smsDeliveryService = $smsDeliveryService;
-        $this->userRepository = $userRepository;
     }
 
     /**
-     * Change booking status
-     *
      * @param Booking $booking
      * @param int $status
      * @param string|null $note
      * @return ExecResult
      * @throws \Throwable
      */
-    public function changeStatus(Booking $booking, int $status, string $note = null): ExecResult
+    public function change(Booking $booking, int $status, string $note = null): ExecResult
     {
         try {
             DB::beginTransaction();

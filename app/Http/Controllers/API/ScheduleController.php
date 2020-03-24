@@ -14,7 +14,8 @@ use App\Models\Schedule;
 use App\Models\User;
 use App\Repositories\BookingRepository;
 use App\Repositories\ScheduleRepository;
-use App\Services\Schedule\ScheduleService;
+use App\Services\Schedule\CreateScheduleService;
+use App\Services\Schedule\EditScheduleService;
 use Carbon\Carbon;
 use Illuminate\Http\JsonResponse;
 use Illuminate\Support\Facades\Auth;
@@ -167,7 +168,7 @@ class ScheduleController extends Controller
     /**
      * @param CreateScheduleFormRequest $request
      * @param string $schedulableType
-     * @param ScheduleService $scheduleService
+     * @param CreateScheduleService $service
      * @return JsonResponse
      *
      * @throws \Throwable
@@ -320,7 +321,7 @@ class ScheduleController extends Controller
     public function create(
         CreateScheduleFormRequest $request,
         string $schedulableType,
-        ScheduleService $scheduleService
+        CreateScheduleService $service
     ): JsonResponse {
         /** @var User $schedulable */
         $schedulable = Auth::user();
@@ -339,21 +340,21 @@ class ScheduleController extends Controller
             /**
              * We don't need validate createSchedule permission
              * for $schedulable = Auth::user(), because this action is available
-             * for only trainer, organization-admin and system admin
+             * only for trainer, organization-admin and system admin
              */
             if (Auth::user()->cant('createSchedule', $schedulable)) {
                 throw new ForbiddenHttpException(__('errors.cant_create_schedule_for_playground'));
             }
         }
 
-        $createResult = $scheduleService->create($schedulable, $request->all());
+        $createResult = $service->create($schedulable, $request->all());
         return $this->created($createResult->getData('schedules'));
     }
 
     /**
      * @param Schedule $schedule
      * @param EditScheduleFormRequest $request
-     * @param ScheduleService $scheduleService
+     * @param EditScheduleService $service
      * @return JsonResponse
      *
      * @throws IncorrectDateRange
@@ -487,15 +488,13 @@ class ScheduleController extends Controller
     public function edit(
         Schedule $schedule,
         EditScheduleFormRequest $request,
-        ScheduleService $scheduleService
+        EditScheduleService $service
     ): JsonResponse {
         if (Auth::user()->cant('manageSchedule', $schedule)) {
             throw new ForbiddenHttpException(__('errors.cant_manage_schedule'));
         }
 
-        return $this->success(
-            $scheduleService->edit($schedule, $request->all())->getData('schedule')
-        );
+        return $this->success($service->edit($schedule, $request->all())->getData('schedule'));
     }
 
     /**

@@ -23,7 +23,6 @@ class BookingPricingService
     protected $scheduleTimingService;
 
     /**
-     * BookingPricingService constructor.
      * @param ScheduleTimingService $scheduleTimingService
      */
     public function __construct(ScheduleTimingService $scheduleTimingService)
@@ -32,8 +31,6 @@ class BookingPricingService
     }
 
     /**
-     * Get booking price for period ($startTime - $endTime)
-     *
      * @param Carbon $startTime
      * @param Carbon $endTime
      * @param string $bookableType

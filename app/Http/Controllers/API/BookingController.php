@@ -12,8 +12,9 @@ use App\Http\Requests\Common\TimeIntervalFormRequest;
 use App\Models\Booking;
 use App\Models\User;
 use App\Repositories\BookingRepository;
-use App\Services\Booking\BookingService;
+use App\Services\Booking\ChangeBookingStatusService;
 use App\Services\Booking\BookingTimingService;
+use App\Services\Booking\CreateBookingService;
 use Carbon\Carbon;
 use Illuminate\Http\JsonResponse;
 use Illuminate\Support\Facades\Auth;
@@ -339,7 +340,7 @@ class BookingController extends Controller
     /**
      * @param string $bookableType
      * @param CreateBookingFormRequest $request
-     * @param BookingService $bookingService
+     * @param CreateBookingService $service
      * @return JsonResponse
      * @throws IncorrectDateRange
      *
@@ -530,11 +531,11 @@ class BookingController extends Controller
     public function create(
         string $bookableType,
         CreateBookingFormRequest $request,
-        BookingService $bookingService
+        CreateBookingService $service
     ): JsonResponse {
         /** @var User $user */
         $user = Auth::user();
-        $result = $bookingService->create($user, $bookableType, $request->all());
+        $result = $service->create($user, $bookableType, $request->all());
 
         if (!$result->getSuccess()) {
             throw new BadRequestHttpException($result->getMessage());
@@ -545,7 +546,7 @@ class BookingController extends Controller
 
     /**
      * @param Booking $booking
-     * @param BookingService $bookingService
+     * @param ChangeBookingStatusService $changeBookingStatusService
      * @param BookingTimingService $bookingTimingService
      * @return JsonResponse
      * @throws \Throwable
@@ -609,7 +610,7 @@ class BookingController extends Controller
      */
     public function confirm(
         Booking $booking,
-        BookingService $bookingService,
+        ChangeBookingStatusService $changeBookingStatusService,
         BookingTimingService $bookingTimingService
     ): JsonResponse {
         if (Auth::user()->cant('confirmBooking', $booking)) {
@@ -622,7 +623,7 @@ class BookingController extends Controller
             throw new BadRequestHttpException($checkAvailabilityResult->getMessage());
         }
 
-        $changeStatusResult = $bookingService->changeStatus($booking, Booking::STATUS_CONFIRMED);
+        $changeStatusResult = $changeBookingStatusService->change($booking, Booking::STATUS_CONFIRMED);
 
         if (!$changeStatusResult->getSuccess()) {
             return $this->error($changeStatusResult->getMessage(), $booking->toArray());
@@ -634,7 +635,7 @@ class BookingController extends Controller
     /**
      * @param Booking $booking
      * @param DeclineBookingFormRequest $request
-     * @param BookingService $bookingService
+     * @param ChangeBookingStatusService $service
      * @return JsonResponse
      * @throws \Throwable
      *
@@ -733,13 +734,13 @@ class BookingController extends Controller
     public function decline(
         Booking $booking,
         DeclineBookingFormRequest $request,
-        BookingService $bookingService
+        ChangeBookingStatusService $service
     ): JsonResponse {
         if (Auth::user()->cant('declineBooking', $booking)) {
             throw new ForbiddenHttpException(__('errors.cant_decline_booking'));
         }
 
-        $changeStatusResult = $bookingService->changeStatus(
+        $changeStatusResult = $service->change(
             $booking,
             Booking::STATUS_DECLINED,
             $request->post('note')

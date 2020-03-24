@@ -10,14 +10,12 @@ use Illuminate\Http\UploadedFile;
 use Illuminate\Support\Facades\Storage;
 
 /**
- * Class FileService
+ * Class FileUploadService
  * @package App\Services\File
  */
-class FileService
+class FileUploadService
 {
     /**
-     * Upload file
-     *
      * @param string $path
      * @param UploadedFile $uploadedFile
      * @param Model $relatedModel

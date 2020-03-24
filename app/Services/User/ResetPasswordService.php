@@ -12,10 +12,10 @@ use Carbon\Carbon;
 use Illuminate\Support\Str;
 
 /**
- * Class UserResetPasswordService
+ * Class ResetPasswordService
  * @package App\Services\User
  */
-class UserResetPasswordService
+class ResetPasswordService
 {
     /**
      * @var SmsDeliveryService

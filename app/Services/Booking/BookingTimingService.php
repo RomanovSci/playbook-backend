@@ -21,8 +21,6 @@ class BookingTimingService
     protected $bookingRepository;
 
     /**
-     * BookingTimingService constructor.
-     *
      * @param BookingRepository $bookingRepository
      */
     public function __construct(BookingRepository $bookingRepository)

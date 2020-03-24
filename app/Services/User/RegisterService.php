@@ -11,10 +11,10 @@ use Illuminate\Support\Str;
 use Laravel\Passport\PersonalAccessTokenResult;
 
 /**
- * Class UserRegisterService
+ * Class RegisterService
  * @package App\Services\User
  */
-class UserRegisterService
+class RegisterService
 {
     /**
      * @var SmsDeliveryService

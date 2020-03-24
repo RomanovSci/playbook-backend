@@ -8,10 +8,10 @@ use App\Models\User;
 use App\Services\ExecResult;
 
 /**
- * Class EquipmentService
+ * Class CreateEquipmentService
  * @package App\Services\Equipment
  */
-class EquipmentService
+class CreateEquipmentService
 {
     /**
      * @param User $user

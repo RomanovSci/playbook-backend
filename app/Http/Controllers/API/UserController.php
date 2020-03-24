@@ -12,9 +12,9 @@ use App\Http\Requests\User\VerifyPhoneFormRequest;
 use App\Models\User;
 use App\Repositories\UserRepository;
 use App\Services\SmsDelivery\SmsDeliveryService;
-use App\Services\User\UserLoginService;
-use App\Services\User\UserRegisterService;
-use App\Services\User\UserResetPasswordService;
+use App\Services\User\LoginService;
+use App\Services\User\RegisterService;
+use App\Services\User\ResetPasswordService;
 use Carbon\Carbon;
 use Illuminate\Http\JsonResponse;
 use Illuminate\Http\Request;
@@ -28,7 +28,7 @@ class UserController extends Controller
 {
     /**
      * @param RegisterFormRequest $request
-     * @param UserRegisterService $service
+     * @param RegisterService $service
      * @return JsonResponse
      * @throws \Throwable
      *
@@ -162,14 +162,14 @@ class UserController extends Controller
      *      ),
      * )
      */
-    public function register(RegisterFormRequest $request, UserRegisterService $service): JsonResponse
+    public function register(RegisterFormRequest $request, RegisterService $service): JsonResponse
     {
         return $this->success($service->register($request->all())->getData());
     }
 
     /**
      * @param LoginFormRequest $request
-     * @param UserLoginService $service
+     * @param LoginService $service
      * @return JsonResponse
      *
      * @OA\Post(
@@ -267,7 +267,7 @@ class UserController extends Controller
      *      ),
      * )
      */
-    public function login(LoginFormRequest $request, UserLoginService $service): JsonResponse
+    public function login(LoginFormRequest $request, LoginService $service): JsonResponse
     {
         return $this->success($service->login($request->all())->getData());
     }
@@ -478,7 +478,7 @@ class UserController extends Controller
 
     /**
      * @param ResetPasswordFormRequest $request
-     * @param UserResetPasswordService $service
+     * @param ResetPasswordService $service
      * @param UserRepository $repository
      * @return JsonResponse
      *
@@ -544,7 +544,7 @@ class UserController extends Controller
      */
     public function resetPassword(
         ResetPasswordFormRequest $request,
-        UserResetPasswordService $service,
+        ResetPasswordService $service,
         UserRepository $repository
     ): JsonResponse {
         $resetResult = $service->reset($repository->getByPhone((string) $request->get('phone')));

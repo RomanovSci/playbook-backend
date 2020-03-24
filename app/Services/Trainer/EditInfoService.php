@@ -11,10 +11,10 @@ use App\Services\File\FileUploadService;
 use Illuminate\Support\Facades\DB;
 
 /**
- * Class TrainerInfoService
+ * Class EditInfoService
  * @package App\Services\Trainer
  */
-class TrainerInfoService
+class EditInfoService
 {
     /**
      * @var FileUploadService
@@ -22,18 +22,14 @@ class TrainerInfoService
     protected $fileUploadService;
 
     /**
-     * TrainerInfoCreateService constructor.
-     *
      * @param FileUploadService $fileUploadService
      */
     public function __construct(FileUploadService $fileUploadService)
     {
         $this->fileUploadService = $fileUploadService;
     }
-    
+
     /**
-     * Edit trainer info
-     *
      * @param User $user
      * @param TrainerInfo $info
      * @param array $data
