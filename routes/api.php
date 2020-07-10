@@ -79,11 +79,18 @@ Route::middleware(['auth:api'])->group(function () {
         Route::get('/', 'API\OrganizationController@get')->name('organization.get');
     });
 
-    /** Tournaments */
+    /** Tournament */
     Route::prefix('tournaments')->group(function () {
-        Route::post('/', 'API\TournamentController@create')->name('tournaments.create');
-        Route::post('/{tournament}/start', 'API\TournamentController@start')->name('tournaments.start');
-        Route::get('/types', 'API\TournamentController@getTypes')->name('tournaments.get_types');
+        Route::get('/', 'API\TournamentController@get')->name('tournament.get');
+        Route::post('/', 'API\TournamentController@create')->name('tournament.create');
+        Route::post('/{tournament}/start', 'API\TournamentController@start')->name('tournament.start');
+        Route::get('/types', 'API\TournamentController@getTypes')->name('tournament.get_types');
+    });
+
+    /** Tournament player */
+    Route::prefix('tournament_players')->group(function () {
+        Route::get('/{tournament}', 'API\TournamentPlayerController@get')->name('tournament_player.get');
+        Route::delete('/{tournament_player}', 'API\TournamentPlayerController@delete')->name('tournament_player.delete');
     });
 });
 

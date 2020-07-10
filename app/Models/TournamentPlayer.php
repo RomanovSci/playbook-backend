@@ -2,6 +2,7 @@
 declare(strict_types = 1);
 
 namespace App\Models;
+use Illuminate\Database\Eloquent\Relations\BelongsTo;
 
 /**
  * Class TournamentPlayer
@@ -12,6 +13,36 @@ namespace App\Models;
  * @property string first_name
  * @property string last_name
  * @property integer order
+ *
+ * @property Tournament tournament
+ *
+ * @OA\Schema(
+ *      allOf={
+ *          @OA\Schema(
+ *              @OA\Property(
+ *                  property="tournament_uuid",
+ *                  type="string",
+ *              ),
+ *              @OA\Property(
+ *                  property="user_uuid",
+ *                  type="string",
+ *              ),
+ *              @OA\Property(
+ *                  property="first_name",
+ *                  type="string",
+ *              ),
+ *              @OA\Property(
+ *                  property="last_name",
+ *                  type="string",
+ *              ),
+ *              @OA\Property(
+ *                  property="order",
+ *                  type="integer",
+ *              ),
+ *          ),
+ *          @OA\Schema(ref="#/components/schemas/BaseModel"),
+ *      }
+ * )
  */
 class TournamentPlayer extends BaseModel
 {
@@ -23,7 +54,7 @@ class TournamentPlayer extends BaseModel
     /**
      * @var array
      */
-    protected $casts = ['order'];
+    protected $casts = ['order' => 'integer'];
 
     /**
      * @var array
@@ -35,4 +66,12 @@ class TournamentPlayer extends BaseModel
         'last_name',
         'order',
     ];
+
+    /**
+     * @return BelongsTo
+     */
+    public function tournament(): BelongsTo
+    {
+        return $this->belongsTo(Tournament::class);
+    }
 }

@@ -4,6 +4,7 @@ declare(strict_types = 1);
 namespace App\Models;
 
 use Carbon\Carbon;
+use Illuminate\Database\Eloquent\Relations\HasMany;
 
 /**
  * Class Tournament
@@ -23,6 +24,8 @@ use Carbon\Carbon;
  * @property string metadata
  * @property string state
  * @property Carbon|string started_at
+ *
+ * @property TournamentPlayer[] players
  *
  * @OA\Schema(
  *      allOf={
@@ -122,4 +125,12 @@ class Tournament extends BaseModel
         'state',
         'started_at',
     ];
+
+    /**
+     * @return HasMany
+     */
+    public function players(): HasMany
+    {
+        return $this->hasMany(TournamentPlayer::class);
+    }
 }
