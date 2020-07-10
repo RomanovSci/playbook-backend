@@ -144,6 +144,7 @@ class TournamentController extends Controller
      *                      "third_place_match": true,
      *                      "players_count_in_group": 2,
      *                      "players_count_in_playoff": 2,
+     *                      "start_date": "2000-01-01 00:00:00",
      *                      "metadata": {
      *                          "meta": "data"
      *                      },
@@ -202,6 +203,10 @@ class TournamentController extends Controller
      *                  ),
      *                  @OA\Property(
      *                      property="state",
+     *                      type="string"
+     *                  ),
+     *                  @OA\Property(
+     *                      property="start_date",
      *                      type="string"
      *                  ),
      *                  @OA\Property(
