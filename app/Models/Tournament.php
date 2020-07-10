@@ -5,6 +5,7 @@ namespace App\Models;
 
 use Carbon\Carbon;
 use Illuminate\Database\Eloquent\Relations\HasMany;
+use Illuminate\Database\Eloquent\Relations\MorphMany;
 
 /**
  * Class Tournament
@@ -23,6 +24,7 @@ use Illuminate\Database\Eloquent\Relations\HasMany;
  * @property integer players_count_in_playoff
  * @property string metadata
  * @property string state
+ * @property Carbon|string start_date
  * @property Carbon|string started_at
  *
  * @property TournamentPlayer[] players
@@ -83,6 +85,10 @@ use Illuminate\Database\Eloquent\Relations\HasMany;
  *                  type="string",
  *              ),
  *              @OA\Property(
+ *                  property="start_date",
+ *                  type="string",
+ *              ),
+ *              @OA\Property(
  *                  property="started_at",
  *                  type="string",
  *              ),
@@ -102,6 +108,7 @@ class Tournament extends BaseModel
      * @var array
      */
     protected $casts = [
+        'start_date' => 'datetime:Y-m-d H:i:s',
         'started_at' => 'datetime:Y-m-d H:i:s',
         'price' => 'integer',
     ];
@@ -123,6 +130,7 @@ class Tournament extends BaseModel
         'players_count_in_playoff',
         'metadata',
         'state',
+        'start_date',
         'started_at',
     ];
 
@@ -132,5 +140,13 @@ class Tournament extends BaseModel
     public function players(): HasMany
     {
         return $this->hasMany(TournamentPlayer::class);
+    }
+
+    /**
+     * @return MorphMany
+     */
+    public function images(): MorphMany
+    {
+        return $this->morphMany(File::class, 'entity', null, 'entity_uuid');
     }
 }

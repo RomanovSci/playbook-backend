@@ -139,7 +139,17 @@ class TournamentController extends Controller
      *                      "category": "men",
      *                      "price": "2000",
      *                      "currency": "USD",
+     *                      "image": "Tournament image",
      *                      "tournament_type_uuid": "0000000-1111-2222-3333-444444444444",
+     *                      "third_place_match": true,
+     *                      "players_count_in_group": 2,
+     *                      "players_count_in_playoff": 2,
+     *                      "metadata": {
+     *                          "meta": "data"
+     *                      },
+     *                      "state": {
+     *                          "tournament": "state"
+     *                      },
      *                      "players": {{
      *                          "uuid": "0000000-1111-2222-3333-444444444444",
      *                          "first_name": "First name",
@@ -167,8 +177,32 @@ class TournamentController extends Controller
      *                      type="string"
      *                  ),
      *                  @OA\Property(
+     *                      property="image",
+     *                      type="string"
+     *                  ),
+     *                  @OA\Property(
      *                      property="tournament_type_uuid",
-     *                      type="string`"
+     *                      type="string"
+     *                  ),
+     *                  @OA\Property(
+     *                      property="third_place_match",
+     *                      type="boolean"
+     *                  ),
+     *                  @OA\Property(
+     *                      property="players_count_in_group",
+     *                      type="integer"
+     *                  ),
+     *                  @OA\Property(
+     *                      property="players_count_in_playoff",
+     *                      type="integer"
+     *                  ),
+     *                  @OA\Property(
+     *                      property="metadata",
+     *                      type="string"
+     *                  ),
+     *                  @OA\Property(
+     *                      property="state",
+     *                      type="string"
      *                  ),
      *                  @OA\Property(
      *                      property="players",

@@ -28,6 +28,7 @@ class CreateTournamentsTable extends Migration
             $table->unsignedInteger('players_count_in_playoff')->nullable();
             $table->json('metadata')->nullable();
             $table->json('state')->nullable();
+            $table->dateTime('start_date');
             $table->dateTime('started_at')->nullable();
             $table->timestamps();
             $table->softDeletes();
