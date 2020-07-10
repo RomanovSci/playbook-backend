@@ -4,6 +4,7 @@ declare(strict_types = 1);
 namespace App\Services\Tournament;
 
 use App\Models\Tournament;
+use App\Models\TournamentPlayer;
 use App\Models\User;
 use App\Services\ExecResult;
 use Illuminate\Contracts\Auth\Authenticatable;
@@ -28,6 +29,14 @@ class CreateTournamentService
         try {
             /** @var Tournament $tournament */
             $tournament = Tournament::create(array_merge($data, ['creator_uuid' => $creator->uuid]));
+
+            foreach ($data['players'] as $index => $player) {
+                TournamentPlayer::create(array_merge($player, [
+                    'tournament_uuid' => $tournament->uuid,
+                    'order' => $index,
+                ]));
+            }
+
             DB::commit();
         } catch (\Throwable $e) {
             Log::error($e->getMessage());

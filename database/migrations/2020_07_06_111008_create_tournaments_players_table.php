@@ -14,7 +14,7 @@ class CreateTournamentsPlayersTable extends Migration
     public function up()
     {
         Schema::create('tournaments_players', function (Blueprint $table) {
-            $table->uuid('id')->primary();
+            $table->uuid('uuid')->primary();
             $table->uuid('tournament_uuid');
             $table->uuid('user_uuid')->nullable();
             $table->string('first_name');

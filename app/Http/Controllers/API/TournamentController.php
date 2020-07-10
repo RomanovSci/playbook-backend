@@ -41,6 +41,7 @@ class TournamentController extends Controller
      *                      "price",
      *                      "currency",
      *                      "tournament_type_uuid",
+     *                      "players",
      *                  },
      *                  example={
      *                      "title": "Tournament",
@@ -49,6 +50,11 @@ class TournamentController extends Controller
      *                      "price": "2000",
      *                      "currency": "USD",
      *                      "tournament_type_uuid": "0000000-1111-2222-3333-444444444444",
+     *                      "players": {{
+     *                          "uuid": "0000000-1111-2222-3333-444444444444",
+     *                          "first_name": "First name",
+     *                          "last_name": "Last name"
+     *                      }}
      *                  },
      *                  @OA\Property(
      *                      property="title",
@@ -72,7 +78,34 @@ class TournamentController extends Controller
      *                  ),
      *                  @OA\Property(
      *                      property="tournament_type_uuid",
-     *                      type="stringx`"
+     *                      type="string`"
+     *                  ),
+     *                  @OA\Property(
+     *                      property="players",
+     *                      type="array",
+     *                      @OA\Items(
+     *                          allOf={
+     *                              @OA\Schema(
+     *                                  type="object",
+     *                                  required={
+     *                                      "first_name",
+     *                                      "last_name",
+     *                                  },
+     *                                  @OA\Property(
+     *                                      property="uuid",
+     *                                      type="string",
+     *                                  ),
+     *                                  @OA\Property(
+     *                                      property="first_name",
+     *                                      type="string",
+     *                                  ),
+     *                                  @OA\Property(
+     *                                      property="last_name",
+     *                                      type="string"
+     *                                  ),
+     *                              )
+     *                          }
+     *                      )
      *                  ),
      *              )
      *          )

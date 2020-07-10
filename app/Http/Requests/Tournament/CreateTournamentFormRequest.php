@@ -29,7 +29,11 @@ class CreateTournamentFormRequest extends BaseFormRequest
             'players_count_in_playoff' => 'numeric|min:0',
             'metadata' => 'json',
             'state' => 'json',
-            'started_at' => 'date_format:Y-m-d H:i:s'
+            'started_at' => 'date_format:Y-m-d H:i:s',
+            'players' => 'required|array',
+            'players.*.uuid' => 'uuid|exists:users,uuid',
+            'players.*.first_name' => 'required|max:255',
+            'players.*.last_name' => 'required|max:255',
         ];
     }
 }
