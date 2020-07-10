@@ -33,6 +33,7 @@ class ScheduleController extends Controller
      * @param string $schedulableType
      * @param string $uuid
      * @return JsonResponse
+     * @throws IncorrectDateRange
      *
      * @OA\Get(
      *      path="/api/schedules/{type}/{uuid}",
