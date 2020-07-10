@@ -5,8 +5,9 @@ namespace App\Http\Controllers\API;
 
 use App\Exceptions\Http\ForbiddenHttpException;
 use App\Http\Controllers\Controller;
-use App\Models\Tournament;
+use App\Http\Requests\TournamentPlayer\GetTournamentPlayerFormRequest;
 use App\Models\TournamentPlayer;
+use App\Repositories\TournamentPlayerRepository;
 use Illuminate\Http\JsonResponse;
 use Illuminate\Support\Facades\Auth;
 
@@ -16,15 +17,22 @@ use Illuminate\Support\Facades\Auth;
  */
 class TournamentPlayerController extends Controller
 {
-
     /**
-     * @param Tournament $tournament
+     * @param GetTournamentPlayerFormRequest $request
+     * @param TournamentPlayerRepository $repository
      * @return JsonResponse
      *
      * @OA\Get(
-     *      path="/api/tournament_players/{tournament_uuid}",
+     *      path="/api/tournament_players",
      *      tags={"Tournament"},
      *      summary="Get tournament players",
+     *      @OA\Parameter(
+     *          name="tournament_uuid",
+     *          description="Tournament uuid",
+     *          in="query",
+     *          required=true,
+     *          @OA\Schema(type="string")
+     *      ),
      *      @OA\Response(
      *          response="200",
      *          description="Success",
@@ -59,9 +67,9 @@ class TournamentPlayerController extends Controller
      *      security={{"Bearer":{}}}
      * )
      */
-    public function get(Tournament $tournament): JsonResponse
+    public function get(GetTournamentPlayerFormRequest $request, TournamentPlayerRepository $repository): JsonResponse
     {
-        return $this->success($tournament->players);
+        return $this->success($repository->whereArray($request->all())->get());
     }
 
     /**

@@ -89,7 +89,7 @@ Route::middleware(['auth:api'])->group(function () {
 
     /** Tournament player */
     Route::prefix('tournament_players')->group(function () {
-        Route::get('/{tournament}', 'API\TournamentPlayerController@get')->name('tournament_player.get');
+        Route::get('/', 'API\TournamentPlayerController@get')->name('tournament_player.get');
         Route::delete('/{tournament_player}', 'API\TournamentPlayerController@delete')->name('tournament_player.delete');
     });
 });
