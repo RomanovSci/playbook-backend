@@ -57,6 +57,13 @@ class UserController extends Controller
      *          required=false,
      *          @OA\Schema(type="string")
      *      ),
+     *      @OA\Parameter(
+     *          name="uuid",
+     *          description="User uuid",
+     *          in="query",
+     *          required=false,
+     *          @OA\Schema(type="string")
+     *      ),
      *      @OA\Response(
      *          response="200",
      *          description="Success",

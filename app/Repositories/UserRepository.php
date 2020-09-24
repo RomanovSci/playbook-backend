@@ -29,6 +29,10 @@ class UserRepository extends Repository
                 ->orWhere('phone', 'ilike', '%' . $data['query'] . '%');
         }
 
+        if (isset($data['uuid'])) {
+            $query->where('uuid', $data['uuid']);
+        }
+
         return $query->get();
     }
 
