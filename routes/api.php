@@ -78,6 +78,20 @@ Route::middleware(['auth:api'])->group(function () {
     Route::prefix('organizations')->group(function () {
         Route::get('/', 'API\OrganizationController@get')->name('organization.get');
     });
+
+    /** Tournament */
+    Route::prefix('tournaments')->group(function () {
+        Route::get('/', 'API\TournamentController@get')->name('tournament.get');
+        Route::post('/', 'API\TournamentController@create')->name('tournament.create');
+        Route::post('/{tournament}/start', 'API\TournamentController@start')->name('tournament.start');
+        Route::get('/types', 'API\TournamentController@getTypes')->name('tournament.get_types');
+    });
+
+    /** Tournament player */
+    Route::prefix('tournament_players')->group(function () {
+        Route::get('/', 'API\TournamentPlayerController@get')->name('tournament_player.get');
+        Route::delete('/{tournament_player}', 'API\TournamentPlayerController@delete')->name('tournament_player.delete');
+    });
 });
 
 /**
@@ -109,6 +123,11 @@ Route::middleware(['role:'
         Route::post('/{schedulable_type}', 'API\ScheduleController@create')->name('schedule.create');
         Route::put('/{schedule}', 'API\ScheduleController@edit')->name('schedule.edit');
         Route::delete('/{schedule}', 'API\ScheduleController@delete')->name('schedule.delete');
+    });
+
+    /** User */
+    Route::prefix('users')->group(function () {
+        Route::get('/', 'API\UserController@get')->name('user.get');
     });
 });
 

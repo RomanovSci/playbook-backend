@@ -7,11 +7,15 @@ use App\Models\Booking;
 use App\Models\Organization;
 use App\Models\Playground;
 use App\Models\Schedule;
+use App\Models\Tournament;
+use App\Models\TournamentPlayer;
 use App\Models\TrainerInfo;
 use App\Policies\BookingPolicy;
 use App\Policies\OrganizationPolicy;
 use App\Policies\PlaygroundPolicy;
 use App\Policies\SchedulePolicy;
+use App\Policies\TournamentPlayerPolicy;
+use App\Policies\TournamentPolicy;
 use App\Policies\TrainerInfoPolicy;
 use Carbon\Carbon;
 use Illuminate\Foundation\Support\Providers\AuthServiceProvider as ServiceProvider;
@@ -35,6 +39,8 @@ class AuthServiceProvider extends ServiceProvider
         Schedule::class => SchedulePolicy::class,
         Booking::class => BookingPolicy::class,
         TrainerInfo::class => TrainerInfoPolicy::class,
+        Tournament::class => TournamentPolicy::class,
+        TournamentPlayer::class => TournamentPlayerPolicy::class,
     ];
 
     /**

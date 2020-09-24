@@ -538,7 +538,7 @@ class BookingController extends Controller
         $result = $service->create($user, $bookableType, $request->all());
 
         if (!$result->getSuccess()) {
-            throw new BadRequestHttpException($result->getMessage());
+            return $this->error($result->getMessage());
         }
 
         return $this->created($result->getData());
@@ -620,7 +620,7 @@ class BookingController extends Controller
         $checkAvailabilityResult = $bookingTimingService->timeIsAvailable($booking);
 
         if (!$checkAvailabilityResult->getSuccess()) {
-            throw new BadRequestHttpException($checkAvailabilityResult->getMessage());
+            return $this->error($checkAvailabilityResult->getMessage());
         }
 
         $changeStatusResult = $changeBookingStatusService->change($booking, Booking::STATUS_CONFIRMED);

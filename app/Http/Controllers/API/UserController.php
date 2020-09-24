@@ -4,6 +4,7 @@ declare(strict_types = 1);
 namespace App\Http\Controllers\API;
 
 use App\Http\Controllers\Controller;
+use App\Http\Requests\Common\GetFormRequest;
 use App\Http\Requests\User\LoginFormRequest;
 use App\Http\Requests\User\RegisterFormRequest;
 use App\Http\Requests\User\ResendVerificationCodeFormRequest;
@@ -26,6 +27,102 @@ use Illuminate\Support\Facades\Auth;
  */
 class UserController extends Controller
 {
+    /**
+     * @param GetFormRequest $request
+     * @param UserRepository $repository
+     * @return JsonResponse
+     *
+     * @OA\Get(
+     *      path="/api/users",
+     *      tags={"User"},
+     *      summary="Get users",
+     *      @OA\Parameter(
+     *          name="limit",
+     *          description="Limit",
+     *          in="query",
+     *          required=true,
+     *          @OA\Schema(type="integer")
+     *      ),
+     *      @OA\Parameter(
+     *          name="offset",
+     *          description="Offset",
+     *          in="query",
+     *          required=true,
+     *          @OA\Schema(type="integer")
+     *      ),
+     *      @OA\Parameter(
+     *          name="query",
+     *          description="Search string",
+     *          in="query",
+     *          required=false,
+     *          @OA\Schema(type="string")
+     *      ),
+     *      @OA\Parameter(
+     *          name="uuid",
+     *          description="User uuid",
+     *          in="query",
+     *          required=false,
+     *          @OA\Schema(type="string")
+     *      ),
+     *      @OA\Response(
+     *          response="200",
+     *          description="Success",
+     *          @OA\MediaType(
+     *              mediaType="application/json",
+     *              @OA\Schema(
+     *                  type="object",
+     *                  @OA\Property(
+     *                      property="message",
+     *                      type="string",
+     *                  ),
+     *                  @OA\Property(
+     *                      type="array",
+     *                      property="data",
+     *                      @OA\Items(ref="#/components/schemas/User")
+     *                  )
+     *              )
+     *         )
+     *      ),
+     *      @OA\Response(
+     *          response="400",
+     *          description="Bad request",
+     *          @OA\MediaType(
+     *              mediaType="application/json",
+     *              @OA\Schema(
+     *                  example={
+     *                      "message": "Validation error",
+     *                      "data": {
+     *                          "limit": {
+     *                              "The limit field is required."
+     *                          },
+     *                          "offset": {
+     *                              "The offset field is required."
+     *                          }
+     *                      }
+     *                  },
+     *              )
+     *          )
+     *      ),
+     *      @OA\Response(
+     *          response="401",
+     *          description="Unauthorized",
+     *          @OA\MediaType(
+     *              mediaType="application/json",
+     *              @OA\Schema(
+     *                  example={
+     *                      "message": "Unauthorized"
+     *                  },
+     *              )
+     *          )
+     *      ),
+     *      security={{"Bearer":{}}}
+     * )
+     */
+    public function get(GetFormRequest $request, UserRepository $repository): JsonResponse
+    {
+        return $this->success($repository->get($request->all()));
+    }
+
     /**
      * @param RegisterFormRequest $request
      * @param RegisterService $service

@@ -16,6 +16,27 @@ class UserRepository extends Repository
     protected const MODEL = User::class;
 
     /**
+     * @param array $data
+     * @return Collection
+     */
+    public function get(array $data): Collection
+    {
+        $query = $this->builder()->limit($data['limit'])->offset($data['offset']);
+
+        if (isset($data['query'])) {
+            $query->where('first_name', 'ilike', '%' . $data['query'] . '%')
+                ->orWhere('last_name', 'ilike', '%' . $data['query'] . '%')
+                ->orWhere('phone', 'ilike', '%' . $data['query'] . '%');
+        }
+
+        if (isset($data['uuid'])) {
+            $query->where('uuid', $data['uuid']);
+        }
+
+        return $query->get();
+    }
+
+    /**
      * Get users list by role
      *
      * @param string $role
