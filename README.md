@@ -12,5 +12,5 @@
 * Run sniffer: `php vendor/bin/phpcs ./app --standard=PSR2`
 
 ### Links
-* [Playbook API](http://13.48.6.243/api/documentation)
+* [Playbook API](http://13.48.85.1/api/documentation)
 * [Swagger specification](https://swagger.io/docs/specification/about/)
