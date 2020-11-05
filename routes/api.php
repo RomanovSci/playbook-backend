@@ -69,7 +69,8 @@ Route::middleware(['auth:api'])->group(function () {
 
     /** Playground */
     Route::prefix('playgrounds')->group(function () {
-        Route::get('/', 'API\PlaygroundController@get')->name('playground.get');
+        Route::get('/', 'API\PlaygroundController@all')->name('playground.all');
+        Route::get('/{playground}', 'API\PlaygroundController@get')->name('playground.get');
         Route::get('/search', 'API\PlaygroundController@search')->name('playground.search');
         Route::get('/types', 'API\PlaygroundController@getTypes')->name('playground.get_types');
     });

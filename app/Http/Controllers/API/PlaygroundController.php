@@ -105,9 +105,63 @@ class PlaygroundController extends Controller
      *      security={{"Bearer":{}}}
      * )
      */
-    public function get(GetFormRequest $request, PlaygroundRepository $repository): JsonResponse
+    public function all(GetFormRequest $request, PlaygroundRepository $repository): JsonResponse
     {
         return $this->success($repository->get($request->all()));
+    }
+
+    /**
+     * @param Playground $playground
+     * @return JsonResponse
+     *
+     * @OA\Get(
+     *      path="/api/playgrounds/{uuid}",
+     *      tags={"Playground"},
+     *      summary="Get playground",
+     *     @OA\Parameter(
+     *          name="uuid",
+     *          description="playground uuid",
+     *          in="path",
+     *          required=true,
+     *          @OA\Schema(type="string")
+     *      ),
+     *      @OA\Response(
+     *          response="200",
+     *          description="Success",
+     *          @OA\MediaType(
+     *              mediaType="application/json",
+     *              @OA\Schema(
+     *                  type="object",
+     *                  @OA\Property(
+     *                      property="message",
+     *                      type="string",
+     *                  ),
+     *                  @OA\Property(
+     *                      type="object",
+     *                      property="data",
+     *                      ref="#/components/schemas/Playground"
+     *                  )
+     *              )
+     *         )
+     *      ),
+     *      @OA\Response(
+     *          response="401",
+     *          description="Unauthorized",
+     *          @OA\MediaType(
+     *              mediaType="application/json",
+     *              @OA\Schema(
+     *                  example={
+     *                      "message": "Unauthorized"
+     *                  },
+     *              )
+     *          )
+     *      ),
+     *      security={{"Bearer":{}}}
+     * )
+     */
+    public function get(Playground $playground): JsonResponse
+    {
+        return $this->success($playground->toArray());
     }
 
     /**

@@ -20,7 +20,9 @@ class PlaygroundRepository extends Repository
     public function get(array $data): Collection
     {
         /** @var Builder $query */
-        $query = Playground::limit($data['limit'])->offset($data['offset']);
+        $query = Playground::limit($data['limit'])
+            ->offset($data['offset'])
+            ->orderBy('created_at', 'DESC');
 
         if (isset($data['query'])) {
             $query->where('name', 'ilike', '%' . $data['query'] . '%')
@@ -28,6 +30,6 @@ class PlaygroundRepository extends Repository
                 ->orWhere('address', 'ilike', '%' . $data['query'] . '%');
         }
 
-        return $query->orderBy('created_at', 'DESC')->get();
+        return $query->get();
     }
 }

@@ -14,6 +14,8 @@ use Illuminate\Foundation\Support\Providers\RouteServiceProvider as ServiceProvi
  */
 class RouteServiceProvider extends ServiceProvider
 {
+    protected const UUID_PATTERN = '[0-9a-f]{8}-[0-9a-f]{4}-[0-9a-f]{4}-[0-9a-f]{4}-[0-9a-f]{12}';
+
     /**
      * This namespace is applied to your controller routes.
      * In addition, it is set as the URL generator's root namespace.
@@ -31,11 +33,12 @@ class RouteServiceProvider extends ServiceProvider
     {
         /** Patterns */
         Route::patterns([
-            'uuid' => '[0-9a-f]{8}-[0-9a-f]{4}-[0-9a-f]{4}-[0-9a-f]{4}-[0-9a-f]{12}',
-            'user' => '[0-9a-f]{8}-[0-9a-f]{4}-[0-9a-f]{4}-[0-9a-f]{4}-[0-9a-f]{12}',
-            'booking' => '[0-9a-f]{8}-[0-9a-f]{4}-[0-9a-f]{4}-[0-9a-f]{4}-[0-9a-f]{12}',
-            'schedule' => '[0-9a-f]{8}-[0-9a-f]{4}-[0-9a-f]{4}-[0-9a-f]{4}-[0-9a-f]{12}',
-            'info' => '[0-9a-f]{8}-[0-9a-f]{4}-[0-9a-f]{4}-[0-9a-f]{4}-[0-9a-f]{12}',
+            'uuid' => self::UUID_PATTERN,
+            'user' => self::UUID_PATTERN,
+            'booking' => self::UUID_PATTERN,
+            'schedule' => self::UUID_PATTERN,
+            'info' => self::UUID_PATTERN,
+            'playground' => self::UUID_PATTERN,
             'bookable_type' => 'trainer|playground',
             'schedulable_type' => 'trainer|playground',
         ]);

@@ -55,9 +55,9 @@ class PlaygroundTest extends ApiTestCase
     /**
      * @return void
      */
-    public function testGetPlaygroundsSuccess(): void
+    public function testGetAllPlaygroundsSuccess(): void
     {
-        $this->get(route('playground.get', ['limit' => 1, 'offset' => 0]), $this->authorizationHeader)
+        $this->get(route('playground.all', ['limit' => 1, 'offset' => 0]), $this->authorizationHeader)
             ->assertStatus(Response::HTTP_OK)
             ->assertJson($this->successResponse([
                 [
@@ -79,9 +79,9 @@ class PlaygroundTest extends ApiTestCase
     /**
      * @return void
      */
-    public function testGetPlaygroundsValidationError(): void
+    public function testGetAllPlaygroundsValidationError(): void
     {
-        $this->get(route('playground.get'), $this->authorizationHeader)
+        $this->get(route('playground.all'), $this->authorizationHeader)
             ->assertStatus(Response::HTTP_BAD_REQUEST)
             ->assertJson($this->errorResponse([
                 'limit' => [],
@@ -92,9 +92,9 @@ class PlaygroundTest extends ApiTestCase
     /**
      * @return void
      */
-    public function testGetPlaygroundsUnauthorized(): void
+    public function testGetAllPlaygroundsUnauthorized(): void
     {
-        $this->get(route('playground.get'))
+        $this->get(route('playground.all'))
             ->assertStatus(Response::HTTP_UNAUTHORIZED)
             ->assertJson($this->unauthorizedResponse());
     }
