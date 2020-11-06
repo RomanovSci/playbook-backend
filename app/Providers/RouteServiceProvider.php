@@ -15,6 +15,22 @@ use Illuminate\Foundation\Support\Providers\RouteServiceProvider as ServiceProvi
 class RouteServiceProvider extends ServiceProvider
 {
     protected const UUID_PATTERN = '[0-9a-f]{8}-[0-9a-f]{4}-[0-9a-f]{4}-[0-9a-f]{4}-[0-9a-f]{12}';
+    protected const SCHEDULABLE_PATTERN = 'trainer|playground';
+
+    protected const ROUTE_PATTERNS = [
+        self::UUID_PATTERN => [
+            'uuid',
+            'user',
+            'booking',
+            'schedule',
+            'info',
+            'playground'
+        ],
+        self::SCHEDULABLE_PATTERN => [
+            'bookable_type',
+            'schedulable_type'
+        ],
+    ];
 
     /**
      * This namespace is applied to your controller routes.
@@ -31,27 +47,9 @@ class RouteServiceProvider extends ServiceProvider
      */
     public function boot(): void
     {
-        /** Patterns */
-        Route::patterns([
-            'uuid' => self::UUID_PATTERN,
-            'user' => self::UUID_PATTERN,
-            'booking' => self::UUID_PATTERN,
-            'schedule' => self::UUID_PATTERN,
-            'info' => self::UUID_PATTERN,
-            'playground' => self::UUID_PATTERN,
-            'bookable_type' => 'trainer|playground',
-            'schedulable_type' => 'trainer|playground',
-        ]);
-
+        $this->initRoutePatterns();
         parent::boot();
-
-        /** Bindings */
-        Route::bind('bookable_type', function ($value) {
-            return $value === 'trainer' ? User::class : Playground::class;
-        });
-        Route::bind('schedulable_type', function ($value) {
-            return $value === 'trainer' ? User::class : Playground::class;
-        });
+        $this->initRouteBinds();
     }
 
     /**
@@ -63,6 +61,35 @@ class RouteServiceProvider extends ServiceProvider
     {
         $this->mapApiRoutes();
         $this->mapWebRoutes();
+    }
+
+    /**
+     * @return void
+     */
+    protected function initRoutePatterns(): void
+    {
+        $patterns = [];
+
+        foreach (self::ROUTE_PATTERNS as $pattern => $keys) {
+            foreach ($keys as $key) {
+                $patterns[$key] = $pattern;
+            }
+        }
+
+        Route::patterns($patterns);
+    }
+
+    /**
+     * @return void
+     */
+    protected function initRouteBinds(): void
+    {
+        $schedulableChecker = function ($value) {
+            return $value === 'trainer' ? User::class : Playground::class;
+        };
+
+        Route::bind('bookable_type', $schedulableChecker);
+        Route::bind('schedulable_type', $schedulableChecker);
     }
 
     /**
