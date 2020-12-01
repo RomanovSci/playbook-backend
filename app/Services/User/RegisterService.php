@@ -38,7 +38,7 @@ class RegisterService
     {
         $data['verification_code'] = Str::random(6);
         $data['password'] = bcrypt($data['password'] ?? $data['verification_code']);
-        $data['status'] = $data['is_trainer'] ? User::STATUS_INACTIVE : User::STATUS_ACTIVE;
+        $data['status'] = User::STATUS_ACTIVE;
 
         DB::beginTransaction();
         try {
