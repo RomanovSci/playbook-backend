@@ -63,7 +63,7 @@ class UserTest extends ApiTestCase
                 'last_name' => $data['last_name'],
                 'middle_name' => $data['middle_name'],
                 'phone' => $data['phone'],
-                'status' => User::STATUS_INACTIVE,
+                'status' => User::STATUS_ACTIVE,
             ]));
     }
 
